@@ -1,0 +1,26 @@
+slug: mcc-ai-high-risk-annexes-2025
+rater: 2
+protocol_version: "1.0"
+rater2: Claude (Sonnet 5.5), Durchgang 2, 2026-10-03; Arbeitsgrundlage waren blinde, gemischte Bögen aus der Rohextraktion; die Rater-1-Dateien wurden vor diesem Durchgang nicht geöffnet. Nicht unabhängig im strengen Sinn (siehe Protokoll Abschnitt 5).
+questions:
+  - id: "MCC-A-1"
+    class_rater2: c
+    rationale: "S5: Systembeschreibung (Sachverhalt)"
+  - id: "MCC-A-2"
+    class_rater2: c
+    rationale: "S5: Beschreibung des Verwendungszwecks (Sachverhalt)"
+  - id: "MCC-B-1"
+    class_rater2: c
+    rationale: "S2: Beschreibung der Datensätze (Nachweis)"
+  - id: "MCC-E-1"
+    class_rater2: c
+    rationale: "S2: Beschreibung von Maßnahmen (Nachweis)"
+  - id: "MCC-F-1"
+    class_rater2: c
+    rationale: "S2: Beschreibung von Maßnahmen (Nachweis)"
+  - id: "MCC-G-1"
+    class_rater2: c
+    rationale: "S5: Festlegung von Genauigkeitsniveaus (vertraglich)"
+  - id: "MCC-H-1"
+    class_rater2: c
+    rationale: "S2: Beschreibung von Maßnahmen (Nachweis)"

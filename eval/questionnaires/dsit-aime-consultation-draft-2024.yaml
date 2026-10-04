@@ -1,0 +1,294 @@
+slug: dsit-aime-consultation-draft-2024
+title: "AI Management Essentials (AIME) tool, Self-assessment questions (Konsultationsentwurf)"
+publisher: "UK Department for Science, Innovation and Technology (DSIT)"
+audience: "Unternehmen, vor allem KMU, die KI-Systeme entwickeln oder nutzen (Selbstbewertung der Management-Praktiken)"
+type: S
+ai_act_native: false
+protocol_version: "1.0"
+source:
+  url: "https://assets.publishing.service.gov.uk/media/672a5706094e4e60c466d19f/AI_Management_Essentials_tool_Self-Assessment.pdf"
+  landing_page: "https://www.gov.uk/government/consultations/ai-management-essentials-tool"
+  retrieved_via: "direkt beim Herausgeber (curl)"
+  retrieved_at: 2026-10-03
+  document_date: "2024-11-06 (Konsultationsentwurf; Seite zuletzt aktualisiert 2026-02-06)"
+  license_note: "Seitenfuß der gov.uk-Konsultationsseite: \"All content is available under the Open Government Licence v3.0, except where otherwise stated\"; im PDF selbst kein Lizenzvermerk gefunden."
+  sha256: "af17d2a98fc6159e11b369bf28b5416eeb516d886568b2fcbc1d787ac097feb0"
+  publishable_text: "ja"
+  authority: "Institutionell (UK-Ministerium); britisch, nicht am AI Act orientiert; es wurde der Konsultationsentwurf ausgewertet, eine spätere Endfassung wurde nicht gefunden oder geprüft."
+extraction:
+  method: "pdftotext -layout; nummerierte Items (x.y und x.y.z) per Skript segmentiert, von Hand geprüft."
+  n_questions: 54
+  exclusions: "Einleitung, Glossar (Annex A), Antwortoptionen, Info-Kästen; Stammfrage 4.1 (Satzanfang zu 4.1.1 bis 4.1.3)."
+  notes: "AIME-4.1.1 bis 4.1.3 tragen den Stamm von 4.1 im Text (Regel 3.2)."
+rater1: Claude (Sonnet 5.5), Durchgang 1, 2026-10-03
+questions:
+  - id: "AIME-1.1"
+    text: "Do you maintain a record of the AI systems your organisation develops and uses?"
+    section: "Section 1"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis KI-Systemverzeichnis"
+  - id: "AIME-1.2"
+    text: "What proportion of the AI systems that you develop and use are documented in your AI system record?"
+    section: "Section 1"
+    class_rater1: c
+    rationale: "Stufe 5: Anteilsangabe (Sachverhalt)"
+  - id: "AIME-1.3"
+    text: "Do you have an established process for adding new systems to your AI system record?"
+    section: "Section 1"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis KI-Systemverzeichnis"
+  - id: "AIME-1.4"
+    text: "If you procure or access AI systems from third party providers, do you request and receive documentation, assets and resources for your AI system record from them?"
+    section: "Section 1"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis KI-Systemverzeichnis"
+  - id: "AIME-1.5"
+    text: "How frequently do you review and update your AI system record?"
+    section: "Section 1"
+    class_rater1: c
+    rationale: "Stufe 5: Häufigkeitsangabe (Sachverhalt)"
+  - id: "AIME-2.1"
+    text: "Do you have an AI policy for your organisation?"
+    section: "Section 2"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis KI-Richtlinie"
+  - id: "AIME-2.2"
+    text: "Is your AI policy available and accessible to all employees?"
+    section: "Section 2"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis KI-Richtlinie"
+  - id: "AIME-2.3"
+    text: "Does your AI policy help users evaluate whether the use of an AI is appropriate for a given function or task?"
+    section: "Section 2"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis KI-Richtlinie"
+  - id: "AIME-2.4"
+    text: "Does your AI policy identify clear roles and responsibilities for AI management processes in your organisation?"
+    section: "Section 2"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis KI-Richtlinie"
+  - id: "AIME-2.5"
+    text: "How frequently do you review and update your AI policy?"
+    section: "Section 2"
+    class_rater1: c
+    rationale: "Stufe 5: Häufigkeitsangabe (Sachverhalt)"
+  - id: "AIME-3.1"
+    text: "Do you develop or use AI systems that directly impact individuals?"
+    section: "Section 3"
+    class_rater1: c
+    rationale: "Stufe 5: Scoping-Sachverhalt (Wirkung auf Personen), kein AI-Act-Merkmal"
+  - id: "AIME-3.2"
+    text: "Do you have clear definitions of fairness with respect to these AI systems?"
+    section: "Section 3"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Fairness-Prozess"
+  - id: "AIME-3.3"
+    text: "Do you have mechanisms for detecting or identifying unfair outcomes or processes with respect to these AI systems and your definitions of fairness?"
+    section: "Section 3"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Fairness-Prozess"
+  - id: "AIME-3.4"
+    text: "Do you have processes for monitoring fairness of AI systems over time and mitigating against unfairness?"
+    section: "Section 3"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Fairness-Prozess"
+  - id: "AIME-3.5"
+    text: "How frequently do you review your process(es) for detecting and mitigating unfairness?"
+    section: "Section 3"
+    class_rater1: c
+    rationale: "Stufe 5: Häufigkeitsangabe (Sachverhalt)"
+  - id: "AIME-4.1.1"
+    text: "Where appropriate, do you have an impact assessment process for identifying how your AI systems might impact… The legal position or life opportunities of individuals?"
+    section: "Section 4"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Folgenabschätzung"
+  - id: "AIME-4.1.2"
+    text: "Where appropriate, do you have an impact assessment process for identifying how your AI systems might impact… The physical or psychological wellbeing of individuals?"
+    section: "Section 4"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Folgenabschätzung"
+  - id: "AIME-4.1.3"
+    text: "Where appropriate, do you have an impact assessment process for identifying how your AI systems might impact… Societies and the environment?"
+    section: "Section 4"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Folgenabschätzung"
+  - id: "AIME-4.2"
+    text: "Do you document potential impacts of your AI systems?"
+    section: "Section 4"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Folgenabschätzung"
+  - id: "AIME-4.3"
+    text: "Do you communicate the potential impacts to the users or customers of your AI systems?"
+    section: "Section 4"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Folgenabschätzung"
+  - id: "AIME-5.1"
+    text: "Do you conduct risk assessments of the AI systems you develop and use?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-5.2.1"
+    text: "Are your risk assessments designed to produce consistent, valid and comparable results?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-5.2.2"
+    text: "Do you compare the results of your risk assessments to your organisation's overall risk thresholds?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-5.2.3"
+    text: "Do you use the results of your risk assessment to prioritise risk treatment?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-5.3.1"
+    text: "Do you monitor all your AI systems for general errors and failures?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-5.3.2"
+    text: "Do you monitor all your AI systems to check that they are performing as expected?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-5.4"
+    text: "Do you have processes for responding to or repairing system failures?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-5.5"
+    text: "Have you defined risk thresholds or critical conditions under which it would become necessary to cease the development or use of your AI systems?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-5.6"
+    text: "Do you have a plan to introduce necessary updates to your risk assessment process as your AI systems evolve or critical issues are identified?"
+    section: "Section 5"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Risikomanagement-Prozess"
+  - id: "AIME-6.1"
+    text: "Do you train, fine-tune or otherwise develop your own AI systems using data?"
+    section: "Section 6"
+    class_rater1: c
+    rationale: "Stufe 5: Scoping-Sachverhalt (eigene Entwicklung), keine Rollenbestimmung nach AI Act"
+  - id: "AIME-6.2"
+    text: "Do you document details about the provenance and collection processes of data used to develop your AI systems?"
+    section: "Section 6"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Datenmanagement"
+  - id: "AIME-6.3"
+    text: "Do you ensure that the data used to develop your AI systems meet any data quality requirements defined by your organisation?"
+    section: "Section 6"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Datenmanagement"
+  - id: "AIME-6.4"
+    text: "Do you ensure that datasets used to develop your AI systems are adequately complete and representative?"
+    section: "Section 6"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Datenmanagement"
+  - id: "AIME-6.5"
+    text: "Do you document details about the data preparation activities undertaken to develop your AI systems?"
+    section: "Section 6"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Datenmanagement"
+  - id: "AIME-6.6"
+    text: "Do you sign and retain written contracts with third parties that process personal data on your behalf?"
+    section: "Section 6"
+    class_rater1: c
+    rationale: "Stufe 1: Verträge mit Auftragsverarbeitern (DSGVO), außerhalb Korpus"
+  - id: "AIME-7.1"
+    text: "Do you take action to mitigate against foreseeable harmful or unfair bias related to the training data of your AI systems?"
+    section: "Section 7"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Bias-Minderung"
+  - id: "AIME-7.2"
+    text: "If you procure AI as a Service (AIaaS) or pretrained AI systems from third party providers to use or develop upon, do you have records of the full extent of the data that has been used to train these systems?"
+    section: "Section 7"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Bias-Minderung"
+  - id: "AIME-7.3"
+    text: "If you procure AIaaS or pretrained AI systems from third party providers, do you conduct appropriate due diligence on the data used to train or develop these systems to mitigate against foreseeable harmful or unfair bias?"
+    section: "Section 7"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Bias-Minderung"
+  - id: "AIME-7.4"
+    text: "Do you have processes to ensure compliance with relevant bias mitigation measures stipulated by international or domestic regulation?"
+    section: "Section 7"
+    class_rater1: c
+    rationale: "Stufe 1: Einhaltung nicht näher benannter Regulierung (international/national), außerhalb Korpus"
+  - id: "AIME-8.1"
+    text: "Do you implement appropriate security measures to protect the data used and/or generated by your AI systems?"
+    section: "Section 8"
+    class_rater1: c
+    rationale: "Stufe 1: Datenschutzmaßnahmen (DSGVO/UK GDPR), außerhalb Korpus"
+  - id: "AIME-8.2"
+    text: "Do you record all your personal data breaches?"
+    section: "Section 8"
+    class_rater1: c
+    rationale: "Stufe 1: Datenschutzmaßnahmen (DSGVO/UK GDPR), außerhalb Korpus"
+  - id: "AIME-8.3"
+    text: "Do you report personal data breaches to affected data subjects when necessary?"
+    section: "Section 8"
+    class_rater1: c
+    rationale: "Stufe 1: Datenschutzmaßnahmen (DSGVO/UK GDPR), außerhalb Korpus"
+  - id: "AIME-8.4"
+    text: "Do you routinely complete Data Protection Impact Assessments (DPIAs) for uses of personal data that are likely to result in high risk to individuals’ interests?"
+    section: "Section 8"
+    class_rater1: c
+    rationale: "Stufe 1: Datenschutzmaßnahmen (DSGVO/UK GDPR), außerhalb Korpus"
+  - id: "AIME-8.5"
+    text: "Have you ensured that all your AI systems and the data they use or generate is protected from interference by third parties?"
+    section: "Section 8"
+    class_rater1: c
+    rationale: "Stufe 1: Datenschutzmaßnahmen (DSGVO/UK GDPR), außerhalb Korpus"
+  - id: "AIME-9.1"
+    text: "Do you have reporting mechanisms for all employees, users and external third parties to report concerns or system failures?"
+    section: "Section 9"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Meldeverfahren"
+  - id: "AIME-9.2"
+    text: "Do you provide reporters with options for either anonymity or confidentiality or both?"
+    section: "Section 9"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Meldeverfahren"
+  - id: "AIME-9.3"
+    text: "Have you identified who in your organisation will be responsible for addressing concerns when they are escalated?"
+    section: "Section 9"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Meldeverfahren"
+  - id: "AIME-9.4"
+    text: "Are your reporting procedures meaningfully transparent for all employees, users and external third parties?"
+    section: "Section 9"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Meldeverfahren"
+  - id: "AIME-9.5"
+    text: "Do you respond to concerns in a timely manner?"
+    section: "Section 9"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Meldeverfahren"
+  - id: "AIME-9.6"
+    text: "Do you document all reported concerns and results of any subsequent investigations?"
+    section: "Section 9"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Meldeverfahren"
+  - id: "AIME-10.1"
+    text: "Have you determined what AI system technical documentation is required by interested parties across your relevant stakeholder categories (e.g. developers, AI system end-users, academic researchers, etc)?"
+    section: "Section 10"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Dokumentation und Kommunikation"
+  - id: "AIME-10.2"
+    text: "Do you provide technical documentation to interested parties in an appropriate format?"
+    section: "Section 10"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Dokumentation und Kommunikation"
+  - id: "AIME-10.3"
+    text: "Have you determined what AI system non-technical documentation is required by interested parties across your relevant stakeholder categories?"
+    section: "Section 10"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Dokumentation und Kommunikation"
+  - id: "AIME-10.4"
+    text: "Do you provide non-technical information to your users and other relevant parties?"
+    section: "Section 10"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis Dokumentation und Kommunikation"

@@ -1,0 +1,134 @@
+slug: community-ankit-uniyal-vendor-ddq-2026
+rater: 2
+protocol_version: "1.0"
+rater2: Claude (Sonnet 5.5), Durchgang 2, 2026-10-03; Arbeitsgrundlage waren blinde, gemischte Bögen aus der Rohextraktion; die Rater-1-Dateien wurden vor diesem Durchgang nicht geöffnet. Nicht unabhängig im strengen Sinn (siehe Protokoll Abschnitt 5).
+questions:
+  - id: "ANKIT-03"
+    class_rater2: c
+    rationale: "S5: Funktionsbeschreibung"
+  - id: "ANKIT-04"
+    class_rater2: c
+    rationale: "S5: Angabe KI-Technik"
+  - id: "ANKIT-05"
+    class_rater2: c
+    rationale: "S5: Angabe Basismodell"
+  - id: "ANKIT-06"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Feintuning"
+  - id: "ANKIT-07"
+    class_rater2: c
+    rationale: "S5: Datenflüsse"
+  - id: "ANKIT-08"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Training mit Kundendaten"
+  - id: "ANKIT-09"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Verarbeitungsort"
+  - id: "ANKIT-10"
+    class_rater2: c
+    rationale: "S5: Angebot Datenresidenz"
+  - id: "ANKIT-11"
+    class_rater2: c
+    rationale: "S2: technische Maßnahme"
+  - id: "ANKIT-12"
+    class_rater2: c
+    rationale: "S2: technische Maßnahme"
+  - id: "ANKIT-13"
+    class_rater2: c
+    rationale: "S5: Aufbewahrung und Löschung"
+  - id: "ANKIT-14"
+    class_rater2: c
+    rationale: "S5: Unterauftragsverarbeiter"
+  - id: "ANKIT-15"
+    class_rater2: c
+    rationale: "S1: Zertifikate und Normen"
+  - id: "ANKIT-16"
+    class_rater2: c
+    rationale: "S2: Nachweis Penetrationstests"
+  - id: "ANKIT-17"
+    class_rater2: c
+    rationale: "S2: Nachweis Bedrohungsmodellierung"
+  - id: "ANKIT-18"
+    class_rater2: c
+    rationale: "S2: technische Schutzmaßnahme"
+  - id: "ANKIT-19"
+    class_rater2: c
+    rationale: "S5: Zusage Meldefrist"
+  - id: "ANKIT-20"
+    class_rater2: c
+    rationale: "S2: Nachweis Notfallplanung"
+  - id: "ANKIT-21"
+    class_rater2: c
+    rationale: "S2: Nachweis Trainingsdatenquellen"
+  - id: "ANKIT-22"
+    class_rater2: c
+    rationale: "S2: Nachweis Bias-Tests"
+  - id: "ANKIT-23"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Erklärbarkeit"
+  - id: "ANKIT-24"
+    class_rater2: c
+    rationale: "S2: Nachweis Monitoring"
+  - id: "ANKIT-25"
+    class_rater2: c
+    rationale: "S5: Zusage Änderungsmitteilung"
+  - id: "ANKIT-26"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Versionierung"
+  - id: "ANKIT-27"
+    class_rater2: c
+    rationale: "S1: Datenschutzgesetze"
+  - id: "ANKIT-28"
+    class_rater2: c
+    rationale: "S5: Verfügbarkeit Vertragsdokument"
+  - id: "ANKIT-29"
+    class_rater2: c
+    rationale: "S1: Datentransfermechanismen"
+  - id: "ANKIT-30"
+    class_rater2: c
+    rationale: "S2: [U:b] Selbstauskunft zur AI-Act-Bereitschaft; der Inhalt der Anbieterpflichten wäre b"
+  - id: "ANKIT-31"
+    class_rater2: c
+    rationale: "S1: Kinderdaten, Datenschutzrecht"
+  - id: "ANKIT-32"
+    class_rater2: c
+    rationale: "S2: Maßnahme der Information von Nutzern (Umsetzung, nicht Geltung von Art. 50)"
+  - id: "ANKIT-33"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Kennzeichnung der Ausgaben"
+  - id: "ANKIT-34"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Zugriff auf Protokolle"
+  - id: "ANKIT-35"
+    class_rater2: c
+    rationale: "S5: Vertragsfrage"
+  - id: "ANKIT-36"
+    class_rater2: c
+    rationale: "S5: Vertragsfrage"
+  - id: "ANKIT-37"
+    class_rater2: c
+    rationale: "S5: Vertragsfrage"
+  - id: "ANKIT-38"
+    class_rater2: c
+    rationale: "S5: Vertragsfrage"
+  - id: "ANKIT-39"
+    class_rater2: c
+    rationale: "S5: Vertragsfrage"
+  - id: "ANKIT-40"
+    class_rater2: c
+    rationale: "S2: Nachweis veröffentlichter Grundsätze"
+  - id: "ANKIT-41"
+    class_rater2: c
+    rationale: "S2: Nachweis Governance und Red Teaming"
+  - id: "ANKIT-42"
+    class_rater2: c
+    rationale: "S5: Geschäftspolitik"
+  - id: "ANKIT-43"
+    class_rater2: c
+    rationale: "S5: Geschäftsangabe"
+  - id: "ANKIT-44"
+    class_rater2: c
+    rationale: "S5: Geschäftsangabe"
+  - id: "ANKIT-45"
+    class_rater2: c
+    rationale: "S1: Roadmap-Selbstauskunft zu AI Act, NIST, ISO (überwiegend außerhalb Korpus)"

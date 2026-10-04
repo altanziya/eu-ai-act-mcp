@@ -1,0 +1,128 @@
+slug: community-eu-ai-act-toolkit-vendor-ddq-2026
+rater: 2
+protocol_version: "1.0"
+rater2: Claude (Sonnet 5.5), Durchgang 2, 2026-10-03; Arbeitsgrundlage waren blinde, gemischte Bögen aus der Rohextraktion; die Rater-1-Dateien wurden vor diesem Durchgang nicht geöffnet. Nicht unabhängig im strengen Sinn (siehe Protokoll Abschnitt 5).
+questions:
+  - id: "ARTEM-01"
+    class_rater2: c
+    rationale: "S5: Angabe KI-Funktionen"
+  - id: "ARTEM-02"
+    class_rater2: c
+    rationale: "S5: Angabe Einsatzzwecke (Sachverhalt)"
+  - id: "ARTEM-03"
+    class_rater2: c
+    rationale: "S5: Angabe Betriebsmodell"
+  - id: "ARTEM-04"
+    class_rater2: c
+    rationale: "S5: Angabe Unterauftragnehmer und Modellanbieter"
+  - id: "ARTEM-05"
+    class_rater2: c
+    rationale: "S5: Angabe KI-Funktionen"
+  - id: "ARTEM-06"
+    class_rater2: c
+    rationale: "S5: [U:b] Produktarchitektur in Beschaffungssprache; \"KI-Modell mit allgemeinem Verwendungszweck\" wäre Rechtsbegriff"
+  - id: "ARTEM-07"
+    class_rater2: c
+    rationale: "S5: Zuordnung Funktionen zu Ausgabearten"
+  - id: "ARTEM-08"
+    class_rater2: c
+    rationale: "S5: [U:b] Sachverhalt, der eine Einstufung auslösen kann; keine Einstufung"
+  - id: "ARTEM-09"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Abschaltbarkeit"
+  - id: "ARTEM-10"
+    class_rater2: c
+    rationale: "S5: Datenarten"
+  - id: "ARTEM-11"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Training mit Kundendaten"
+  - id: "ARTEM-12"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Speicherung"
+  - id: "ARTEM-13"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Protokollaufbewahrung"
+  - id: "ARTEM-14"
+    class_rater2: c
+    rationale: "S5: Speicherort"
+  - id: "ARTEM-15"
+    class_rater2: c
+    rationale: "S5: Aufbewahrungsfristen"
+  - id: "ARTEM-16"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Opt-out"
+  - id: "ARTEM-17"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-18"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-19"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-20"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-21"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-22"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-23"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-24"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-25"
+    class_rater2: c
+    rationale: "S2: Dokumentenanforderung"
+  - id: "ARTEM-26"
+    class_rater2: c
+    rationale: "S2: technische Maßnahme"
+  - id: "ARTEM-27"
+    class_rater2: c
+    rationale: "S2: technische Maßnahme"
+  - id: "ARTEM-28"
+    class_rater2: c
+    rationale: "S2: Nachweis verfügbarer Protokolle"
+  - id: "ARTEM-29"
+    class_rater2: c
+    rationale: "S2: Prozessnachweis Vorfallbehandlung"
+  - id: "ARTEM-30"
+    class_rater2: c
+    rationale: "S5: Verfügbarkeit Vertragsdokument"
+  - id: "ARTEM-31"
+    class_rater2: c
+    rationale: "S1: DSGVO-Unterstützung"
+  - id: "ARTEM-32"
+    class_rater2: c
+    rationale: "S5: Löschung und Export"
+  - id: "ARTEM-33"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Administration"
+  - id: "ARTEM-34"
+    class_rater2: c
+    rationale: "S2: Produktfunktion menschliche Prüfung"
+  - id: "ARTEM-35"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Korrektur und Übersteuerung"
+  - id: "ARTEM-36"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Konfidenz und Erklärung"
+  - id: "ARTEM-37"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Standardsperren"
+  - id: "ARTEM-38"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Rollenbegrenzung"
+  - id: "ARTEM-39"
+    class_rater2: c
+    rationale: "S2: Nachweis angebotener Unterstützung"
+  - id: "ARTEM-40"
+    class_rater2: c
+    rationale: "S2: Dokumentationsnachweis (Themen AI-Act-nah, gefragt wird nach Vorhandensein)"
+  - id: "ARTEM-41"
+    class_rater2: c
+    rationale: "S2: [U:b] Nachweis, dass der Anbieter Kundenpflichten erläutert; Inhalt der Betreiberpflichten wäre b"

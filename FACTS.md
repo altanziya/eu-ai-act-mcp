@@ -1,0 +1,131 @@
+# FACTS – verifizierte Faktenbasis und offene Hypothesen
+
+Regeln: eine Zeile pro Fakt. `Prüfung`: **F** = von Fable selbst per Primärquelle verifiziert, **B** = aus Bericht übernommen (Agent, nicht einzeln geprüft), **S** = Sekundärquelle/unsicher. Abrufdatum = wann die Quelle gelesen wurde. Widerlegte Fakten nicht löschen, sondern mit `~~` durchstreichen und Ersatz-ID nennen.
+
+## Recht und Zeitplan
+
+| ID | Fakt | Quelle | Abruf | Prüfung |
+|---|---|---|---|---|
+| F1 | AI Act konsolidiert als `02024R1689-20260727`; Änderungsakt Digital Omnibus on AI = VO (EU) 2026/1744, in Kraft 27.07.2026 | EUR-Lex ELI `reg/2024/1689/2026-07-27`; Gibson Dunn; Sidley | 2026-10-03 | F |
+| F2 | Hochrisiko Anhang III ab 02.12.2027, Anhang I ab 02.08.2028 (Omnibus) | Travers Smith; CSA; Gibson Dunn | 2026-10-03 | F |
+| F3 | Art. 50 Transparenz ab 02.08.2026; Kennzeichnung für Bestandssysteme Schonfrist bis 02.12.2026; finale Art.-50-Leitlinien 20.07.2026 | Bird & Bird; McCann FitzGerald; Omnibus | 2026-10-03 | F |
+| F4 | Neues Art.-5-Verbot (NCII/CSAM-Generierung), Übergangsfrist bis 02.12.2026 | Gibson Dunn | 2026-10-03 | B |
+| F5 | KI-MIG (DE) in Kraft 29.07.2026; BNetzA zentrale Marktüberwachung, KoKIVO | BGBl. I Nr. 233; Bundestag; datenschutzticker | 2026-10-03 | F |
+| F6 | Kommission: AI Act Service Desk + Single Information Platform seit 08.10.2025 (Compliance Checker, Explorer), keine API | digital-strategy.ec.europa.eu; ZwillGen | 2026-10-03 | F |
+| F7 | JTC 21: EN 18286 (QMS, Art. 17) im Formal Vote (06/2026); erste harmonisierte Normen Q4 2026 erwartet; M/613 läuft 28.02.2027 aus | kla.digital Tracker; CEN-CENELEC | 2026-10-03 | B |
+| F11 | Südkorea AI Basic Act in Kraft 22.01.2026, risikobasiert, Bußgeld-Schonfrist ≥ 1 Jahr; law.go.kr Open API mit Historie | Bericht 02 §1 [10][11] | 2026-10-03 | B |
+| F12 | Colorado: SB 24-205 aufgehoben und ersetzt durch SB 26-189 (signiert 14.05.2026, gilt ab 01.01.2027, Notice-Ansatz statt Impact Assessment) | leg.colorado.gov/bills/sb26-189 | 2026-10-03 | F |
+| F13 | NIST listet keinen Crosswalk AI RMF ↔ Colorado und keinen zum finalen AI Act (13 Crosswalks, u. a. ISO 42001, Singapur, Korea, Japan) | Bericht 02 §5 [37] | 2026-10-03 | B |
+| F14 | Außerhalb EU/Korea nur Soft Law oder punktuelle Gesetze (UK, CA, JP, IN, SG, CH, AU); Brasilien PL 2338 seit 12/2024 in der Kammer | Bericht 02 §1 | 2026-10-03 | B |
+
+## Markt und Wettbewerb
+
+| ID | Fakt | Quelle | Abruf | Prüfung |
+|---|---|---|---|---|
+| F8 | AI-Act-MCPs: SonnyLabs/EU_AI_ACT_MCP 33★ Apache 17 Tools; saidbazyar/sovereign-ai-act-mcp 0★ MIT, kennt 2026/1744, gehostet regulatoryai.eu; CSOAI; lexbeam. Generisch: cyanheads/eur-lex-mcp-server 8★ Apache, konsolidierte Fassungen | GitHub-Seiten; PulseMCP | 2026-10-03 | F |
+| ~~F9~~ | ~~Legalithm kostenlos bis ~04/2028; Workflow-Tools mit kaum APIs~~ → ersetzt durch F40, F42, F45 (Free dauerhaft; mehrere Tools haben APIs) | Legalithm-Vergleich 04/2026 (Vendor-Blog, widerlegt durch Pricing-Seite) | 2026-10-03 | widerlegt |
+| F15 | Reiner Gesetzeszugang ist Commodity (CELLAR, legislation.gov.uk, eCFR, GovInfo gratis; freie Legal-MCPs ohne Key). Bezahlt wird für Citator/Verify/Redaktion; TR und Lexis haben 2026 "Verify"-Funktionen gebaut; Shepard's Verify prüft nur Existenz | Bericht 01 §1, §6 | 2026-10-03 | B |
+| F16 | RegAlytics liefert Regulierungsdaten per MCP, REST, Webhooks, Flat Files; verbrauchsbasiert ohne Sitze; Self-Serve per Kreditkarte | regalytics.ai/pricing | 2026-10-03 | F |
+| F17 | RegTech konsolidiert: CUBE kaufte TR Regulatory Intelligence (01/2025), Kodex AI (10/2025), 4CRisk (19.02.2026, Konditionen offen); Bloomberg kaufte Regology (06/2026); Archer kaufte Compliance.ai (2024) | fintech.global (4CRisk geprüft); Bericht 01 §2 | 2026-10-03 | F (4CRisk) / B (Rest) |
+| F18 | TR-MCP-Connector verlangt CoCounsel-Abo, verbietet Nutzung der Inhalte mit anderen KI-Tools, ist Pilot | Bericht 01 §1 (TR-Doku) | 2026-10-03 | B |
+| F19 | Rules as Code: Kanada nennt frühe OpenFisca-Projekte "lang, mühsam, nicht sustainable"; für den AI Act nur akademische Ontologien (AIRO, VAIR, TAIR), keine gepflegte Entscheidungs-API gefunden | Bericht 01 §4 (OECD OPSI PDF) | 2026-10-03 | B |
+| F20 | GDPR-Lehre: Workflow-Plattformen gewannen (OneTrust, Ethyca); Regulatory Intelligence wurde als Feature zugekauft (OneTrust/DataGuidance 2019) | Bericht 02 §3 [27] | 2026-10-03 | B |
+| F21 | Tracker (IAPP, OECD.AI, White & Case) ohne Rechtsdaten-API; am nächsten: Saidot (Knowledge Graph + REST), UCF (API, kommerziell), SCF (frei, OSCAL-JSON) | Bericht 02 §2 | 2026-10-03 | B |
+
+| F38 | CELLAR liefert `02024R1689-20260727` per Content Negotiation (`Accept: application/xhtml+xml`, `Accept-Language`) als XHTML: EN 851 KB, DE 900 KB, enthält `art_4a`, `art_75a`, Verweis auf 2026/1744. Formex (`application/xml;type=fmx4`) für die konsolidierte Fassung: 404. OJ-Fassung `32024R1689` als XHTML verfügbar; konsolidierte CELEX-Nummern existieren nur zu Änderungsdaten (`-20240801` = 404) | eigener curl-Spike, reproduziert | 2026-10-03 | F |
+| F39 | Lexbeam `eu-ai-act-mcp`: 10 Tools, nur 28 Artikel-Zusammenfassungen ("Summaries are not statutory text"), Omnibus integriert, Claim-Matrix gegen hash-verifizierte Konsolidierung bei jedem Build, **kein `as_of`**, gehostet `mcp.lexbeam.com/mcp` ohne Auth, MIT, 3★; npm ≈693/Monat (B) | GitHub-README (v1.6.0 sichtbar, npm v1.7.0 lt. Bericht 03) | 2026-10-03 | F |
+| F40 | Legalithm: Free-Tier dauerhaft, bezahlt ab 1.500 €/Produkt/Jahr, Billing nicht live; offline MCP (4 Tools), CLI mit `check` (Drift-Check, non-zero exit für CI), GitHub Action, Corpus API mit Free-Key, Output trägt `asOf`; MIT, Mirror 0★; npm ≈544/Monat (B) | legalithm.com/en/pricing; github.com/legalithm-org/legalithm | 2026-10-03 | F |
+| F41 | AI Law Radar (ailawradar.com): REST `/obligations`, `/deadlines`, `/changes`, MCP-Endpoint, RSS/JSON-Feeds, CC BY 4.0, kein Key für Lesezugriff, "Radar Pro (Agency)" ohne öffentlichen Preis; globales Obligation-Register, ≈12 EU-Einträge (B), kein Volltext | ailawradar.com/api | 2026-10-03 | F |
+| F42 | AI Act Radar (aiactradar.com, anderes Produkt als F41): HMAC-signierte Webhooks (Topics gpai, high-risk, standards), REST mit Cursor-Pagination, MCP (`query_ai_act_updates`, `get_obligation_for_role`), versioniertes Schema, Payloads EN+DE; Team-Tier dauerhaft gratis inkl. API/MCP; kommerziell ab 500 €/Monat (White-Label, Freshness-SLA, Gewährleistung, Zielgruppe GRC-Plattformen/Verlage/Zertifizierer); Beta, Keys per Hand; keine Kundenzahlen | aiactradar.com | 2026-10-03 | F |
+| F43 | ≥17 AI-Act-Einträge im offiziellen MCP-Registry (u. a. ai-act-radar, sovereign, ark-forge, CSOAI/MEOK, Ansvar, Legalithm, ai-act-article-50-audit); Downloads der Wettbewerber 287–771/Monat, Stars 0–33 | Bericht 03 §1, Bericht 06 §6 (Registry, npm, PyPI) | 2026-10-03 | B |
+| F44 | Nachfragesignale: GitHub-Issues/PRs mit "EU AI Act" 19 (01/2025) → 3.322 (08/2026), großteils Vendor-Seeding; Stack Overflow 0 Fragen; Ask HN zu AI-Act-Compliance 1 Punkt/6 Kommentare; HN "How Claude marks AI-generated content" 451 Punkte/424 Kommentare | Bericht 06 §1, §4 (GitHub-API, HN-Algolia, Stack-Exchange-API) | 2026-10-03 | B |
+| F45 | Preisanker Markt ohne ausgewiesene Umsätze: Ansvar 29/249/490/2.000 €/Monat; AI Law Tracker 49/99/299 $ + OEM 499 $ + Enterprise 12.000 $/Jahr; Legalithm 1.500 €/Jahr; AI Act Radar 500 €/Monat | Bericht 06 §5 | 2026-10-03 | B |
+| F46 | Goldset-Quellen: Kommissions-Entwurf Leitlinien Hochrisiko-Klassifikation Art. 6 (19.05.2026, Beispielliste, Finalisierung "Ende 2026"); Verbote-Leitlinien 134 S. mit grob 100+ Beispielen; AI Act Evaluation Benchmark 339 Szenarien/137 QA CC-BY-4.0 (vermutlich LLM-generiert); AIRO-SHACL CC BY 4.0; appliedAI-DB Basis 2023, Lizenz unklar; Lexbeam `evals/front-door` MIT | Bericht 03 §4 | 2026-10-03 | B |
+| F47 | Korpuslücken in SPEC v0.1: Code of Practice Kennzeichnung (10.06.2026), Serious-Incident-Meldevorlage, MDCG 2025-6, Hochrisiko-Leitlinien-Entwurf. Omnibus setzt Fristen: Annex-I-Leitlinien bis 01.08.2027, Post-Market-Monitoring-Vorlage bis 02.09.2027 | Bericht 03 §5 | 2026-10-03 | B |
+| F48 | BNetzA KI-Service-Desk: statisches HTML (18 FAQ, KI-Kompass, 2 Factsheets), keine API, kein KI-spezifischer Feed; kein Indiz für eine API der Single Information Platform | Bericht 03 §5–6 (direkt gelesen) | 2026-10-03 | B |
+| F49 | Python-Paket `eurlex` ist AGPL-3.0 (Lizenzfalle für Apache-Projekt); Honeyfield `eurlex-mcp-server` MIT, ≈904 npm/Monat; EUR-Lex-Inhalte CC BY 4.0 (Beschluss 2011/833/EU), Drittinhalte ausgenommen | Bericht 03 §2 | 2026-10-03 | B |
+
+## MCP-Ökosystem und Technik
+
+| ID | Fakt | Quelle | Abruf | Prüfung |
+|---|---|---|---|---|
+| F22 | MCP-Spec 2026-07-28: stateless (kein `initialize`, keine `Mcp-Session-Id`), `server/discover` Pflicht, MRTR ersetzt Elicitation/Sampling-Requests, Tasks als Extension, Roots/Sampling/Logging deprecated, Pflichtheader `Mcp-Method`/`Mcp-Name`, DCR deprecated | modelcontextprotocol.io/specification/2026-07-28/changelog | 2026-10-03 | F |
+| F23 | TS-SDK v2.3.0 vom 02.10.2026 (ein Server je Request, Hono-Adapter) | Bericht 04 §3 [3] | 2026-10-03 | B |
+| F24 | Anthropic Connectors Directory: Remote-HTTPS, OAuth **oder keine Auth bei öffentlichen Daten**, keine lokalen MCPB-Server mehr, Skills nur im Plugin-Bundle; Listing-Dashboard mit Nutzung je Tool | Bericht 04 §1 [6][7][8] | 2026-10-03 | B |
+| F25 | npm-Downloads/Monat (09/2026): Playwright MCP 29,0 Mio., Context7 3,0 Mio., Firecrawl 0,40 Mio., Exa 0,24 Mio., Tavily 0,09 Mio.; `eu-ai-act-mcp` und `aiact-mcp` auf npm frei | Bericht 04 §1 [13] (npm-API) | 2026-10-03 | B |
+| F26 | Bezahlte Agent-APIs: Exa 4–15 $/1k, Tavily 0,008 $/Credit, Firecrawl ab 16 $/5k, Context7 10 $/Seat + 2k Calls, Composio 29 $ Pro; Free-Tiers ≈ 1.000 Calls/Monat. Kein belegter Umsatz für reine Wissens-MCPs | Bericht 04 §2 (Preisseiten) | 2026-10-03 | B |
+| F27 | Anthropic-Doku: Claude nutzt bei Wissensfragen zu einem verbundenen Dienst nicht zwingend das Tool (Risiko: Modell antwortet aus Gedächtnis) | Bericht 04 §3 [28] | 2026-10-03 | B |
+| F28 | Studie 2026 (ukrainisches Recht, 100 Fragen): 13–21 % halluzinierte Zitate; mit Web-Zugriff noch 3–13 % falsche URLs | Bericht 04 §3 [32] | 2026-10-03 | S |
+| F29 | Anthropic Citations mit Structured Outputs inkompatibel (HTTP 400) | Bericht 04 §3 [27] | 2026-10-03 | B |
+
+| F30 | Legal-RAG-Halluzinationen: Lexis+ AI / Practical Law ≈17 %, Westlaw ≈33 %, GPT-4 43 % (Stanford/JELS 2025, preregistriert) | Bericht 05 §1 [1] | 2026-10-03 | B |
+| F31 | Charlotin-Datenbank: 2.125 Gerichtsfälle mit KI-Halluzinationen (02.10.2026): 1.227 Pro-se, 840 Anwälte, 33 Richter; USA 1.459, DE 11 | damiencharlotin.com/hallucinations | 2026-10-03 | F |
+| F32 | Cellar-Notification-Feed (RSS/Atom) mit Parametern `startDate`, `endDate`, `type` (CREATE/UPDATE/DELETE), `wemiClasses`, `page`; liefert vollständige Historie der Ingestionen → Primärweg für Change-Detection | op.europa.eu/en/web/cellar/cellar-data/rss-and-atom-feeds | 2026-10-03 | F |
+| F33 | Berichtigungen des AI Act gelten sprachspezifisch (je Corrigendum nur einzelne Sprachfassungen) → Fassungsmodell muss pro Sprache führen | Bericht 05 §4 (EUR-Lex-Seite 2024/1689) | 2026-10-03 | B |
+| F34 | AI-Act-Evaldatensätze existieren ohne Fassungsbezug: AI Act Evaluation Benchmark (339 Szenarien), AIReg-Bench (120 Dokumente), TESSA (100 Fragen); Studie 28.09.2026 bewertet 12 Compliance-Checker als "early-stage" | Bericht 05 §2 [16][17][18][33] | 2026-10-03 | B |
+| F35 | Allgemeiner Cohere-Reranker verschlechterte Ergebnisse in LegalBench-RAG gegenüber keinem Reranker; prompt-basierte Abstention wirkt nicht (LegalCiteBench) | Bericht 05 §1, §3 [5][10] | 2026-10-03 | B |
+| F36 | Bei ≈100 Goldset-Fällen ist "0 False Negatives" nicht belegbar (Clopper-Pearson 95 %-Obergrenze ≈3 %); Ziel als statistische Obergrenze formulieren | Bericht 05 §2 (Methodik) | 2026-10-03 | F (Mathematik geprüft) |
+| F37 | Sonnet 5.5 / Opus 5.5: keine Temperatur-Steuerung, kein erzwungenes `tool_choice` laut Bericht; Extraktion nicht bitgenau reproduzierbar | Bericht 05 [43] | 2026-10-03 | S (vor Architektur-ADR per claude-api-Skill prüfen) |
+
+## Arbeitsweise und Tooling
+
+| ID | Fakt | Quelle | Abruf | Prüfung |
+|---|---|---|---|---|
+| F50 | Vercel-Evals: Skill in 56 % der Fälle nie aufgerufen; Pass-Rate Baseline 53 %, Skills 53 %, Skills mit expliziter Anweisung 79 %, immer geladener 8-KB-AGENTS.md-Index 100 % | vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals (27.01.2026) | 2026-10-03 | F |
+| F51 | Subagenten erben alle CLAUDE.md-Ebenen samt Imports; Frontmatter `omitClaudeMd: true` schaltet das ab (Claude Code ≥ 2.1.271) | code.claude.com/docs/en/sub-agents | 2026-10-03 | F |
+| F52 | CLAUDE.md und Auto-Memory sind "Kontext, keine erzwungene Konfiguration"; Durchsetzung nur per Hook; `@path`-Imports werden beim Start geladen (max. 4 Hops), sparen keinen Kontext; Dateien > 200 Zeilen senken Regeltreue | code.claude.com/docs/en/memory | 2026-10-03 | F |
+| F53 | Stop-Hook: Exit 0 = ok (JSON-Ausgabe möglich), Exit 2 = blockiert das Beenden, stderr geht an Claude; kein Matcher; `hookSpecificOutput.additionalContext` für nicht-blockierendes Feedback | code.claude.com/docs/en/hooks | 2026-10-03 | F |
+| F54 | Community-Stimmen 30 Tage (last30days, 179 Items, ~11 % on-topic): Fristen werden ohne Fassungsangabe zitiert ("gilt seit 2.8.2026" neben "verschoben"); Omnibus-Änderung an Art. 4 nur in einem YouTube-Kommentar; Art. 50 erreicht Laien; keine Nutzerkritik an Tools, kein Beleg für Chatbot-Halluzinationen zum AI Act; Reddit 0/51 on-topic | Bericht 07 | 2026-10-03 | B |
+
+| F55 | GitHub-Pages-Projektseiten tragen den Repo-Namen in der URL; bei Umbenennung des Repos ändert sich die Pages-URL ohne Weiterleitung (Repo-URL selbst wird weitergeleitet) | Spec-Review R2-10 + eigenes Wissen; GitHub-Doku "Renaming a repository" vor Domainwechsel gegenprüfen | 2026-10-03 | S |
+
+| F56 | Fragebogen-Test (Hausaufgabe Teil 1, maschinell): 9 öffentliche KI-Lieferanten-/Selbstbewertungs-Fragebögen, 701 Fragen (ALTAI, MCC-AI-Anhänge, Fraunhofer AI-Profil, Algorithm-Audit-Tool, UK AIME, HECVAT-KI, CSA AI-CAIQ, 2 GitHub-Vorlagen). Allein per Zitatnachweis beantwortbar (Klasse a): 0 von 701. Per Klassifikation + Beleg (a ∪ b): 6,6 % gepoolt nach Adjudikation (46/701; 45 davon aus dem Klassifikator-Tool; in den 8 übrigen Bögen 0,2 %). Kappa zweier maschineller Durchgänge 0,965 (obere Schranke). Einschränkung: kein öffentlicher, AI-Act-nativer Einkäufer-/Zertifizierer-Fragebogen mit Umfang gefunden; 5 von 9 nicht AI-Act-ausgerichtet | `eval/questionnaire-results.md`, `eval/questionnaires/` | 2026-10-03 | F (Stichprobe geprüft, 11 Fälle adjudiziert) |
+| F57 | Fable 5/5.1 auf Max-Plänen: bis 50 % des Wochenlimits ohne Zusatzkosten ("You can use up to 50% of your weekly usage limits on Fable models at no extra cost"); danach usage credits oder Modellwechsel; Fable verbraucht das Wochenlimit schneller als andere Modelle. Pro-Pläne: Fable nur über Credits | support.claude.com/en/articles/15424964 (Bericht 11) | 2026-10-05 | F |
+| F58 | `CLAUDE_CODE_SUBAGENT_MODEL` ist nur Default (Agent-Definition oder per-Aufruf-`model` gewinnen); `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` (≥ 2.1.257) zwingt alle Subagenten, Teammates und Workflow-Agenten auf dieses Modell; Forks und Skills mit `model: inherit` bleiben auf dem Hauptmodell. Eingebauter `Explore` läuft bei Fable-Hauptmodell mit Subscription auf Opus. Default 20 parallele Subagenten, Spawn-Tiefe 3 (`CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`). `effort` wird von der Session geerbt, außer Frontmatter setzt es | code.claude.com/docs/en/sub-agents (Bericht 11) | 2026-10-05 | F |
+| F59 | Subagenten, Workflows, Routines, Teammates zählen in denselben Plan-Pool wie die Hauptsession; Agent Teams ≈ 7x Verbrauch im plan mode; Prompt-Cache-Lebensdauer 1 h auf Subscription, 5 min sobald usage credits greifen; `/usage` zeigt Attribution je Subagent/Skill/MCP; Auto-Continue bei Limit nur interaktiv (≥ 2.1.234, `autoContinueAtUsageLimit`); CLAUDE.md-Ziel < 200 Zeilen; Abschnitt "Compact instructions" in CLAUDE.md steuert die Compaction | code.claude.com/docs/en/costs (Bericht 11) | 2026-10-05 | F |
+| F60 | Kontextfenster: Fable 5.1, Opus 5.5, Sonnet 5.5 = 1M (128K Output), Haiku 4.5 = 200K; Auto-Compaction bei ≈ 967K, einstellbar 100K–1M (`/autocompact`); Compaction lädt CLAUDE.md, Memory und bis zu 5 zuletzt bearbeitete Dateien (≤ 5k Tokens) neu; `SessionStart`-Hook mit Matcher `compact` kann Kontext nachinjizieren | platform.claude.com models/overview, code.claude.com/docs/en/context-window (Bericht 11) | 2026-10-05 | B |
+| F61 | Agent SDK und `claude -p` zählen gegen die Subscription-Limits; geplante Umstellung auf separates Monatsguthaben (15.06.2026) pausiert, Ankündigung vor Änderung zugesagt; `--bare` liest keine Subscription-Credentials; in `-p` kein Auto-Continue bei Limit; Anthropic-Linie für unbeaufsichtigte Läufe: prüfbare Bedingung (`/goal`, Stop-Hook), auto mode statt bypassPermissions, Review-Subagent in frischem Kontext, Zustand in Dateien (progress, JSON-Featureliste, Commit je Feature) | support.claude.com/en/articles/15036540, code.claude.com/docs/en/best-practices, anthropic.com/engineering/effective-harnesses-for-long-running-agents (Bericht 11) | 2026-10-05 | B |
+| F62 | Hooks: Stop-Hook darf den Turn 8-mal in Folge fortsetzen, dann übergeht Claude Code den nächsten Block (`CLAUDE_CODE_STOP_HOOK_BLOCK_CAP` hebt die Grenze an); `PreCompact` mit Exit 2 blockiert die Compaction; Hook-Eingaben tragen `agent_id`/`agent_type`, wenn sie in einem Subagenten feuern (Unterscheidung Chair/Worker); `PreToolUse` für das Agent-Tool enthält `prompt`, `description`, `subagent_type`, `model` (Spawn-Whitelist möglich); `PostToolUse` für Agent liefert `resolvedModel`, `modelsUsed`, `totalTokens` | code.claude.com/docs/en/hooks (Rohtext, Bericht 10; von Fable im Rohtext bestätigt) | 2026-10-05 | F |
+| F63 | Subagent-Steuerung: Projekt-Agent namens `Explore` überschreibt den eingebauten und behält sein `model`; `maxTurns` im Frontmatter stoppt den Subagenten, Rückgabe gilt als partial und ist fortsetzbar (≥ 2.1.246); fehlt `Agent` in `tools`, kann der Subagent nichts spawnen; `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` (Default 20, ≥ 2.1.217); `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=1` schaltet Verschachtelung ab; `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` senkt die Compaction-Schwelle, gilt für Haupt- und Subagenten; `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` Default 200, nur anhebbar | code.claude.com/docs/en/sub-agents, /env-vars (Bericht 10) | 2026-10-05 | F |
+| F64 | Community-Praxis (30 Tage): Mehrtages-Builds laufen als kurze gegatete Sitzungen mit Zustand in Dateien, nicht als Dauersitzung; Fehlerbilder: selbsterklärtes "fertig", Stillstand an Rückfragen (5 von 8 Nachtläufen), Reviewer-Fixer-Schleifen ohne Zähler; "grün gelogen" belegt (Migration gelöscht für grüne Tests); Fable-Chair-Fälle: ganzes Fable-Wochenkontingent in 19 Runden, zehn Fable-Subagenten = 28 % Wochen-Fable in Minuten; Subagent-Start kostet 15,7k–38k Tokens vor dem ersten Tool-Aufruf (Einzelmessung); `/compact` bei 950k = 14 % des 5-h-Limits (Einzelfall) | Bericht 10 (Reddit via Arctic Shift, HN, Blogs; anekdotisch) | 2026-10-05 | S |
+| F65 | Max-Wochenlimit seit 14.09.2026 auf 125 % der Vor-Aktions-Basis gesetzt (≈ 17 % weniger als im Sommer), 5-h-Limits unverändert (Anthropic-Zitat via BleepingComputer); Einzelmessung "−58 %" methodisch angreifbar | Bericht 10 | 2026-10-05 | S |
+
+## Projektkontext
+
+| ID | Fakt | Quelle | Abruf | Prüfung |
+|---|---|---|---|---|
+| F10 | Altans Zielrollen: Forward Deployed / Solutions Engineer (70 %), AI Policy/Governance (30 %); Stärken GTM, pSEO, Agent-Ops (Berta), EU AI Act | `~/Developer/ai-job-search/CLAUDE.md` | 2026-10-03 | F |
+
+## Recheck (Verfallsdaten für Rechtsstand; Lint warnt bei Überschreitung)
+
+| ID | recheck_by | Grund |
+|---|---|---|
+| F1 | 2027-01-15 | weitere Omnibus-Runden, Berichtigungen |
+| F2 | 2027-06-01 | Hochrisiko-Fristen, Standards-Kopplung |
+| F3 | 2026-12-15 | Schonfrist Kennzeichnung endet 02.12.2026 |
+| F4 | 2026-12-15 | Übergangsfrist neues Verbot endet 02.12.2026 |
+| F5 | 2027-01-15 | KoKIVO-Aufbau, BNetzA-Veröffentlichungen |
+| F6 | 2027-01-15 | API der Single Information Platform? |
+| F7 | 2026-12-31 | erste harmonisierte Normen Q4 2026 |
+| F12 | 2027-01-15 | Colorado SB 26-189 ab 01.01.2027, Klagen |
+| F22 | 2027-01-15 | nächste MCP-Spec-Revision |
+| F39 | 2026-12-01 | Lexbeam-Releases (as_of?) |
+| F42 | 2026-12-01 | AI Act Radar aus Beta, Kundenzahlen |
+| F46 | 2026-12-31 | Hochrisiko-Leitlinien final "Ende 2026" |
+
+## Offene Hypothesen (H-IDs)
+
+| ID | Hypothese | Test | Status |
+|---|---|---|---|
+| H1 | Compliance-Tool-Hersteller zahlen für einen gepflegten AI-Act-Feed (Vendor-Tier) | 5–10 Interviews + Wartelisten-Landingpage **vor** Phase 2; Preisanker 500 €/Mo existiert (F42, F45), Kunden nirgends belegt, Holistic AI baut intern | **schwach belegt** (Bericht 06) |
+| H2 | Entwickler nutzen den MCP zur Build-Zeit (Pre-Release-Check) | Remote-Endpoint Free, Calls/Woche pro Kanal messen | offen |
+| H3 | Konsolidierte Fassung liegt in CELLAR als parsebares Formex oder AKN-XHTML vor | curl-Spike (F38) | **weitgehend bestätigt**: XHTML ja (EN/DE), Formex für Konsolidierung nein; offen: Stabilität der XHTML-IDs über Fassungen |
+| H4 | Kommission liefert in den nächsten 12 Monaten keine API mit Versionierung und Soft Law | Watchlist Service Desk | offen |
+| H5 | PDF-Report verkauft sich an KMU trotz kostenloser Tools | Landingpage-Test | offen |
+| H6 | "Citator für den AI Act" (Zitat byte-genau gegen Fassung prüfen + Änderungsstatus) ist der stärkste Moat | Nutzerfeedback nach Launch; Vergleich mit Shepard's Verify (nur Existenzprüfung) | offen, von Bericht 01 gestützt |
+| H8 | Entwickler nutzen einen MCP eher für "Nachweis mit Fundstelle für die Compliance-Abteilung" als für Nachschlagen (llama.cpp #27826) | Tool `verify_citation`/Record früh testen | offen, von Bericht 06 nahegelegt |
+| H9 | Der Evidence Record ist ein Vertriebskanal (Empfänger wird nächster Nutzer) | Fragebögen: **F = nein** (6,6 % statt ≥ 40 %), Z = 0 % (F56); Drei-Personen-Test (P) offen | **F widerlegt**; Ausgang nur noch "gemischt" (P ja) oder "widerlegt" (P nein), siehe Design-Doc §E1 |
+| H10 | Frontier-Modelle zitieren bei AI-Act-Fassungs- und Fristenfragen in messbarem Anteil (> 5 %) die falsche Fassung oder Frist | 40-Fall-Eval ohne/mit Tool, Clopper-Pearson-Intervall (F36); Gate G2 | offen, entscheidet C vs. Pivot (ADR-008) |
+| H11 | Der erste zahlende "Kunde" des Projekts ist ein Arbeitgeber (FDE-/Governance-Rolle), nicht ein Compliance-Team | Artefakt in Bewerbungen/Interviews einsetzen, Reaktion dokumentieren | offen, Eureka Office Hours 2026-10-03 |
+| H12 | Nach Einrichtung einer Custom Domain leitet GitHub die github.io-Adresse einer Pages-Seite dorthin weiter, bestehende Record-Links bleiben gültig | GitHub-Doku prüfen, Test mit Wegwerf-Repo vor Domainwechsel | offen (Design-Doc Rev. 3) |
+| H7 | Juristische Nutzer verlangen eine Antwort-Latenz unter Tagen für Primärrecht, Soft Law darf Tage dauern | Interviews | offen |

@@ -1,0 +1,1624 @@
+slug: csa-ai-caiq-1-1-0
+title: "AI Consensus Assessment Initiative Questionnaire (AI-CAIQ) v1.1.0"
+publisher: "Cloud Security Alliance (CSA)"
+audience: "KI-Anbieter (Selbstbewertung für STAR for AI Level 1) und Auftraggeber (Bewertung von Drittanbietern)"
+type: L
+ai_act_native: false
+protocol_version: "1.0"
+source:
+  url: "https://cloudsecurityalliance.org/artifacts/ai-controls-matrix-v1-1"
+  landing_page: "https://cloudsecurityalliance.org/artifacts/ai-controls-matrix-v1-1"
+  retrieved_via: "Datensatz-Repo CloudSecurityAlliance-DataSets/dataset-public-laws-regulations-standards, Datei control/cloudsecurityalliance.org/aicm-caiq/1.1.0/aicm-caiq-1.1.0-questions.csv, letzter Datei-Commit e07c424eb8bfa49bb151a941e22d64795aa66e73 (2026-07-31). Der Download beim Herausgeber verlangt einen CSA-Login (auth0) und wurde nicht verwendet. Ob der Datensatz von CSA selbst betrieben wird, ist nicht verifiziert."
+  retrieved_at: 2026-10-03
+  document_date: "2026-06-22 (Veröffentlichung laut CSA-Artefaktseite)"
+  license_note: "Datensatz-Metadaten: \"LicenseRef-CSA-CC-BY-NC-SA-4.0\" mit dem Zusatz \"CSA publications are typically released under CC BY-NC-SA 4.0\"; Repo selbst CC0-1.0. Am Original nicht verifiziert."
+  sha256: "74552e5d80c85adbf7cb648b518af3947c96868e62aa8c2ddf0e61646c9f33ae"
+  publishable_text: "prüfen"
+  authority: "Echter, aktueller KI-Lieferantenfragebogen einer Branchenorganisation (Sicherheits- und Governance-Kontrollen, ordnet sich der AICM-Matrix zu); nicht AI-Act-nativ. Bezug über abgeleiteten Datensatz, dessen Metadaten die Übereinstimmung mit der Original-Arbeitsmappe selbst behaupten (nicht von uns geprüft). Die AICM-Bundle-Beilage \"Mapping to the AI EU Act\" wurde nicht beschafft."
+extraction:
+  method: "CSV-Datei (Spalte question), Zeilenumbrüche normalisiert; alle 320 Zeilen."
+  n_questions: 320
+  exclusions: "keine"
+  notes: "Alle Fragen sind Ja/Nein-Fragen zu Kontrollzielen der AICM. Spalte aicm_control_specification wurde nicht verwendet. 6 Fragetexte wegen mehr als 300 Zeichen gekürzt."
+rater1: Claude (Sonnet 5.5), Durchgang 1, 2026-10-03
+questions:
+  - id: "CAIQ-A&A-01.1"
+    text: "Are audit and assurance policies, procedures, and standards established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Audit & Assurance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-A&A-01.2"
+    text: "Are audit and assurance policies, procedures, and standards reviewed and updated at least annually or upon significant changes?"
+    section: "Audit & Assurance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-A&A-02.1"
+    text: "Are independent audit and assurance assessments conducted according to relevant standards at least annually?"
+    section: "Audit & Assurance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-A&A-03.1"
+    text: "Are independent audit and assurance assessments performed according to risk-based plans and policies, and in response to significant changes or emerging risks?"
+    section: "Audit & Assurance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-A&A-04.1"
+    text: "Is compliance verified with all relevant standards, regulations, legal/contractual, and statutory requirements applicable to the audit?"
+    section: "Audit & Assurance"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-A&A-05.1"
+    text: "Are Audit Management processes aligned with relevant auditing standards, defined and implemented to support audit planning, risk analysis, security control assessment, conclusion, remediation schedules, report generation, review of past reports and supporting evidence?"
+    section: "Audit & Assurance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-A&A-06.1"
+    text: "Is a risk-based corrective action plan established, documented, approved, communicated, applied, evaluated, and maintained to remediate audit findings, regularly review, and report remediation status to relevant stakeholders?"
+    section: "Audit & Assurance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-01.1"
+    text: "Are policies and procedures for application security established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-AIS-01.2"
+    text: "Are the policies and procedures for application security reviewed and updated at least annually, or upon significant system changes?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-AIS-02.1"
+    text: "Are baseline requirements for securing applications established, documented, and maintained?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-03.1"
+    text: "Are technical and operational metrics defined and implemented in alignment with business objectives, security requirements, and compliance obligations?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-04.1"
+    text: "Is a secure SDLC process for application requirements analysis, planning, design, development, testing, deployment, and operation, defined and implemented in accordance with security requirements?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-05.1"
+    text: "Is a testing strategy implemented, including criteria for acceptance of new information systems, upgrades, and new versions, to provide application security assurance, maintain compliance, and meet organizational delivery goals?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-05.2"
+    text: "Is automation applied where applicable and possible?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-06.1"
+    text: "Are strategies and capabilities established and implemented for secure, standardized, and compliant application deployment?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-07.1"
+    text: "Are processes defined and implemented to remediate application security vulnerabilities, automating remediation when possible?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-08.1"
+    text: "Are processes, procedures and technical measures to secure APIs, including authorization flaws, API key management, regular security testing, defined, implemented and evaluated?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-08.2"
+    text: "Are technical measures for any improvements reviewed and updated at least annually or after significant system changes?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-AIS-09.1"
+    text: "Is the input against adversarial patterns, failure patterns and unwanted behaviour, validated, filtered, modified, or blocked as necessary, according to organizational policies, applicable laws and regulations?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-AIS-10.1"
+    text: "Is the output against adversarial patterns, failure patterns and unwanted behaviour, validated, filtered, modified, or blocked as necessary, according to organizational policies, applicable laws and regulations?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-AIS-11.1"
+    text: "Are the security boundaries for agents established?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-12.1"
+    text: "Are source code management practices, such as version control, code review and static code analysis, implemented and aligning with the SDLC process?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-13.1"
+    text: "Are sandboxing techniques implemented to execute AI tools and plugins in isolated environments to prevent unintended interactions with critical systems or data and to limit the possibility of lateral movement?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-14.1"
+    text: "Are security measures implemented to protect cache systems in GenAI systems and services?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-AIS-15.1"
+    text: "Are mechanisms implemented to enable the model to clearly distinguish user-provided input instructions from data and system instructions (e.g., system prompts)?"
+    section: "Application & Interface Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-01.1"
+    text: "Are business continuity management and operational resilience policies and procedures established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-BCR-01.2"
+    text: "Are policies and procedures reviewed and updated at least annually, or upon significant changes?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-BCR-02.1"
+    text: "Is the impact of business disruptions and risks determined to establish criteria for developing business continuity and operational resilience strategies and capabilities?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-02.2"
+    text: "Is the risk assessment and impact analysis, reviewed and updated at least annually or upon significant changes?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-BCR-03.1"
+    text: "Are strategies established to reduce the impact of business disruptions, and improve resiliency and recovery from business disruptions?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-04.1"
+    text: "Is a business continuity plan - based on the results of operational resilience strategies and capabilities - established, documented, approved, communicated, applied, evaluated and maintained?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-05.1"
+    text: "Is relevant documentation, both internal and from external parties, for supporting the business continuity and operational resilience plans, developed, identified, and acquired?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-05.2"
+    text: "Is the documentation available to authorized stakeholders and reviewed at least annually, or upon significant changes?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-BCR-06.1"
+    text: "Are the business continuity and operational resilience plans exercised and tested at least annually, or upon significant changes?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-BCR-07.1"
+    text: "Are communication channels with all relevant stakeholders established and maintained in the course of business continuity and resilience procedures?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-08.1"
+    text: "Are backups periodically performed?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-08.2"
+    text: "Is the confidentiality, integrity and availability of the backup, ensured and data restoration from backup verified for resiliency?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-09.1"
+    text: "Is a disaster response plan to recover from natural and man-made disasters established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-09.2"
+    text: "Is the Disaster Response Plan updated at least annually or upon significant changes?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-BCR-10.1"
+    text: "Is the disaster response plan exercised annually or upon significant changes, including, if possible, the participation of local emergency authorities?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-BCR-11.1"
+    text: "Are business-critical equipment supplemented with both locally redundant and geographically dispersed equipment located at a reasonable minimum distance in accordance with applicable industry standards?"
+    section: "Business Continuity Management and Operational Resilience"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CCC-01.1"
+    text: "Are policies and procedures for managing the risks associated with applying changes to assets owned, controlled or used by the organization, established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-CCC-01.2"
+    text: "Are the policies and procedures reviewed and updated at least annually or upon significant changes?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-CCC-02.1"
+    text: "Is a defined quality change control, approval and testing process incorporating baselines, testing and release standards, established, maintained and implemented?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CCC-03.1"
+    text: "Is a change management procedure implemented to manage the risks associated with applying changes to assets owned, controlled or used by the organization?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CCC-04.1"
+    text: "Are procedures implemented and enforced to authorize the addition, removal, update, and management of assets that are owned, controlled, or used by the organization?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CCC-05.1"
+    text: "Are provisions included that limit changes impacting directly service customer owned environments (tenants) to explicitly authorized requests within service level agreements?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CCC-06.1"
+    text: "Are change management and configuration baselines established, documented and implemented for all relevant authorized changes on organization assets?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CCC-06.2"
+    text: "Are the baselines reviewed and updated at least annually or upon significant changes?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-CCC-07.1"
+    text: "Are detection measures with proactive notification implemented in case of changes deviating from the established baseline?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CCC-08.1"
+    text: "Is a procedure implemented (aligning with the requirements of GRC-04: Policy Exception Process) for the management of exceptions, including emergencies, in the change and configuration process?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CCC-09.1"
+    text: "Is a process defined and implemented to proactively roll back changes to a previous known good state in case of errors or security concerns?"
+    section: "Change Control and Configuration Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-01.1"
+    text: "Are cryptography, encryption, and key management policies and procedures established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-CEK-01.2"
+    text: "Are cryptography, encryption, and key management policies and procedures reviewed and updated at least annually or upon significant changes?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-CEK-02.1"
+    text: "Are cryptography, encryption, and key management roles and responsibilities defined and implemented?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-03.1"
+    text: "Is data protection, at-rest, in-transit and where applicable in-use, provided by using cryptographic libraries certified to approved standards?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-04.1"
+    text: "Are encryption algorithms utilized following industry standards for protecting data, based on the data classification and associated risks?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-05.1"
+    text: "Are standard change management procedures established to review, approve, implement, and communicate cryptography, encryption, and key management technology changes that accommodate internal and external sources?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-06.1"
+    text: "Are changes to cryptography-, encryption- and key management-related systems, policies, and procedures, managed and adopted in a manner that fully accounts for downstream effects of proposed changes, including residual risk, cost, and benefits analysis?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-07.1"
+    text: "Is a cryptography, encryption, and key management risk program established and maintained that includes risk assessment, risk treatment, risk context, monitoring, and feedback provisions?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-08.1"
+    text: "Are service providers providing service customers with the capability to manage their own data encryption keys?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-09.1"
+    text: "Are encryption and key management systems, policies, and processes audited with a frequency proportional to the system's risk exposure?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-09.2"
+    text: "Are encryption and key management systems, policies, and processes audited preferably continuously but at least annually and after any security event?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-CEK-10.1"
+    text: "Are cryptographic keys generated using industry-accepted and approved cryptographic libraries that specify algorithm strength and random number generator specifications?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-11.1"
+    text: "Are cryptographic secrets and private keys that are provisioned for a unique purpose properly managed?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-CEK-12.1"
+    text: "Are cryptographic keys rotated based on a cryptoperiod calculated while considering information disclosure risks, and legal and regulatory requirements?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-13.1"
+    text: "Are cryptographic keys revoked and removed before the end of the established cryptoperiod (when a key is compromised, or an entity is no longer part of the organization) per defined, implemented, and evaluated processes, procedures, and technical measures which include legal and regulatory req [...]"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-14.1"
+    text: "Are processes, procedures, and technical measures which include provisions for legal and regulatory requirements, defined, implemented and evaluated, to securely destroy cryptographic keys when they are no longer needed?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-15.1"
+    text: "Are processes, procedures, and technical measures to create keys in a pre-activated state (i.e., when they have been generated but not authorized for use) defined, implemented, and evaluated, including provisions for legal and regulatory requirements?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-16.1"
+    text: "Are processes, procedures, and technical measures to monitor, review, and approve key transitions (e.g., from any state to/from suspension) defined, implemented, and evaluated including provisions for legal and regulatory requirements?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-17.1"
+    text: "Are processes, procedures, and technical measures to deactivate keys (at the time of their expiration date) defined, implemented, and evaluated including provisions for legal and regulatory requirements?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-18.1"
+    text: "Are processes, procedures, and technical measures to manage archived keys in a secure repository (requiring least privilege access) defined, implemented, and evaluated including provisions for legal and regulatory requirements?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-19.1"
+    text: "Are processes, procedures, and technical measures to use compromised keys to encrypt information in specific scenarios (e.g., only in controlled circumstances and thereafter only for data decryption and never for encryption) defined, implemented, and evaluated including provisions for legal an [...]"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-20.1"
+    text: "Are processes, procedures, and technical measures to assess operational continuity risks (versus the risk of losing control of keying material and exposing protected data) defined, implemented, and evaluated, including provisions for legal and regulatory requirement provisions?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-CEK-21.1"
+    text: "Are key management system processes, procedures, and technical measures defined, implemented, and evaluated to track and report all cryptographic materials and status changes including provisions for legal and regulatory requirements?"
+    section: "Cryptography, Encryption & Key Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DCS-01.1"
+    text: "Are the policies and procedures for physical and environmental security, established, documented, approved, communicated, applied, evaluated and maintained?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-01.2"
+    text: "Are the Physical and Environmental Security Policy and Procedures, reviewed at least annually or upon significant changes?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-DCS-02.1"
+    text: "Are policies and procedures for the secure disposal of equipment used outside the organization's premises established, documented, approved, communicated, enforced, and maintained?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-02.2"
+    text: "Is a data destruction procedure applied that renders recovery of information impossible if equipment is not physically destroyed?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-02.3"
+    text: "Are all policies and procedures for the secure disposal of equipment used outside the organization's premises reviewed and updated at least annually, or upon significant changes?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-03.1"
+    text: "Are policies and procedures for the relocation or transfer of hardware, software, or data/information to an offsite or alternate location established, documented, approved, communicated, implemented, enforced, maintained?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-03.2"
+    text: "Are the written or cryptographically verifiable authorizations required for relocation or transfer request?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-03.3"
+    text: "Are policies and procedures for the relocation or transfer of hardware, software, or data/information to an offsite or alternate location reviewed and updated at least annually, or upon significant changes?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-04.1"
+    text: "Are policies and procedures for maintaining a safe and secure working environment (in offices, rooms, and facilities) established, documented, approved, communicated, applied, evaluated and maintained?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-04.2"
+    text: "Are policies and procedures for maintaining safe, secure working environments (e.g., offices, rooms, and facilities) reviewed and updated at least annually, or upon significant changes?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-05.1"
+    text: "Are policies and procedures for the secure transportation of physical media established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-05.2"
+    text: "Are policies and procedures for the secure transportation of physical media reviewed and updated at least annually, or upon significant changes?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-DCS-06.1"
+    text: "Are the physical and logical assets (e.g. applications) classified and documented based on the organizational business risk?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-06.2"
+    text: "Is the assets' classification reviewed and updated at least annually or upon significant changes?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-DCS-07.1"
+    text: "Are all relevant physical and logical assets located at service provider sites catalogued and tracked within a secured system?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-07.2"
+    text: "Are catalogues reviewed and updated at least annually or upon significant changes?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-DCS-08.1"
+    text: "Are physical security perimeters designed and implemented to safeguard personnel, data, and information systems?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-09.1"
+    text: "Is equipment identification used as a method for connection authentication?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-10.1"
+    text: "Are solely authorized personnel able to access secure areas, with all ingress and egress areas restricted, documented, and monitored by physical access control mechanisms?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-10.2"
+    text: "Are access control records retained periodically, as deemed appropriate by the organization?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-11.1"
+    text: "Are datacenter surveillance systems at the external perimeter and at all the ingress and egress points, implemented, maintained, and operated to detect unauthorized ingress and egress attempts?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-12.1"
+    text: "Are data center personnel trained to safely manage adverse events, including but not limited to unauthorized ingress and egress attempts?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-13.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to ensure risk-based protection of power and telecommunication cables from interception, interference, or damage threats at all facilities, offices, and rooms?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-14.1"
+    text: "Are data center environmental control systems designed to implement and maintain, and test for continual effectiveness of temperature and humidity conditions within accepted industry standards?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-15.1"
+    text: "Are utility services secured, monitored, maintained, and tested at planned intervals for continual effectiveness?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-16.1"
+    text: "Is business-critical equipment segregated from locations subject to a high probability of environmental risk events?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-17.1"
+    text: "Are data center security metrics established, monitored and reported, to secure data center assets and services?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DCS-18.1"
+    text: "Are processes, procedures and technical measures defined, implemented and evaluated, to ensure continuous operations?"
+    section: "Datacenter Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-01.1"
+    text: "Are Policies and Procedures established, documented, approved, communicated, applied, evaluated, and maintained for the preparation, classification, protection, and handling of data throughout its lifecycle, and according to all applicable laws and regulations, standards, and risk level?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-01.2"
+    text: "Are Policies and Procedures reviewed and updated at least annually, or upon significant changes?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-DSP-02.1"
+    text: "Are industry-accepted methods applied for securely disposing of data from storage media so that it is not recoverable by any forensic means?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-03.1"
+    text: "Are data inventories created and maintained at least for any sensitive, regulated, and personal data?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-03.2"
+    text: "Are inventories reviewed and updated at least annually or upon significant changes?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-DSP-04.1"
+    text: "Are data classified according to its type, criticality and sensitivity level?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-05.1"
+    text: "Is data flow documentation created to identify what data is processed, stored, or transmitted where?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-05.2"
+    text: "Is data flow documentation reviewed at defined intervals, at least annually, and upon significant changes?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-DSP-06.1"
+    text: "Are ownership and stewardship of all relevant personal and sensitive data documented?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-06.2"
+    text: "Are reviews performed at least annually for the documented ownership and stewardship of all relevant personal and sensitive data?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-DSP-07.1"
+    text: "Are systems, products, and business practices developed based upon a principle of security by design and industry best practices?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-08.1"
+    text: "Are systems, products, and business practices developed based upon a principle of privacy by design and industry best practices?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-08.2"
+    text: "Are systems' privacy settings configured by default, according to all applicable laws and regulations?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-09.1"
+    text: "Are Data Protection Impact Assessments (DPIAs) conducted to evaluate the origin, nature, particularity, and severity of the risks upon the processing of personal data, according to any applicable laws, regulations, and industry best practices?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-10.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated that ensure any transfer of personal or sensitive data is protected from unauthorized access and only processed within scope as permitted by the respective laws and regulations?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-11.1"
+    text: "Are processes, procedures, and technical measures defined and implemented to enable data subjects to request access to, modify, or delete their personal data according to applicable laws and regulations?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-12.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to ensure that personal data is processed according to applicable laws and regulations and for the purposes declared to the data subject?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-13.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated for transferring and sub-processing personal data within the service supply chain according to applicable laws and regulations?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-14.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to disclose the details of any personal or sensitive data access by sub-processors to the data owner before initiating that processing?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-15.1"
+    text: "Are authorizations obtained from data owners and associated risks managed before replicating or using production data in non-production environments?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-16.1"
+    text: "Are data retention, archiving, and deletion managed per business requirements, applicable laws, and regulations?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-17.1"
+    text: "Are processes, procedures, and technical measures defined and implemented to protect sensitive data throughout its lifecycle?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-18.1"
+    text: "Is the procedure to manage and respond to requests for disclosure of Personal Data by Law Enforcement Authorities according to applicable laws and regulations, implemented and described to the service customers by the service providers?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-19.1"
+    text: "Are processes, procedures, and technical measures defined and implemented to specify and document the physical locations of data, including any locations where data is processed or backed up?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-20.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to: 1) Document and trace data sources, and 2) Make the data source available according to legal and regulatory requirements"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-DSP-21.1"
+    text: "Are processes, procedures and technical measures to prevent data poisoning in AI models and continuously detect such, defined, implemented and evaluated?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-22.1"
+    text: "Are Privacy Enhancing Technologies (PET) used for training data informed by risk and privacy impact analysis and business use cases?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-23.1"
+    text: "Is the consistency and conformity of training, fine-tuning or augmentation data regularly validated?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-23.2"
+    text: "Is dataset versioning to ensure traceability implemented and are restrictions to prevent unauthorized changes, enforced?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-DSP-24.1"
+    text: "Is training-data differentiation and relevance to the intended use of the AI Model, ensured?"
+    section: "Data Security and Privacy Lifecycle Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-01.1"
+    text: "Are policies and procedures established, documented, approved, communicated, applied, evaluated, and maintained for an information governance program that is sponsored by the leadership of the organization and related to AI systems as well?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-GRC-01.2"
+    text: "Are policies and procedures for an information governance program and related to AI systems, reviewed and updated at least annually, or upon significant changes?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-GRC-02.1"
+    text: "Is a formal, documented, and leadership-sponsored AI risk management (AIRM) program that includes policies and procedures for identification, evaluation, ownership, treatment, and acceptance of risks, established and maintained?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-GRC-03.1"
+    text: "Are relevant organizational policies and associated procedures reviewed at least annually or when a substantial change within the organization, occurs?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-GRC-04.1"
+    text: "Is an approved exception process mandated by the governance program established and followed whenever a deviation from an established policy occurs?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-05.1"
+    text: "Is an Information Security Program that includes programs for all the relevant domains of the AICM developed and implemented?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-06.1"
+    text: "Are roles and responsibilities defined and documented for planning, implementing, operating, assessing, and improving governance programs?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-07.1"
+    text: "Are all relevant standards, regulations, legal/contractual, and statutory requirements, that are applicable to your organization, identified and documented?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-GRC-07.2"
+    text: "Are all relevant standards, regulations, legal/contractual and statutory requirements reviewed and updated at least annually or upon significant changes?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-GRC-08.1"
+    text: "Is contact established and maintained with related special interest groups and other relevant entities in line with business context?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-09.1"
+    text: "Are policies and procedures defined, documented, and enforced for the acceptable use of AI services offered by the organization?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-GRC-09.2"
+    text: "Is effectiveness of the acceptable use of AI services policies and procedures evaluated by continuous risk assessments, reviews, and human oversight?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-GRC-10.1"
+    text: "Is an AI Impact Assessment process and its criteria to regularly evaluate the ethical, societal, operational, legal, and security impacts of the AI system throughout its lifecycle, established, documented, and communicated to all relevant stakeholders?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-GRC-11.1"
+    text: "Are AI systems, models, datasets & algorithms regularly evaluated for bias and fairness to ensure compliance with ethical standards?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-12.1"
+    text: "Is an ethics committee established to review AI applications, ensuring alignment with ethical standards and organizational values?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-13.1"
+    text: "Is the degree of explainability required for the AI Services established, documented, and communicated?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-14.1"
+    text: "Is the degree of explainability of the AI Services evaluated, documented, and communicated, including possible limitations and exceptions?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-GRC-15.1"
+    text: "Are processes, procedures, and technical measures to ensure human oversight and control of the AI system in compliance with regulatory requirements and organizational risk management, established, executed and assessed?"
+    section: "Governance, Risk and Compliance"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-HRS-01.1"
+    text: "Are new employee background verification policies and procedures (including but not limited to remote employees, contractors, and third parties) established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-01.2"
+    text: "Are background verification policies and procedures designed according to local laws, regulations, ethics, and contractual constraints and proportional to the data classification to be accessed, business requirements, and acceptable risk?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-HRS-01.3"
+    text: "Are background verification policies and procedures reviewed and updated at least annually, or upon significant changes?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-02.1"
+    text: "Are policies and procedures for defining allowances and conditions for the acceptable use of organizationally-owned or managed assets established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-02.2"
+    text: "Are the policies and procedures for defining allowances and conditions for the acceptable use of organizationally-owned or managed assets, reviewed and updated at least annually, or upon significant changes?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-03.1"
+    text: "Are policies and procedures requiring unattended workspaces to conceal confidential data established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-03.2"
+    text: "Are policies and procedures requiring unattended workspaces to conceal confidential data reviewed and updated at least annually, or upon significant changes?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-04.1"
+    text: "Are policies and procedures to protect information accessed, processed, or stored at remote sites and locations established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-04.2"
+    text: "Are policies and procedures to protect information accessed, processed, or stored at remote sites and locations reviewed and updated at least annually, or upon significant changes?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-05.1"
+    text: "Are return procedures of organization-owned assets by terminated employees, contractors and third-parties, established and documented?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-06.1"
+    text: "Are procedures outlining the roles and responsibilities concerning changes in employment established, documented, and communicated to all relevant personnel?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-07.1"
+    text: "Are employees required to sign an employment agreement before gaining access to organizational information systems, resources, and assets?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-08.1"
+    text: "Are provisions and/or terms for adherence to established information governance and security policies included within employment agreements?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-09.1"
+    text: "Are employee roles and responsibilities relating to information assets' security and privacy established, documented and communicated?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-10.1"
+    text: "Are requirements for non-disclosure/confidentiality agreements reflecting organizational data protection needs and operational details identified, documented, and reviewed at planned intervals?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-11.1"
+    text: "Is a security awareness training program for all employees of the organization established, documented, approved, communicated, applied, evaluated and maintained?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-11.2"
+    text: "Are regular security awareness training updates provided?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-12.1"
+    text: "Are employees with access to sensitive organizational and personal data, provided with appropriate security awareness training and regular updates in organizational procedures, processes, and policies, relating to their professional function relative to the organization?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-13.1"
+    text: "Are employees notified of their roles and responsibilities to maintain awareness and compliance with established policies, procedures, and applicable legal, statutory, or regulatory compliance obligations?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-HRS-14.1"
+    text: "Are the policies and procedures defining the AI training program for all relevant personnel of the organization established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-HRS-14.2"
+    text: "Are regular training updates given to personnel based on their roles?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-HRS-15.1"
+    text: "Are the policies and procedures on the acceptable use of AI technologies within the organization established, documented, and communicated to all personnel?"
+    section: "Human Resources"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-IAM-01.1"
+    text: "Are Identity and Access Management policies and procedures established, documented, approved, communicated, implemented, applied, evaluated, and maintained for identity and access management?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-IAM-01.2"
+    text: "Are Identity and Access Management Policies and Procedures reviewed and updated at least annually, or upon significant changes?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-IAM-02.1"
+    text: "Are policies and procedures for the management of authentication credentials including passwords, established, documented, approved, communicated, implemented, applied, evaluated, and maintained?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-IAM-02.2"
+    text: "Are policies and procedures for the management of authentication credentials, including passwords, reviewed and updated at least annually, or upon significant changes?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-IAM-03.1"
+    text: "Is the inventory of identities managed, stored and regularly reviewed, and is their level of access monitored?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-04.1"
+    text: "Are separation of duties principles employed when implementing information system access?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-05.1"
+    text: "Are least privilege principles employed when implementing information system access?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-06.1"
+    text: "Is an identity access provisioning process which authorizes, records, and communicates access changes to data and assets, defined and implemented?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-07.1"
+    text: "Is identity access de-provisioned or modified, in a timely manner?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-08.1"
+    text: "Is identity access for least privilege and separation of duties reviewed and revalidated with a frequency commensurated with organizational risk tolerance and at least annually or upon significant changes?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-IAM-09.1"
+    text: "Are processes, procedures, and technical measures for the segregation of privileged access roles, defined, implemented, and evaluated?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-10.1"
+    text: "Is an access process defined and implemented to ensure privileged access roles and rights are granted for a time-limited period?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-10.2"
+    text: "Are procedures implemented to prevent the accumulation of segregated privileged access?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-11.1"
+    text: "Are processes and procedures for service customers to participate, where applicable, in granting access for agreed high-risk (as defined by the organizational risk assessment) privileged access roles, defined, implemented, and evaluated?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-12.1"
+    text: "Are processes, procedures, and technical measures, that ensure identities’ activities are identifiable through uniquely associated IDs, defined, implemented, and evaluated?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-13.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated for authenticating access to systems, applications, and data assets, including multifactor authentication for at least privileged user and sensitive data access?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-13.2"
+    text: "Are digital certificates or alternatives adopted that achieve an equivalent level of security for system identities?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-14.1"
+    text: "Are processes, procedures, and technical measures for the secure management of authentication credentials, including passwords, defined, implemented, and evaluated?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-15.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to verify access to data and system functions are authorized?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-16.1"
+    text: "Are policies and procedures defined for \"need to know\" access to knowledge, information and data within the organization and in the context of the AI system to be applied when regulating access to resources?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-IAM-17.1"
+    text: "Are roles for access when allowing model output modification of AI-generated output established to ensure changes are made only by authorized identities?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IAM-18.1"
+    text: "Are agents' access to the tools and plugins necessary for the activity or use case at hand, restricted to ensure adherence to the principles of need-to-know and least privilege?"
+    section: "Identity & Access Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IPY-01.1"
+    text: "Are interoperability and portability policies and procedures established, documented, approved, communicated, evaluated, and maintained, including requirements for: a. Communications between application interfaces b. Information processing interoperability c. Application development portabilit [...]"
+    section: "Interoperability & Portability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-IPY-01.2"
+    text: "Are interoperability and portability policies and procedures reviewed and updated at least annually or upon significant changes?"
+    section: "Interoperability & Portability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-IPY-02.1"
+    text: "Are application interface(s) to service customers provided so that they programmatically retrieve their data to enable interoperability and portability?"
+    section: "Interoperability & Portability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IPY-03.1"
+    text: "Are cryptographically secure network protocols implemented for the management, import, and export of data, according to industry standards?"
+    section: "Interoperability & Portability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-IPY-04.1"
+    text: "Are agreements including provisions specifying service customers' access to data upon contract termination, including: a. Data format b. Length of time the data will be stored c. Scope of the data retained and made available to the service customers d. Data deletion policy?"
+    section: "Interoperability & Portability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-01.1"
+    text: "Has the organization established, documented, approved, communicated, applied, evaluated, and maintained policies and procedures for infrastructure and virtualization security?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-01.2"
+    text: "Are these policies and procedures reviewed and updated at least annually, or upon significant changes?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-I&S-02.1"
+    text: "Are availability, quality and the adequate capacity of resources, being planned and monitored in order to deliver the required system performance as determined by the business?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-03.1"
+    text: "Are communications between environments, services, and applications being monitored, encrypted, and restricted to only authenticated and authorized connections, as justified by the business?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-03.2"
+    text: "Are these configurations reviewed at least annually and supported by a documented justification of all allowed services, protocols, ports, and compensating controls?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-I&S-04.1"
+    text: "Are the host and guest OS, hypervisor, or infrastructure control plane, being hardened according to their respective best practices and supported by technical controls as part of a security baseline?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-05.1"
+    text: "Are production and non-production environments separated, to reduce the risk of sensitive production data being used in non-production environments?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-05.2"
+    text: "Is production data sanitized or protected before any authorized non-production use?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-06.1"
+    text: "Are applications and infrastructures designed, developed, deployed and configured such that service customer (tenant) access is appropriately segmented, segregated, monitored, and restricted from other tenants?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-07.1"
+    text: "Are secure and encrypted communication channels used when migrating servers, services, applications or data to hosted environments?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-07.2"
+    text: "Are such channels including only up-to-date and approved protocols?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-08.1"
+    text: "Are high-risk environments based on data sensitivity, threat exposure, and business impact identified and documented?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-I&S-09.1"
+    text: "Are processes, procedures, and defense-in-depth techniques for the protection, detection, and timely response to network-based attacks, defined, implemented and evaluated?"
+    section: "Infrastructure Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-01.1"
+    text: "Are logging and monitoring policies and procedures established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-LOG-01.2"
+    text: "Are policies and procedures reviewed, approved and updated at least annually, or upon significant changes?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-LOG-02.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to ensure audit log security and retention?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-03.1"
+    text: "Are security-related events within applications and the underlying infrastructure, identified and monitored?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-03.2"
+    text: "Is a system to generate alerts to responsible stakeholders based on security events and their corresponding metrics, defined and implemented?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-04.1"
+    text: "Is audit log access restricted to authorized identities, and are records of that access maintained?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-05.1"
+    text: "Are capabilities to correlate and monitor security audit logs for the detection of suspicious or anomalous activity that deviates from typical or expected patterns implemented and maintained?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-05.2"
+    text: "Is a process, on reviewing and taking appropriate and timely actions on detected anomalies, defined, established and followed?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-06.1"
+    text: "Is a reliable time source being used across all relevant information processing systems?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-07.1"
+    text: "Are information metadata system events that should be logged, established, documented, and implemented?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-07.2"
+    text: "Is the scope reviewed and updated at least annually, or whenever there is a change in the threat environment, and as per relevant regulatory requirements?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-LOG-08.1"
+    text: "Are technical measures for service customers to detect and scrub or tokenize sensitive data from logs to prevent unauthorized exposure, as per applicable laws and regulations defined, implemented and evaluated?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-LOG-09.1"
+    text: "Are audit records generated, and do they contain relevant security information?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-10.1"
+    text: "Are the audit records protected from unauthorized access, modification, and deletion?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-11.1"
+    text: "Are monitoring and internal reporting capabilities established to report on cryptographic operations, encryption, and key management policies, processes, procedures, and controls?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-12.1"
+    text: "Are key lifecycle management events logged and monitored to enable auditing and reporting on cryptographic keys' usage?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-13.1"
+    text: "Is physical access logged and monitored using an auditable access control system?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-14.1"
+    text: "Are processes and technical measures for reporting monitoring system anomalies and failures defined, implemented, and evaluated?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-14.2"
+    text: "Are accountable parties immediately notified about anomalies and failures?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-15.1"
+    text: "Are all input events (content and metadata) logged and monitored to enable auditing and reporting on the usage of AI models?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-LOG-16.1"
+    text: "Are all output events (content and metadata) logged and monitored to enable auditing and reporting on the usage of AI models?"
+    section: "Logging and Monitoring"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-01.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to ensure the security of the Training Pipeline?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-01.2"
+    text: "Are policies, procedures and technical measures to address new security threats and best practices regularly reviewed and updated?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-MDS-02.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated for the periodic scanning of model artifacts for vulnerabilities and attacks at each step of the service lifecycle and at each handover point?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-02.2"
+    text: "Are policies, procedures and technical measures to address model artifact scanning regularly reviewed and updated?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-MDS-03.1"
+    text: "Are processes and procedures defined, implemented, enforced, and evaluated for documenting, approving, communicating, evaluating, and maintaining model documentation?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-03.2"
+    text: "Is the model documentation regularly reviewed and updated?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-MDS-04.1"
+    text: "Are baseline requirements for Model documentation established and implemented?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-05.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated for the validation of the model documentation aligned with the current model?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-06.1"
+    text: "Are processes and technical measures defined, implemented, and evaluated to regularly assess adversarial threats specific to each AI model?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-07.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated for Model Hardening to mitigate relevant adversarial attacks as identified in the Threat Analysis and Adversarial Threat Analysis?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-08.1"
+    text: "Are checksums regularly calculated and compared using cryptographic hashes of model checkpoints to detect unauthorized modifications?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-08.2"
+    text: "Are these measures applied at least annually based on the level of risk, or after any change of hands?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-MDS-09.1"
+    text: "Are models signed cryptographically and are signatures verified to ensure model provenance and ownership any time the model changes hands or is loaded from storage?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-10.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated for continuous monitoring of model performance metrics over time to identify sudden shifts or unexpected changes in predictions that could degrade model performance?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-11.1"
+    text: "Is a risk-based evaluation of the model and model serving infrastructure for model failure performed?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-11.2"
+    text: "Are measures defined and implemented to mitigate model and model serving infrastructure failures, and are they regularly evaluated throughout the AI system's lifecycle?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-12.1"
+    text: "Are processes established to evaluate the risk associated with open models?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-12.2"
+    text: "Are risk factors periodically reviewed, and is a process implemented to monitor and mitigate any determined vulnerabilities?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-MDS-13.1"
+    text: "Are secure model formats and processes for AI model serialization adopted where applicable?"
+    section: "Model Security"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-01.1"
+    text: "Are policies and procedures established, documented, approved, communicated, applied, evaluated, and maintained for Security Incident Management, E-Discovery, and Forensics?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-SEF-01.2"
+    text: "Are policies and procedures for Security Incident Management, E-Discovery, and Forensics reviewed and updated at least annually, or upon significant changes?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-SEF-02.1"
+    text: "Are Service Management Policies and Procedures established, documented, approved, communicated, applied, evaluated, and maintained for the timely management of security incidents?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-02.2"
+    text: "Are Service Management Policies and Procedures reviewed and updated at least annually, or upon significant changes?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-SEF-03.1"
+    text: "Is a security incident response plan established, documented, approved, communicated, applied, evaluated, and maintained to include, but not be limited to: a communication strategy for notifying relevant internal departments, impacted service customers, and other business critical relationship [...]"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-04.1"
+    text: "Are the incident response plans exercised at planned intervals or upon significant changes?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-05.1"
+    text: "Are information security incident metrics established, monitored and reported?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-06.1"
+    text: "Are security-related event triage processes, procedures and technical measures supporting business processes, defined, implemented and evaluated? Alternative formulation: Are processes procedures and technical measures supporting business processes to triage security-related events, defined, i [...]"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-07.1"
+    text: "Are processes, procedures and technical measures for timely and effective response to security incidents in accordance with incident categories and severity levels defined, implemented and evaluated?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-07.2"
+    text: "Are the test processes and procedures reviewed and updated at least annually?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-SEF-08.1"
+    text: "Are processes, procedures and technical measures for security breach notifications defined and implemented?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-08.2"
+    text: "Are material security breaches including any relevant supply chain breaches, as per applicable SLAs, laws and regulations reported?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-SEF-09.1"
+    text: "Is a secure repository of security incident records established and maintained?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-09.2"
+    text: "Are the incident records regularly reviewed to identify patterns, root causes, and systemic vulnerabilities, and implement relevant corrective measures?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-SEF-10.1"
+    text: "Are points of contact maintained for applicable regulation authorities, national and local law enforcement, and other legal jurisdictional authorities?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-SEF-10.2"
+    text: "Are the points of contact reviewed and updated at least annually?"
+    section: "Security Incident Management, E-Discovery, & Cloud Forensics"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-STA-01.1"
+    text: "Are policies and procedures for supply chain risk management established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-STA-01.2"
+    text: "Are the policies and procedures reviewed and updated at least annually or upon significant changes?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-STA-02.1"
+    text: "Are policies and procedures established, documented, approved, communicated, applied, evaluated, and maintained for applying the Shared Security Responsibility Model (SSRM) within the organization?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-STA-02.2"
+    text: "Are policies and procedures for applying the Shared Security Responsibility Model (SSRM) within the organization reviewed and updated at least annually, or upon significant changes?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-STA-03.1"
+    text: "Is the SSRM applied, documented, implemented and managed throughout the supply chain?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-04.1"
+    text: "Are service customers provided with SSRM guidance detailing information about the applicability throughout the supply chain?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-05.1"
+    text: "Is the shared ownership and applicability of all CSA AICM controls delineated according to the SSRM?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-06.1"
+    text: "Is the SSRM documentation reviewed and validated?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-07.1"
+    text: "Are the portions of the SSRM the organization is responsible for implemented, operated, audited, or assessed?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-08.1"
+    text: "Is an inventory of all supply chain relationships maintained and developed?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-09.1"
+    text: "Is a process for establishing a Bill of Material for the service supply chain, defined, implemented, and enforced?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-09.2"
+    text: "Is the Bill of Material reviewed and updated at least annually or upon significant changes?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-STA-10.1"
+    text: "Are risk factors associated with the supply chain relationships periodically reviewed?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-11.1"
+    text: "Are service agreements required to incorporate at least the following mutually agreed upon provisions and/or terms? • Scope, characteristics and location of business relationship and services offered • Information security requirements (including SSRM) • Change management process • Logging and [...]"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-12.1"
+    text: "Are supply chain agreements reviewed at least annually or upon significant changes?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-STA-13.1"
+    text: "Is there a process for conducting internal assessments at least annually to confirm the conformance and effectiveness of standards, policies, procedures, and SLA activities?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis regelmäßiger Überprüfung (Kontrollziel)"
+  - id: "CAIQ-STA-14.1"
+    text: "Are policies implemented requiring all service providers throughout the supply chain to comply with information security, confidentiality, access control, privacy, audit, personnel policy and service level requirements and standards?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-STA-15.1"
+    text: "Are the organization's service providers' IT governance policies and procedures reviewed at least annually or upon significant changes?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-STA-16.1"
+    text: "Is a process for conducting risk-based security assessments of the supply chain, defined and implemented?"
+    section: "Supply Chain Management, Transparency, and Accountability"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-01.1"
+    text: "Are policies and procedures that identify, report, and prioritize the remediation of vulnerabilities and threats in order to protect systems against vulnerability exploitation, established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-TVM-01.2"
+    text: "Are threats and vulnerabilities policies and procedures reviewed and updated at least annually or upon significant changes?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-TVM-02.1"
+    text: "Are policies and procedures to protect against malware and malicious instructions, established, documented, approved, communicated, applied, evaluated, and maintained?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-TVM-02.2"
+    text: "Are malware and malicious instructions protection policies and procedures, reviewed and updated at least annually or upon significant changes?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-TVM-03.1"
+    text: "Are processes, procedures, and technical measures for the detection of vulnerabilities on organizationally managed assets, defined, implemented, and evaluated at least monthly?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-04.1"
+    text: "Are threat analysis processes and procedures defined, implemented, and evaluated to identify, assess, and review the threat landscape for Cloud and AI systems?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-04.2"
+    text: "Are threat models built according to industry best practices to inform the risk mitigation strategy?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-05.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to update detection tools, threat signatures, and indicators of compromise weekly or more frequently?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-06.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to identify updates for applications that use third party or open source libraries according to the organization's vulnerability management policy?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-07.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated for the periodic performance of penetration testing by independent third parties?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-08.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated based on identified risks to support scheduled and emergency responses to vulnerability identification?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-09.1"
+    text: "Are risk-based methods utilized to prioritize vulnerability remediation using an industry-recognized framework effectively?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-10.1"
+    text: "Is a risk-based method for the prioritization and mitigation of threats, used, leveraging an industry-recognized framework to guide threat decision-making and protection measures?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-11.1"
+    text: "Are processes defined and implemented for tracking and reporting vulnerability identification and remediation activities that include stakeholder notification?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-12.1"
+    text: "Are metrics established, monitored, and reported for vulnerability identification and remediation at defined intervals?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-13.1"
+    text: "Are processes, procedures, and technical measures to apply guardrails to the AI system defined and implemented?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-TVM-13.2"
+    text: "Are guardrails continuously evaluated for changes in regulatory requirements and risk scenarios?"
+    section: "Threat & Vulnerability Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-UEM-01.1"
+    text: "Are policies and procedures established, documented, approved, communicated, applied, evaluated, and maintained for all endpoints?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-UEM-01.2"
+    text: "Are the policies and procedures reviewed and updated at least annually or upon significant system changes?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Richtlinien und Prozessen (Kontrollziel)"
+  - id: "CAIQ-UEM-02.1"
+    text: "Is there a defined, documented, applicable and evaluated list containing approved services, applications, and the sources of applications (stores) acceptable for use by endpoints when accessing or storing organization-managed data?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-03.1"
+    text: "Is a process defined and implemented to validate endpoint device compatibility with operating systems and applications?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-04.1"
+    text: "Is an inventory of all endpoints for storing, accessing and processing company data, maintained?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-05.1"
+    text: "Are processes, procedures, and technical measures defined, implemented and evaluated, to enforce policies and controls for all endpoints permitted to access systems and/or store, transmit, or process organizational data?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-06.1"
+    text: "Are all relevant interactive-use endpoints configured to require an automatic lock screen?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-07.1"
+    text: "Are changes to endpoint operating systems, patch levels, and/or applications managed through the organizational change management process?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-08.1"
+    text: "Is information protected from unauthorized disclosure on managed endpoints with storage encryption?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-09.1"
+    text: "Are anti-malware detection and prevention technology services configured on managed endpoints?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-10.1"
+    text: "Are software firewalls properly configured on managed endpoints?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-11.1"
+    text: "Are managed endpoints configured with data loss prevention (DLP) technologies and rules in accordance with a risk assessment?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-12.1"
+    text: "Are remote geolocation capabilities enabled for all managed mobile endpoints, according to all applicable laws and regulations?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Kontroll- oder Prozessnachweis; Verweis auf geltendes Recht nur generisch, außerhalb Korpus"
+  - id: "CAIQ-UEM-13.1"
+    text: "Are processes, procedures, and technical measures defined, implemented, and evaluated to enable remote company data deletion on managed endpoint devices?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"
+  - id: "CAIQ-UEM-14.1"
+    text: "Are processes, procedures, and technical and/or contractual measures defined, implemented, and evaluated to maintain proper security of third-party endpoints with access to organizational assets?"
+    section: "Universal Endpoint Management"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis einer technischen oder organisatorischen Kontrolle"

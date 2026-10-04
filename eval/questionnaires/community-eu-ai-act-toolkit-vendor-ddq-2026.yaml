@@ -1,0 +1,229 @@
+slug: community-eu-ai-act-toolkit-vendor-ddq-2026
+title: "Vendor AI Due Diligence Questionnaire (EU AI Act Toolkit, vendor pack)"
+publisher: "Artem Nazarko / artemhobotun (Privatperson, GitHub), Repo EU-AI-Act-Toolkit"
+audience: "Deployer und Provider, die KI-fähige SaaS-Tools kaufen oder verlängern (Lieferantenfragebogen)"
+type: L
+ai_act_native: true
+protocol_version: "1.0"
+source:
+  url: "https://github.com/artemhobotun/EU-AI-Act-Toolkit/blob/main/toolkit/vendor-pack/templates/vendor-ai-due-diligence-questionnaire.md"
+  landing_page: "https://github.com/artemhobotun/EU-AI-Act-Toolkit"
+  retrieved_via: "GitHub-API (raw), Repo-Stand fa7a06b8b9b84234b3225dc8599eb7d995df7c74 (2026-05-27); Datei zuletzt geändert in Commit d89a8413ad41716e9b0b6cf28f0d64b7e7dda0e4 (2026-05-18)"
+  retrieved_at: 2026-10-03
+  document_date: "2026-05 (Front-Matter last_reviewed); Datei-Commit 2026-05-18"
+  license_note: "MIT (GitHub-API, LICENSE-Datei des Repos)."
+  sha256: "d588bf39b22c9c6c08e0d8483f3e6b7c321e1dc0d3c5cbc83446aaa8679003e7"
+  publishable_text: "ja"
+  authority: "Community-Vorlage einer Privatperson, nicht institutionell, keine externe Prüfung erkennbar, möglicherweise LLM-gestützt erstellt. Front-Matter verweist auf Art. 13 und 25 des AI Act; der AI-Act-Bezug im Fragetext ist dünn (3 Fragen im Abschnitt \"EU AI Act readiness support\")."
+extraction:
+  method: "Markdown-Datei; Aufzählungspunkte unter \"Questions:\", \"Request:\" und im Feldblock des Überblicks extrahiert; Feld `kind` im Rohlauf unterscheidet Frage, Dokumentenanforderung, Feld."
+  n_questions: 41
+  exclusions: "Identifikationsfelder (Product name, Vendor legal entity); die Tabelle \"Open questions and escalation\" (leer)."
+  notes: "Das Repo enthält eine zweite, kürzere Vorlage (toolkit/templates/vendor-ai-questionnaire.md), die nicht ausgewertet wurde. 28 echte Fragen, 9 Dokumentenanforderungen, 4 Felder."
+rater1: Claude (Sonnet 5.5), Durchgang 1, 2026-10-03
+questions:
+  - id: "ARTEM-01"
+    text: "AI-enabled features:"
+    section: "Vendor and product overview"
+    class_rater1: c
+    rationale: "Stufe 5: Angabe KI-Funktionen (Sachverhalt)"
+  - id: "ARTEM-02"
+    text: "Intended customer use cases:"
+    section: "Vendor and product overview"
+    class_rater1: c
+    rationale: "Stufe 5: Angabe Einsatzzwecke (Sachverhalt, Eingabe für Einstufung)"
+  - id: "ARTEM-03"
+    text: "Deployment model:"
+    section: "Vendor and product overview"
+    class_rater1: c
+    rationale: "Stufe 5: Angabe Betriebsmodell (Sachverhalt)"
+  - id: "ARTEM-04"
+    text: "Subprocessors / third-party model providers:"
+    section: "Vendor and product overview"
+    class_rater1: c
+    rationale: "Stufe 5: Angabe Unterauftragnehmer und Modellanbieter (Sachverhalt)"
+  - id: "ARTEM-05"
+    text: "What AI functionality is included?"
+    section: "Vendor and product overview"
+    class_rater1: c
+    rationale: "Stufe 5: Angabe KI-Funktionen (Sachverhalt)"
+  - id: "ARTEM-06"
+    text: "Is the product using general-purpose AI models?"
+    section: "Vendor and product overview"
+    class_rater1: b
+    rationale: "[U:c] Subsumtion des verwendeten Modells unter den Begriff KI-Modell mit allgemeinem Verwendungszweck (Art. 3); nah an Sachverhaltsfrage"
+  - id: "ARTEM-07"
+    text: "Which features generate, classify, rank, score, recommend, or automate outputs?"
+    section: "Vendor and product overview"
+    class_rater1: c
+    rationale: "Stufe 5: Zuordnung Funktionen zu Ausgabearten (Sachverhalt)"
+  - id: "ARTEM-08"
+    text: "Are outputs used for decisions about people?"
+    section: "Vendor and product overview"
+    class_rater1: c
+    rationale: "[U:b] Sachverhalt, der Anhang-III-Einstufung auslösen kann (Entscheidungen über Personen); selbst keine Einstufung"
+  - id: "ARTEM-09"
+    text: "Can customers disable or configure AI features?"
+    section: "Vendor and product overview"
+    class_rater1: c
+    rationale: "Stufe 2: Produktfunktion (Abschaltbarkeit)"
+  - id: "ARTEM-10"
+    text: "What data is processed?"
+    section: "Data use"
+    class_rater1: c
+    rationale: "Stufe 5: Datenarten (Sachverhalt)"
+  - id: "ARTEM-11"
+    text: "Are customer data or customer inputs used for model training?"
+    section: "Data use"
+    class_rater1: c
+    rationale: "Stufe 5: Sachverhalt (Training mit Kundendaten)"
+  - id: "ARTEM-12"
+    text: "Are customer outputs stored?"
+    section: "Data use"
+    class_rater1: c
+    rationale: "Stufe 5: Sachverhalt (Speicherung von Ausgaben)"
+  - id: "ARTEM-13"
+    text: "Are logs retained?"
+    section: "Data use"
+    class_rater1: c
+    rationale: "Stufe 5: Sachverhalt (Protokollaufbewahrung)"
+  - id: "ARTEM-14"
+    text: "Where is data stored?"
+    section: "Data use"
+    class_rater1: c
+    rationale: "Stufe 5: Speicherort (Sachverhalt)"
+  - id: "ARTEM-15"
+    text: "What retention periods apply?"
+    section: "Data use"
+    class_rater1: c
+    rationale: "Stufe 5: Aufbewahrungsfristen (Sachverhalt)"
+  - id: "ARTEM-16"
+    text: "Can customers opt out of training or analytics?"
+    section: "Data use"
+    class_rater1: c
+    rationale: "Stufe 2: Produktfunktion (Opt-out)"
+  - id: "ARTEM-17"
+    text: "product documentation"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-18"
+    text: "AI feature description"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-19"
+    text: "model or system cards if available"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-20"
+    text: "risk management documentation if available"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-21"
+    text: "transparency information"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-22"
+    text: "security documentation"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-23"
+    text: "data processing agreement"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-24"
+    text: "subprocessors list"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-25"
+    text: "audit log or export options"
+    section: "Documentation"
+    class_rater1: c
+    rationale: "Stufe 2: Dokumentenanforderung (Nachweis)"
+  - id: "ARTEM-26"
+    text: "What access controls exist?"
+    section: "Security and privacy"
+    class_rater1: c
+    rationale: "Stufe 2: technische Maßnahme (Zugriffskontrolle)"
+  - id: "ARTEM-27"
+    text: "Is encryption used in transit and at rest?"
+    section: "Security and privacy"
+    class_rater1: c
+    rationale: "Stufe 2: technische Maßnahme (Verschlüsselung)"
+  - id: "ARTEM-28"
+    text: "What audit logs are available?"
+    section: "Security and privacy"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis verfügbarer Protokolle"
+  - id: "ARTEM-29"
+    text: "How are incidents handled?"
+    section: "Security and privacy"
+    class_rater1: c
+    rationale: "Stufe 2: Prozessnachweis (Vorfallbehandlung)"
+  - id: "ARTEM-30"
+    text: "Is a DPA available?"
+    section: "Security and privacy"
+    class_rater1: c
+    rationale: "Stufe 5: Verfügbarkeit eines Vertragsdokuments (DPA)"
+  - id: "ARTEM-31"
+    text: "What GDPR support exists?"
+    section: "Security and privacy"
+    class_rater1: c
+    rationale: "Stufe 1: DSGVO-Unterstützung, außerhalb Korpus"
+  - id: "ARTEM-32"
+    text: "How can data be deleted or exported?"
+    section: "Security and privacy"
+    class_rater1: c
+    rationale: "Stufe 5: Verfahren zur Löschung und zum Export (Datenschutzsachverhalt)"
+  - id: "ARTEM-33"
+    text: "What admin controls are available?"
+    section: "Security and privacy"
+    class_rater1: c
+    rationale: "Stufe 2: Produktfunktion (Administrationskontrollen)"
+  - id: "ARTEM-34"
+    text: "Can humans review outputs before use?"
+    section: "Human oversight and controls"
+    class_rater1: c
+    rationale: "Stufe 2: Produktfunktion (menschliche Prüfung); berührt Art. 14, fragt aber nach Funktion"
+  - id: "ARTEM-35"
+    text: "Can outputs be challenged, corrected, or overridden?"
+    section: "Human oversight and controls"
+    class_rater1: c
+    rationale: "Stufe 2: Produktfunktion (Korrektur und Übersteuerung)"
+  - id: "ARTEM-36"
+    text: "Are confidence scores or explanations available?"
+    section: "Human oversight and controls"
+    class_rater1: c
+    rationale: "Stufe 2: Produktfunktion (Konfidenzwerte, Erklärungen)"
+  - id: "ARTEM-37"
+    text: "Are risky actions blocked by default?"
+    section: "Human oversight and controls"
+    class_rater1: c
+    rationale: "Stufe 2: Produktfunktion (Standardsperren)"
+  - id: "ARTEM-38"
+    text: "Can AI features be limited by user role?"
+    section: "Human oversight and controls"
+    class_rater1: c
+    rationale: "Stufe 2: Produktfunktion (rollenbasierte Begrenzung)"
+  - id: "ARTEM-39"
+    text: "What information can the vendor provide to support customer readiness work?"
+    section: "EU AI Act readiness support"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis angebotener Unterstützungsleistungen des Anbieters"
+  - id: "ARTEM-40"
+    text: "Does the vendor provide documentation about intended use, limitations, monitoring, transparency, or human oversight?"
+    section: "EU AI Act readiness support"
+    class_rater1: c
+    rationale: "Stufe 2: Nachweis von Dokumentation; Themenliste ist AI-Act-nah, gefragt wird nach Dokumentation"
+  - id: "ARTEM-41"
+    text: "Does the vendor explain customer responsibilities?"
+    section: "EU AI Act readiness support"
+    class_rater1: c
+    rationale: "[U:b] Stufe 2: Nachweis, dass der Anbieter Kundenpflichten erläutert; Inhalt (Betreiberpflichten) wäre b"

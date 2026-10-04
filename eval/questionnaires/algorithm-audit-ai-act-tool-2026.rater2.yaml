@@ -1,0 +1,155 @@
+slug: algorithm-audit-ai-act-tool-2026
+rater: 2
+protocol_version: "1.0"
+rater2: Claude (Sonnet 5.5), Durchgang 2, 2026-10-03; Arbeitsgrundlage waren blinde, gemischte Bögen aus der Rohextraktion; die Rater-1-Dateien wurden vor diesem Durchgang nicht geöffnet. Nicht unabhängig im strengen Sinn (siehe Protokoll Abschnitt 5).
+questions:
+  - id: "AA-AI1-risk-annexI"
+    class_rater2: b
+    rationale: "S4: Anhang I / Art. 6 Abs. 1"
+  - id: "AA-AI1-risk-III.1"
+    class_rater2: b
+    rationale: "S4: [U:c] Rechtsbegriff biometrische Daten, nahe an Sachverhalt"
+  - id: "AA-AI1-risk-III.1.1"
+    class_rater2: b
+    rationale: "S4: [U:c] Zuordnung biometrischer Nutzung zu Rechtstatbeständen, nahe an Sachverhalt"
+  - id: "AA-AI1-risk-5.e.2"
+    class_rater2: b
+    rationale: "S4: Art. 5 Abs. 1 Buchst. e"
+  - id: "AA-AI1-risk-5.h.verify"
+    class_rater2: b
+    rationale: "S4: Verifizierungsausnahme bei biometrischer Identifizierung"
+  - id: "AA-AI1-risk-5.g.1"
+    class_rater2: b
+    rationale: "S4: Art. 5 Abs. 1 Buchst. g"
+  - id: "AA-AI1-risk-5.f.1"
+    class_rater2: b
+    rationale: "S4: Merkmal Arbeitsplatz oder Bildung, Art. 5 Abs. 1 Buchst. f"
+  - id: "AA-AI1-risk-III.1.2"
+    class_rater2: b
+    rationale: "S4: Art. 5 Abs. 1 Buchst. h"
+  - id: "AA-AI1-risk-III.1.2-prohibited"
+    class_rater2: b
+    rationale: "S4: Ausnahmen Art. 5 Abs. 1 Buchst. h"
+  - id: "AA-AI1-risk-cybersec"
+    class_rater2: b
+    rationale: "S4: Ausnahmemerkmal Cybersicherheit und Datenschutz"
+  - id: "AA-AI1-risk-art50"
+    class_rater2: b
+    rationale: "S4: Szenarien des Art. 50"
+  - id: "AA-AI1-risk-art50.nudify"
+    class_rater2: b
+    rationale: "S4: [U:c] Subsumtion unter ein Verbots- oder Pflichtmerkmal, formuliert als Nutzungsfakt"
+  - id: "AA-AI1-risk-annexIIIGate"
+    class_rater2: b
+    rationale: "S4: Bereiche Anhang III"
+  - id: "AA-AI1-risk-III.2.4"
+    class_rater2: b
+    rationale: "S4: Merkmal Sicherheitsbauteil in kritischer Infrastruktur"
+  - id: "AA-AI1-risk-III.2.5"
+    class_rater2: b
+    rationale: "S4: Ausnahmemerkmal ausschließlich Cybersicherheit (Anhang III Nr. 2)"
+  - id: "AA-AI1-risk-III.2.6-cer"
+    class_rater2: c
+    rationale: "S1: [U:b] Status nach CER-Richtlinie, anderer Rechtsakt"
+  - id: "AA-AI1-risk-III.3.uses"
+    class_rater2: b
+    rationale: "S4: Bildungsfälle Anhang III Nr. 3"
+  - id: "AA-AI1-risk-III.4.uses"
+    class_rater2: b
+    rationale: "S4: Beschäftigungsfälle Anhang III Nr. 4"
+  - id: "AA-AI1-risk-III.4.monitor"
+    class_rater2: b
+    rationale: "S4: Anhang III Nr. 4 Buchst. b"
+  - id: "AA-AI1-risk-III.5.decision"
+    class_rater2: b
+    rationale: "S4: Anhang III Nr. 5 Buchst. a"
+  - id: "AA-AI1-risk-III.5.private"
+    class_rater2: b
+    rationale: "S4: Fälle Anhang III Nr. 5 Buchst. b bis d"
+  - id: "AA-AI1-risk-III.6-5.d"
+    class_rater2: b
+    rationale: "S4: Anhang III Nr. 6 Buchst. d"
+  - id: "AA-AI1-risk-III.6-5.d.solely"
+    class_rater2: b
+    rationale: "S4: Rechtsmerkmal ausschließliches Profiling (Art. 5 Abs. 1 Buchst. d)"
+  - id: "AA-AI1-risk-III.6.uses"
+    class_rater2: b
+    rationale: "S4: Fälle Anhang III Nr. 6"
+  - id: "AA-AI1-risk-III.7.uses"
+    class_rater2: b
+    rationale: "S4: Fälle Anhang III Nr. 7"
+  - id: "AA-AI1-risk-III.7.4"
+    class_rater2: b
+    rationale: "S4: Anhang III Nr. 7"
+  - id: "AA-AI1-risk-III.7.5"
+    class_rater2: b
+    rationale: "S4: Ausnahme Anhang III Nr. 7"
+  - id: "AA-AI1-risk-III.8.2"
+    class_rater2: b
+    rationale: "S4: Ausnahme Anhang III Nr. 8"
+  - id: "AA-AI1-risk-III.8.elections"
+    class_rater2: b
+    rationale: "S4: Anhang III Nr. 8 Buchst. b"
+  - id: "AA-AI1-risk-5.a"
+    class_rater2: b
+    rationale: "S4: Art. 5 Abs. 1 Buchst. a"
+  - id: "AA-AI1-risk-5.c"
+    class_rater2: b
+    rationale: "S4: Art. 5 Abs. 1 Buchst. c"
+  - id: "AA-AI1-risk-5.a.4"
+    class_rater2: c
+    rationale: "S5: [U:b] allgemeine Risikoeinschätzung ohne benanntes Rechtsmerkmal"
+  - id: "AA-AI1-risk-5.c.treat"
+    class_rater2: b
+    rationale: "S4: Merkmale Art. 5 Abs. 1 Buchst. c"
+  - id: "AA-AI1-risk-exceptions"
+    class_rater2: b
+    rationale: "S4: Ausnahmen vom Anwendungsbereich (Art. 2)"
+  - id: "AA-AI1-risk-2.6-yes"
+    class_rater2: c
+    rationale: "S5: Freitextbeschreibung"
+  - id: "AA-AI1-risk-6.1"
+    class_rater2: b
+    rationale: "S4: Merkmal Profiling, Art. 6 Abs. 3"
+  - id: "AA-AI1-risk-6.2"
+    class_rater2: b
+    rationale: "S4: Ausnahmegründe des Art. 6 Abs. 3"
+  - id: "AA-AI1-risk-6.3"
+    class_rater2: b
+    rationale: "S4: Konkretisierung der Ausnahmen des Art. 6 Abs. 3"
+  - id: "AA-AI1-risk-art6.thirdParty"
+    class_rater2: c
+    rationale: "S1: [U:b] Drittprüfpflicht folgt aus Sektorrecht (Anhang-I-Rechtsakte), nicht aus dem AI-Act-Text"
+  - id: "AA-AI2-role-q12"
+    class_rater2: b
+    rationale: "S4: Rollenbestimmung nach Art. 3"
+  - id: "AA-AI2-role-q13"
+    class_rater2: c
+    rationale: "S5: [U:b] Sachverhalt Betriebsstatus, nur mittelbar relevant für Übergangsregeln"
+  - id: "AA-AI2-role-q12b"
+    class_rater2: b
+    rationale: "S4: Rollenwechsel Art. 25"
+  - id: "AA-ART50-generalException"
+    class_rater2: b
+    rationale: "S4: Ausnahmen vom Anwendungsbereich"
+  - id: "AA-ART50-generalExceptionResearchDescription"
+    class_rater2: c
+    rationale: "S5: Freitextbeschreibung"
+  - id: "AA-ART50-scenarios"
+    class_rater2: b
+    rationale: "S4: Szenarien des Art. 50"
+  - id: "AA-ART50-interactiveException"
+    class_rater2: b
+    rationale: "S4: Ausnahmen Art. 50 Abs. 1"
+  - id: "AA-ART50-syntheticException"
+    class_rater2: b
+    rationale: "S4: Ausnahmen Art. 50 Abs. 2"
+  - id: "AA-ART50-biometricException"
+    class_rater2: b
+    rationale: "S4: Ausnahme Art. 50 Abs. 3"
+  - id: "AA-ART50-deepfakeException"
+    class_rater2: b
+    rationale: "S4: Ausnahmen Art. 50 Abs. 4"
+  - id: "AA-ART50-publicInterestTextException"
+    class_rater2: b
+    rationale: "S4: Ausnahmen Art. 50 Abs. 4"

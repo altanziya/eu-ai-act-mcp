@@ -1,0 +1,419 @@
+slug: altai-eu-hleg-2020
+rater: 2
+protocol_version: "1.0"
+rater2: Claude (Sonnet 5.5), Durchgang 2, 2026-10-03; Arbeitsgrundlage waren blinde, gemischte Bögen aus der Rohextraktion; die Rater-1-Dateien wurden vor diesem Durchgang nicht geöffnet. Nicht unabhängig im strengen Sinn (siehe Protokoll Abschnitt 5).
+questions:
+  - id: "ALTAI-FRIA-1"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-FRIA-1a"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-FRIA-1b"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-FRIA-2"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-FRIA-2a"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-FRIA-2b"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-FRIA-3"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-FRIA-3a"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-FRIA-3b"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-FRIA-4"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-FRIA-4a"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-FRIA-4b"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-01"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R1-02"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R1-03"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-04"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R1-05"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-06"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R1-07"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-08"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R1-09"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-10"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R1-11"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R1-12"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-13"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-14"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-15"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R1-16"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-17"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-18"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R1-19"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-01"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R2-02"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R2-03"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R2-04"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-05"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-06"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-07"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-08"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-09"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R2-10"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-11"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-12"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-13"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-14"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-15"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-16"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-17"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-18"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-19"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-20"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R2-21"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-22"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-23"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-24"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-25"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R2-26"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-27"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-28"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-29"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-30"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-31"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R2-32"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R2-33"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R3-01"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R3-02"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R3-03"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R3-04"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R3-05"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R3-06"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R3-07"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R3-08"
+    class_rater2: c
+    rationale: "S1: Maßstab außerhalb des AI Act (Grundrechte, DSGVO, Normen)"
+  - id: "ALTAI-R4-01"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-02"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-03"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-04"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-05"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-06"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-07"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-08"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-09"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-10"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-11"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-12"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R4-13"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-01"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-02"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-03"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-04"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-05"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-06"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-07"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-08"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-09"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-10"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-11"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R5-12"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-13"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-14"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-15"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-16"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-17"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-18"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-19"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-20"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-21"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-22"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-23"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-24"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R5-25"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-01"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R6-02"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R6-03"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-04"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-05"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R6-06"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-07"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-08"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-09"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R6-10"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-11"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R6-12"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-13"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R6-14"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-15"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R6-16"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-01"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-02"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-03"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-04"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R7-05"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-06"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-07"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-08"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-09"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-10"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"
+  - id: "ALTAI-R7-11"
+    class_rater2: c
+    rationale: "S5: Risiko-, Wirkungs- oder Sachverhaltsfrage ohne AI-Act-Merkmal"
+  - id: "ALTAI-R7-12"
+    class_rater2: c
+    rationale: "S2: Nachweis einer Maßnahme, eines Prozesses oder einer Fähigkeit der Organisation"

@@ -1,0 +1,125 @@
+slug: hecvat-4-1-6-ai-section
+rater: 2
+protocol_version: "1.0"
+rater2: Claude (Sonnet 5.5), Durchgang 2, 2026-10-03; Arbeitsgrundlage waren blinde, gemischte Bögen aus der Rohextraktion; die Rater-1-Dateien wurden vor diesem Durchgang nicht geöffnet. Nicht unabhängig im strengen Sinn (siehe Protokoll Abschnitt 5).
+questions:
+  - id: "HECVAT-DPAI-01"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Verarbeitung durch KI"
+  - id: "HECVAT-DPAI-02"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Datenaufbewahrung"
+  - id: "HECVAT-DPAI-03"
+    class_rater2: c
+    rationale: "S2: Vertragsnachweis (Datenschutz)"
+  - id: "HECVAT-DPAI-04"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Unterauftragsverarbeitung mit KI"
+  - id: "HECVAT-DPAI-05"
+    class_rater2: c
+    rationale: "S5: Sachverhalt zur Verarbeitung durch KI-Dienste"
+  - id: "HECVAT-DPAI-06"
+    class_rater2: c
+    rationale: "S5: Sachverhalt geteilte KI-Dienste"
+  - id: "HECVAT-DPAI-07"
+    class_rater2: c
+    rationale: "S2: Schutzmaßnahme"
+  - id: "HECVAT-DPAI-08"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Opt-out"
+  - id: "HECVAT-AIQU-01"
+    class_rater2: c
+    rationale: "S5: Sachverhalt ML-Einsatz"
+  - id: "HECVAT-AIQU-02"
+    class_rater2: c
+    rationale: "S5: Sachverhalt LLM-Einsatz"
+  - id: "HECVAT-AIGN-01"
+    class_rater2: c
+    rationale: "S2: Nachweis Risikomodell"
+  - id: "HECVAT-AIGN-02"
+    class_rater2: c
+    rationale: "S2: Produktfunktion Abschaltbarkeit"
+  - id: "HECVAT-AIGN-03"
+    class_rater2: c
+    rationale: "S2: Schulungsnachweis"
+  - id: "HECVAT-AIGN-04"
+    class_rater2: c
+    rationale: "S5: Funktionsbeschreibung"
+  - id: "HECVAT-AIGN-05"
+    class_rater2: c
+    rationale: "S2: technische Funktion"
+  - id: "HECVAT-AIPL-01"
+    class_rater2: c
+    rationale: "S2: Nachweis Richtlinien und Prozesse"
+  - id: "HECVAT-AIPL-02"
+    class_rater2: c
+    rationale: "S2: Nachweis Risikoidentifikation"
+  - id: "HECVAT-AIPL-03"
+    class_rater2: c
+    rationale: "S2: technische Fähigkeit Abschaltung"
+  - id: "HECVAT-AIPL-04"
+    class_rater2: c
+    rationale: "S2: technische Fähigkeit Wiedereinschaltung"
+  - id: "HECVAT-AIPL-05"
+    class_rater2: c
+    rationale: "S1: NIST AI RMF als Maßstab"
+  - id: "HECVAT-AISC-01"
+    class_rater2: c
+    rationale: "S2: technische Fähigkeit Löschung aus Modell"
+  - id: "HECVAT-AISC-02"
+    class_rater2: c
+    rationale: "S5: Sachverhalt Nutzung von Eingaben"
+  - id: "HECVAT-AISC-03"
+    class_rater2: c
+    rationale: "S2: Protokollierung als Maßnahme"
+  - id: "HECVAT-AISC-04"
+    class_rater2: c
+    rationale: "S2: Beschreibung einer Eingabevalidierung"
+  - id: "HECVAT-AISC-05"
+    class_rater2: c
+    rationale: "S2: Nachweis Lieferkettenrisiko"
+  - id: "HECVAT-AIML-01"
+    class_rater2: c
+    rationale: "S2: technische Trennung"
+  - id: "HECVAT-AIML-02"
+    class_rater2: c
+    rationale: "S2: technische Kontrolle"
+  - id: "HECVAT-AIML-03"
+    class_rater2: c
+    rationale: "S2: Prüfnachweis Trainingsdaten"
+  - id: "HECVAT-AIML-04"
+    class_rater2: c
+    rationale: "S2: Nachweis Überwachung Trainingsdaten"
+  - id: "HECVAT-AIML-05"
+    class_rater2: c
+    rationale: "S2: Zugriffsbeschränkung"
+  - id: "HECVAT-AIML-06"
+    class_rater2: c
+    rationale: "S2: Schutzmaßnahme"
+  - id: "HECVAT-AIML-07"
+    class_rater2: c
+    rationale: "S2: Dokumentation und Protokollierung; berührt Art. 11 bis 13, fragt aber nach Umsetzung"
+  - id: "HECVAT-AIML-08"
+    class_rater2: c
+    rationale: "S2: technische Maßnahme"
+  - id: "HECVAT-AILM-01"
+    class_rater2: c
+    rationale: "S2: technische Kontrolle"
+  - id: "HECVAT-AILM-02"
+    class_rater2: c
+    rationale: "S2: Prüfnachweis Trainingsdaten"
+  - id: "HECVAT-AILM-03"
+    class_rater2: c
+    rationale: "S2: Produktfunktion menschliche Freigabe"
+  - id: "HECVAT-AILM-04"
+    class_rater2: c
+    rationale: "S2: technische Begrenzung"
+  - id: "HECVAT-AILM-05"
+    class_rater2: c
+    rationale: "S2: technische Begrenzung"
+  - id: "HECVAT-AILM-06"
+    class_rater2: c
+    rationale: "S2: technische Kontrolle"
+  - id: "HECVAT-AILM-07"
+    class_rater2: c
+    rationale: "S2: technische Kontrolle"
