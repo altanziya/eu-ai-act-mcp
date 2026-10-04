@@ -6,3 +6,6 @@ dist/
 .DS_Store
 *.log
 .gstack/
+!plan/*.log
+plan/.gate-failures-*
+__pycache__/
