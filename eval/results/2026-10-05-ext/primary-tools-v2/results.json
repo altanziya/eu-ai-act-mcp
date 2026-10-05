@@ -1,0 +1,86 @@
+{
+  "cases_file": "eval/cases-ext.yaml",
+  "prompt_version": "eval-prompt-v2",
+  "scorer_version": "eval-scorer-v2",
+  "rescored_runs": 0,
+  "status": "complete",
+  "dry_run": false,
+  "reps": 3,
+  "max_usd": 0,
+  "max_claude_calls": 60,
+  "claude_calls": 45,
+  "total_cost_usd": 0,
+  "total_cost_equiv_usd": 1.3847327999999999,
+  "backends": {
+    "claude-code/claude-opus-5-5": "claude-code"
+  },
+  "primary_model": "claude-code/claude-opus-5-5",
+  "e1": null,
+  "runs": 45,
+  "planned_runs": 45,
+  "models": [
+    "claude-code/claude-opus-5-5"
+  ],
+  "arms": [
+    "tools"
+  ],
+  "cases": 15,
+  "max_tokens": 3000,
+  "request_params": {},
+  "estimates": {
+    "claude-code/claude-opus-5-5 | tools": {
+      "run_usd": 0,
+      "requests": 1,
+      "source": "subscription"
+    }
+  },
+  "cells": [
+    {
+      "model": "claude-code/claude-opus-5-5",
+      "backend": "claude-code",
+      "arm": "tools",
+      "cases": 15,
+      "excluded_cases": 0,
+      "errors_majority": 2,
+      "errors_any": 2,
+      "ci": {
+        "lower": 0.01657591344008364,
+        "upper": 0.40460269660337234
+      },
+      "sensitivity": {
+        "errors": 2,
+        "n": 15,
+        "lower": 0.01657591344008364,
+        "upper": 0.40460269660337234
+      },
+      "runs": 45,
+      "unparseable_runs": 0,
+      "api_error_runs": 0,
+      "tool_call_rate": 0.9777777777777777,
+      "version_named": {
+        "n": 45,
+        "32024R1689": 6,
+        "02024R1689-20260727": 39,
+        "both": 0,
+        "none": 0
+      },
+      "tools_usage": {
+        "with_tool": {
+          "runs": 44,
+          "scored": 44,
+          "wrong": 6,
+          "rate": 0.13636363636363635
+        },
+        "no_tool": {
+          "runs": 1,
+          "scored": 1,
+          "wrong": 0,
+          "rate": 0
+        }
+      },
+      "cost_usd": 0,
+      "cost_equiv_usd": 1.3847327999999999,
+      "cost_estimated_runs": 0
+    }
+  ]
+}

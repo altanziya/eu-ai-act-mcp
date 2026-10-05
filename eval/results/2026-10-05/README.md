@@ -33,7 +33,7 @@ Without tools, the models are right about everything the 2024 text still says an
 
 ## Pre-registered decision (E1)
 
-Primary endpoint: Opus 5.5 with web search, version and deadline questions. **4/30 wrong, Clopper-Pearson 95 % [3.8 %, 30.7 %]: undecided.** The rule required a lower bound of at least 5 %. The pre-registration says to extend to n = 45 with the same rule; that extension has not been run yet.
+Primary endpoint: Opus 5.5 with web search, version and deadline questions. **4/30 wrong, Clopper-Pearson 95 % [3.8 %, 30.7 %]: undecided.** The rule required a lower bound of at least 5 %. The pre-registration says to extend to n = 45 with the same rule. **Update:** the extension ran the same day: 6/45, formally met but not robust; see [`../2026-10-05-ext/`](../2026-10-05-ext/).
 
 ## Limitations and deviations, stated up front
 

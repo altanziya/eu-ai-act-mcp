@@ -1,0 +1,123 @@
+{
+  "cases_file": "eval/cases-ext.yaml",
+  "prompt_version": "eval-prompt-v2",
+  "scorer_version": "eval-scorer-v2",
+  "rescored_runs": 0,
+  "status": "complete",
+  "dry_run": false,
+  "reps": 1,
+  "max_usd": 2,
+  "max_claude_calls": 400,
+  "claude_calls": 0,
+  "total_cost_usd": 0.6434300000000002,
+  "total_cost_equiv_usd": 0,
+  "backends": {
+    "openai/gpt-6-astra": "openrouter",
+    "google/gemini-3.1-pro-preview": "openrouter"
+  },
+  "primary_model": "openai/gpt-6-astra",
+  "e1": null,
+  "runs": 30,
+  "planned_runs": 30,
+  "models": [
+    "openai/gpt-6-astra",
+    "google/gemini-3.1-pro-preview"
+  ],
+  "arms": [
+    "plain"
+  ],
+  "cases": 15,
+  "max_tokens": 3000,
+  "request_params": {
+    "openai/gpt-6-astra": {
+      "temperature": false,
+      "reasoning_effort": "low"
+    },
+    "google/gemini-3.1-pro-preview": {
+      "temperature": true,
+      "reasoning_effort": "low"
+    }
+  },
+  "estimates": {
+    "openai/gpt-6-astra | plain": {
+      "run_usd": 0.024329999999999997,
+      "requests": 1,
+      "source": "arm_max"
+    },
+    "google/gemini-3.1-pro-preview | plain": {
+      "run_usd": 0.014755999999999998,
+      "requests": 1,
+      "source": "probe"
+    }
+  },
+  "cells": [
+    {
+      "model": "openai/gpt-6-astra",
+      "backend": "openrouter",
+      "arm": "plain",
+      "cases": 15,
+      "excluded_cases": 0,
+      "errors_majority": 9,
+      "errors_any": 9,
+      "ci": {
+        "lower": 0.32286976620628327,
+        "upper": 0.8366356761404867
+      },
+      "sensitivity": {
+        "errors": 9,
+        "n": 15,
+        "lower": 0.32286976620628327,
+        "upper": 0.8366356761404867
+      },
+      "runs": 15,
+      "unparseable_runs": 0,
+      "api_error_runs": 0,
+      "tool_call_rate": null,
+      "version_named": {
+        "n": 15,
+        "32024R1689": 15,
+        "02024R1689-20260727": 0,
+        "both": 0,
+        "none": 0
+      },
+      "tools_usage": null,
+      "cost_usd": 0.4116699999999999,
+      "cost_equiv_usd": 0,
+      "cost_estimated_runs": 0
+    },
+    {
+      "model": "google/gemini-3.1-pro-preview",
+      "backend": "openrouter",
+      "arm": "plain",
+      "cases": 13,
+      "excluded_cases": 2,
+      "errors_majority": 9,
+      "errors_any": 9,
+      "ci": {
+        "lower": 0.3857383382492974,
+        "upper": 0.9090796054279036
+      },
+      "sensitivity": {
+        "errors": 11,
+        "n": 15,
+        "lower": 0.44899675896303093,
+        "upper": 0.9221284537089565
+      },
+      "runs": 15,
+      "unparseable_runs": 2,
+      "api_error_runs": 0,
+      "tool_call_rate": null,
+      "version_named": {
+        "n": 13,
+        "32024R1689": 13,
+        "02024R1689-20260727": 0,
+        "both": 0,
+        "none": 0
+      },
+      "tools_usage": null,
+      "cost_usd": 0.23176,
+      "cost_equiv_usd": 0,
+      "cost_estimated_runs": 0
+    }
+  ]
+}

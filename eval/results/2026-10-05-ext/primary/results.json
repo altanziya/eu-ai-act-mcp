@@ -1,0 +1,122 @@
+{
+  "cases_file": "eval/cases-ext.yaml",
+  "prompt_version": "eval-prompt-v2",
+  "scorer_version": "eval-scorer-v2",
+  "rescored_runs": 0,
+  "status": "complete",
+  "dry_run": false,
+  "reps": 3,
+  "max_usd": 0,
+  "max_claude_calls": 100,
+  "claude_calls": 90,
+  "total_cost_usd": 0,
+  "total_cost_equiv_usd": 2.564907400000001,
+  "backends": {
+    "claude-code/claude-opus-5-5": "claude-code"
+  },
+  "primary_model": "claude-code/claude-opus-5-5",
+  "e1": {
+    "model": "claude-code/claude-opus-5-5",
+    "arm": "web",
+    "subset": "version_deadline",
+    "errors": 2,
+    "n": 15,
+    "lower": 0.01657591344008364,
+    "upper": 0.40460269660337234,
+    "decision": "undecided"
+  },
+  "runs": 90,
+  "planned_runs": 90,
+  "models": [
+    "claude-code/claude-opus-5-5"
+  ],
+  "arms": [
+    "web",
+    "plain"
+  ],
+  "cases": 15,
+  "max_tokens": 3000,
+  "request_params": {},
+  "estimates": {
+    "claude-code/claude-opus-5-5 | web": {
+      "run_usd": 0,
+      "requests": 1,
+      "source": "subscription"
+    },
+    "claude-code/claude-opus-5-5 | plain": {
+      "run_usd": 0,
+      "requests": 1,
+      "source": "subscription"
+    }
+  },
+  "cells": [
+    {
+      "model": "claude-code/claude-opus-5-5",
+      "backend": "claude-code",
+      "arm": "web",
+      "cases": 15,
+      "excluded_cases": 0,
+      "errors_majority": 2,
+      "errors_any": 3,
+      "ci": {
+        "lower": 0.01657591344008364,
+        "upper": 0.40460269660337234
+      },
+      "sensitivity": {
+        "errors": 2,
+        "n": 15,
+        "lower": 0.01657591344008364,
+        "upper": 0.40460269660337234
+      },
+      "runs": 45,
+      "unparseable_runs": 0,
+      "api_error_runs": 0,
+      "tool_call_rate": null,
+      "version_named": {
+        "n": 45,
+        "32024R1689": 25,
+        "02024R1689-20260727": 20,
+        "both": 0,
+        "none": 0
+      },
+      "tools_usage": null,
+      "cost_usd": 0,
+      "cost_equiv_usd": 1.8067802000000002,
+      "cost_estimated_runs": 0
+    },
+    {
+      "model": "claude-code/claude-opus-5-5",
+      "backend": "claude-code",
+      "arm": "plain",
+      "cases": 15,
+      "excluded_cases": 0,
+      "errors_majority": 8,
+      "errors_any": 8,
+      "ci": {
+        "lower": 0.2658613472773982,
+        "upper": 0.7873332704806921
+      },
+      "sensitivity": {
+        "errors": 8,
+        "n": 15,
+        "lower": 0.2658613472773982,
+        "upper": 0.7873332704806921
+      },
+      "runs": 45,
+      "unparseable_runs": 0,
+      "api_error_runs": 0,
+      "tool_call_rate": null,
+      "version_named": {
+        "n": 45,
+        "32024R1689": 45,
+        "02024R1689-20260727": 0,
+        "both": 0,
+        "none": 0
+      },
+      "tools_usage": null,
+      "cost_usd": 0,
+      "cost_equiv_usd": 0.7581271999999998,
+      "cost_estimated_runs": 0
+    }
+  ]
+}
