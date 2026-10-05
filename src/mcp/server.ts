@@ -10,17 +10,14 @@ import { z } from "zod";
 import { V2024, V2026 } from "../config.js";
 import { diffProvision } from "../tools/diffProvision.js";
 import { getProvision } from "../tools/getProvision.js";
+import { todayIso } from "../tools/today.js";
 import { verifyCitation } from "../tools/verifyCitation.js";
 
 const version = z.enum([V2024, V2026]);
 const lang = z.enum(["en", "de"]);
 const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false } as const;
 
-/** Today from the local date components (toISOString would shift the date in UTC between 0 and 2 o'clock). */
-function localDateIso(d: Date = new Date()): string {
-  const p = (n: number): string => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
-}
+const localDateIso = todayIso;
 
 const json = (value: unknown): { content: Array<{ type: "text"; text: string }> } => ({ content: [{ type: "text", text: JSON.stringify(value, null, 2) }] });
 const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; text: string }> } => ({
@@ -37,10 +34,13 @@ export function createServer(): McpServer {
       title: "Get provision",
       description:
         `Returns one provision of Regulation (EU) 2024/1689 by id or citation (e.g. "art_50.par_1" or "Article 50(1)"), with all descendants. ` +
-        `version: ${V2024} (Official Journal, default for recitals) or ${V2026} (consolidated after the Omnibus; default). Recitals exist only in ${V2024}; asking for one in ${V2026} returns found=false with a fallback.`,
+        `as_of: reference date; without version the text in force on that date is returned (before 2026-07-27 the Official Journal version ${V2024}, after it the consolidated version ${V2026}); default today. ` +
+        `version: ${V2024} (Official Journal) or ${V2026} (consolidated after the Omnibus); an explicit version wins over as_of. Recitals exist only in ${V2024}; asking for one in ${V2026} returns found=false with a fallback. ` +
+        `The result carries applicability: whether the provision applies on as_of (from the deadline table).`,
       inputSchema: {
         id: z.string().min(1).describe("Node id (art_50.par_1.a, anx_3.pt_1, rec_12, cpt_3.sct_2) or citation (Article 50(1)(a), Anhang III Nummer 1)"),
-        version: version.optional().describe(`Corpus version; default ${V2026}`),
+        as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD; default today. Selects the version (before 2026-07-27 the Official Journal version, after it the consolidated version) unless version is given."),
+        version: version.optional().describe("Corpus version; default: the version in force on as_of"),
         lang: lang.optional().describe("en (default) or de"),
         include_children: z.boolean().optional().describe("Include all descendants (default true)"),
       },

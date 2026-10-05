@@ -33,12 +33,15 @@ export const TOOL_DEFS = [
       name: "aiact_get_provision",
       description:
         `Returns one provision of Regulation (EU) 2024/1689 by id or citation (e.g. "art_50.par_1" or "Article 50(1)"), with all descendants. ` +
-        `version: 32024R1689 (Official Journal, default for recitals) or 02024R1689-20260727 (consolidated after the Omnibus; default). Recitals exist only in 32024R1689; asking for one in 02024R1689-20260727 returns found=false with a fallback.`,
+        `as_of: reference date; without version the text in force on that date is returned (before 2026-07-27 the Official Journal version 32024R1689, after it the consolidated version 02024R1689-20260727); default today. ` +
+        `version: 32024R1689 (Official Journal) or 02024R1689-20260727 (consolidated after the Omnibus); an explicit version wins over as_of. Recitals exist only in 32024R1689; asking for one in 02024R1689-20260727 returns found=false with a fallback. ` +
+        `The result carries applicability: whether the provision applies on as_of (from the deadline table).`,
       parameters: {
         type: "object",
         properties: {
           id: { type: "string", minLength: 1, description: "Node id (art_50.par_1.a, anx_3.pt_1, rec_12, cpt_3.sct_2) or citation (Article 50(1)(a), Anhang III Nummer 1)" },
-          version: { type: "string", enum: ["32024R1689", "02024R1689-20260727"], description: "Corpus version; default 02024R1689-20260727" },
+          as_of: { type: "string", pattern: "^\\d{4}-\\d{2}-\\d{2}$", description: "Reference date YYYY-MM-DD; default today. Selects the version (before 2026-07-27 the Official Journal version, after it the consolidated version) unless version is given." },
+          version: { type: "string", enum: ["32024R1689", "02024R1689-20260727"], description: "Corpus version; default: the version in force on as_of" },
           lang: { type: "string", enum: ["en", "de"], description: "en (default) or de" },
           include_children: { type: "boolean", description: "Include all descendants (default true)" },
         },
@@ -82,12 +85,12 @@ export const TOOL_DEFS = [
   },
 ] as const;
 
-/** Runs one tool call locally; errors and unknown tools become `{error}` results. `asOf` is the default reference date of verify_citation. */
+/** Runs one tool call locally; errors and unknown tools become `{error}` results. `asOf` is the default reference date of get_provision and verify_citation. */
 export function runTool(name: string, rawArgs: string, asOf: string, maxChars = TOOL_RESULT_CHARS): string {
   let out: unknown;
   try {
     const args = JSON.parse(rawArgs === "" ? "{}" : rawArgs) as Record<string, unknown>;
-    if (name === "aiact_get_provision") out = getProvision(args as unknown as Parameters<typeof getProvision>[0]);
+    if (name === "aiact_get_provision") out = getProvision({ ...(args as unknown as Parameters<typeof getProvision>[0]), as_of: (args["as_of"] as string | undefined) ?? asOf });
     else if (name === "aiact_diff") out = diffProvision(args as unknown as Parameters<typeof diffProvision>[0]);
     else if (name === "aiact_verify_citation") out = verifyCitation({ ...(args as unknown as Parameters<typeof verifyCitation>[0]), as_of: (args["as_of"] as string | undefined) ?? asOf });
     else out = { error: `unknown tool ${name}` };
