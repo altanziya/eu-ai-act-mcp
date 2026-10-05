@@ -174,6 +174,20 @@ describe("errors", () => {
     expect(r.error).toMatch(/error_max_turns/);
     expect(r.cost_equiv_usd).toBe(0.05);
   });
+  it("limit text with is_error false and an empty result is quota_stop", async () => {
+    vi.stubEnv("FAKE_CLAUDE_MODE", "quietlimit");
+    const r = await go("plain");
+    expect(r.outcome).toBe("quota_stop");
+    expect(r.error).toMatch(/limit/);
+  });
+  it("limit text without any result event is quota_stop; a plain empty result is not", async () => {
+    vi.stubEnv("FAKE_CLAUDE_MODE", "noresultlimit");
+    expect((await go("plain")).outcome).toBe("quota_stop");
+    vi.stubEnv("FAKE_CLAUDE_MODE", "emptyresult");
+    expect((await go("plain")).outcome).toBe("ok"); // stays an unparseable run, not a stop
+    vi.stubEnv("FAKE_CLAUDE_MODE", "noresult");
+    expect((await go("plain")).outcome).toBe("error");
+  });
   it("limit / usage text with an error is quota_stop", async () => {
     vi.stubEnv("FAKE_CLAUDE_MODE", "limit");
     const r = await go("plain");

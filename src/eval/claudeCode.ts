@@ -179,14 +179,17 @@ export async function runClaude(o: ClaudeRunOptions): Promise<ClaudeRunResult> {
     const s = parseStream(stdout);
     const base = { ...s, exit_code: code, latency_ms: Date.now() - t0 };
     let message: string | null = null;
+    // A limit message can come as is_error:false with an empty or missing result: then it is only in the assistant text.
+    const quietLimit = !spawnError && !timedOut && code === 0 && !s.isError && s.text.trim() === "" && isQuotaMessage(s.assistantText);
     if (spawnError) message = `spawn failed: ${spawnError}`;
     else if (timedOut) message = `timeout after ${(o.timeoutMs ?? CLAUDE_TIMEOUT_MS) / 1000} s`;
     else if (s.isError) message = s.text || `claude reported an error (${s.subtype ?? "no subtype"})`;
     else if (code !== 0) message = `exit ${code}: ${(s.text || stderr).trim() || "no output"}`;
+    else if (quietLimit) message = s.assistantText.trim();
     else if (s.hasResult && s.subtype !== null && s.subtype !== "success") message = `result subtype ${s.subtype}${s.text ? `: ${s.text}` : ""}`; // e.g. error_max_turns
     else if (!s.hasResult) message = "no result event in the stream";
     if (message === null) return { ...base, outcome: "ok" };
-    const quota = !spawnError && !timedOut && isQuotaMessage(`${s.isError ? s.text : ""} ${code !== 0 ? stderr : ""} ${message}`);
+    const quota = quietLimit || (!spawnError && !timedOut && isQuotaMessage(`${s.isError ? s.text : ""} ${code !== 0 ? stderr : ""} ${message}`));
     return { ...base, outcome: quota ? "quota_stop" : "error", error: message.replace(/\s+/g, " ").slice(0, ERROR_CHARS) };
   } finally {
     rmSync(root, { recursive: true, force: true });

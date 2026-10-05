@@ -98,6 +98,14 @@ describe("claude-code backend in the harness", () => {
     expect(readResults(out).cells[0]).toMatchObject({ api_error_runs: 0, runs: 2 });
   });
 
+  it("a quiet limit message (is_error false) also stops the run with quota_stop", async () => {
+    vi.stubEnv("FAKE_CLAUDE_MODE", "quietlimit");
+    const out = join(tmp, "quiet");
+    await main(args(out, ["--arms", "plain"]));
+    expect(callCount(log)).toBe(1);
+    expect(readResults(out)).toMatchObject({ status: "quota_stop" });
+  });
+
   it("a used-up quota ends the run with quota_stop; --resume continues with the missing runs", async () => {
     vi.stubEnv("FAKE_CLAUDE_MODE", "limit");
     vi.stubEnv("FAKE_CLAUDE_FAIL_AFTER", "2"); // two good calls, then the limit
