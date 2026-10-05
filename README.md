@@ -162,7 +162,7 @@ I designed the specification, the data model, the verification levels and the tr
 
 - **Each build step** had a written contract and a gate script. Golden tests were written and frozen before implementation; the agents could not change them.
 - **Every merge** passed the gate and two independent reviews in a fresh context. The reviews found real defects, such as a silently redefined metric and an incomplete verdict on the verify page, which were fixed before merge.
-- **Decisions** are recorded as ADRs in [`decisions/`](decisions/), research with sources in [`research/`](research/).
+- **The process is documented** in [`process/`](process/) (German): architecture decisions as ADRs, research reports with sources, verified facts, session logs and the build contracts.
 
 ## Repository layout
 
@@ -174,7 +174,8 @@ I designed the specification, the data model, the verification levels and the tr
 | `site/` | Landing page, verify page (GitHub Pages) |
 | `tests/` | Unit and golden tests |
 | `docs/reference.md` | Full technical reference |
-| `decisions/`, `research/`, `plan/`, `log/` | Working notes in German: ADRs, research reports, build contracts, session logs |
+| `process/` | Working notes in German: decisions (ADRs), research, facts, specification, session logs |
+| `plan/` | Build contracts and gate scripts per step |
 
 ## License
 
