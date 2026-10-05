@@ -206,10 +206,11 @@ describe("golden day 2: aiact_verify_citation V0", () => {
     expect(r.validity.act).toBe(OMNIBUS);
   });
   it("a changed year is a hard-token mismatch", () => {
-    const n = need(EN24, "art_113");
-    if (!n.text.includes("2026")) throw new Error("precondition: art_113 (2024) text lacks the token 2026");
+    // ID scheme v1 (ADR-012): "It shall apply from 2 August 2026." is the second subparagraph of Article 113.
+    const n = ["art_113.sub_2", "art_113"].map((id) => EN24.get(id)).find((x) => x && x.text.includes("2026"));
+    if (!n) throw new Error("precondition: neither art_113.sub_2 nor art_113 (2024) contains the token 2026");
     const quote = n.text.replace("2026", "2027");
-    const r = verifyCitation({ quote, claimed_ref: "art_113", as_of: "2025-01-01", lang: "en" });
+    const r = verifyCitation({ quote, claimed_ref: n.id, as_of: "2025-01-01", lang: "en" });
     expect(r.status).toBe("mismatch_hard_token");
     const mm = r.hard_token_mismatches ?? [];
     expect(mm.some((m) => m.in_quote.includes("2027") && m.in_corpus.includes("2026"))).toBe(true);
@@ -259,9 +260,10 @@ describe("golden day 2: V1 deadlines", () => {
     expect(existsSync(p)).toBe(true);
     const d = JSON.parse(readFileSync(p, "utf8")) as { versions: Record<string, { default: unknown; rules: unknown[] }> };
     for (const v of [V2024, V2026]) {
-      expect(d.versions[v]).toBeDefined();
-      expect(d.versions[v].default).toBeDefined();
-      expect(Array.isArray(d.versions[v].rules) && d.versions[v].rules.length > 0).toBe(true);
+      const block = d.versions[v];
+      expect(block).toBeDefined();
+      expect(block?.default).toBeDefined();
+      expect(Array.isArray(block?.rules) && (block?.rules.length ?? 0) > 0).toBe(true);
     }
   });
 });
