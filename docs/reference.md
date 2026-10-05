@@ -217,8 +217,8 @@ extended for this (ordinal paragraphs such as "third paragraph", German "Ziffer"
 
 ### `aiact_audit_text` (`auditText`, core `auditCore.ts`, scanner `auditScan.ts`)
 
-Input `{ text, as_of, lang? }` (`as_of` required by the library function; the MCP server fills in today; `lang` default `en` selects
-the corpus and the language of the messages; citation and date notations of both languages are recognised in any case).
+Input `{ text, as_of, lang? }` (`as_of` required by the library function; the MCP server fills in today; `lang` selects
+the corpus and the language of the messages; without `lang` it is detected from the text (`detectLang`, see `aiact_search`), an explicit `lang` wins; citation and date notations of both languages are recognised in any case).
 Output `{ as_of, version_checked, findings, summary: { error, warning, info, ok }, notice }`, `version_checked` = `versionForDate(as_of)`.
 A finding is `{ kind, severity, span: { start, end }, excerpt, message, ref?, node?, expected?, found?, sources, suggestion? }`; `span`
 offsets are UTF-16 positions in the input text, findings are ordered by `span.start`, `sources` are `<version>:<node id>`.
@@ -264,15 +264,22 @@ the other version of one of them (`expected` falls back to the rule when the tex
 the quotation check. *Quotations*: text in `" "`, `“ ”`, `„ “` or `« »` of at least 6 words, with a citation in the same or the previous
 sentence (a citation inside the quotation does not count), is passed to `verifyCitation` with that citation as `claimed_ref` (at
 most 200 per text, identical ones once). Sentences are split at `. ! ?` (not after abbreviations such as Art., Abs., Nr.; not in
-"2. August"), at blank lines, and never inside a checked quotation.
+"2. August"), at blank lines (LF and CRLF), at the start of every list item (`-`, `*`, `•`, `1.`, `1)`, `a)`) and table row (`|`), and never inside a checked quotation.
+*Trigger words*: hyphenated compounds count as one word; "by" only directly before the date and not after a passive participle
+("reviewed by"); a date opening the sentence with a preposition (from, as of, ab (dem), seit (dem), bis (zum) …) acts as a trigger and the
+subject may follow without a comma; "on"/"am"/"vom" opening the sentence also need a verb of application or duty in the clause (apply, take effect, gelten, in Kraft treten, müssen …).
 *Both routes* (`high-risk` without an annex): the subject has the dates of both routes of Article 6 (`art_6.par_2` = Annex III and `art_6.par_1` = Annex I,
 from the deadline table, nothing in the code). A date of a route in the version in force is `deadline_ok` (the message names the route); a date that
 is only a date of the other version is `outdated_deadline` with `expected` = the Annex III date of the version in force, the message names both
 current dates ("2 December 2027 for Annex III systems and 2 August 2028 for Annex I products"). Such a finding needs a trigger word in the clause of
 the date and the term before the date in that clause (or a date opening the sentence: "From 2 August 2026, high-risk ..."); a general application date
-("The AI Act applies from 2 August 2026, with high-risk systems following later") is not flagged. *Subject from the previous sentence*: a
+("The AI Act applies from 2 August 2026, with high-risk systems following later") is not flagged. Negated forms (non-high-risk, not high-risk,
+other than high-risk, kein/ohne/nicht Hochrisiko) are no anchor. If the Regulation as a whole is the grammatical subject of the date's clause
+("the AI Act applies", "die Verordnung gilt"), the general application date applies instead of the routes; as an object or genitive
+("under the AI Act", "the AI Act's") it is not a subject. Before the amending act applies, the message names both dates of the 2024 text. *Subject from the previous sentence*: a
 date with a trigger word whose sentence has no subject takes the subjects of the sentence before it, if that is in the same paragraph (no blank line)
-and has no date of its own; at most one sentence back, only date findings, no new citation findings, no `unverified_date` for carried subjects.
+and has no date of its own; nothing is carried over into a sentence with its own subject (including the Regulation as a whole or a
+citation of another act), a list item or a table row; at most one sentence back, only date findings, no new citation findings, no `unverified_date` for carried subjects.
 *Messages* name dates in reading form ("2 August 2026", "2. August 2026"); `found` and `expected` stay ISO.
 Speed: `verifyCitation` finds the nodes that can match a quote through an inverted token index per corpus (a node needs at least half
 of the quote's tokens, so only nodes holding one of the rarest quote tokens are tested), and searches the four corpora of the precedence
@@ -280,7 +287,9 @@ order only until one decides. Results are the same as testing every node (`tests
 a 5000-word text take about 0.2 s on a developer machine (the audit tests keep their limit of 2 s).
 Known gaps: no recitals, no relative dates ("two years after entry into force"), no check of
 which provision applies to a system; a date without trigger word is not reported when it matches nothing; "high-risk" is a subject only for
-dates with a trigger word, and a subject mentioned only after the date (other than a date opening the sentence) is ignored.
+dates with a trigger word, and a subject mentioned only after the date (other than a date opening the sentence) is ignored. Erring on the side of silence:
+"The AI Act requires high-risk AI systems to comply from 2 August 2026" (the Regulation is the subject), a German feminine genitive
+"der Verordnung" (read as subject), "completed by 2 August 2026" (passive participle before "by") and "before 2 August 2026" are not reported.
 
 ## Verification levels V0-V2
 
