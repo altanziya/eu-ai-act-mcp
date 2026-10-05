@@ -71,7 +71,7 @@ describe("MCP aiact_obligations (day 5b)", () => {
     expect(tool?.description).toMatch(/not legal advice/);
     const profile = (tool?.inputSchema.properties as Record<string, { properties?: Record<string, { type?: string; enum?: string[]; description?: string }> }>)["profile"];
     expect(profile?.properties?.["annex_iii_area"]?.description).toMatch(/Annex III point/);
-    expect(profile?.properties?.["gpai_model"]?.type).toBe("boolean");
+    expect(profile?.properties?.["gpai_model"]?.type).toContain("boolean");
     expect(Object.keys(profile?.properties ?? {})).toContain("role");
     expect(tool?.inputSchema.required).toContain("profile");
     await client.close();
@@ -91,6 +91,30 @@ describe("MCP aiact_obligations (day 5b)", () => {
     expect(JSON.stringify(early.body)).toMatch(/2026-07-27/);
     expect((await call(client, "aiact_obligations", { profile: { role: [] } })).isError).toBe(true);
     expect((await call(client, "aiact_obligations", { profile: { role: ["provider"] } })).body["as_of"]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    await client.close();
+  });
+  it("returns minified JSON in compact detail by default, the full result with detail full", async () => {
+    const client = await connect();
+    const profile = { role: ["provider"], annex_iii_area: "4", annex_iii_art6_3_exception_concluded: false };
+    const raw = (await client.callTool({ name: "aiact_obligations", arguments: { profile, as_of: "2026-10-05" } })) as { content: Array<{ text: string }> };
+    const text = (raw.content[0] as { text: string }).text;
+    expect(text).not.toMatch(/\n/);
+    const compact = JSON.parse(text) as { obligations: Array<Record<string, unknown>>; profile_echo?: unknown };
+    expect(compact.profile_echo).toBeUndefined();
+    expect(compact.obligations[0]).not.toHaveProperty("summary");
+    expect(compact.obligations[0]).toHaveProperty("quote");
+    const full = await call(client, "aiact_obligations", { profile, as_of: "2026-10-05", detail: "full" });
+    expect(full.body["profile_echo"]).toBeDefined();
+    expect((full.body["obligations"] as Array<Record<string, unknown>>)[0]).toHaveProperty("summary");
+    expect((await call(client, "aiact_obligations", { profile, detail: "tiny" })).isError).toBe(true);
+    await client.close();
+  });
+  it("rejects what the core rejects: a numeric Annex III area, an impossible date, an unknown field", async () => {
+    const client = await connect();
+    expect((await call(client, "aiact_obligations", { profile: { role: ["provider"], annex_iii_area: 4 }, as_of: "2026-10-05" })).isError).toBe(true);
+    expect((await call(client, "aiact_obligations", { profile: { role: ["provider"], placed_on_market_before: "2026-02-30" }, as_of: "2026-10-05" })).isError).toBe(true);
+    expect((await call(client, "aiact_obligations", { profile: { role: ["provider"] }, as_of: "2026-09-31" })).isError).toBe(true);
+    expect((await call(client, "aiact_obligations", { profile: { role: ["provider"], annex_iii_area: null, gpai_model: null }, as_of: "2026-10-05" })).isError).toBeUndefined();
     await client.close();
   });
 });

@@ -14,6 +14,7 @@ import { diffProvision } from "../tools/diffProvision.js";
 import { getProvision } from "../tools/getProvision.js";
 import { aiactObligations, describeProfile } from "../tools/obligations.js";
 import { aiactSearch } from "../tools/search.js";
+import { isIsoDate } from "../tools/corpus.js";
 import { todayIso } from "../tools/today.js";
 import { verifyCitation } from "../tools/verifyCitation.js";
 
@@ -28,10 +29,10 @@ function profileSchema(): z.ZodType<Record<string, unknown>> {
   const shape: Record<string, z.ZodType> = {};
   for (const [name, f] of Object.entries(describeProfile())) {
     let t: z.ZodType;
-    if (f.type === "boolean") t = z.boolean();
+    if (f.type === "boolean") t = z.boolean().nullable();
     else if (f.type === "enum_array") t = z.array(z.enum(f.values as [string, ...string[]])).min(1);
     else if (f.type === "enum") t = z.enum(f.values as [string, ...string[]]).nullable();
-    else if (f.type === "date") t = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable();
+    else if (f.type === "date") t = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(isIsoDate, "not a valid calendar date").nullable();
     else t = z.unknown();
     shape[name] = (f.required ? t : t.optional()).describe(f.description);
   }
@@ -39,6 +40,8 @@ function profileSchema(): z.ZodType<Record<string, unknown>> {
 }
 
 const json = (value: unknown): { content: Array<{ type: "text"; text: string }> } => ({ content: [{ type: "text", text: JSON.stringify(value, null, 2) }] });
+/** Minified JSON (the obligations result is large; no indentation saves a third). */
+const jsonCompact = (value: unknown): { content: Array<{ type: "text"; text: string }> } => ({ content: [{ type: "text", text: JSON.stringify(value) }] });
 const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; text: string }> } => ({
   isError: true,
   content: [{ type: "text", text: JSON.stringify({ error: e instanceof Error ? e.message : String(e) }) }],
@@ -181,15 +184,16 @@ export function createServer(options: ServerOptions = {}): McpServer {
           "Dates follow Article 113 and the classification route (Annex III / Annex I); where the literal rule differs the entry carries applies_from_literal and a caveat. Covers the consolidated text from 2026-07-27. " +
           "Deterministic, no language model. Orientation only, not legal advice; it flags legal assessments, it does not make them.",
         inputSchema: {
-          profile: profileSchema().describe("Company profile; `role` (array of provider|deployer|importer|distributor|authorised_representative|product_manufacturer) is required, missing flags count as false, other missing fields as unknown"),
+          profile: profileSchema().describe("Company profile; `role` (array of provider|deployer|importer|distributor|authorised_representative|product_manufacturer) is required, missing flags count as false (uses_or_provides_ai_system: true), other missing fields as unknown"),
           as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD, not before 2026-07-27; default today"),
           lang: lang.optional().describe("Language of the citations; en (default) or de (quotations stay in English)"),
+          detail: z.enum(["compact", "full"]).optional().describe("compact (default): without summary, omnibus_note and profile_echo, quotations cut to 300 characters; full: everything"),
         },
         annotations: READ_ONLY,
       },
       (args) => {
         try {
-          return json(aiactObligations({ ...args, as_of: args.as_of ?? localDateIso() }));
+          return jsonCompact(aiactObligations({ ...args, as_of: args.as_of ?? localDateIso(), detail: args.detail ?? "compact" }));
         } catch (e) {
           return failure(e);
         }

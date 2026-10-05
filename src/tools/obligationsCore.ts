@@ -14,7 +14,7 @@
 import { V2024, V2026 } from "../constants.js";
 import { ancestorChain, descendants, isIsoDate, isLang, versionForDate, CONSOLIDATED_FROM } from "./corpus.js";
 import type { CorpusIndex, CorpusLoader, Lang } from "./corpus.js";
-import { matchRule, resolveDeadline } from "./deadlines.js";
+import { matchRule } from "./deadlines.js";
 import type { DeadlineBlock, DeadlineRule, DeadlineTable } from "./deadlines.js";
 import { formatRef } from "./formatRef.js";
 
@@ -22,6 +22,8 @@ export type Value = string | boolean | null | string[];
 export type Condition = Record<string, unknown>;
 
 export interface Timing {
+  /** hr_route only: pins the entry to the date of this route even when both routes apply. */
+  route?: "annex_i" | "annex_iii";
   basis: "hr_route" | "deadline_table" | "transition";
   literal_rule?: string;
   rule?: string;
@@ -71,13 +73,18 @@ export interface ObligationsInput {
   as_of: string;
   /** Language of the citations; default en. Quotations stay in English (the language of the data). */
   lang?: Lang;
+  /** full (default): everything. compact: no summary, omnibus_note and profile_echo, quotations cut to COMPACT_QUOTE_MAX characters. */
+  detail?: Detail;
 }
+export type Detail = "compact" | "full";
+export const COMPACT_QUOTE_MAX = 300;
 export type Status = "applicable" | "upcoming" | "depends";
 export interface Obligation {
   id: string;
   kind: string;
   title: string;
-  summary: string;
+  /** Not in compact detail. */
+  summary?: string;
   roles: string[];
   provisions: Array<{ id: string; citation: string }>;
   anchor_node: string;
@@ -90,23 +97,33 @@ export interface Obligation {
   status: Status;
   /** Whole days from as_of to applies_from; 0 when applicable; null when no fixed date. */
   days_until: number | null;
-  conditional_dates?: Array<{ date: string; condition: string }>;
   legal_assessment_needed?: string;
+  /** Not in compact detail. */
   omnibus_note?: string;
   changed_by_omnibus: boolean;
 }
 export interface ObligationsResult {
   as_of: string;
   version: string;
-  profile_echo: Record<string, Value>;
+  /** Not in compact detail. */
+  profile_echo?: Record<string, Value>;
   derived: string[];
   obligations: Obligation[];
   timeline: Array<{ date: string; ids: string[] }>;
-  open_questions: Array<{ id: string; question: string }>;
+  open_questions: OpenQuestion[];
   notice: string;
+}
+export interface OpenQuestion {
+  /** The profile field (kind classification) or the obligation id (kind legal_assessment). */
+  id: string;
+  kind: "classification" | "legal_assessment";
+  question: string;
 }
 
 export const NOTICE = "Orientation from the consolidated text, not legal advice; dates follow Article 113 and the classification route; legal assessments are flagged, not made.";
+export const OUT_OF_SCOPE_NOTE = "The profile states the organisation is out of scope (uses_or_provides_ai_system is false); no obligations are listed.";
+/** The scope gate of the profile (Article 2): false lists nothing. */
+const SCOPE_FIELD = "uses_or_provides_ai_system";
 export const BEFORE_CONSOLIDATED_MESSAGE = `obligations map covers the consolidated text in force from ${CONSOLIDATED_FROM}; use get_provision/verify_citation for earlier dates`;
 
 /** Rule ids of data/deadlines.json that carry the Chapter III application date of the two classification routes (Article 6(2) / Article 6(1)). */
@@ -116,14 +133,13 @@ export const ROUTE_RULE_ANNEX_I = "art6-par1-annex1";
 const SIMPLIFIED_ROUTE_RULE = "ch3s1-3";
 const DEFAULT_RULE = "default";
 const COMPUTED_PLACED_BEFORE = "placed_before_chapter_iii_date";
-/** Fields the `computed` rule placed_before_chapter_iii_date reads (besides the profile): used to find which answers matter. */
-const PLACED_BEFORE_DEPENDS_ON = ["placed_on_market_before", "high_risk_annex_iii", "high_risk_annex_i"];
+const COMPUTED_DATE_BEFORE = "date_before";
 
 // ---------------------------------------------------------------------------------------------------------------------
 // profile fields
 
 export type FieldSpec =
-  | { type: "boolean" }
+  | { type: "boolean"; default?: boolean }
   | { type: "enum_array"; values: string[] }
   | { type: "enum"; values: string[] }
   | { type: "date" }
@@ -132,15 +148,16 @@ export interface FieldDescription {
   description: string;
   type: FieldSpec["type"];
   values?: string[];
+  default?: boolean;
   required: boolean;
 }
 
-/** The type of a profile field, read from the first clause of its description in `profile_fields` (bool; array of enum a|b; null or string '1'..'8'; null or enum 'A'|'B'; enum a|b; null or ISO date). */
+/** The type of a profile field, read from the first clause of its description in `profile_fields` (bool; bool, default true; array of enum a|b; null or string '1'..'8'; null or enum 'A'|'B'; enum a|b; null or ISO date). */
 export function fieldSpec(description: string): FieldSpec {
   const head = (description.split(";")[0] as string).trim();
   let m: RegExpExecArray | null;
   if ((m = /^array of enum (\S+)$/.exec(head))) return { type: "enum_array", values: (m[1] as string).split("|") };
-  if (/^bool$/.test(head)) return { type: "boolean" };
+  if ((m = /^bool(?:, default (true|false))?$/.exec(head))) return { type: "boolean", ...(m[1] !== undefined ? { default: m[1] === "true" } : {}) };
   if (/^null or ISO date$/.test(head)) return { type: "date" };
   if ((m = /^null or string '(\d+)'\.\.'(\d+)'$/.exec(head))) {
     const values: string[] = [];
@@ -157,7 +174,7 @@ export function describeProfileWith(data: ObligationsData): Record<string, Field
   const out: Record<string, FieldDescription> = {};
   for (const [name, description] of Object.entries(data.profile_fields)) {
     const spec = fieldSpec(description);
-    out[name] = { description, type: spec.type, ...("values" in spec ? { values: spec.values } : {}), required: name === "role" };
+    out[name] = { description, type: spec.type, ...("values" in spec ? { values: spec.values } : {}), ...("default" in spec && spec.default !== undefined ? { default: spec.default } : {}), required: name === "role" };
   }
   return out;
 }
@@ -189,7 +206,7 @@ function normalizeProfile(data: ObligationsData, raw: Record<string, unknown>): 
       continue;
     }
     if (v === undefined || v === null) {
-      values[name] = spec.type === "boolean" ? false : null;
+      values[name] = spec.type === "boolean" ? (spec.default ?? false) : null;
       continue;
     }
     switch (spec.type) {
@@ -198,13 +215,14 @@ function normalizeProfile(data: ObligationsData, raw: Record<string, unknown>): 
         values[name] = v as boolean;
         break;
       case "enum": {
-        const s = typeof v === "number" ? String(v) : v;
-        if (typeof s !== "string" || !spec.values.includes(s)) fail(`null or one of ${spec.values.join("|")}`);
-        values[name] = s as string;
+        if (typeof v === "number") fail(`null or one of ${spec.values.map((x) => `"${x}"`).join("|")}: a string, not a number (use "${String(v)}")`);
+        if (typeof v !== "string" || !spec.values.includes(v)) fail(`null or one of ${spec.values.join("|")}`);
+        values[name] = v as string;
         break;
       }
       case "date":
-        if (typeof v !== "string" || !isIsoDate(v)) fail("null or an ISO date (YYYY-MM-DD)");
+        if (typeof v !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v)) fail("null or an ISO date (YYYY-MM-DD)");
+        if (!isIsoDate(v as string)) fail("a valid date: not a valid calendar date");
         values[name] = v as string;
         break;
       case "enum_array":
@@ -230,9 +248,7 @@ export class Evaluator {
   constructor(
     private readonly data: Pick<ObligationsData, "derived" | "profile_fields">,
     readonly values: Record<string, Value>,
-    private readonly computed: (name: string, ev: Evaluator) => boolean = () => {
-      throw new Error("computed rules are not available here");
-    },
+    private readonly computed: (name: string, rule: Condition, ev: Evaluator) => boolean = (name, rule, ev) => defaultComputed(name, rule, ev),
   ) {}
 
   field(name: string): Value {
@@ -243,7 +259,7 @@ export class Evaluator {
       this.stack.push(name);
       try {
         const rule = this.data.derived[name] as Condition;
-        const v = "computed" in rule ? this.computed(name, this) : this.test(rule);
+        const v = "computed" in rule ? this.computed(name, rule, this) : this.test(rule);
         this.memo.set(name, v);
         return v;
       } finally {
@@ -262,6 +278,10 @@ export class Evaluator {
     if ("field" in cond) {
       const v = this.field(cond["field"] as string);
       if ("eq" in cond) return sameValue(v, cond["eq"]);
+      if ("has" in cond) {
+        if (!Array.isArray(v)) throw new Error(`"has" needs an array field, ${JSON.stringify(cond["field"])} is not one`);
+        return v.includes(cond["has"] as string);
+      }
       if ("in" in cond) {
         if (!Array.isArray(cond["in"])) throw new Error(`"in" needs an array in ${JSON.stringify(cond)}`);
         return cond["in"].some((x) => sameValue(v, x));
@@ -272,36 +292,29 @@ export class Evaluator {
   }
 }
 
+/** Computed rules that need nothing but the profile: `date_before` (true if the date field is set and earlier than `date`, a date from the data). */
+function defaultComputed(name: string, rule: Condition, ev: Evaluator): boolean {
+  if (rule["computed"] === COMPUTED_DATE_BEFORE) {
+    const date = rule["date"];
+    if (typeof rule["field"] !== "string" || typeof date !== "string" || !isIsoDate(date)) throw new Error(`invalid date_before rule for ${name}: ${JSON.stringify(rule)}`);
+    const v = ev.field(rule["field"]);
+    return typeof v === "string" && v < date;
+  }
+  throw new Error(`no implementation for computed rule ${name}`);
+}
+
 function sameValue(a: Value, b: unknown): boolean {
   if (Array.isArray(a)) return Array.isArray(b) && a.length === b.length && a.every((x, i) => x === b[i]);
   return a === b;
 }
 
-/** Fields a derived field (or a condition) reads, following derived fields recursively: profile fields (`leaves`) and derived fields (`derived`). */
-function fieldsRead(data: Pick<ObligationsData, "derived" | "profile_fields">, root: Condition | string): { leaves: Set<string>; derived: Set<string> } {
-  const leaves = new Set<string>();
-  const derived = new Set<string>();
-  const visitField = (name: string): void => {
-    if (Object.prototype.hasOwnProperty.call(data.derived, name)) {
-      if (derived.has(name)) return;
-      derived.add(name);
-      const rule = data.derived[name] as Condition;
-      if ("computed" in rule) {
-        if (name === COMPUTED_PLACED_BEFORE) for (const f of PLACED_BEFORE_DEPENDS_ON) visitField(f);
-        return;
-      }
-      visitCond(rule);
-    } else leaves.add(name);
-  };
-  const visitCond = (c: Condition): void => {
-    if ("all" in c) (c["all"] as Condition[]).forEach(visitCond);
-    else if ("any" in c) (c["any"] as Condition[]).forEach(visitCond);
-    else if ("not" in c) visitCond(c["not"] as Condition);
-    else if ("field" in c) visitField(c["field"] as string);
-  };
-  if (typeof root === "string") visitField(root);
-  else visitCond(root);
-  return { leaves, derived };
+/** Profile fields named directly in a condition (not through derived fields). */
+function directFields(c: Condition, out = new Set<string>()): Set<string> {
+  if ("all" in c) (c["all"] as Condition[]).forEach((x) => directFields(x, out));
+  else if ("any" in c) (c["any"] as Condition[]).forEach((x) => directFields(x, out));
+  else if ("not" in c) directFields(c["not"] as Condition, out);
+  else if (typeof c["field"] === "string") out.add(c["field"]);
+  return out;
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -327,14 +340,15 @@ function entryDate(e: ObligationEntry, ev: Evaluator, block: DeadlineBlock, idx:
   const t = e.timing;
   const caveat = t.deadline_caveat !== undefined ? { deadline_caveat: t.deadline_caveat } : {};
   if (t.basis === "transition") return { applies_from: t.date ?? null };
+  const notBefore = (d: string): string => (t.not_before !== undefined ? maxDate(d, t.not_before) : d);
   if (t.basis === "hr_route") {
-    const literal = ruleOf(block, t.literal_rule ?? DEFAULT_RULE).applies_from;
+    const literal = notBefore(ruleOf(block, t.literal_rule ?? DEFAULT_RULE).applies_from);
     const routes: string[] = [];
-    if (ev.field("high_risk_annex_iii") === true) routes.push(ruleOf(block, ROUTE_RULE_ANNEX_III).applies_from);
-    if (ev.field("high_risk_annex_i") === true) routes.push(ruleOf(block, ROUTE_RULE_ANNEX_I).applies_from);
+    if (t.route !== "annex_i" && ev.field("high_risk_annex_iii") === true) routes.push(ruleOf(block, ROUTE_RULE_ANNEX_III).applies_from);
+    if (t.route !== "annex_iii" && ev.field("high_risk_annex_i") === true) routes.push(ruleOf(block, ROUTE_RULE_ANNEX_I).applies_from);
     if (routes.length === 0) return { applies_from: literal, ...caveat };
     routes.sort();
-    const from = routes[0] as string;
+    const from = notBefore(routes[0] as string);
     return {
       applies_from: from,
       ...(literal !== from && t.literal_rule !== SIMPLIFIED_ROUTE_RULE ? { applies_from_literal: literal } : {}),
@@ -348,7 +362,7 @@ function entryDate(e: ObligationEntry, ev: Evaluator, block: DeadlineBlock, idx:
     if (t.rule !== undefined) date = ruleOf(block, t.rule).applies_from;
     else if (literal !== undefined) date = literal;
     else date = (matchRule(block, ancestorChain(idx, e.anchor_node).map((n) => n.id)) ?? ruleOf(block, DEFAULT_RULE)).applies_from;
-    if (t.not_before !== undefined) date = maxDate(date, t.not_before);
+    date = notBefore(date);
     return { applies_from: date, ...(t.rule !== undefined && literal !== undefined && literal !== date ? { applies_from_literal: literal } : {}), ...caveat };
   }
   throw new Error(`unknown timing basis ${JSON.stringify((t as { basis: unknown }).basis)} in ${e.id}`);
@@ -366,23 +380,39 @@ function quoteVerified(idx: CorpusIndex, anchor: string, quote: string): boolean
   return text.includes(norm(quote));
 }
 
+const cut = (quote: string): string => (quote.length <= COMPACT_QUOTE_MAX ? quote : `${quote.slice(0, COMPACT_QUOTE_MAX - 1).trimEnd()}…`);
+
 // ---------------------------------------------------------------------------------------------------------------------
 
-function candidates(description: string): Value[] {
+/** Values of a field to try when asking "would an answer change the result?". Booleans both ways, enums all, dates one date before everything. */
+function probeValues(description: string): Value[] {
   const spec = fieldSpec(description);
   if (spec.type === "boolean") return [true, false];
   if (spec.type === "enum") return spec.values;
-  if (spec.type === "date") return ["1900-01-01"]; // a probe date: only "earlier than any route date" is of interest
+  if (spec.type === "date") return ["1900-01-01"]; // a probe date: only "earlier than any date in the data" is of interest
   return [];
+}
+
+/** The question for an open field: the open legal question of the classification rule that names it, else the description of the field. */
+function fieldQuestion(data: ObligationsData, field: string): string {
+  const rule = data.classification.find((c) => c.legal_assessment_needed !== undefined && c.rule !== undefined && directFields(c.rule).has(field));
+  if (rule?.legal_assessment_needed !== undefined) return rule.legal_assessment_needed;
+  const description = data.profile_fields[field] as string;
+  const i = description.indexOf(";");
+  const text = (i === -1 ? description : description.slice(i + 1)).trim();
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
 export function aiactObligationsWith(input: ObligationsInput, load: CorpusLoader, deadlines: DeadlineTable, data: ObligationsData): ObligationsResult {
   if (data.schema !== "obligations-v1") throw new Error(`unsupported obligations data schema ${JSON.stringify(data.schema)}`);
   const asOf = input.as_of;
-  if (typeof asOf !== "string" || !isIsoDate(asOf)) throw new Error(`as_of must be an ISO date (YYYY-MM-DD), got ${JSON.stringify(asOf)}`);
+  if (typeof asOf !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(asOf)) throw new Error(`as_of must be an ISO date (YYYY-MM-DD), got ${JSON.stringify(asOf)}`);
+  if (!isIsoDate(asOf)) throw new Error(`as_of ${JSON.stringify(asOf)} is not a valid calendar date`);
   if (asOf < CONSOLIDATED_FROM) throw new Error(BEFORE_CONSOLIDATED_MESSAGE);
   const lang = input.lang ?? "en";
   if (!isLang(lang)) throw new Error(`unknown lang ${String(lang)}`);
+  const detail = input.detail ?? "full";
+  if (detail !== "full" && detail !== "compact") throw new Error(`unknown detail ${String(detail)} (compact or full)`);
   const version = versionForDate(asOf);
   if (version !== data.source_version) throw new Error(`obligations data is for ${data.source_version}, but ${asOf} is covered by ${version}`);
   const block = deadlines.versions[version];
@@ -393,8 +423,8 @@ export function aiactObligationsWith(input: ObligationsInput, load: CorpusLoader
   const idx = load(version, "en");
   const idx2024 = load(V2024, "en");
 
-  const computed = (name: string, ev: Evaluator): boolean => {
-    if (name !== COMPUTED_PLACED_BEFORE) throw new Error(`no implementation for computed rule ${name}`);
+  const computed = (name: string, rule: Condition, ev: Evaluator): boolean => {
+    if (name !== COMPUTED_PLACED_BEFORE) return defaultComputed(name, rule, ev);
     const placed = ev.field("placed_on_market_before");
     if (typeof placed !== "string") return false;
     const dates: string[] = [];
@@ -404,23 +434,22 @@ export function aiactObligationsWith(input: ObligationsInput, load: CorpusLoader
     return placed < (dates.sort()[0] as string);
   };
   const evaluator = (values: Record<string, Value>): Evaluator => new Evaluator(data, values, computed);
+  const roles = profile.values["role"] as string[];
+  const inScope = profile.values[SCOPE_FIELD] !== false;
+  /** The entries that apply for a profile, with their dates (no quotation checks): the basis of the result and of the open-question probes. */
+  const select = (ev: Evaluator): Array<{ e: ObligationEntry; d: EntryDate }> =>
+    !inScope ? [] : data.obligations.filter((e) => (e.roles.includes("any") || e.roles.some((r) => roles.includes(r))) && ev.test(e.applies_if)).map((e) => ({ e, d: entryDate(e, ev, block, idx) }));
   const ev = evaluator(profile.values);
+  const selected = select(ev);
 
   const derivedTrue = Object.keys(data.derived)
     .filter((k) => ev.field(k) === true)
     .sort();
 
-  const roles = profile.values["role"] as string[];
-  const applicable = data.obligations.filter((e) => (e.roles.includes("any") || e.roles.some((r) => roles.includes(r))) && ev.test(e.applies_if));
-
   const rank: Record<Status, number> = { applicable: 0, upcoming: 1, depends: 2 };
-  const obligations: Obligation[] = applicable.map((e) => {
-    const d = entryDate(e, ev, block, idx);
+  const obligations: Obligation[] = selected.map(({ e, d }) => {
     const from = d.applies_from;
     const status: Status = from === null ? "depends" : from <= asOf ? "applicable" : "upcoming";
-    const node = idx.byId.get(e.anchor_node);
-    // hr_route: the route decides the date (route_dates covers mixed cases), later dates of the anchor's rule would only repeat it
-    const conditional = node && e.timing.basis !== "hr_route" ? resolveDeadline(version, node, idx.byId, asOf, deadlines).conditional_dates : undefined;
 
     let changed = e.omnibus_note !== undefined || e.new_in_2026 === true;
     if (!changed && from !== null && e.timing.basis !== "transition" && block2024) {
@@ -434,11 +463,11 @@ export function aiactObligationsWith(input: ObligationsInput, load: CorpusLoader
       id: e.id,
       kind: e.kind,
       title: e.title,
-      summary: e.summary,
+      ...(detail === "full" ? { summary: e.summary } : {}),
       roles: e.roles,
       provisions: e.provisions.map((p) => ({ id: p, citation: formatRef(p, lang) })),
       anchor_node: e.anchor_node,
-      quote: e.quote,
+      quote: detail === "full" ? e.quote : cut(e.quote),
       quote_verified: quoteVerified(idx, e.anchor_node, e.quote),
       applies_from: from,
       ...(d.applies_from_literal !== undefined ? { applies_from_literal: d.applies_from_literal } : {}),
@@ -446,9 +475,8 @@ export function aiactObligationsWith(input: ObligationsInput, load: CorpusLoader
       ...(d.deadline_caveat !== undefined ? { deadline_caveat: d.deadline_caveat } : {}),
       status,
       days_until: from === null ? null : Math.max(0, daysBetween(asOf, from)),
-      ...(conditional !== undefined ? { conditional_dates: conditional } : {}),
       ...(e.legal_assessment_needed !== undefined ? { legal_assessment_needed: e.legal_assessment_needed } : {}),
-      ...(e.omnibus_note !== undefined ? { omnibus_note: e.omnibus_note } : {}),
+      ...(detail === "full" && e.omnibus_note !== undefined ? { omnibus_note: e.omnibus_note } : {}),
       changed_by_omnibus: changed,
     };
   });
@@ -470,32 +498,29 @@ export function aiactObligationsWith(input: ObligationsInput, load: CorpusLoader
   }
   const timeline = [...byDate.entries()].sort((a, b) => (a[0] < b[0] ? -1 : 1)).map(([date, ids]) => ({ date, ids }));
 
-  const open_questions: Array<{ id: string; question: string }> = [];
-  for (const o of obligations) if (o.legal_assessment_needed !== undefined) open_questions.push({ id: o.id, question: o.legal_assessment_needed });
-  // Classification questions: the rule reads profile fields that are partly answered and partly open, and an answer to an open one would change the result.
-  // Only for derived fields that an entry for one of the profile's roles reads (a provider is not asked about the deployer's FRIA scope).
-  const readByRole = new Set<string>();
-  for (const e of data.obligations) if (e.roles.includes("any") || e.roles.some((r) => roles.includes(r))) for (const f of fieldsRead(data, e.applies_if).derived) readByRole.add(f);
-  for (const c of data.classification) {
-    if (c.legal_assessment_needed === undefined || c.derives === undefined || !readByRole.has(c.derives)) continue;
-    const leaves = [...fieldsRead(data, c.derives).leaves].filter((f) => f !== "role");
-    const open = leaves.filter((f) => !profile.provided.has(f));
-    if (open.length === 0 || open.length === leaves.length) continue;
-    const current = ev.field(c.derives);
-    const deciding = open.filter((f) =>
-      candidates(data.profile_fields[f] as string).some((v) => evaluator({ ...profile.values, [f]: v }).field(c.derives as string) !== current),
-    );
-    if (deciding.length > 0) open_questions.push({ id: c.id, question: `${c.legal_assessment_needed} (not set in the profile: ${deciding.join(", ")})` });
+  const open_questions: OpenQuestion[] = [];
+  if (inScope) {
+    // A question per open profile field, only if another admissible value of the field would change the list of obligations or one of their dates for this profile.
+    const signature = (sel: Array<{ e: ObligationEntry; d: EntryDate }>): string => sel.map(({ e, d }) => `${e.id}@${d.applies_from ?? ""}`).sort().join("|");
+    const current = signature(selected);
+    for (const [field, description] of Object.entries(data.profile_fields)) {
+      if (field === "role" || profile.provided.has(field)) continue;
+      const spec = fieldSpec(description);
+      if (spec.type === "boolean" && spec.default !== undefined) continue; // an assumed default (the scope gate), not an open question
+      const changes = probeValues(description).some((v) => signature(select(evaluator({ ...profile.values, [field]: v }))) !== current);
+      if (changes) open_questions.push({ id: field, kind: "classification", question: fieldQuestion(data, field) });
+    }
+    for (const o of obligations) if (o.legal_assessment_needed !== undefined) open_questions.push({ id: o.id, kind: "legal_assessment", question: o.legal_assessment_needed });
   }
 
   return {
     as_of: asOf,
     version,
-    profile_echo: profile.values,
+    ...(detail === "full" ? { profile_echo: profile.values } : {}),
     derived: derivedTrue,
     obligations,
     timeline,
     open_questions,
-    notice: NOTICE,
+    notice: inScope ? NOTICE : `${NOTICE} ${OUT_OF_SCOPE_NOTE}`,
   };
 }
