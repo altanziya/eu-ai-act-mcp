@@ -253,6 +253,43 @@ describe("quotations", () => {
   });
 });
 
+describe("runtime limits", () => {
+  const filler = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor";
+  const c26 = loadCorpus(V2026, "en");
+  const nodes = c26.nodes.filter((n) => n.type === "paragraph" && n.text.split(/\s+/).length >= 12);
+  it("5000 words with 150 different quotations take under 2 s", () => {
+    const text = nodes
+      .slice(100, 250)
+      .map((n) => `Article ${n.id.split(".")[0]?.slice(4)} says "${n.text.split(/\s+/).slice(0, 10).join(" ")}" ${filler} ${filler}.`)
+      .join(" ");
+    expect(text.split(/\s+/).length).toBeGreaterThan(5000);
+    auditText({ text: "warm up Article 9(2).", as_of: NOW });
+    const t0 = performance.now();
+    const r = run(text);
+    expect(performance.now() - t0).toBeLessThan(2000);
+    expect(r.findings.filter((f) => f.kind.startsWith("quote_")).length).toBe(150);
+    expect(r.findings.some((f) => f.kind === "not_checked")).toBe(false);
+  });
+  it("quotations beyond the limit of 200 are reported as not checked (info), the others still checked", () => {
+    const text = Array.from({ length: 230 }, (_, i) => `Article 9(2) says "Providers shall always keep entirely unrelated imaginary wording number ${i} about bananas" ok.`).join(" ");
+    const t0 = performance.now();
+    const r = run(text);
+    expect(performance.now() - t0).toBeLessThan(2000);
+    expect(r.findings.filter((f) => f.kind === "quote_not_found")).toHaveLength(200);
+    const nc = r.findings.filter((f) => f.kind === "not_checked");
+    expect(nc).toHaveLength(30);
+    expect(nc[0]).toMatchObject({ severity: "info" });
+    expect(nc[0]?.message).toMatch(/not checked/);
+    expect(run(text, NOW, "de").findings.find((f) => f.kind === "not_checked")?.message).toMatch(/nicht geprüft/);
+  });
+  it("the same quotation repeated is verified once", () => {
+    const text = Array(150).fill('Article 9(2) says "Providers shall always keep entirely unrelated imaginary wording about bananas" ok.').join(" ");
+    const t0 = performance.now();
+    run(text);
+    expect(performance.now() - t0).toBeLessThan(1000);
+  });
+});
+
 describe("result shape", () => {
   const text = "Under Article 6(2) and Annex III, the obligations for high-risk AI systems apply from 2 August 2026. See Article 999. Article 10(5) too.";
   const r = run(text);

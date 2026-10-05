@@ -40,6 +40,7 @@ export type FindingKind =
   | "wrong_pinpoint"
   | "quote_deviates"
   | "quote_not_found"
+  | "not_checked"
   | "no_references";
 
 export interface Finding {
@@ -74,6 +75,8 @@ export interface AuditResult {
 
 const EXCERPT_MAX = 160;
 const MIN_QUOTE_WORDS = 6;
+/** Quotations checked per text; further ones get an info finding "not checked" (each check is a full search of the corpus). */
+export const MAX_QUOTE_CHECKS = 200;
 
 // ---------------------------------------------------------------------------------------------------------------
 // Anchors: subjects without a citation, and annex citations that stand for a rule
@@ -265,6 +268,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     claimed: Checked;
   }
   const quoteJobs: QuoteJob[] = [];
+  const unchecked: Span[] = [];
   for (const q of quotes) {
     if (q.words < MIN_QUOTE_WORDS) continue;
     const outside = refs.filter((r) => r.mention.span.end <= q.span.start || r.mention.span.start >= q.span.end);
@@ -272,9 +276,23 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     const same = outside.filter((r) => r.sentence === qs);
     const before = same.filter((r) => r.mention.span.end <= q.span.start);
     const claimed = before[before.length - 1] ?? same[0] ?? [...outside.filter((r) => r.sentence === qs - 1)].pop();
-    if (claimed) quoteJobs.push({ quote: q, claimed });
+    if (!claimed) continue;
+    if (quoteJobs.length < MAX_QUOTE_CHECKS) quoteJobs.push({ quote: q, claimed });
+    else unchecked.push(q.span);
   }
-  const insideChecked = (s: Span): boolean => quoteJobs.some((j) => s.start >= j.quote.span.start && s.end <= j.quote.span.end);
+  // quoteJobs are in text order and do not overlap: binary search for the last one starting at or before the span
+  const insideChecked = (s: Span): boolean => {
+    let lo = 0;
+    let hi = quoteJobs.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const j = (quoteJobs[mid] as QuoteJob).quote.span;
+      if (j.start > s.start) hi = mid - 1;
+      else if (j.end >= s.end) return true;
+      else lo = mid + 1;
+    }
+    return false;
+  };
 
   for (const r of refs) {
     if (insideChecked(r.mention.span)) continue;
@@ -306,13 +324,23 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   }
 
   // ---- 3. quotations (before dates, so that dates inside a checked quotation are left to the quotation check) -----
+  const verified = new Map<string, VerifyResult>();
+  for (const span of unchecked) {
+    add({ kind: "not_checked", severity: "info", span, excerpt: slice(span), message: tr(`quotation not checked (limit of ${MAX_QUOTE_CHECKS} checked quotations per text)`, `Zitat nicht geprüft (höchstens ${MAX_QUOTE_CHECKS} geprüfte Zitate je Text)`) });
+  }
   for (const { quote, claimed } of quoteJobs) {
     const claimedId = claimed.curId ?? claimed.mention.id;
     let v: VerifyResult;
-    try {
-      v = verifyCitationWith({ quote: quote.inner, claimed_ref: claimedId, as_of: asOf, lang }, load, deadlines);
-    } catch {
-      continue;
+    const key = `${claimedId}\u0000${quote.inner}`;
+    const cached = verified.get(key);
+    if (cached) v = cached;
+    else {
+      try {
+        v = verifyCitationWith({ quote: quote.inner, claimed_ref: claimedId, as_of: asOf, lang }, load, deadlines);
+      } catch {
+        continue;
+      }
+      verified.set(key, v);
     }
     const span = quote.span;
     const base = { span, excerpt: slice(span), ref: cite(claimedId) };
