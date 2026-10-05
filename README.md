@@ -10,6 +10,10 @@ Official Journal version (`32024R1689`) and consolidated version after the Omnib
     npm run parse   # data/raw -> data/corpus/<celex>.<lang>.json + data/diff/<lang>.json
     npm run h3      # data/h3.json
     npm run mcp     # MCP server on stdio (see "Run the MCP server")
+    npm run release -- --id <release_id>   # release/<id>/ with manifest (see "Releases and manifest")
+    npm run sign -- --release <id> --key-file <pem>
+    npm run record -- --quote "..." --as-of YYYY-MM-DD --lang en --release <id>
+    npm run build:site && npm run site:serve   # verify page on http://127.0.0.1:8787/verify/
     npm test
     npm run typecheck
 
@@ -221,6 +225,91 @@ Claude Code: `claude mcp add eu-ai-act -- npx tsx /path/to/eu-ai-act-mcp/src/mcp
 args `["tsx", "src/mcp/server.ts"]`, working directory the repository root. Tools: `aiact_get_provision`, `aiact_diff`,
 `aiact_verify_citation`, all with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
 reads only `data/corpus`, `data/diff` and `data/deadlines.json`; it makes no network calls.
+
+## Releases and manifest
+
+A release is an immutable copy of the data a verifier needs, in `release/<release_id>/`:
+
+    release/<release_id>/corpus/<celex>.<lang>.json   (the four corpus files)
+    release/<release_id>/deadlines.json
+    release/<release_id>/diff/{en,de}.json
+    release/<release_id>/manifest.json                (schema aiact-corpus-manifest/1)
+    release/<release_id>/manifest.sig.json            (added by `npm run sign`)
+
+    npm run release -- --id aiact-corpus-2026-10-05
+
+`manifest.json` lists every file with `path`, `sha256`, `bytes` (corpus files also `celex`, `lang`, `node_count`), plus
+`release_id`, `tool_version` (from `package.json`) and the notices (DE and EN). It is sorted by path, 2-space JSON, LF,
+trailing newline, with no timestamp, so the same data always gives the same bytes. An existing release is never
+overwritten: building it again with different data fails; use a new id. The committed release is
+`release/aiact-corpus-2026-10-05/`.
+
+## Signing (maintainer)
+
+Ed25519 over the exact bytes of `manifest.json`. The private key stays outside the repo (macOS keychain, offline backup);
+`*.pem` and `*.key` are git-ignored.
+
+    npm run sign -- --release <id> --key-file /path/to/private.pem [--publish-key]
+    npm run sign -- --release <id> --keychain <service> [--publish-key]   # security find-generic-password -s <service> -w
+
+This writes `release/<id>/manifest.sig.json` (`schema aiact-manifest-signature/1`, `key_id`, `algorithm`, base64 `signature`,
+`signed_sha256`). `key_id` is the first 16 hex characters of the SHA-256 over the raw 32-byte public key. With `--publish-key`
+the public key goes to `site/keys/<key_id>.pub` and `site/keys/index.json` (`{ "keys": [{ key_id, public_key_pem, status }] }`,
+`status` is `active` or `revoked`). Keys are PEM (SPKI public, PKCS8 private); `generateKeyPair()` in `src/release/sign.ts`
+creates a pair with `node:crypto`. Signing and verifying use `@noble/ed25519`, the same code as in the browser. No release is
+signed yet; the verify page then shows the signature as "missing".
+
+## Evidence record
+
+An evidence record (`aiact-evidence-record/1`) is one quote check made against one release: `release_id`, `input` (`quote`,
+`claimed_ref`, `as_of`, `lang`), the full `result` of `aiact_verify_citation`, `cited_nodes` (`id`, `version`, `lang`, `hash`,
+`node_hash` of every node the result points to), `manifest_sha256`, `notice` (DE and EN) and `record_hash`. `question`,
+`creator` and `created_at` are statements by the creator and are not checked. `record_hash` is the SHA-256 over the canonical
+JSON (keys sorted recursively, no whitespace) of the record without `record_hash`. The library has no clock; the CLI sets
+`created_at` (override with `--created-at`).
+
+    npm run record -- --quote "..." --ref art_5.par_1.a --as-of 2026-09-01 --lang en \
+      --release aiact-corpus-2026-10-05 [--question "..."] [--creator "..."]
+
+The command prints the record and a verify link. The link carries the record as base64url of its UTF-8 JSON after `#`
+(`.../verify/#<record>`); the fragment is never sent to a server.
+
+## Verify page
+
+`site/verify/index.html` plus the bundle `site/verify/verify.js` (esbuild from `src/verify-core/browser.ts`; no framework, no
+external resources). The page decodes the record from `location.hash`, loads `../release/<release_id>/manifest.json`, the
+signature (if any), `../keys/index.json`, the four corpus files and `deadlines.json`, checks them against the manifest, and
+recomputes V0, V1 and V2 from `quote`, `claimed_ref` and `as_of` with the same code as the Node tools
+(`src/tools/verifyCore.ts`). It shows the stated and the recomputed result side by side, the hash check of each cited
+node, the signature status (`valid`, `invalid`, `missing`, `unknown_key`, `revoked`) and the creator's statements marked as
+unverified. The required notices and the statement text are static HTML (readable without JavaScript).
+
+    npm run build:site    # bundle + copy release/ to site/release/ + site/keys/index.json
+    npm run site:serve    # http://127.0.0.1:8787/verify/#<record>   (fetch does not work over file://)
+
+`site/release/` and `site/verify/verify.js` are build outputs and git-ignored. All paths are relative, so the `site/` folder
+can be hosted under any base path. Revoking a key means setting its `status` to `revoked` in `site/keys/index.json`.
+
+## Trust model
+
+What a record shows, if the page reports a valid signature and no mismatch: the quoted passages read as stated in the signed
+corpus release, as of the date given, and the quotation check was recomputed on the page from the record's input. What it
+does not show: who created it, that the question or the creator's statements are true, whether the passage supports a legal
+claim (`support_checked` is always false), or that any system is compliant. The text is a rendition from EUR-Lex that is
+not legally authentic; only the Official Journal is binding. Not legal advice.
+
+- The maintainer signs the corpus manifest (Ed25519). The private key lives only in the local macOS keychain, never in the
+  repo or in CI; signing is manual per release. Public key and fingerprint are published in this README, under `/keys` on
+  the page and in a second channel; revocations are listed in the repo. If a key is compromised its key id is revoked, a new
+  manifest is issued, and all records with the old key id count as "signature revoked".
+- A record without a valid signature (`missing`, `unknown_key`, `invalid`, `revoked`) proves nothing about the release.
+- The page checks, in this order: record hash, manifest hash, the release files against the manifest, the signature, every
+  cited node against the release corpus, and the recomputed result against the stated one.
+
+Statement shown on the page: "Dieser Record verweist auf Textstellen, die mit dem signierten Korpus-Release X
+übereinstimmen; die Zitatprüfung wurde hier neu berechnet. Er beweist nicht, wer ihn erstellt hat, und bestätigt keine
+Konformität eines Systems." / "This record refers to passages that match the signed corpus release X; the quotation check
+was recomputed here. It does not prove who created it and does not confirm compliance of any system."
 
 ## Licences (separate)
 
