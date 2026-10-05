@@ -57,6 +57,25 @@ const STOPWORDS = new Set(
   ).split(" "),
 );
 
+const EN_STOPWORDS = new Set("a an and are as at be been but by for from has have in into is it its of on or such that the their then there these this those to was were which will with shall what how when who must does do can".split(" "));
+const DE_ONLY_STOPWORDS = new Set("aber als am auch auf aus bei bis dass dem den der des die ein eine einer eines einem einen er es für hat im ist mit nach nicht oder sich sie sind so über und von vom war wird zu zum zur welche welcher wann wie muss müssen gilt gelten".split(" "));
+/** German word parts that are frequent in AI Act queries and rare in English ones (stems of compounds and the usual noun/adjective endings). */
+const DE_PARTS = ["pflicht", "betreiber", "anbieter", "hochrisiko", "verbot", "frist", "kennzeichnung", "gesetz", "verordnung", "bewertung", "aufsicht", "behörde", "zulassung", "konformität", "nachweis", "einführer", "händler", "bevollmächtigt"];
+const DE_ENDINGS = /(?:ung|ungen|keit|keiten|heit|heiten|schaft|schaften|lich|liche|lichen|licher|isch|ische|ischen)$/;
+
+/** Language of a query without `lang`: German on umlauts/ß, German stopwords, typical German word parts and endings (words of 6+ letters) outscoring English stopwords; else English. */
+export function detectLang(query: string): Lang {
+  let de = 0;
+  let en = 0;
+  for (const { word } of tokenizeWords(query)) {
+    if (/[äöüß]/.test(word)) de += 2;
+    if (DE_ONLY_STOPWORDS.has(word) && !EN_STOPWORDS.has(word)) de += 1;
+    else if (EN_STOPWORDS.has(word) && !DE_ONLY_STOPWORDS.has(word)) en += 1;
+    if (word.length >= 6 && (DE_PARTS.some((p) => word.includes(p)) || DE_ENDINGS.test(word))) de += 1;
+  }
+  return de > en ? "de" : "en";
+}
+
 export function tokenizeWords(text: string): Array<{ word: string; start: number; end: number }> {
   const out: Array<{ word: string; start: number; end: number }> = [];
   for (const m of text.normalize("NFC").matchAll(/[\p{L}\p{N}]+/gu)) {
@@ -238,8 +257,8 @@ export function snippetOf(source: string, terms: ReadonlySet<string>, stemmer: (
 export function aiactSearchWith(input: SearchInput & { as_of: string }, load: CorpusLoader, deadlines: DeadlineTable): SearchResult {
   const asOf = input.as_of;
   if (!isIsoDate(asOf)) throw new Error(`as_of must be an ISO date (YYYY-MM-DD), got ${JSON.stringify(asOf)}`);
-  const lang = input.lang ?? "en";
-  if (!isLang(lang)) throw new Error(`unknown lang ${String(lang)}`);
+  if (input.lang !== undefined && !isLang(input.lang)) throw new Error(`unknown lang ${String(input.lang)}`);
+  const lang = input.lang ?? detectLang(input.query);
   const limit = Math.min(MAX_LIMIT, Math.max(1, Math.floor(input.limit ?? DEFAULT_LIMIT)));
   const version = versionForDate(asOf);
   const base = { as_of: asOf, version, lang, notice: notice([version]) };
