@@ -14,7 +14,10 @@
     "h3": "tsx scripts/h3.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "mcp": "tsx src/mcp/server.ts"
+    "mcp": "tsx src/mcp/server.ts",
+    "release": "tsx scripts/release.ts",
+    "sign": "tsx scripts/sign.ts",
+    "record": "tsx scripts/record.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
