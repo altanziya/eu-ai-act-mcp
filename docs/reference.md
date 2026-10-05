@@ -83,7 +83,7 @@ Rules:
 
 ## Tools
 
-Five read-only tools (pure functions in `src/tools/`, exposed by `src/mcp/server.ts`; `aiact_search` and `aiact_audit_text` only in extended mode, see "Run the MCP server"). Every result carries `notice`
+Six read-only tools (pure functions in `src/tools/`, exposed by `src/mcp/server.ts`; `aiact_search`, `aiact_audit_text` and `aiact_obligations` only in extended mode, see "Run the MCP server"). Every result carries `notice`
 (`{de, en}`, the mandatory texts with the version actually checked). No result contains a timestamp; `as_of` is only
 echoed. Versions: `32024R1689` (Official Journal) and `02024R1689-20260727` (consolidated after the Omnibus,
 amending act `32026R1744`). Where an `id` is expected, a human citation is accepted too (`Article 50(1)(a)`,
@@ -124,7 +124,7 @@ checks that a text supports a claim (`support_checked` is always `false`) and gi
 
 ### `aiact_search` (`aiactSearch`, core `searchCore.ts`)
 
-Input `{ query, as_of?, lang?, limit? }`: `as_of` default today, `lang` default `en`, `limit` default 8, at most 20 (values below 1 are
+Input `{ query, as_of?, lang?, limit? }`: `as_of` default today, `lang` default: detected from the query (`detectLang`: German on umlauts/ß, German stopwords, frequent German word parts such as "pflicht", "betreiber", "hochrisiko" and endings such as -ung/-keit/-lich, outscoring English stopwords; otherwise `en`), `limit` default 8, at most 20 (values below 1 are
 raised to 1). Output `{ as_of, version, lang, results: [{ id, citation, heading?, snippet, score, applicability }], notice }`.
 Searches the version in force on `as_of` (no recitals in the consolidated version). Ranking: BM25 (k1 1.2, b 0.75), one
 document per node (own heading and text; descendants are separate documents). Tokens are lower-case Unicode words minus a short
@@ -142,6 +142,50 @@ paragraphs; articles and annexes count 0.85, chapters and sections 0.6. Ties by 
 word boundaries (`…` marks a cut). `applicability` as in `aiact_get_provision`. The core takes the corpus loader and the deadline
 table as parameters and has no `node:` import (it is meant to run in the browser). Relevance checks are in
 `tests/unit/search.test.ts` ("relevance on the real corpus").
+
+### `aiact_obligations` (`aiactObligations`, core `obligationsCore.ts`)
+
+Input `{ profile, as_of?, lang? }`. Output `{ as_of, version, profile_echo, derived, obligations, timeline, open_questions, notice }`.
+Orientation from the consolidated text: for a company profile, the applicable and upcoming obligations with citation, verbatim
+quotation, application date on `as_of` and the places where a legal assessment is needed. No language model; deterministic.
+
+- **Data** `data/obligations.json` (schema `obligations-v1`, reviewed draft from `work/obligations/`): `profile_fields`, `derived`
+  (rules over profile fields and other derived fields), `obligations` (about 95 entries, each with `roles`, `applies_if`, `provisions`,
+  `anchor_node`, a verbatim `quote`, `timing`), `classification` (the rules behind the derived fields, with the open legal question).
+  The file contains no application dates except the fixed dates of Article 111 (`timing.date`) and `not_before`; all other
+  dates come from `data/deadlines.json`.
+- **Profile**: only fields of `profile_fields` (`describeProfile()` returns name, description, type and allowed values; the MCP input
+  schema is generated from it). An unknown field is an error that lists the allowed fields. `role` is required (non-empty array of
+  `provider|deployer|importer|distributor|authorised_representative|product_manufacturer`); missing booleans count as false, other
+  missing fields as unknown (null). `profile_echo` is the normalised profile.
+- **`as_of`**: ISO date, default today; before 2026-07-27 an error (the map is built on the consolidated text; use `get_provision` /
+  `verify_citation` for earlier dates).
+- **Rules** (DSL): `{field, eq}`, `{field, in}`, `{all}`, `{any}`, `{not}`; fields are profile or derived fields (a cycle is an error).
+  `{computed}` exists only for `placed_before_chapter_iii_date` (true when `placed_on_market_before` is set and earlier than the route
+  date: rule `art6-par2-annex3` for Annex III, `art6-par1-annex1` for Annex I Section A, the earlier one if both routes apply).
+  `derived` lists the true derived fields, sorted. An entry applies when its `roles` meet `profile.role` (or contain `any`) and `applies_if` holds.
+- **Dates** by `timing.basis`: `hr_route` takes the route date (both routes: the earlier one as `applies_from`, both in `route_dates`;
+  no route, for example a role change under Article 25 without classification: the date of `literal_rule`); `deadline_table` takes rule
+  `rule`, else `literal_rule`, else the rule matching the anchor, `not_before` as a lower bound; `transition` takes `timing.date`
+  (`null`: `applies_from: null`, `status: "depends"`, `days_until: null`). If the literal rule of Article 113 gives another date than the
+  effective one, the entry carries `applies_from_literal` and the data's `deadline_caveat` (Article 113 names Chapter III Sections 1 to 3 only, so for example conformity
+  assessment, registration and post-market monitoring are literally under the residual rule of 2026-08-02; the map reports both dates and does not decide).
+  `conditional_dates` are later dates of the anchor's rule (`later_dates` in the table).
+- **Entry**: `{ id, kind (obligation|permission|relief|transition|scope), title, summary, roles, provisions: [{id, citation}], anchor_node, quote,
+  quote_verified (re-checked against the corpus at run time, whitespace-normalised, including descendants of the anchor), applies_from,
+  applies_from_literal?, route_dates?, deadline_caveat?, status (applicable|upcoming|depends), days_until, conditional_dates?,
+  legal_assessment_needed?, omnibus_note?, changed_by_omnibus }`. `changed_by_omnibus` is true with an `omnibus_note`, for provisions new
+  in 2026, or when the rule of the same anchor in the Official Journal version gives another date (not for `transition` entries, whose dates are not from Article 113).
+  Order: `status` (applicable, upcoming, depends), `applies_from`, `id`.
+- **`timeline`**: each distinct `applies_from` on or after `as_of`, ascending, with the entry ids.
+- **`open_questions`**: the `legal_assessment_needed` of the listed entries, plus questions of the classification rules whose profile
+  fields are partly answered and where an answer to an open field would change the derived field (for example Annex III area set, Article 6(3)
+  conclusion not set). Only derived fields that an entry for one of the profile's roles reads are asked about.
+- **Limits**: the map does not decide classification, significance of design changes, "substantial modification", public-service status or open-source
+  status; those are flagged. Not covered: duties of Member States, the Commission, notified bodies and authorities; penalty amounts (see `work/obligations/notes.md`,
+  "Nicht abgedeckt"). The core takes the corpus loader, the deadline table and the data as parameters and has no `node:` import
+  (`tests/unit/obligations.test.ts` bundles it for the browser). `placed_on_market_before_2025_08_02` and `placed_on_market_before_2026_08_02` are
+  profile fields the caller sets; they are not derived from `placed_on_market_before`.
 
 ### Citation format (`formatRef`)
 
@@ -412,9 +456,9 @@ Output in `--out`:
 Claude Code: `claude mcp add eu-ai-act -- npx tsx /path/to/eu-ai-act-mcp/src/mcp/server.ts`. Other clients: command `npx`,
 args `["tsx", "src/mcp/server.ts"]`, working directory the repository root. Tools: `aiact_get_provision`, `aiact_diff`,
 `aiact_verify_citation`; in extended mode (`npm run mcp:extended`, argument `--extended` or `AIACT_MCP_EXTENDED=1`, in code
-`createServer({ extended: true })`) also `aiact_search` and `aiact_audit_text`. The default lists exactly the three tools because the
+`createServer({ extended: true })`) also `aiact_search`, `aiact_audit_text` and `aiact_obligations`. The default lists exactly the three tools because the
 frozen day-2 golden test checks that; the evaluation's tools arm (`TOOL_DEFS`) offers the three. All tools with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
-reads only `data/corpus`, `data/diff` and `data/deadlines.json`; it makes no network calls.
+reads only `data/corpus`, `data/diff`, `data/deadlines.json` and `data/obligations.json`; it makes no network calls.
 
 ## Releases and manifest
 
