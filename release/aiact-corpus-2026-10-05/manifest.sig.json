@@ -1,0 +1,7 @@
+{
+  "schema": "aiact-manifest-signature/1",
+  "key_id": "71fa6df7215bb8b9",
+  "algorithm": "Ed25519",
+  "signature": "YEc7hToL9e5p6OO+6bLCrEW//O6451HpxzHEL3//0BaaIGZxz+lDHfrDxC3e/UDhmJb++zcJy8nklOb13AykDA==",
+  "signed_sha256": "6ed000b33ec7ff482243f3077b9dea94bf844ad4f5481d286b83dadf310cb2c9"
+}

@@ -1,1 +1,9 @@
-{ "keys": [] }
+{
+  "keys": [
+    {
+      "key_id": "71fa6df7215bb8b9",
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAbGxGkulyZecOQw7a9JYR+fH9KaFqq4ekOPdsqCO15/w=\n-----END PUBLIC KEY-----\n",
+      "status": "active"
+    }
+  ]
+}
