@@ -1,7 +1,7 @@
 # STATUS (Stand 2026-10-05 04:15, Session 4)
 
 ## Phase
-**Phase 0 → Approach A (48-Stunden-Beweis). Tag 1, 2 und 3a abgeschlossen und auf `main` (23c6fe2, e03932a, 75f486d), zwei Kalendertage vor Plan. Tag 3b wartet auf Altan.** Design-Doc APPROVED (D13), Go erteilt (05.10. 01:10), ADR-011/012 umgesetzt. Fable-Wochenanteil ≥ 87 % (Reset Mo 18:59).
+**Phase 0 → Approach A (48-Stunden-Beweis). Tag 1, 2 und 3a abgeschlossen und auf `main` (0fe4c4b, e84f3d4, 575cd49), zwei Kalendertage vor Plan. Tag 3b wartet auf Altan.** Design-Doc APPROVED (D13), Go erteilt (05.10. 01:10), ADR-011/012 umgesetzt. Fable-Wochenanteil ≥ 87 % (Reset Mo 18:59).
 
 ## Ergebnis Session 4 (Stand 04:15)
 - **Tag 1:** Parser EN/DE beider Fassungen, ID-Schema v1 (ADR-012), Diff, H3 (F67, F68). **Tag 2:** drei MCP-Tools (V0 Pinpoint, V1 Fristen, V2 Sprache) als stdio-Server, Ref-Parser EN/DE (F70). **Tag 3a:** Release `aiact-corpus-2026-10-05` mit deterministischem Manifest, Ed25519-Signatur-Schnittstelle (noble, Interop mit node:crypto), Evidence Record mit `record_hash` (Python-Gegenrechnung identisch), isomorpher Verify-Kern, statische Verify-Seite (Bundle 44,9 KB); 337 Tests (F71). Jeder Tag zwei Opus-Reviews, Blocker/Major vor Merge behoben.

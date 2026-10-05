@@ -22,7 +22,7 @@ Option 3.
 4. Verschoben auf Tag 2: Binnenstruktur der Änderungsartikel 105–108, Klassifikation "geändert verschoben", darstellungsbedingte `changed`.
 
 ## Nachweis
-F38, F66, F67; Reviewer-Bericht 05.10. 02:35 (`grep -c rct_` = 0 in beiden Konsolidierungsdateien, 180 im Amtsblatt; "Whereas"/"HAVE ADOPTED" nur im Amtsblatt; Disclaimer der Konsolidierung: authentische Fassungen "including their preambles" nur im Amtsblatt); Builder-Bericht 05.10. 02:21; `data/h3.json` und `data/diff/en.report.md` auf `feat/day-1-parser` (8c90130).
+F38, F66, F67; Reviewer-Bericht 05.10. 02:35 (`grep -c rct_` = 0 in beiden Konsolidierungsdateien, 180 im Amtsblatt; "Whereas"/"HAVE ADOPTED" nur im Amtsblatt; Disclaimer der Konsolidierung: authentische Fassungen "including their preambles" nur im Amtsblatt); Builder-Bericht 05.10. 02:21; `data/h3.json` und `data/diff/en.report.md` auf `feat/day-1-parser` (702c26f).
 
 ## Begründung
 Die Kennzahl ist ein Mittel, keine Zahl um ihrer selbst willen: Sie soll zeigen, ob logische IDs über Fassungen tragen (H3 in FACTS). Die Konsolidierung verweist für die Präambel selbst auf das Amtsblatt (F66); Erwägungsgründe bleiben also nur über die Amtsblattfassung zitierbar. Das ist eine Produkterkenntnis für die Verify-Logik (Tag 2), kein Parserfehler. Die ID-Fehler dagegen treffen das Kernversprechen "Zitat byte-genau gegen Fassung prüfen" (H6) und sind vor den Tools billiger zu beheben als danach.
