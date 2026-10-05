@@ -30,6 +30,8 @@ export interface RunRecord {
   error?: string;
   /** PROMPT_VERSION the run was made with. */
   prompt_version?: string;
+  /** Cost of at least one request is the estimate (usage.cost missing, or the request failed after it was sent). */
+  cost_estimated?: boolean;
   /** Run cut short by the budget; re-run on --resume. */
   incomplete?: boolean;
   mock?: boolean;
@@ -64,6 +66,8 @@ export interface CellSummary {
   /** Share of runs with at least one tool call (tools arm only). */
   tool_call_rate: number | null;
   cost_usd: number;
+  /** Runs that booked an estimate instead of usage.cost. */
+  cost_estimated_runs: number;
 }
 
 export type Filter = (r: RunRecord) => boolean;
@@ -106,6 +110,7 @@ export function summarize(lines: RunRecord[], filter: Filter = () => true): Cell
       api_error_runs: runs.filter((r) => r.error !== undefined).length,
       tool_call_rate: arm === "tools" && runs.length > 0 ? runs.filter((r) => r.tool_calls.length > 0).length / runs.length : null,
       cost_usd: all.reduce((s, r) => s + r.cost, 0),
+      cost_estimated_runs: all.filter((r) => r.cost_estimated === true).length,
     });
   }
   return out;
@@ -156,7 +161,7 @@ function table(cells: CellSummary[]): string[] {
   ];
   for (const c of cells) {
     L.push(
-      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${f4(c.cost_usd)} |`,
+      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${f4(c.cost_usd)}${c.cost_estimated_runs > 0 ? ` (${c.cost_estimated_runs} runs estimated)` : ""} |`,
     );
     if (c.sensitivity) {
       const s = c.sensitivity;

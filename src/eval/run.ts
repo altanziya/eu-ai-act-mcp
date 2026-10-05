@@ -206,6 +206,7 @@ export async function main(argv: string[]): Promise<number> {
         maxTokens: MAX_TOKENS, title: "eu-ai-act-mcp eval",
         ...(p?.temperature ? { temperature: 0 } : {}),
         ...(p?.reasoning_effort ? { reasoningEffort: p.reasoning_effort } : {}),
+        fallbackRequestCost: est.run / Math.max(1, est.requests),
         beforeRequest: (n) => {
           // first request: whole-run estimate; later requests: the rest of the run estimate, at least one request's share
           const next = n === 0 ? est.run : Math.max(est.run - runCost, est.run / Math.max(1, est.requests));
@@ -221,9 +222,10 @@ export async function main(argv: string[]): Promise<number> {
         ...base, raw: r.text, parsed, score: scoreCase(t.c, parsed), prompt_tokens: r.prompt_tokens, completion_tokens: r.completion_tokens, cost: r.cost,
         tool_calls: r.tool_calls, requests: r.requests, finish_reason: r.finish_reason, status: r.status, latency_ms: r.latency_ms,
         ...(r.error !== undefined ? { error: r.error } : {}),
+        ...(r.cost_estimated ? { cost_estimated: true } : {}),
         ...(r.stopped ? { incomplete: true } : {}),
       };
-      estimator.observe(t.model, t.arm, r.cost);
+      if (!r.cost_estimated) estimator.observe(t.model, t.arm, r.cost); // an estimate must not raise the next estimate
       if (r.stopped) {
         if (r.requests > 0) appendFileSync(runsPath, `${JSON.stringify(rec)}\n`);
         stop(`budget during ${t.c.id} | ${t.model} | ${t.arm} | rep ${t.rep + 1} (spent ${usd(budget.spent)}, cap ${o.maxUsd})`);

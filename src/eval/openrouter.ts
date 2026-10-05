@@ -11,6 +11,9 @@ import { verifyCitation } from "../tools/verifyCitation.js";
 export const API = "https://openrouter.ai/api/v1";
 export const REFERER = "https://github.com/akoemek-dev/eu-ai-act-mcp";
 export const MAX_TOOL_ROUNDS = 6;
+/** Tool calls executed per round; further calls of the same round get an error result. */
+export const MAX_TOOL_CALLS_PER_ROUND = 4;
+export const TOOL_CALL_LIMIT_ERROR = "tool call limit per round";
 export const TOOL_RESULT_CHARS = 6000;
 
 export type Arm = "plain" | "web" | "tools";
@@ -146,6 +149,8 @@ export async function chat(key: string, body: Record<string, unknown>, p: ChatPa
 export interface ToolCallRecord {
   name: string;
   arguments: string;
+  /** Not executed: over MAX_TOOL_CALLS_PER_ROUND. */
+  rejected?: true;
 }
 
 export interface ConversationOptions extends ChatParams {
@@ -158,8 +163,13 @@ export interface ConversationOptions extends ChatParams {
   asOf: string;
   /** Called before every request (0-based); returning false stops the conversation (result.stopped). */
   beforeRequest?: (requestNo: number) => boolean;
-  /** Called with usage.cost after every response. */
+  /** Called with the cost booked for every request (usage.cost, or the estimate when it is missing). */
   onCost?: (cost: number) => void;
+  /**
+   * Cost booked for a request whose usage.cost is missing, or that failed (exception, timeout) after it was sent: the cap
+   * stays hard when the provider reports nothing. The harness passes its per-request estimate (already times 1.5). Default 0.
+   */
+  fallbackRequestCost?: number;
 }
 
 export interface ConversationResult {
@@ -171,6 +181,8 @@ export interface ConversationResult {
   prompt_tokens: number;
   completion_tokens: number;
   cost: number;
+  /** At least one request was booked with the estimate instead of usage.cost. */
+  cost_estimated: boolean;
   model_reported: string | null;
   finish_reason: string | null;
   web_citations: number;
@@ -190,8 +202,14 @@ export async function converse(o: ConversationOptions): Promise<ConversationResu
   if (o.arm === "web") base["plugins"] = [{ id: "web" }];
   if (o.arm === "tools") base["tools"] = TOOL_DEFS;
   const r: ConversationResult = {
-    text: "", status: 0, requests: 0, tool_rounds: 0, tool_calls: [], prompt_tokens: 0, completion_tokens: 0, cost: 0,
+    text: "", status: 0, requests: 0, tool_rounds: 0, tool_calls: [], prompt_tokens: 0, completion_tokens: 0, cost: 0, cost_estimated: false,
     model_reported: null, finish_reason: null, web_citations: 0, stopped: false, latency_ms: 0,
+  };
+  const bookEstimate = (): void => {
+    const c = o.fallbackRequestCost ?? 0;
+    r.cost += c;
+    r.cost_estimated = true;
+    o.onCost?.(c);
   };
   const t0 = Date.now();
   try {
@@ -202,14 +220,24 @@ export async function converse(o: ConversationOptions): Promise<ConversationResu
         break;
       }
       const body = { ...base, messages, ...(o.arm === "tools" && !withTools ? { tool_choice: "none" } : {}) };
-      const { status, json } = await chat(o.key, body, o);
+      let res: { status: number; json: ChatResponse };
+      try {
+        res = await chat(o.key, body, o);
+      } catch (e) {
+        r.requests++; // sent, but no answer (timeout, connection lost): the provider may have billed it
+        bookEstimate();
+        throw e;
+      }
+      const { status, json } = res;
       r.requests++;
       r.status = status;
       r.prompt_tokens += json.usage?.prompt_tokens ?? 0;
       r.completion_tokens += json.usage?.completion_tokens ?? 0;
-      const cost = json.usage?.cost ?? 0;
-      r.cost += cost;
-      o.onCost?.(cost);
+      const reported = json.usage?.cost;
+      if (typeof reported === "number") {
+        r.cost += reported;
+        o.onCost?.(reported);
+      } else if (status < 400 || status >= 500) bookEstimate(); // a 4xx was rejected before processing and is not billed
       r.model_reported = json.model ?? r.model_reported;
       if (status >= 400) {
         r.error = (json.error?.message ?? "error").slice(0, 300);
@@ -223,10 +251,11 @@ export async function converse(o: ConversationOptions): Promise<ConversationResu
       if (o.arm === "tools" && calls.length > 0 && round < MAX_TOOL_ROUNDS) {
         r.tool_rounds++;
         messages.push({ role: "assistant", content: msg?.content ?? null, tool_calls: calls });
-        for (const c of calls) {
-          r.tool_calls.push({ name: c.function.name, arguments: c.function.arguments.slice(0, 300) });
-          messages.push({ role: "tool", tool_call_id: c.id, content: runTool(c.function.name, c.function.arguments, o.asOf) });
-        }
+        calls.forEach((c, i) => {
+          const over = i >= MAX_TOOL_CALLS_PER_ROUND;
+          r.tool_calls.push({ name: c.function.name, arguments: c.function.arguments.slice(0, 300), ...(over ? { rejected: true as const } : {}) });
+          messages.push({ role: "tool", tool_call_id: c.id, content: over ? JSON.stringify({ error: TOOL_CALL_LIMIT_ERROR }) : runTool(c.function.name, c.function.arguments, o.asOf) });
+        });
         continue;
       }
       r.text = msg?.content ?? "";
