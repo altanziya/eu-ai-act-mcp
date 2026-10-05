@@ -13,7 +13,7 @@ Hypothese, nicht Befund: Wer heute eine AI-Act-Frage klärt, erhält Antworten o
 
 Wettbewerb: ≥ 17 AI-Act-Einträge im MCP-Registry (F43), darunter der MCP von AI Act Radar (kostenlose Team-Stufe, kommerziell ab 500 €/Monat, F42). Keiner weist Umsatz aus (F45). **Unter den sechs geprüften Einträgen** (Lexbeam, Sovereign, CSOAI, SonnyLabs, Legalithm, AI Act Radar; F39–F43) bietet keiner konsolidierten Volltext mit Stichtag, Diff und mehrstufige Zitatverifikation; die übrigen Einträge sind ungeprüft. Der cyanheads EUR-Lex-MCP (F8) ist generischer EUR-Lex-Zugriff mit konsolidierten Fassungen, ohne Stichtag je Vorschrift und ohne Verifikation; er dient als Baseline.
 
-Gründer: Altan Kömek, solo, baut mit Claude Code; GTM/AI-Ops bei Arbeitgeber (Edge-AI-Startup, Industriekunden), Werkstudent bei Netzwerk-Unternehmen, EU-AI-Act-Wissen aus dem Politikstudium; Jobsuche FDE/Solutions Engineer und AI Governance (F10).
+Gründer: Altan Kömek, solo, baut mit Claude Code; GTM/AI-Ops beim Arbeitgeber (Edge-AI-Startup), Werkstudent bei Netzwerk-Unternehmen, EU-AI-Act-Wissen aus dem Politikstudium; Jobsuche FDE/Solutions Engineer und AI Governance (F10).
 
 ## Demand Evidence
 Keine. Wörtlich: Q1 **"Noch niemand."** Q3 **"Niemand, kein Kanal."** Recherche: Stack Overflow 0 Fragen, Ask-HN 1 Punkt, GitHub-Erwähnungen großteils Vendor-Seeding (F44). Einziger belegter Schmerz: Jurist im llama.cpp-Projekt sucht einen "proof" für seine Compliance-Abteilung (Bericht 06). Preisanker existieren (F42, F45), Kunden nicht.
