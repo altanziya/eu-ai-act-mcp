@@ -69,7 +69,8 @@ export function canonicalJson(value: unknown): string {
 /** SHA-256 (hex) over the canonical JSON of the record without its `record_hash`. */
 export const recordHash = (body: EvidenceRecordBody): string => sha256Hex(new TextEncoder().encode(canonicalJson(body)));
 
-function citedNodesOf(result: VerifyResult, ctx: ReleaseContext): CitedNode[] {
+/** The nodes a result cites (match, provision_id, candidates), deduplicated, with their hashes from the release. */
+export function citedNodesOf(result: VerifyResult, ctx: ReleaseContext): CitedNode[] {
   const refs: Array<{ id: string; version: Version; lang: Lang }> = [];
   if (result.match) refs.push({ id: result.match.provision_id, version: result.match.version_id, lang: result.match.lang });
   if (result.provision_id) {

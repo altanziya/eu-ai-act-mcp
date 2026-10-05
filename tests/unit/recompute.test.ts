@@ -93,6 +93,38 @@ describe("recomputeRecord", () => {
   });
 });
 
+describe("cited_nodes comparison", () => {
+  const citedDiff = (r: EvidenceRecord) => recomputeRecord(r, rel.ctx).differences.find((d) => d.field === "cited_nodes");
+  it("an untouched record has no cited_nodes difference", () => {
+    const r = rec();
+    expect(r.cited_nodes.length).toBeGreaterThan(0);
+    expect(citedDiff(r)).toBeUndefined();
+  });
+  it("an additional cited node is a difference and breaks matches_record", () => {
+    const r = rec();
+    const extra = { ...(r.cited_nodes[0] as EvidenceRecord["cited_nodes"][number]), id: "art_6.par_1.a" };
+    const forged = rehash(r, (x) => ({ ...x, cited_nodes: [...x.cited_nodes, extra] }));
+    const rep = recomputeRecord(forged, rel.ctx);
+    expect(rep.matches_record).toBe(false);
+    expect(citedDiff(forged)).toEqual({ field: "cited_nodes", record: ["art_5.par_1.a", "art_6.par_1.a"], recomputed: ["art_5.par_1.a"] });
+  });
+  it("a cited node that was swapped for another one is reported as missing and extra", () => {
+    const r = rec();
+    const forged = rehash(r, (x) => ({ ...x, cited_nodes: x.cited_nodes.map((c) => ({ ...c, id: "art_6.par_1.a" })) }));
+    expect(citedDiff(forged)).toEqual({ field: "cited_nodes", record: ["art_6.par_1.a"], recomputed: ["art_5.par_1.a"] });
+    expect(recomputeRecord(forged, rel.ctx).matches_record).toBe(false);
+  });
+  it("an empty list although the result has a match is a difference", () => {
+    const forged = rehash(rec(), (x) => ({ ...x, cited_nodes: [] }));
+    expect(citedDiff(forged)).toEqual({ field: "cited_nodes", record: [], recomputed: ["art_5.par_1.a"] });
+    expect(recomputeRecord(forged, rel.ctx).matches_record).toBe(false);
+  });
+  it("a changed hash of a cited node is a difference", () => {
+    const forged = rehash(rec(), (x) => ({ ...x, cited_nodes: x.cited_nodes.map((c) => ({ ...c, hash: "0".repeat(64) })) }));
+    expect(citedDiff(forged)).toBeDefined();
+  });
+});
+
 describe("release file checks", () => {
   const read = (p: string): Uint8Array => new Uint8Array(readFileSync(join(rel.dir, p)));
   it("accepts untouched files and flags a changed, a truncated or an unlisted file", () => {

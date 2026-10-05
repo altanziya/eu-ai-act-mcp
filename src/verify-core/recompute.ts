@@ -3,11 +3,12 @@
  * the release context, and optionally the manifest bytes, the signature file and the public keys).
  *
  * Checks: record hash, manifest hash, manifest signature (Ed25519), every cited node against the release corpus, and
- * V0/V1/V2 recomputed from the record's `input`. `matches_record` compares the decisive fields only.
+ * V0/V1/V2 recomputed from the record's `input`. `matches_record` compares the decisive fields and the set of cited
+ * nodes (id, version, lang, hash, node_hash).
  */
 import { isLang, isVersion } from "../tools/corpus.js";
 
-import { recordHash } from "../record/record.js";
+import { citedNodesOf, recordHash } from "../record/record.js";
 import type { EvidenceRecord, EvidenceRecordBody } from "../record/record.js";
 import type { ReleaseContext } from "../release/contextCore.js";
 import { manifestBytes as serialiseManifest, sha256Hex } from "../release/manifestCore.js";
@@ -98,6 +99,12 @@ export function recomputeRecord(record: EvidenceRecord, ctx: ReleaseContext, opt
     ctx.loadCorpus,
     ctx.deadlines,
   );
+  const citedKey = (c: { id: string; version: string; lang: string; hash: string; node_hash: string }): string => `${c.id} (${c.version}, ${c.lang}) ${c.hash} ${c.node_hash}`;
+  const statedCited = record.cited_nodes ?? [];
+  const freshCited = citedNodesOf(recomputed, ctx);
+  if (statedCited.map(citedKey).sort().join("\n") !== freshCited.map(citedKey).sort().join("\n")) {
+    differences.push({ field: "cited_nodes", record: statedCited.map((c) => c.id).sort(), recomputed: freshCited.map((c) => c.id).sort() });
+  }
   const stated = decisive(record.result);
   const fresh = decisive(recomputed);
   for (const field of Object.keys(fresh)) {
