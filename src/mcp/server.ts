@@ -1,6 +1,6 @@
 /**
  * MCP server (stdio) for the EU AI Act provision tree: aiact_get_provision, aiact_diff, aiact_verify_citation and, in
- * extended mode (`npm run mcp:extended`, `--extended`, `AIACT_MCP_EXTENDED=1`), aiact_search and aiact_audit_text.
+ * extended mode (`npm run mcp:extended`, `--extended`, `AIACT_MCP_EXTENDED=1`), aiact_search, aiact_audit_text and aiact_obligations.
  * The default stays the three tools of the frozen day-2 golden test (exactly three tools listed). All tools are read-only. Results are JSON text in content[0]. Start: `npm run mcp`.
  * stdout carries the protocol only; nothing else may be written to it.
  */
@@ -12,6 +12,7 @@ import { V2024, V2026 } from "../config.js";
 import { auditText } from "../tools/audit.js";
 import { diffProvision } from "../tools/diffProvision.js";
 import { getProvision } from "../tools/getProvision.js";
+import { aiactObligations, describeProfile } from "../tools/obligations.js";
 import { aiactSearch } from "../tools/search.js";
 import { todayIso } from "../tools/today.js";
 import { verifyCitation } from "../tools/verifyCitation.js";
@@ -22,6 +23,21 @@ const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: 
 
 const localDateIso = todayIso;
 
+/** zod schema of the company profile, generated from `profile_fields` of data/obligations.json (loose: the tool names the allowed fields itself). */
+function profileSchema(): z.ZodType<Record<string, unknown>> {
+  const shape: Record<string, z.ZodType> = {};
+  for (const [name, f] of Object.entries(describeProfile())) {
+    let t: z.ZodType;
+    if (f.type === "boolean") t = z.boolean();
+    else if (f.type === "enum_array") t = z.array(z.enum(f.values as [string, ...string[]])).min(1);
+    else if (f.type === "enum") t = z.enum(f.values as [string, ...string[]]).nullable();
+    else if (f.type === "date") t = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable();
+    else t = z.unknown();
+    shape[name] = (f.required ? t : t.optional()).describe(f.description);
+  }
+  return z.looseObject(shape) as unknown as z.ZodType<Record<string, unknown>>;
+}
+
 const json = (value: unknown): { content: Array<{ type: "text"; text: string }> } => ({ content: [{ type: "text", text: JSON.stringify(value, null, 2) }] });
 const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; text: string }> } => ({
   isError: true,
@@ -29,7 +45,7 @@ const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; te
 });
 
 export interface ServerOptions {
-  /** Also register aiact_search and aiact_audit_text (day 5a). Default false: tests/golden/day2 expects exactly three tools. */
+  /** Also register aiact_search, aiact_audit_text (day 5a) and aiact_obligations (day 5b). Default false: tests/golden/day2 expects exactly three tools. */
   extended?: boolean;
 }
 
@@ -149,6 +165,30 @@ export function createServer(options: ServerOptions = {}): McpServer {
       (args) => {
         try {
           return json(auditText({ ...args, as_of: args.as_of ?? localDateIso() }));
+        } catch (e) {
+          return failure(e);
+        }
+      },
+    );
+
+    server.registerTool(
+      "aiact_obligations",
+      {
+        title: "Obligations navigator",
+        description:
+          "For a company profile, returns the applicable and upcoming obligations of the AI Act with citation, verbatim quotation, application date on as_of and notes where a legal assessment is needed. " +
+          "Dates follow Article 113 and the classification route (Annex III / Annex I); where the literal rule differs the entry carries applies_from_literal and a caveat. Covers the consolidated text from 2026-07-27. " +
+          "Deterministic, no language model. Orientation only, not legal advice; it flags legal assessments, it does not make them.",
+        inputSchema: {
+          profile: profileSchema().describe("Company profile; `role` (array of provider|deployer|importer|distributor|authorised_representative|product_manufacturer) is required, missing flags count as false, other missing fields as unknown"),
+          as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD, not before 2026-07-27; default today"),
+          lang: lang.optional().describe("Language of the citations; en (default) or de (quotations stay in English)"),
+        },
+        annotations: READ_ONLY,
+      },
+      (args) => {
+        try {
+          return json(aiactObligations({ ...args, as_of: args.as_of ?? localDateIso() }));
         } catch (e) {
           return failure(e);
         }
