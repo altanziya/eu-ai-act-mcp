@@ -19,7 +19,8 @@
     "sign": "tsx scripts/sign.ts",
     "record": "tsx scripts/record.ts",
     "build:site": "tsx scripts/build-site.ts",
-    "site:serve": "tsx scripts/site-serve.ts"
+    "site:serve": "tsx scripts/site-serve.ts",
+    "cost:probe": "tsx scripts/cost-probe.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
