@@ -1,8 +1,11 @@
 /** Day 5d addendum (plan/day-5d-addendum.md), points A1-C10: no false alarms on correct sentences, more German/English word orders, small fixes. EN and DE, each with a counter-probe. */
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { auditText } from "../../src/tools/audit.js";
 import type { Finding } from "../../src/tools/audit.js";
 import { splitSentences, startsListItem } from "../../src/tools/auditScan.js";
+import { CONSOLIDATED_FROM } from "../../src/tools/corpus.js";
+import { V2026 } from "../../src/constants.js";
 
 const NOW = "2026-10-05";
 const BEFORE = "2026-06-01";
@@ -145,5 +148,53 @@ describe("B7 hyphenated compounds count as one word", () => {
   it("counter-probe: a trigger word still has to be within six words", () => {
     expect(errors("Our high-risk AI systems apply many different measures to this and that, and then we meet on 2 August 2026.", "en")).toHaveLength(0);
     expect(errors("Unsere Hochrisiko-KI-Systeme haben viele verschiedene Maßnahmen, die wir gelten lassen, und dann treffen wir uns sehr gerne am 2. August 2026.", "de")).toHaveLength(0);
+  });
+});
+
+describe("C8 the amendment date comes from the data, not from a literal in the audit core", () => {
+  it("auditCore.ts holds no literal 2026-07-27; CONSOLIDATED_FROM is the date of the consolidated corpus id", () => {
+    expect(readFileSync(new URL("../../src/tools/auditCore.ts", import.meta.url), "utf8")).not.toContain("2026-07-27");
+    const corpus = JSON.parse(readFileSync(new URL("../../data/corpus/02024R1689-20260727.en.json", import.meta.url), "utf8")) as { celex: string };
+    expect(corpus.celex).toBe(V2026);
+    expect(CONSOLIDATED_FROM).toBe("2026-07-27");
+    expect(CONSOLIDATED_FROM.replace(/-/g, "")).toBe(corpus.celex.slice(-8));
+  });
+  it("EN and DE messages still name the date; counter-probe: a text in force today does not", () => {
+    expect(run("Article 4a(1) allows it.", "en", BEFORE)[0]!.message).toContain("27 July 2026");
+    expect(run("Artikel 4a Absatz 1 erlaubt das.", "de", BEFORE)[0]!.message).toContain("27. Juli 2026");
+    expect(run("Article 4a(1) allows it.", "en")[0]!.message).not.toContain("27 July 2026");
+  });
+});
+
+describe("C9 Official Journal version: high-risk date names both routes", () => {
+  it("EN: 2 August 2028 on a date before the amendment names Annex III and Annex I", () => {
+    const f = run("High-risk AI systems must comply from 2 August 2028.", "en", BEFORE).filter((x) => x.kind === "unverified_date");
+    expect(f).toHaveLength(1);
+    expect(f[0]!.message).toContain("2 August 2026 for Annex III systems");
+    expect(f[0]!.message).toContain("2 August 2027 for Annex I products");
+  });
+  it("DE: beide damals geltenden Daten", () => {
+    const f = run("Hochrisiko-KI-Systeme müssen ab dem 2. August 2028 konform sein.", "de", BEFORE).filter((x) => x.kind === "unverified_date");
+    expect(f).toHaveLength(1);
+    expect(f[0]!.message).toContain("2. August 2026 für Systeme nach Anhang III");
+    expect(f[0]!.message).toContain("2. August 2027 für Produkte nach Anhang I");
+  });
+  it("counter-probe: the current version keeps its own message; a date right in the version in force is ok", () => {
+    expect(outdated("High-risk AI systems must comply from 2 August 2026.", "en")[0]!.message).toContain("2 August 2028 for Annex I products");
+    expect(run("High-risk AI systems must comply from 2 August 2026.", "en", BEFORE).filter((x) => x.kind === "deadline_ok")).toHaveLength(1);
+  });
+});
+
+describe("C10 without lang the messages follow the language of the text", () => {
+  it("EN text: English message", () => {
+    expect(outdated("High-risk AI systems must comply from 2 August 2026.")[0]!.message).toMatch(/December 2027/);
+  });
+  it("DE text: German message and German citation form", () => {
+    expect(outdated("Die Pflichten für Hochrisiko-KI-Systeme gelten ab dem 2. August 2026.")[0]!.message).toMatch(/Dezember 2027/);
+    expect(run("Artikel 6 Absatz 2 gilt.")[0]!.message).toMatch(/besteht in der/);
+  });
+  it("counter-probe: an explicit lang wins over the text", () => {
+    expect(outdated("Die Pflichten für Hochrisiko-KI-Systeme gelten ab dem 2. August 2026.", "en")[0]!.message).toMatch(/December 2027/);
+    expect(outdated("High-risk AI systems must comply from 2 August 2026.", "de")[0]!.message).toMatch(/Dezember 2027/);
   });
 });

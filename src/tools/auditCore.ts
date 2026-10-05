@@ -14,7 +14,7 @@
 import { V2024, V2026 } from "../constants.js";
 import { diffNodes } from "../diff/diff.js";
 import type { DiffMove } from "../diff/diff.js";
-import { ancestorChain, descendants, isIsoDate, isLang, otherVersion, versionForDate } from "./corpus.js";
+import { ancestorChain, CONSOLIDATED_FROM, descendants, isIsoDate, isLang, otherVersion, versionForDate } from "./corpus.js";
 import type { CorpusIndex, CorpusLoader, Lang, Version } from "./corpus.js";
 import { matchRule } from "./deadlines.js";
 import type { DeadlineRule, DeadlineTable } from "./deadlines.js";
@@ -22,6 +22,7 @@ import { findDates, findQuotes, findRefsDetailed, splitSentences, startsListItem
 import type { RefMention, Span } from "./auditScan.js";
 import { formatRef } from "./formatRef.js";
 import { notice } from "./notice.js";
+import { detectLang } from "./searchCore.js";
 import type { Notice } from "./notice.js";
 import { verifyCitationWith } from "./verifyCore.js";
 import type { VerifyResult } from "./verifyCore.js";
@@ -245,7 +246,8 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   const asOf = input.as_of;
   if (typeof text !== "string") throw new Error("text must be a string");
   if (typeof asOf !== "string" || !isIsoDate(asOf)) throw new Error(`as_of is required and must be an ISO date (YYYY-MM-DD), got ${JSON.stringify(asOf)}`);
-  const lang = input.lang ?? "en";
+  // without `lang` the messages follow the language of the text
+  const lang = input.lang ?? detectLang(text);
   if (!isLang(lang)) throw new Error(`unknown lang ${String(lang)}`);
   const de = lang === "de";
   const ACT = de ? "Verordnung (EU) 2026/1744" : "Regulation (EU) 2026/1744";
@@ -358,7 +360,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     } else if (othId) {
       add({
         kind: "not_yet_in_force", severity: "warning", span, excerpt: slice(span), ref: asWritten, node: othId, sources: [src(other, othId)],
-        message: tr(`${asWritten} is not in the text in force on ${D(asOf)}; it was inserted by ${ACT} (consolidated version from ${D("2026-07-27")}).`, `${asWritten} steht nicht im am ${D(asOf)} geltenden Text; eingefügt durch ${ACT} (konsolidierte Fassung ab ${D("2026-07-27")}).`),
+        message: tr(`${asWritten} is not in the text in force on ${D(asOf)}; it was inserted by ${ACT} (consolidated version from ${D(CONSOLIDATED_FROM)}).`, `${asWritten} steht nicht im am ${D(asOf)} geltenden Text; eingefügt durch ${ACT} (konsolidierte Fassung ab ${D(CONSOLIDATED_FROM)}).`),
       });
     } else {
       add({
@@ -661,8 +663,16 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
         const a3 = cite((ROUTES[0] as { annex: string }).annex);
         const a1 = cite((ROUTES[1] as { annex: string }).annex);
         add({ ...common, kind: "outdated_deadline", severity: "error", message: tr(`High-risk AI systems: ${D(found)} was the date in the Official Journal version; on ${D(asOf)} it is ${expected ? D(expected) : "another date"} for ${a3} systems${cur1 ? ` and ${D(cur1)} for ${a1} products` : ""} (changed by ${ACT}).`, `Hochrisiko-KI-Systeme: ${D(found)} war das Datum der Amtsblattfassung; am ${D(asOf)} gilt ${expected ? D(expected) : "ein anderes Datum"} für Systeme nach ${a3}${cur1 ? ` und ${D(cur1)} für Produkte nach ${a1}` : ""} (geändert durch ${ACT}).`) });
+      } else if (laterAct && s.routes) {
+        // "high-risk ... from <date>" before the amending act applies: both dates of the version in force, not only Article 6(2)
+        const d3 = ruleDates(version, cur, (ROUTES[0] as { id: string }).id, deadlines)?.dates[0];
+        const d1 = ruleDates(version, cur, (ROUTES[1] as { id: string }).id, deadlines)?.dates[0];
+        const a3 = cite((ROUTES[0] as { annex: string }).annex);
+        const a1 = cite((ROUTES[1] as { annex: string }).annex);
+        const both = d3 && d1 ? tr(`${D(d3)} for ${a3} systems and ${D(d1)} for ${a1} products`, `${D(d3)} für Systeme nach ${a3} und ${D(d1)} für Produkte nach ${a1}`) : d3 ? D(d3) : tr("another date", "ein anderes Datum");
+        add({ ...common, kind: "unverified_date", severity: "warning", message: tr(`${D(found)} is the application date of high-risk AI systems in the consolidated version (${ACT}, from ${D(CONSOLIDATED_FROM)}); on ${D(asOf)} it is ${both}.`, `${D(found)} ist der Geltungsbeginn für Hochrisiko-KI-Systeme in der konsolidierten Fassung (${ACT}, ab ${D(CONSOLIDATED_FROM)}); am ${D(asOf)} gilt ${both}.`) });
       } else if (laterAct) {
-        add({ ...common, kind: "unverified_date", severity: "warning", message: tr(`${D(found)} is the ${v.viaText ? "date in the text" : "application date"} of the consolidated version (${ACT}, from ${D("2026-07-27")}); on ${D(asOf)} ${ref} ${expected ? `has ${D(expected)}` : "reads differently"}.`, `${D(found)} ist das ${v.viaText ? "Datum im Text" : "Geltungsdatum"} der konsolidierten Fassung (${ACT}, ab ${D("2026-07-27")}); am ${D(asOf)} ${expected ? `gilt für ${ref} der ${D(expected)}` : `lautet ${ref} anders`}.`) });
+        add({ ...common, kind: "unverified_date", severity: "warning", message: tr(`${D(found)} is the ${v.viaText ? "date in the text" : "application date"} of the consolidated version (${ACT}, from ${D(CONSOLIDATED_FROM)}); on ${D(asOf)} ${ref} ${expected ? `has ${D(expected)}` : "reads differently"}.`, `${D(found)} ist das ${v.viaText ? "Datum im Text" : "Geltungsdatum"} der konsolidierten Fassung (${ACT}, ab ${D(CONSOLIDATED_FROM)}); am ${D(asOf)} ${expected ? `gilt für ${ref} der ${D(expected)}` : `lautet ${ref} anders`}.`) });
       } else {
         add({ ...common, kind: "outdated_deadline", severity: "error", message: tr(`${ref} gave ${D(found)}; on ${D(asOf)} it is ${expected ? D(expected) : "another date"} (changed by ${ACT}).`, `${ref} nannte ${D(found)}; am ${D(asOf)} gilt ${expected ? D(expected) : "ein anderes Datum"} (geändert durch ${ACT}).`) });
       }

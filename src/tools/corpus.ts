@@ -10,8 +10,8 @@ export type { Lang };
 export type Version = typeof V2024 | typeof V2026;
 export const VERSIONS: readonly Version[] = [V2024, V2026];
 export const AMENDING_ACT = "32026R1744";
-/** First day on which the consolidated version (after the Omnibus) is the version checked. */
-export const CONSOLIDATED_FROM = "2026-07-27";
+/** First day on which the consolidated version (after the Omnibus) is the version checked: the date in its CELEX id (`02024R1689-20260727`), as in the corpus metadata. */
+export const CONSOLIDATED_FROM = V2026.replace(/^.*-(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3");
 
 export const isVersion = (v: unknown): v is Version => v === V2024 || v === V2026;
 export const isLang = (l: unknown): l is Lang => l === "en" || l === "de";
