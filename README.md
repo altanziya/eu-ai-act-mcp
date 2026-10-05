@@ -105,7 +105,8 @@ list of `{op: equal|insert|delete, text}` over the words of heading plus text.
 
 ### `aiact_verify_citation` (`verifyCitation`)
 
-Input `{ quote, claimed_ref?, as_of?, lang? }` (`as_of` ISO date, default today in the MCP server; `lang` default `en`).
+Input `{ quote, claimed_ref?, as_of, lang? }` (`as_of` ISO date; required by the library function, which has no default; the MCP
+server fills in today's local date when it is omitted; `lang` default `en`).
 Output `{ status, as_of, lang, version_checked, claimed_ref_input?, claimed_ref_id?, match?, provision_id?, found_in_version?,
 found_in_lang?, hard_token_mismatches?, soft_token_diffs?, candidates?, warnings?, validity, language_check,
 support_checked: false, notice }`.
@@ -131,6 +132,12 @@ V0, V1 and V2 are separate fields; there is no combined "verified".
    beats it. Quotes across several nodes of one article -> `multi_node` (`candidates` = one part per node).
 5. Else `not_found`. Fewer than 6 tokens -> `too_short`.
 
+**Recitals (F66).** The consolidated version has no recitals; they are not superseded, they are absent. If `claimed_ref` is a
+recital (`rec_N`) or the best hit is one, the quote is checked against `32024R1689` (`version_checked` and `match.version_id` are
+then `32024R1689`), the normal V0 status is returned, `warnings` contains `recital_not_in_consolidated_version` and
+`validity` is `{ state: "unknown", note: "recital: no application date; the preamble is not part of the consolidated text" }`.
+Never `found_other_version` or `superseded_by` for a recital.
+
 Rules fixed by this implementation:
 
 - *Normalization:* NFC, soft hyphens, typographic quotes and hyphens, whitespace (line breaks become spaces), a list label
@@ -145,6 +152,8 @@ Rules fixed by this implementation:
   at similarity >= 0.95 from 20 tokens and >= 0.97 for 6 to 19 tokens (that is 1 soft edit from 20 tokens, 2 from 40; none
   below 20). Differing soft tokens are listed in `soft_token_diffs`. `mismatch_hard_token` needs soft tokens over the
   threshold, at least half the quote matched and at least 3 soft tokens matched.
+- *Short quotes:* at 6 to 19 tokens the threshold 0.97 allows no soft edit at all (1 edit in 19 tokens is 0.947), so such a quote
+  is a hit only if its words match; `fuzzy` there arises only from capitalisation or punctuation, never from a different word.
 - *exact vs fuzzy:* `exact` = same words, case and inner punctuation (boundary punctuation ignored); a quote that differs only
   in capitalisation or inner punctuation is `fuzzy` with similarity 1 and the warning `differs_in_case_or_punctuation`.
 - *Pinpoint ids:* `Article 3(1)` is read as `art_3.par_1`; if the corpus has `art_3.pt_1` instead, that node is used.
@@ -178,7 +187,9 @@ wins (the most specific), a node named in `except` is removed from that rule, no
 | 2026 | `ch1-2` | Chapters I, II, except Art. 5(1) points (ba), (bb), 5(1a), 5(1b) | 2025-02-02 |
 | 2026 | `art5-ba-bb-1a-1b` | Art. 5(1) points (ba), (bb), Art. 5(1a), 5(1b) | 2026-12-02 |
 | 2026 | `ch3s4-ch5-ch7-ch12-art78` | as in 2024 | 2025-08-02 |
-| 2026 | `ch3s1-3` | Ch. III Sections 1, 2, 3, except Art. 6(5) | 2027-12-02 (Annex III systems) / 2028-08-02 (Annex I systems) |
+| 2026 | `art6-par1-annex1` | Art. 6(1) | 2028-08-02 (Annex I systems) |
+| 2026 | `art6-par2-annex3` | Art. 6(2) | 2027-12-02 (Annex III systems) |
+| 2026 | `ch3s1-3` | Ch. III Sections 1, 2, 3, except Art. 6(5) and, being more specific, Art. 6(1), 6(2) | 2027-12-02 (Annex III systems) / 2028-08-02 (Annex I systems) |
 | 2026 | `art102-110` | Arts. 102 to 110 | 2026-07-27 |
 | 2026 | default | everything else (incl. Art. 6(5)) | 2026-08-02 |
 
