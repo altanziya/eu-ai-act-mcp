@@ -70,20 +70,32 @@ export function parseArgs(argv: string[]): Options {
   };
 }
 
+/** Mock `answer` text: carries the expected claim (yes/no as first word, else as substring); a deliberate error flips yes/no or drops the claim. */
+function mockAnswerText(claim: string | undefined, wrong: boolean): string {
+  if (claim === undefined) return "mock answer";
+  const w = /^[^\p{L}]*(\p{L}+)[^\p{L}]*$/u.exec(claim)?.[1]?.toLowerCase();
+  if (w === "yes" || w === "ja" || w === "no" || w === "nein") {
+    const yes = w === "yes" || w === "ja";
+    return `${yes !== wrong ? "Yes" : "No"}. mock answer`;
+  }
+  return wrong ? "mock answer" : `mock answer: ${claim}`;
+}
+
 /** Deterministic mock answer from `expected`; every third case (1-based 3, 6, ...) is deliberately wrong. */
 export function mockAnswer(c: EvalCase, index: number): string {
   const wrong = (index + 1) % 3 === 0;
+  const answer = mockAnswerText(c.expected.claim, wrong);
   if (c.kind === "evaluation") {
     const v = c.expected.verdict ?? "correct";
     const flipped = v === "correct" ? "incorrect" : "correct";
-    return JSON.stringify({ verdict: wrong ? flipped : v, answer: "mock answer" });
+    return JSON.stringify({ verdict: wrong ? flipped : v, answer });
   }
   return JSON.stringify({
     date: wrong ? "1999-01-01" : (c.expected.date ?? null),
     version: c.expected.version ?? null,
-    article: c.expected.articles?.[0] ?? null,
+    article: wrong && c.expected.articles ? "Article 1" : (c.expected.articles?.[0] ?? null), // a case that only expects articles must be able to err
     quote: c.ground_truth.quote,
-    answer: "mock answer",
+    answer,
   });
 }
 
