@@ -1,0 +1,3184 @@
+{
+ "schema": "obligations-v1",
+ "source_version": "02024R1689-20260727",
+ "dsl": {
+  "ops": [
+   "all",
+   "any",
+   "not",
+   "field+eq",
+   "field+in"
+  ],
+  "note": "Conditions use profile_fields and derived fields. Derived fields are defined in `derived` (DSL over profile fields and other derived fields, evaluated recursively); rules of the form {\"computed\": ...} are described in prose and implemented in navigator code."
+ },
+ "timing_model": {
+  "hr_route": "effective date = rule art6-par2-annex3 for the Annex III route, art6-par1-annex1 for the Annex I (Section A) route, both dates if both routes apply; literal_rule is the deadlines.json rule that literally resolves the anchor; deadline_caveat explains divergences; if neither route is true (e.g. obligations triggered by Art. 25 role changes without a classified route), fall back to the literal_rule date and keep the caveat",
+  "deadline_table": "date from deadlines.json: rule `rule` if set (effective), else `literal_rule`, else matchRule on anchor_node, else default; if `rule` and `literal_rule` differ, the literal date is reported as applies_from_literal with deadline_caveat; not_before (2026-07-27, entry into force of Regulation (EU) 2026/1744) applies as max() for provisions new in 2026",
+  "transition": "fixed date from the text of Art. 111 (date null = no fixed date, depends on placed_before_chapter_iii_date)"
+ },
+ "derived": {
+  "annex_iii_area_set": {
+   "not": {
+    "field": "annex_iii_area",
+    "eq": null
+   }
+  },
+  "high_risk_annex_i": {
+   "all": [
+    {
+     "field": "annex_i_section",
+     "eq": "A"
+    },
+    {
+     "field": "annex_i_third_party_conformity_assessment",
+     "eq": true
+    }
+   ]
+  },
+  "art6_3_exception_applies": {
+   "all": [
+    {
+     "not": {
+      "field": "annex_iii_area",
+      "eq": null
+     }
+    },
+    {
+     "field": "annex_iii_art6_3_exception_concluded",
+     "eq": true
+    },
+    {
+     "field": "annex_iii_performs_profiling",
+     "eq": false
+    }
+   ]
+  },
+  "high_risk_annex_iii": {
+   "all": [
+    {
+     "field": "annex_iii_area_set",
+     "eq": true
+    },
+    {
+     "not": {
+      "field": "art6_3_exception_applies",
+      "eq": true
+     }
+    }
+   ]
+  },
+  "high_risk": {
+   "any": [
+    {
+     "field": "high_risk_annex_i",
+     "eq": true
+    },
+    {
+     "field": "high_risk_annex_iii",
+     "eq": true
+    }
+   ]
+  },
+  "placed_before_chapter_iii_date": {
+   "computed": "placed_on_market_before is earlier than the Chapter III date from deadlines.json for the route (Annex III: rule art6-par2-annex3; Annex I A: rule art6-par1-annex1); false when placed_on_market_before is null"
+  },
+  "legacy_art111_2": {
+   "all": [
+    {
+     "field": "placed_before_chapter_iii_date",
+     "eq": true
+    },
+    {
+     "field": "significant_design_change_since_application",
+     "eq": false
+    }
+   ]
+  },
+  "hr_chapter_iii_in_scope": {
+   "all": [
+    {
+     "field": "high_risk",
+     "eq": true
+    },
+    {
+     "not": {
+      "field": "annex_x_large_scale_it",
+      "eq": true
+     }
+    },
+    {
+     "not": {
+      "field": "legacy_art111_2",
+      "eq": true
+     }
+    }
+   ]
+  },
+  "fria_required": {
+   "all": [
+    {
+     "field": "hr_chapter_iii_in_scope",
+     "eq": true
+    },
+    {
+     "field": "high_risk_annex_iii",
+     "eq": true
+    },
+    {
+     "not": {
+      "field": "annex_iii_area",
+      "eq": "2"
+     }
+    },
+    {
+     "any": [
+      {
+       "field": "deployer_public_body_or_public_service",
+       "eq": true
+      },
+      {
+       "all": [
+        {
+         "field": "annex_iii_area",
+         "eq": "5"
+        },
+        {
+         "field": "annex_iii_point5_bc",
+         "eq": true
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "gpai_systemic_risk": {
+   "all": [
+    {
+     "field": "gpai_model",
+     "eq": true
+    },
+    {
+     "any": [
+      {
+       "field": "gpai_systemic_risk_threshold_met",
+       "eq": true
+      },
+      {
+       "field": "gpai_commission_designated",
+       "eq": true
+      }
+     ]
+    }
+   ]
+  },
+  "gpai_open_source_exemption_applies": {
+   "all": [
+    {
+     "field": "gpai_model",
+     "eq": true
+    },
+    {
+     "field": "open_source_model",
+     "eq": true
+    },
+    {
+     "not": {
+      "field": "gpai_systemic_risk",
+      "eq": true
+     }
+    }
+   ]
+  }
+ },
+ "profile_fields": {
+  "role": "array of enum provider|deployer|importer|distributor|authorised_representative|product_manufacturer; an actor may hold several roles; an obligation applies if its roles list intersects (or contains 'any')",
+  "uses_or_provides_ai_system": "bool; actor provides, deploys, imports or distributes at least one AI system or model in the EU (scope gate, Art. 2)",
+  "gpai_model": "bool; actor provides a general-purpose AI model (Art. 3(63))",
+  "gpai_systemic_risk_threshold_met": "bool; model meets Art. 51(1)(a) high-impact capabilities (presumed above the FLOP threshold of Art. 51(2)); triggers the Art. 52(1) notification and, with the designation, derives gpai_systemic_risk",
+  "open_source_model": "bool; GPAI model released under a free and open-source licence with publicly available weights, architecture and usage information (Art. 53(2))",
+  "annex_iii_area": "null or string '1'..'8'; Annex III point (anx_3.pt_N) the intended purpose falls into",
+  "annex_iii_point5_bc": "bool; Annex III point 5(b) or 5(c) use case (creditworthiness; life and health insurance pricing); drives FRIA scope; only meaningful with annex_iii_area == '5' (ignored otherwise)",
+  "annex_iii_art6_3_exception_concluded": "bool; provider has concluded and documented that an Annex III system is not high-risk under Art. 6(3)",
+  "annex_iii_performs_profiling": "bool; Annex III system profiles natural persons (overrides the Art. 6(3) exception)",
+  "annex_x_large_scale_it": "bool; AI system is a component of a large-scale IT system listed in Annex X placed on the market before 2027-08-02",
+  "provider_in_third_country": "bool; provider is established outside the Union",
+  "processes_special_category_data_for_bias": "bool; actor intends to process special categories of personal data for bias detection or correction (Art. 4a)",
+  "art5_ba_bb_generation_capability": "bool; system can generate or manipulate intimate/sexually explicit imagery of real persons or CSAM-type material (Art. 5(1)(ba),(bb), (1a))",
+  "deployer_law_enforcement_realtime_rbi": "bool; deployer is a law enforcement authority using real-time remote biometric identification in publicly accessible spaces",
+  "deployer_post_remote_biometric_law_enforcement": "bool; deployer uses a post-remote biometric identification high-risk system in a criminal investigation (Art. 26(10))",
+  "rebrands_high_risk_system": "bool; non-provider puts own name or trademark on a high-risk system already on the market (Art. 25(1)(a))",
+  "substantially_modifies_high_risk_system": "bool; non-provider substantially modifies a high-risk system that stays high-risk (Art. 25(1)(b))",
+  "changes_intended_purpose_to_high_risk": "bool; non-provider changes the intended purpose of a system so it becomes high-risk (Art. 25(1)(c))",
+  "deployer_controls_input_data": "bool; deployer exercises control over input data (Art. 26(4))",
+  "deployer_is_employer_workplace_use": "bool; deployer is an employer using the high-risk system at the workplace (Art. 26(7))",
+  "deployer_public_authority_or_union_body": "bool; deployer is a public authority or Union institution, body, office or agency (Art. 26(8), 49(3))",
+  "deployer_public_body_or_public_service": "bool; deployer is a body governed by public law or a private entity providing public services (Art. 27(1))",
+  "deployer_processes_personal_data": "bool; deployer's use involves personal data, so a DPIA may be due (Art. 26(9))",
+  "deployer_decisions_about_natural_persons": "bool; deployer makes or assists decisions about natural persons with the system (Art. 26(11), 86)",
+  "art50_interacts_with_persons": "bool; system interacts directly with natural persons (Art. 50(1))",
+  "art50_generates_synthetic_content": "bool; system generates synthetic audio, image, video or text (Art. 50(2))",
+  "art50_emotion_or_biometric_categorisation": "bool; system is an emotion recognition or biometric categorisation system (Art. 50(3))",
+  "art50_deep_fake": "bool; deployer uses a system to generate or manipulate deep-fake image, audio or video (Art. 50(4))",
+  "art50_public_interest_text": "bool; deployer publishes AI-generated text to inform the public on matters of public interest (Art. 50(4) second subparagraph)",
+  "enterprise_size": "enum sme|smc|other; SME incl. start-up, small mid-cap (Art. 3 point 14b, Recommendation (EU) 2025/1099), or other",
+  "placed_on_market_before": "null or ISO date; date the system or model was placed on the market or put into service (Art. 111)",
+  "placed_on_market_before_2025_08_02": "bool; derived from placed_on_market_before for GPAI models (Art. 111(3))",
+  "placed_on_market_before_2026_08_02": "bool; derived from placed_on_market_before for generative systems (Art. 111(4))",
+  "significant_design_change_since_application": "bool; system underwent significant design changes after Chapter III started to apply to it (Art. 111(2))",
+  "hrai_intended_for_public_authorities": "bool; high-risk system is intended for use by public authorities (Art. 111(2) second sentence)",
+  "annex_i_section": "null or enum 'A'|'B'; Annex I section of the harmonisation legislation covering the product. Machinery (Regulation (EU) 2023/1230) is in Section B since 2026/1744 (anx_1.sec_b.pt_21); in the 2024 text it was in Section A",
+  "annex_i_third_party_conformity_assessment": "bool; the product must undergo third-party conformity assessment under the Annex I legislation (Art. 6(1)(b)); third-party assessment solely for non-safety risks does not count (Art. 6(1c))",
+  "gpai_commission_designated": "bool; Commission designated the GPAI model as systemic-risk (Art. 51(1)(b), Art. 52(1))",
+  "financial_institution": "bool; actor is a financial institution subject to Union financial-services internal governance rules (Art. 17(4), 18(3), 19(2), 26(5)-(6))"
+ },
+ "obligations": [
+  {
+   "id": "ai-literacy",
+   "kind": "obligation",
+   "title": "Take measures supporting staff AI literacy",
+   "summary": "Providers and deployers must take measures that support AI literacy of staff and others operating AI systems on their behalf, scaled to knowledge, context and affected persons. No specific literacy level per individual is guaranteed or required.",
+   "roles": [
+    "provider",
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "uses_or_provides_ai_system",
+    "eq": true
+   },
+   "provisions": [
+    "art_4"
+   ],
+   "anchor_node": "art_4.par_1",
+   "quote": "This obligation does not require providers or deployers to guarantee any specific level of AI literacy of any individual.",
+   "anchor_node_2024": "art_4",
+   "omnibus_note": "Weakened by the Omnibus: 2024 text required measures 'to ensure, to their best extent, a sufficient level' of literacy; 2026 text only requires measures to 'support the development' of literacy and expressly excludes any guaranteed level.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch1-2"
+   }
+  },
+  {
+   "id": "bias-special-category-data-hrai",
+   "kind": "permission",
+   "title": "Process special-category data for bias correction (HRAI)",
+   "summary": "Providers of high-risk systems may exceptionally process special categories of personal data for bias detection and correction under Art. 10(2)(f),(g) only if strictly necessary and all six safeguards in Art. 4a(1)(a)-(f) are met, on top of GDPR.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "high_risk",
+      "eq": true
+     },
+     {
+      "field": "processes_special_category_data_for_bias",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_4a.par_1",
+    "art_10.par_2"
+   ],
+   "anchor_node": "art_4a.par_1",
+   "quote": "all the following conditions shall be met in order for such processing to occur:",
+   "new_in_2026": true,
+   "legal_assessment_needed": "Whether processing is 'strictly necessary' and whether synthetic or anonymised data would suffice (Art. 4a(1)(a)).",
+   "omnibus_note": "New Art. 4a replaces former Art. 10(5); the permission now also reaches non-high-risk systems and deployers (see next entry).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch1-2",
+    "deadline_caveat": "Literally, Chapter I (rule ch1-2, 2025-02-02) applies, but this permission serves Art. 10 data governance, which applies only from the route date; treat the route date as effective."
+   }
+  },
+  {
+   "id": "bias-special-category-data-other",
+   "kind": "permission",
+   "title": "Process special-category data for bias correction (others)",
+   "summary": "Providers and deployers of other AI systems and models, and deployers of high-risk systems, may exceptionally process special-category data for bias detection only if strictly necessary and all Art. 4a(1) safeguards apply. No duty to perform bias detection arises.",
+   "roles": [
+    "provider",
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "processes_special_category_data_for_bias",
+    "eq": true
+   },
+   "provisions": [
+    "art_4a.par_2"
+   ],
+   "anchor_node": "art_4a.par_2.sub_2",
+   "quote": "This paragraph does not create any obligation to conduct such bias detection and correction.",
+   "new_in_2026": true,
+   "legal_assessment_needed": "Strict necessity and whether the bias is likely to affect health, safety or fundamental rights (Art. 4a(2)(a)).",
+   "omnibus_note": "New in the 2026 consolidated text; extends the bias-data permission beyond high-risk providers.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch1-2",
+    "not_before": "2026-07-27"
+   }
+  },
+  {
+   "id": "prohibited-practices-screening",
+   "kind": "obligation",
+   "title": "Check that no Art. 5 prohibited practice applies",
+   "summary": "Do not place on the market, put into service or use AI systems for the prohibited practices of Art. 5(1) (manipulation, vulnerability exploitation, social scoring, crime-risk profiling, facial scraping, workplace/education emotion inference, sensitive biometric categorisation, real-time RBI). Screen every system against the list.",
+   "roles": [
+    "any"
+   ],
+   "applies_if": {
+    "field": "uses_or_provides_ai_system",
+    "eq": true
+   },
+   "provisions": [
+    "art_5.par_1",
+    "art_5.par_8"
+   ],
+   "anchor_node": "art_5.par_1.a",
+   "quote": "the placing on the market, the putting into service or the use of an AI system that deploys subliminal techniques beyond a person's consciousness",
+   "legal_assessment_needed": "Each prohibition contains evaluative elements (significant harm, material distortion, 'solely' profiling, medical/safety exception).",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch1-2"
+   }
+  },
+  {
+   "id": "prohibited-intimate-deepfake",
+   "kind": "obligation",
+   "title": "Do not generate non-consensual intimate imagery",
+   "summary": "AI systems generating or manipulating realistic intimate or sexually explicit material of identifiable persons without explicit consent are prohibited. Under Art. 5(1a), providers are caught if this is the intended purpose or a foreseeable outcome lacking adequate safeguards; deployers if used for this purpose.",
+   "roles": [
+    "provider",
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "art5_ba_bb_generation_capability",
+    "eq": true
+   },
+   "provisions": [
+    "art_5.par_1",
+    "art_5.par_1a",
+    "art_5.par_1b"
+   ],
+   "anchor_node": "art_5.par_1.ba",
+   "quote": "generates or manipulates realistic images, videos, audio or similar material of an identifiable natural person's intimate parts",
+   "new_in_2026": true,
+   "legal_assessment_needed": "Whether generation is 'reasonably foreseeable and reproducible' and whether safeguards are 'reasonable and adequate' (Art. 5(1a)(a)(ii)); whether an edit counts as 'manipulation' (Art. 5(1b)).",
+   "omnibus_note": "New prohibition added by the Omnibus; applies later than the other Art. 5 prohibitions (see deadlines.json).",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "art5-ba-bb-1a-1b",
+    "not_before": "2026-07-27"
+   }
+  },
+  {
+   "id": "prohibited-csam-generation",
+   "kind": "obligation",
+   "title": "Do not generate child sexual abuse material",
+   "summary": "AI systems generating or manipulating child sexual abuse material or performances as defined in Directive 2011/93/EU are prohibited, subject to a national 'without right' defence. Art. 5(1a) limits provider and deployer liability as for intimate imagery.",
+   "roles": [
+    "provider",
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "art5_ba_bb_generation_capability",
+    "eq": true
+   },
+   "provisions": [
+    "art_5.par_1",
+    "art_5.par_1a"
+   ],
+   "anchor_node": "art_5.par_1.bb",
+   "quote": "generates or manipulates material or performance within the meaning of Article 2, points (c) and (e), of Directive 2011/93/EU",
+   "new_in_2026": true,
+   "legal_assessment_needed": "National-law 'without right' defence; same Art. 5(1a) foreseeability and safeguards test.",
+   "omnibus_note": "New prohibition added by the Omnibus.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "art5-ba-bb-1a-1b",
+    "not_before": "2026-07-27"
+   }
+  },
+  {
+   "id": "rbi-law-enforcement-conditions",
+   "kind": "obligation",
+   "title": "Real-time RBI by police: authorisation and FRIA",
+   "summary": "Real-time remote biometric identification in public spaces for law enforcement is prohibited except for the three listed objectives; each use needs prior judicial or independent authorisation, a completed FRIA, registration, and notification to the market surveillance and data protection authorities.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "deployer_law_enforcement_realtime_rbi",
+    "eq": true
+   },
+   "provisions": [
+    "art_5.par_1.h",
+    "art_5.par_2",
+    "art_5.par_3",
+    "art_5.par_4"
+   ],
+   "anchor_node": "art_5.par_3",
+   "quote": "each use for the purposes of law enforcement of a 'real-time' remote biometric identification system in publicly accessible spaces shall be subject to a prior authorisation",
+   "legal_assessment_needed": "Strict necessity per objective; urgency procedure; national implementing law under Art. 5(5).",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch1-2"
+   }
+  },
+  {
+   "id": "hrai-requirements-compliance",
+   "kind": "obligation",
+   "title": "Ensure high-risk system meets Section 2 requirements",
+   "summary": "High-risk systems must comply with the requirements of Chapter III Section 2 (Arts. 9-15), taking into account intended purpose and the state of the art. Product-embedded systems may integrate testing and documentation with sectoral law.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_8"
+   ],
+   "anchor_node": "art_8.par_1",
+   "quote": "High-risk AI systems shall comply with the requirements laid down in this Section",
+   "omnibus_note": "Application date moved by the Omnibus (Annex III 2027-12-02, Annex I 2028-08-02).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "risk-management-system",
+   "kind": "obligation",
+   "title": "Establish a risk management system",
+   "summary": "Set up, document and maintain a continuous, lifecycle risk management process: identify and evaluate foreseeable risks including misuse, use post-market data, adopt targeted mitigations, test against predefined metrics, and consider impact on minors and vulnerable groups.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_9"
+   ],
+   "anchor_node": "art_9.par_1",
+   "quote": "A risk management system shall be established, implemented, documented and maintained in relation to high-risk AI systems.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "data-governance",
+   "kind": "obligation",
+   "title": "Apply data governance to training/validation/test data",
+   "summary": "Training, validation and test data must follow documented governance practices (design choices, origin, preparation, bias examination and mitigation, gap analysis) and be relevant, representative and as error-free as feasible for the intended purpose.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_10",
+    "art_4a.par_1"
+   ],
+   "anchor_node": "art_10.par_2",
+   "quote": "Training, validation and testing data sets shall be subject to data governance and management practices appropriate for the intended purpose of the high-risk AI system.",
+   "omnibus_note": "Former Art. 10(5) (special-category data for bias) moved to new Art. 4a; Art. 10(1) and (6) now refer to Art. 4a(1).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "technical-documentation",
+   "kind": "obligation",
+   "title": "Draw up and maintain technical documentation",
+   "summary": "Prepare technical documentation covering at least the Annex IV elements before market placement and keep it up to date. For Annex I products, one single documentation set may cover both regimes.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_11",
+    "anx_4"
+   ],
+   "anchor_node": "art_11.par_1",
+   "quote": "The technical documentation of a high-risk AI system shall be drawn up before that system is placed on the market or put into service and shall be kept up-to date.",
+   "omnibus_note": "SME relief in Art. 11(1) extended to SMCs (see relief entry).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "automatic-logging",
+   "kind": "obligation",
+   "title": "Design system to record events automatically",
+   "summary": "The high-risk system must technically allow automatic logging over its lifetime, supporting traceability of risk situations, post-market monitoring and deployer monitoring; remote biometric identification systems have minimum log content.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_12"
+   ],
+   "anchor_node": "art_12.par_1",
+   "quote": "High-risk AI systems shall technically allow for the automatic recording of events (logs) over the lifetime of the system.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "transparency-instructions-for-use",
+   "kind": "obligation",
+   "title": "Provide instructions for use to deployers",
+   "summary": "Design the system to be interpretable by deployers and supply concise, complete instructions for use with at least the Art. 13(3) content: provider identity, performance and limits, oversight measures, resources, log mechanisms.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_13"
+   ],
+   "anchor_node": "art_13.par_2",
+   "quote": "High-risk AI systems shall be accompanied by instructions for use in an appropriate digital format or otherwise",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "human-oversight-design",
+   "kind": "obligation",
+   "title": "Design for effective human oversight",
+   "summary": "Build the system, including interface tools, so natural persons can effectively oversee it during use, with oversight measures proportionate to risk, autonomy and context; give deployers the means to understand, override and stop it.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_14"
+   ],
+   "anchor_node": "art_14.par_1",
+   "quote": "High-risk AI systems shall be designed and developed in such a way, including with appropriate human-machine interface tools, that they can be effectively overseen by natural persons during the period in which they are in use.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "accuracy-robustness-cybersecurity",
+   "kind": "obligation",
+   "title": "Achieve accuracy, robustness and cybersecurity",
+   "summary": "The system must reach an appropriate level of accuracy, robustness and cybersecurity throughout its lifecycle, declare accuracy metrics in the instructions, resist errors and feedback loops, and withstand unauthorised manipulation.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_15"
+   ],
+   "anchor_node": "art_15.par_1",
+   "quote": "High-risk AI systems shall be designed and developed in such a way that they achieve an appropriate level of accuracy, robustness, and cybersecurity",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "provider-identification",
+   "kind": "obligation",
+   "title": "Mark system with provider name and address",
+   "summary": "Show the provider name, registered trade name or mark and contact address on the system or, if impossible, on packaging or accompanying documents.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_16.b"
+   ],
+   "anchor_node": "art_16.b",
+   "quote": "indicate on the high-risk AI system or, where that is not possible, on its packaging or its accompanying documentation, as applicable, their name",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "accessibility-compliance",
+   "kind": "obligation",
+   "title": "Meet accessibility requirements",
+   "summary": "The provider must ensure the high-risk system complies with the accessibility requirements of Directives (EU) 2016/2102 and (EU) 2019/882.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_16.l"
+   ],
+   "anchor_node": "art_16.l",
+   "quote": "ensure that the high-risk AI system complies with accessibility requirements in accordance with Directives (EU) 2016/2102 and (EU) 2019/882.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "quality-management-system",
+   "kind": "obligation",
+   "title": "Put a quality management system in place",
+   "summary": "Establish a documented quality management system (written policies, procedures, instructions) covering at least the Art. 17(1) aspects, proportionate to organisation size; sectoral or financial-services governance can be reused.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_17"
+   ],
+   "anchor_node": "art_17.par_1",
+   "quote": "Providers of high-risk AI systems shall put a quality management system in place that ensures compliance with this Regulation.",
+   "omnibus_note": "Proportionality language in Art. 17(2) extended to SMCs.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "documentation-retention",
+   "kind": "obligation",
+   "title": "Keep documentation for 10 years",
+   "summary": "Keep technical documentation, QMS documentation, notified-body decisions and the EU declaration of conformity at the disposal of authorities for 10 years after placing on the market.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_18"
+   ],
+   "anchor_node": "art_18.par_1",
+   "quote": "The provider shall, for a period ending 10 years after the high-risk AI system has been placed on the market or put into service, keep at the disposal of the national competent authorities:",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "provider-log-retention",
+   "kind": "obligation",
+   "title": "Keep automatically generated logs",
+   "summary": "Keep the logs generated by the high-risk system to the extent under the provider's control, for a period appropriate to the intended purpose and at least six months unless other law provides otherwise.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_19",
+    "art_16.e"
+   ],
+   "anchor_node": "art_19.par_1",
+   "quote": "Providers of high-risk AI systems shall keep the logs referred to in Article 12(1), automatically generated by their high-risk AI systems",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "corrective-actions-and-information",
+   "kind": "obligation",
+   "title": "Take corrective action on non-conformity",
+   "summary": "If a placed system is, or may be, non-conforming, immediately correct, withdraw, disable or recall it and inform distributors, deployers, authorised representative and importers; investigate risks with the market surveillance authority.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_20"
+   ],
+   "anchor_node": "art_20.par_1",
+   "quote": "shall immediately take the necessary corrective actions to bring that system into conformity, to withdraw it, to disable it, or to recall it, as appropriate.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "cooperate-with-authorities-provider",
+   "kind": "obligation",
+   "title": "Provide information and logs to authorities on request",
+   "summary": "On reasoned request of a competent authority, provide all information and documentation needed to show conformity, and access to the automatically generated logs under the provider's control.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_21",
+    "art_16.k"
+   ],
+   "anchor_node": "art_21.par_1",
+   "quote": "Providers of high-risk AI systems shall, upon a reasoned request by a competent authority, provide that authority all the information and documentation necessary",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "annex-iii-non-high-risk-documentation",
+   "kind": "obligation",
+   "title": "Document the Art. 6(3) not-high-risk assessment",
+   "summary": "A provider who concludes that an Annex III system is not high-risk must document the assessment before placing it on the market and provide it to authorities on request.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "art6_3_exception_applies",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "high_risk_annex_i",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_6.par_4"
+   ],
+   "anchor_node": "art_6.par_4",
+   "quote": "A provider who considers that an AI system referred to in Annex III is not high-risk shall document its assessment before that system is placed on the market or put into service.",
+   "legal_assessment_needed": "Whether a narrow-procedural/preparatory/pattern-detection condition truly applies, and that no profiling occurs (Art. 6(3)).",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "eu-database-registration-provider",
+   "kind": "obligation",
+   "title": "Register high-risk system in the EU database",
+   "summary": "Before placing on the market, the provider (or authorised representative) registers itself and the Annex III system in the EU database; area 2 (critical infrastructure) is registered nationally.",
+   "roles": [
+    "provider",
+    "authorised_representative"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "high_risk_annex_iii",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "annex_iii_area",
+       "eq": "2"
+      }
+     },
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_49.par_1",
+    "art_16.i"
+   ],
+   "anchor_node": "art_49.par_1",
+   "quote": "the provider or, where applicable, the authorised representative shall register themselves and their system in the EU database referred to in Article 71.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "eu-database-registration-art6-3",
+   "kind": "obligation",
+   "title": "Register Annex III system claimed not high-risk",
+   "summary": "Providers relying on the Art. 6(3) exception must still register themselves and the system in the EU database before placing it on the market.",
+   "roles": [
+    "provider",
+    "authorised_representative"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "art6_3_exception_applies",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "high_risk_annex_i",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_49.par_2"
+   ],
+   "anchor_node": "art_49.par_2",
+   "quote": "that provider or, where applicable, the authorised representative shall register themselves and that system in the EU database referred to in Article 71.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to Art. 49(2); the Art. 6(3) assessment it records is in Chapter III Section 1, applicable from 2027-12-02.",
+    "rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "conformity-assessment-biometrics",
+   "kind": "obligation",
+   "title": "Conformity assessment for Annex III point 1",
+   "summary": "For biometric systems, choose internal control (Annex VI) or notified-body assessment (Annex VII) if harmonised standards were applied; use Annex VII where no standards or only partly applied or standards are missing.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "high_risk_annex_i",
+       "eq": true
+      }
+     },
+     {
+      "field": "annex_iii_area",
+      "eq": "1"
+     }
+    ]
+   },
+   "provisions": [
+    "art_43.par_1"
+   ],
+   "anchor_node": "art_43.par_1",
+   "quote": "the provider has applied harmonised standards referred to in Article 40, or, where applicable, common specifications referred to in Article 41",
+   "legal_assessment_needed": "Whether harmonised standards or common specifications were fully applied determines the route (Annex VI vs VII).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "conformity-assessment-annex-iii-internal",
+   "kind": "obligation",
+   "title": "Conformity assessment by internal control (Annex III 2-8)",
+   "summary": "For Annex III points 2 to 8, follow the internal-control procedure of Annex VI; no notified body is involved.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "high_risk_annex_iii",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "high_risk_annex_i",
+       "eq": true
+      }
+     },
+     {
+      "field": "annex_iii_area",
+      "in": [
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7",
+       "8"
+      ]
+     }
+    ]
+   },
+   "provisions": [
+    "art_43.par_2"
+   ],
+   "anchor_node": "art_43.par_2",
+   "quote": "providers shall follow the conformity assessment procedure based on internal control as referred to in Annex VI",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "conformity-assessment-annex-i",
+   "kind": "obligation",
+   "title": "Conformity assessment under Annex I legislation",
+   "summary": "For Annex I Section A products, follow the conformity assessment procedure of the relevant sectoral legislation, with the Section 2 requirements assessed within it; notified bodies need AI-specific competence.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "high_risk_annex_i",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_43.par_3"
+   ],
+   "anchor_node": "art_43.par_3",
+   "quote": "the provider of the system shall follow the relevant conformity assessment procedure as required in accordance with the relevant Union harmonisation legislation.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "new-conformity-assessment-substantial-modification",
+   "kind": "obligation",
+   "title": "Repeat conformity assessment after substantial modification",
+   "summary": "A system already assessed needs a new conformity assessment after a substantial modification, whether or not it is further distributed. Pre-determined changes of learning systems are not substantial.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_43.par_4"
+   ],
+   "anchor_node": "art_43.par_4",
+   "quote": "shall undergo a new conformity assessment procedure in the event of a substantial modification",
+   "legal_assessment_needed": "Whether a change is 'substantial' (Art. 3(23)) versus pre-determined.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "eu-declaration-of-conformity",
+   "kind": "obligation",
+   "title": "Draw up the EU declaration of conformity",
+   "summary": "Draw up a written, machine-readable or electronically signed EU declaration for each high-risk system with the Annex V content, keep it 10 years, translate it, and keep it up to date.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_47",
+    "art_16.g"
+   ],
+   "anchor_node": "art_47.par_1",
+   "quote": "The provider shall draw up a written machine readable, physical or electronically signed EU declaration of conformity for each high-risk AI system",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "ce-marking",
+   "kind": "obligation",
+   "title": "Affix the CE marking",
+   "summary": "Affix the CE marking visibly, legibly and indelibly (digital marking for digital systems), followed by the notified body number where applicable.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_48",
+    "art_16.h"
+   ],
+   "anchor_node": "art_48.par_3",
+   "quote": "The CE marking shall be affixed visibly, legibly and indelibly for high-risk AI systems.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "post-market-monitoring",
+   "kind": "obligation",
+   "title": "Establish a post-market monitoring system",
+   "summary": "Set up and document a post-market monitoring system based on a plan (part of Annex IV documentation) that actively collects and analyses performance data over the system's lifetime.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_72"
+   ],
+   "anchor_node": "art_72.par_1",
+   "quote": "Providers shall establish and document a post-market monitoring system in a manner that is proportionate to the nature of the AI technologies and the risks of the high-risk AI system.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "serious-incident-reporting",
+   "kind": "obligation",
+   "title": "Report serious incidents to authorities",
+   "summary": "Report serious incidents to the market surveillance authority of the Member State where it occurred, immediately after establishing a causal link and within 15 days at most; 2 days for widespread infringement or serious critical-infrastructure disruption; 10 days for death.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_73.par_1",
+    "art_73.par_2",
+    "art_73.par_3",
+    "art_73.par_4"
+   ],
+   "anchor_node": "art_73.par_1",
+   "quote": "Providers of high-risk AI systems placed on the Union market shall report any serious incident to the market surveillance authorities of the Member States where that incident occurred.",
+   "legal_assessment_needed": "Whether an event is a 'serious incident' and when a causal link is established (Art. 73(2)).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "third-party-supply-agreement",
+   "kind": "obligation",
+   "title": "Agree information transfer with component suppliers",
+   "summary": "The provider of a high-risk system and any third party supplying AI models, tools, components or processes must agree in writing the information, capabilities and access needed for the provider to comply.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_25.par_4"
+   ],
+   "anchor_node": "art_25.par_4",
+   "quote": "shall, by written agreement, specify the necessary information, capabilities, technical access and other assistance",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "appoint-authorised-representative",
+   "kind": "obligation",
+   "title": "Appoint an EU authorised representative",
+   "summary": "Providers established outside the EU must appoint, by written mandate, an authorised representative in the Union before making a high-risk system available there, and enable it to perform its tasks.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "provider_in_third_country",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_22.par_1",
+    "art_22.par_2"
+   ],
+   "anchor_node": "art_22.par_1",
+   "quote": "providers established in third countries shall, by written mandate, appoint an authorised representative which is established in the Union.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "authorised-representative-tasks",
+   "kind": "obligation",
+   "title": "Perform the mandated tasks as authorised representative",
+   "summary": "Perform the tasks in the mandate, give authorities a copy of it on request, and terminate the mandate and inform the market surveillance authority if the provider acts contrary to its obligations.",
+   "roles": [
+    "authorised_representative"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_22.par_3",
+    "art_22.par_4"
+   ],
+   "anchor_node": "art_22.par_3",
+   "quote": "The authorised representative shall perform the tasks specified in the mandate received from the provider.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "importer-verification",
+   "kind": "obligation",
+   "title": "Verify conformity before importing",
+   "summary": "Before placing a high-risk system on the market, the importer verifies the conformity assessment, technical documentation, CE marking, EU declaration, instructions and the appointment of an authorised representative.",
+   "roles": [
+    "importer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_23.par_1",
+    "art_23.par_2"
+   ],
+   "anchor_node": "art_23.par_1",
+   "quote": "Before placing a high-risk AI system on the market, importers shall ensure that the system is in conformity with this Regulation by verifying that:",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "importer-no-placing-if-nonconforming",
+   "kind": "obligation",
+   "title": "Withhold non-conforming system from market",
+   "summary": "If there is reason to consider a system non-conforming or falsified, do not place it on the market until conformity is restored, and inform the provider, representative and authorities where a risk exists.",
+   "roles": [
+    "importer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_23.par_2"
+   ],
+   "anchor_node": "art_23.par_2",
+   "quote": "it shall not place the system on the market until it has been brought into conformity",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "importer-marking-and-records",
+   "kind": "obligation",
+   "title": "Mark importer details and keep records",
+   "summary": "Show importer name and contact address on the system or documentation, keep certificate, instructions and declaration of conformity for 10 years, and cooperate with and supply information to authorities.",
+   "roles": [
+    "importer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_23.par_3",
+    "art_23.par_5",
+    "art_23.par_6",
+    "art_23.par_7"
+   ],
+   "anchor_node": "art_23.par_3",
+   "quote": "Importers shall indicate their name, registered trade name or registered trade mark, and the address at which they can be contacted",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "distributor-verification",
+   "kind": "obligation",
+   "title": "Verify CE marking and documents before supplying",
+   "summary": "Before making a high-risk system available, distributors check the CE marking, EU declaration, instructions for use and that provider and importer met their marking and identification duties; do not supply if doubtful.",
+   "roles": [
+    "distributor"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_24.par_1",
+    "art_24.par_2"
+   ],
+   "anchor_node": "art_24.par_1",
+   "quote": "Before making a high-risk AI system available on the market, distributors shall verify that it bears the required CE marking",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "distributor-corrective-action-and-cooperation",
+   "kind": "obligation",
+   "title": "Act on non-conformity and cooperate (distributor)",
+   "summary": "Distributors who find a supplied system non-conforming take or ensure corrective action, inform the provider/importer and authorities of risks, provide information on request, and cooperate with authorities.",
+   "roles": [
+    "distributor"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_24.par_4",
+    "art_24.par_5",
+    "art_24.par_6",
+    "art_24.par_3"
+   ],
+   "anchor_node": "art_24.par_4",
+   "quote": "shall take the corrective actions necessary to bring that system into conformity with those requirements, to withdraw it or recall it",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "role-change-rebranding",
+   "kind": "obligation",
+   "title": "Becoming provider by rebranding a high-risk system",
+   "summary": "A distributor, importer, deployer or third party who puts its name or trademark on a high-risk system already on the market is treated as provider and bears all Art. 16 obligations, unless contracts allocate them otherwise.",
+   "roles": [
+    "distributor",
+    "importer",
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "rebrands_high_risk_system",
+    "eq": true
+   },
+   "provisions": [
+    "art_25.par_1",
+    "art_25.par_2"
+   ],
+   "anchor_node": "art_25.par_1.a",
+   "quote": "they put their name or trademark on a high-risk AI system already placed on the market or put into service",
+   "legal_assessment_needed": "Role change under Art. 25(1)(a); effect of contractual allocation ('without prejudice to contractual arrangements').",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "role-change-substantial-modification",
+   "kind": "obligation",
+   "title": "Becoming provider by substantial modification",
+   "summary": "Anyone who substantially modifies a high-risk system that remains high-risk becomes its provider; the original provider is then no longer treated as provider of that system.",
+   "roles": [
+    "distributor",
+    "importer",
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "substantially_modifies_high_risk_system",
+    "eq": true
+   },
+   "provisions": [
+    "art_25.par_1",
+    "art_25.par_2"
+   ],
+   "anchor_node": "art_25.par_1.b",
+   "quote": "they make a substantial modification to a high-risk AI system that has already been placed on the market",
+   "legal_assessment_needed": "Whether a modification is 'substantial'; Art. 25(1)(b).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "role-change-purpose-modification",
+   "kind": "obligation",
+   "title": "Becoming provider by changing intended purpose",
+   "summary": "Anyone who changes the intended purpose of a non-high-risk system, including a general-purpose system, so that it becomes high-risk is treated as its provider with all Art. 16 obligations.",
+   "roles": [
+    "distributor",
+    "importer",
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "changes_intended_purpose_to_high_risk",
+    "eq": true
+   },
+   "provisions": [
+    "art_25.par_1",
+    "art_25.par_2"
+   ],
+   "anchor_node": "art_25.par_1.c",
+   "quote": "they modify the intended purpose of an AI system, including a general-purpose AI system, which has not been classified as high-risk",
+   "legal_assessment_needed": "Whether the new use falls into Annex III or Annex I (Art. 6); GPAI downstream use is a frequent case.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "product-manufacturer-as-provider",
+   "kind": "obligation",
+   "title": "Product manufacturer is provider of embedded AI",
+   "summary": "For high-risk AI that is a safety component of an Annex I Section A product, the product manufacturer is treated as provider under Art. 16 if it places the product on the market with its name or puts it into service under its name.",
+   "roles": [
+    "product_manufacturer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "high_risk_annex_i",
+      "eq": true
+     },
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_25.par_3"
+   ],
+   "anchor_node": "art_25.par_3",
+   "quote": "the product manufacturer shall be considered to be the provider of the high-risk AI system",
+   "legal_assessment_needed": "Which of the two circumstances in Art. 25(3) applies.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-use-per-instructions",
+   "kind": "obligation",
+   "title": "Use high-risk system per instructions",
+   "summary": "Deployers take appropriate technical and organisational measures to use high-risk systems in line with the instructions for use.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_26.par_1"
+   ],
+   "anchor_node": "art_26.par_1",
+   "quote": "Deployers of high-risk AI systems shall take appropriate technical and organisational measures to ensure they use such systems in accordance with the instructions for use",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-assign-human-oversight",
+   "kind": "obligation",
+   "title": "Assign competent human oversight",
+   "summary": "Deployers assign human oversight to natural persons with the necessary competence, training, authority and support.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_26.par_2"
+   ],
+   "anchor_node": "art_26.par_2",
+   "quote": "Deployers shall assign human oversight to natural persons who have the necessary competence, training and authority, as well as the necessary support.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-input-data",
+   "kind": "obligation",
+   "title": "Ensure input data is relevant and representative",
+   "summary": "To the extent the deployer controls the input data, it ensures the data is relevant and sufficiently representative for the system's intended purpose.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "deployer_controls_input_data",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_26.par_4"
+   ],
+   "anchor_node": "art_26.par_4",
+   "quote": "that deployer shall ensure that input data is relevant and sufficiently representative in view of the intended purpose of the high-risk AI system.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-monitoring-and-incident-info",
+   "kind": "obligation",
+   "title": "Monitor operation and inform on risks or incidents",
+   "summary": "Monitor the system according to the instructions; on reason to see a risk, inform provider or distributor and the authority without delay and suspend use; on a serious incident, inform provider first, then importer or distributor and authorities.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_26.par_5"
+   ],
+   "anchor_node": "art_26.par_5",
+   "quote": "Deployers shall monitor the operation of the high-risk AI system on the basis of the instructions for use",
+   "legal_assessment_needed": "When use 'may result in' a Art. 79(1) risk; what counts as a serious incident.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-log-retention",
+   "kind": "obligation",
+   "title": "Keep generated logs at least six months",
+   "summary": "Deployers keep the logs automatically generated by the high-risk system, to the extent under their control, for a period appropriate to the purpose and at least six months, unless other law provides otherwise.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_26.par_6"
+   ],
+   "anchor_node": "art_26.par_6",
+   "quote": "for a period appropriate to the intended purpose of the high-risk AI system, of at least six months",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-inform-workers",
+   "kind": "obligation",
+   "title": "Inform workers before workplace use",
+   "summary": "Employers inform workers' representatives and affected workers before putting into service or using a high-risk system at the workplace.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "deployer_is_employer_workplace_use",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_26.par_7"
+   ],
+   "anchor_node": "art_26.par_7",
+   "quote": "deployers who are employers shall inform workers' representatives and the affected workers that they will be subject to the use of the high-risk AI system.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-public-registration",
+   "kind": "obligation",
+   "title": "Register use and check registration (public deployers)",
+   "summary": "Public authorities, Union bodies and persons acting on their behalf, deploying Annex III systems (not area 2), register themselves and the use in the EU database, and must not use an unregistered system; they inform provider or distributor.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "high_risk_annex_iii",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "annex_iii_area",
+       "eq": "2"
+      }
+     },
+     {
+      "field": "deployer_public_authority_or_union_body",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_26.par_8",
+    "art_49.par_3"
+   ],
+   "anchor_node": "art_49.par_3",
+   "quote": "deployers that are public authorities, Union institutions, bodies, offices or agencies or persons acting on their behalf shall register themselves",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "deployer-dpia-use-instructions",
+   "kind": "obligation",
+   "title": "Use provider information for the DPIA",
+   "summary": "Where applicable, deployers use the information from Art. 13 to carry out their GDPR (or Law Enforcement Directive) data protection impact assessment.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "deployer_processes_personal_data",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_26.par_9"
+   ],
+   "anchor_node": "art_26.par_9",
+   "quote": "deployers of high-risk AI systems shall use the information provided under Article 13 of this Regulation",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-post-remote-biometric-id",
+   "kind": "obligation",
+   "title": "Obtain authorisation for post-remote biometric ID",
+   "summary": "For targeted search of a suspect, request judicial or administrative authorisation ex ante or within 48 hours; no untargeted use; document each use in the police file and report annually.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "deployer_post_remote_biometric_law_enforcement",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_26.par_10"
+   ],
+   "anchor_node": "art_26.par_10",
+   "quote": "the deployer of a high-risk AI system for post-remote biometric identification shall request an authorisation, ex ante, or without undue delay and no later than 48 hours",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-inform-affected-persons",
+   "kind": "obligation",
+   "title": "Inform persons subject to high-risk decisions",
+   "summary": "Deployers of Annex III systems that make or assist decisions about natural persons inform those persons that the high-risk system is used on them (Directive 2016/680 Art. 13 for law enforcement).",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "high_risk_annex_iii",
+      "eq": true
+     },
+     {
+      "field": "deployer_decisions_about_natural_persons",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_26.par_11"
+   ],
+   "anchor_node": "art_26.par_11",
+   "quote": "shall inform the natural persons that they are subject to the use of the high-risk AI system.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "deployer-cooperate-with-authorities",
+   "kind": "obligation",
+   "title": "Cooperate with competent authorities",
+   "summary": "Deployers cooperate with competent authorities in any action they take regarding the high-risk system.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_26.par_12"
+   ],
+   "anchor_node": "art_26.par_12",
+   "quote": "Deployers shall cooperate with the relevant competent authorities in any action those authorities take in relation to the high-risk AI system",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "fundamental-rights-impact-assessment",
+   "kind": "obligation",
+   "title": "Perform a fundamental rights impact assessment",
+   "summary": "Before first deploying, public-law bodies, private entities providing public services, and deployers of Annex III 5(b) or (c) systems (not area 2) assess fundamental rights impact and notify the market surveillance authority with the template.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "fria_required",
+    "eq": true
+   },
+   "provisions": [
+    "art_27.par_1",
+    "art_27.par_2",
+    "art_27.par_3"
+   ],
+   "anchor_node": "art_27.par_1",
+   "quote": "shall perform an assessment of the impact on fundamental rights that the use of such system may produce.",
+   "legal_assessment_needed": "Whether the deployer is a body governed by public law or a private entity providing public services; whether point 5(b)/(c) applies.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "right-to-explanation",
+   "kind": "obligation",
+   "title": "Explain decisions based on high-risk output",
+   "summary": "Where a deployer decision based on an Annex III system (not area 2) has legal or similarly significant effects, the affected person may obtain clear explanations of the system's role and the main elements of the decision.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "high_risk_annex_iii",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "annex_iii_area",
+       "eq": "2"
+      }
+     },
+     {
+      "field": "deployer_decisions_about_natural_persons",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_86"
+   ],
+   "anchor_node": "art_86.par_1",
+   "quote": "shall have the right to obtain from the deployer clear and meaningful explanations of the role of the AI system in the decision-making procedure",
+   "legal_assessment_needed": "'Legal effects or similarly significant' and 'adverse impact'; right applies only where not otherwise provided by Union law (Art. 86(3)).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "transparency-ai-interaction",
+   "kind": "obligation",
+   "title": "Disclose AI interaction to users",
+   "summary": "Design systems that interact directly with people so that those people are told they are dealing with an AI, unless obvious to a reasonably well-informed person; narrow law-enforcement exception.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "art50_interacts_with_persons",
+    "eq": true
+   },
+   "provisions": [
+    "art_50.par_1",
+    "art_50.par_5"
+   ],
+   "anchor_node": "art_50.par_1",
+   "quote": "are informed that they are interacting with an AI system, unless this is obvious from the point of view of a natural person",
+   "legal_assessment_needed": "Whether the AI interaction is 'obvious' to a reasonably well-informed person.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "default"
+   }
+  },
+  {
+   "id": "transparency-machine-readable-marking",
+   "kind": "obligation",
+   "title": "Mark synthetic outputs machine-readably",
+   "summary": "Providers of systems generating synthetic audio, image, video or text must mark outputs in a machine-readable, detectable format using effective, interoperable, robust solutions as technically feasible; assistive editing is excluded.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "art50_generates_synthetic_content",
+    "eq": true
+   },
+   "provisions": [
+    "art_50.par_2",
+    "art_50.par_5"
+   ],
+   "anchor_node": "art_50.par_2",
+   "quote": "shall ensure that the outputs of the AI system are marked in a machine-readable format and detectable as artificially generated or manipulated.",
+   "legal_assessment_needed": "Scope of the 'assistive function for standard editing' and 'do not substantially alter' exceptions.",
+   "omnibus_note": "Schedule and grace period for systems already on the market: see Art. 111(4) entry.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "default"
+   }
+  },
+  {
+   "id": "transparency-emotion-biometric-deployer",
+   "kind": "obligation",
+   "title": "Inform people exposed to emotion or biometric categorisation",
+   "summary": "Deployers of emotion recognition or biometric categorisation systems inform exposed persons of the operation and process personal data in line with GDPR and related law; law-enforcement exception applies.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "art50_emotion_or_biometric_categorisation",
+    "eq": true
+   },
+   "provisions": [
+    "art_50.par_3",
+    "art_50.par_5"
+   ],
+   "anchor_node": "art_50.par_3",
+   "quote": "shall inform the natural persons exposed thereto of the operation of the system",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "default"
+   }
+  },
+  {
+   "id": "transparency-deep-fake-disclosure",
+   "kind": "obligation",
+   "title": "Disclose deep fakes",
+   "summary": "Deployers disclose that image, audio or video content constituting a deep fake is artificially generated or manipulated; for evidently artistic or satirical works disclosure may be limited so as not to hamper enjoyment.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "art50_deep_fake",
+    "eq": true
+   },
+   "provisions": [
+    "art_50.par_4",
+    "art_50.par_5"
+   ],
+   "anchor_node": "art_50.par_4",
+   "quote": "shall disclose that the content has been artificially generated or manipulated.",
+   "legal_assessment_needed": "Whether content is a 'deep fake' (Art. 3(60)) and whether the artistic-work limitation applies.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "default"
+   }
+  },
+  {
+   "id": "transparency-public-interest-text",
+   "kind": "obligation",
+   "title": "Disclose AI-generated text on public-interest matters",
+   "summary": "Deployers publishing AI-generated or manipulated text to inform the public on matters of public interest must disclose it, unless the text was human-reviewed or under editorial control with a person holding editorial responsibility.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "field": "art50_public_interest_text",
+    "eq": true
+   },
+   "provisions": [
+    "art_50.par_4.sub_2",
+    "art_50.par_5"
+   ],
+   "anchor_node": "art_50.par_4.sub_2",
+   "quote": "shall disclose that the text has been artificially generated or manipulated.",
+   "legal_assessment_needed": "Meaning of 'matters of public interest' and of sufficient human review or editorial control.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "default"
+   }
+  },
+  {
+   "id": "transparency-information-manner",
+   "kind": "obligation",
+   "title": "Give transparency information clearly and on time",
+   "summary": "Information under Art. 50(1)-(4) must be given in a clear, distinguishable manner at the latest at first interaction or exposure and conform to accessibility requirements.",
+   "roles": [
+    "provider",
+    "deployer"
+   ],
+   "applies_if": {
+    "any": [
+     {
+      "field": "art50_interacts_with_persons",
+      "eq": true
+     },
+     {
+      "field": "art50_generates_synthetic_content",
+      "eq": true
+     },
+     {
+      "field": "art50_emotion_or_biometric_categorisation",
+      "eq": true
+     },
+     {
+      "field": "art50_deep_fake",
+      "eq": true
+     },
+     {
+      "field": "art50_public_interest_text",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_50.par_5"
+   ],
+   "anchor_node": "art_50.par_5",
+   "quote": "in a clear and distinguishable manner at the latest at the time of the first interaction or exposure.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "default"
+   }
+  },
+  {
+   "id": "gpai-technical-documentation",
+   "kind": "obligation",
+   "title": "Maintain GPAI model technical documentation",
+   "summary": "Providers of general-purpose AI models draw up and keep up to date model documentation (training, testing, evaluation) with at least Annex XI content for the AI Office and national authorities. Not required for qualifying open-source models without systemic risk.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "gpai_open_source_exemption_applies",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_53.par_1.a",
+    "anx_11"
+   ],
+   "anchor_node": "art_53.par_1.a",
+   "quote": "draw up and keep up-to-date the technical documentation of the model, including its training and testing process",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-downstream-information",
+   "kind": "obligation",
+   "title": "Provide information to downstream integrators",
+   "summary": "Provide AI system providers integrating the model with documentation enabling them to understand capabilities and limits and comply with their duties (Annex XII), protecting trade secrets. Not required for qualifying open-source models without systemic risk.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "gpai_open_source_exemption_applies",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_53.par_1.b",
+    "anx_12"
+   ],
+   "anchor_node": "art_53.par_1.b",
+   "quote": "draw up, keep up-to-date and make available information and documentation to providers of AI systems who intend to integrate the general-purpose AI model",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-copyright-policy",
+   "kind": "obligation",
+   "title": "Adopt a copyright compliance policy",
+   "summary": "Put in place a policy to comply with Union copyright law, in particular to detect and respect rights reservations under Art. 4(3) of Directive 2019/790. Applies to all GPAI providers including open-source.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "gpai_model",
+    "eq": true
+   },
+   "provisions": [
+    "art_53.par_1.c"
+   ],
+   "anchor_node": "art_53.par_1.c",
+   "quote": "put in place a policy to comply with Union law on copyright and related rights",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-training-content-summary",
+   "kind": "obligation",
+   "title": "Publish a training-content summary",
+   "summary": "Publish a sufficiently detailed summary of the content used to train the model, following the AI Office template. Applies to all GPAI providers including open-source.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "gpai_model",
+    "eq": true
+   },
+   "provisions": [
+    "art_53.par_1.d"
+   ],
+   "anchor_node": "art_53.par_1.d",
+   "quote": "draw up and make publicly available a sufficiently detailed summary about the content used for training of the general-purpose AI model",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-cooperation",
+   "kind": "obligation",
+   "title": "Cooperate with Commission and national authorities",
+   "summary": "GPAI model providers cooperate as necessary with the Commission and national competent authorities in exercising their powers.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "gpai_model",
+    "eq": true
+   },
+   "provisions": [
+    "art_53.par_3"
+   ],
+   "anchor_node": "art_53.par_3",
+   "quote": "Providers of general-purpose AI models shall cooperate as necessary with the Commission and the national competent authorities",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-authorised-representative",
+   "kind": "obligation",
+   "title": "Appoint EU representative for GPAI model",
+   "summary": "Third-country GPAI model providers appoint an EU authorised representative by written mandate before placing the model on the Union market; open-source models without systemic risk are exempt.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "field": "provider_in_third_country",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "gpai_open_source_exemption_applies",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_54"
+   ],
+   "anchor_node": "art_54.par_1",
+   "quote": "Prior to placing a general-purpose AI model on the Union market, providers established in third countries shall, by written mandate, appoint an authorised representative",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-open-source-exemption",
+   "kind": "relief",
+   "title": "Open-source exemption from Art. 53(1)(a),(b) and Art. 54",
+   "summary": "Free and open-source GPAI models with public weights, architecture and usage information are exempt from technical documentation, downstream information and representative duties, but not from copyright policy and training summary; never exempt with systemic risk.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "gpai_open_source_exemption_applies",
+    "eq": true
+   },
+   "provisions": [
+    "art_53.par_2",
+    "art_54.par_6"
+   ],
+   "anchor_node": "art_53.par_2",
+   "quote": "This exception shall not apply to general-purpose AI models with systemic risks.",
+   "legal_assessment_needed": "Whether the licence is truly 'free and open-source' and parameters are 'made publicly available' (monetisation questions, Recital 103).",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-systemic-risk-notification",
+   "kind": "obligation",
+   "title": "Notify the Commission of systemic-risk model",
+   "summary": "Notify the Commission within two weeks once the high-impact-capability condition is met or known to be met; the provider may submit substantiated arguments that the model does not present systemic risks.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "field": "gpai_systemic_risk_threshold_met",
+    "eq": true
+   },
+   "provisions": [
+    "art_52.par_1",
+    "art_52.par_2"
+   ],
+   "anchor_node": "art_52.par_1",
+   "quote": "the relevant provider shall notify the Commission without delay and in any event within two weeks after that requirement is met",
+   "legal_assessment_needed": "Whether the model has high-impact capabilities; presumption at the FLOP threshold in Art. 51(2) can be rebutted (Art. 52(2)).",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-sr-model-evaluation",
+   "kind": "obligation",
+   "title": "Evaluate systemic-risk model incl. adversarial testing",
+   "summary": "Providers of GPAI models with systemic risk perform model evaluation with standardised protocols and document adversarial testing to identify and mitigate systemic risks.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "field": "gpai_systemic_risk",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_55.par_1.a"
+   ],
+   "anchor_node": "art_55.par_1.a",
+   "quote": "perform model evaluation in accordance with standardised protocols and tools reflecting the state of the art",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-sr-risk-assessment-mitigation",
+   "kind": "obligation",
+   "title": "Assess and mitigate systemic risks at Union level",
+   "summary": "Systemic-risk model providers assess and mitigate possible Union-level systemic risks stemming from development, placing on the market or use of the model.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "field": "gpai_systemic_risk",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_55.par_1.b"
+   ],
+   "anchor_node": "art_55.par_1.b",
+   "quote": "assess and mitigate possible systemic risks at Union level, including their sources",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-sr-incident-reporting",
+   "kind": "obligation",
+   "title": "Report serious incidents of systemic-risk model",
+   "summary": "Keep track of, document and report to the AI Office and, as appropriate, national authorities, without undue delay, serious incidents and possible corrective measures.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "field": "gpai_systemic_risk",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_55.par_1.c"
+   ],
+   "anchor_node": "art_55.par_1.c",
+   "quote": "keep track of, document, and report, without undue delay, to the AI Office",
+   "legal_assessment_needed": "What counts as a serious incident for a general-purpose model.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "gpai-sr-cybersecurity",
+   "kind": "obligation",
+   "title": "Ensure cybersecurity of systemic-risk model",
+   "summary": "Ensure adequate cybersecurity protection for the systemic-risk model and its physical infrastructure.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "field": "gpai_systemic_risk",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_55.par_1.d"
+   ],
+   "anchor_node": "art_55.par_1.d",
+   "quote": "ensure an adequate level of cybersecurity protection for the general-purpose AI model with systemic risk",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "transition-annex-x-it-systems",
+   "kind": "transition",
+   "title": "Legacy large-scale IT systems (Annex X)",
+   "summary": "AI systems that are components of Annex X large-scale IT systems placed on the market before 2 August 2027 must comply by 31 December 2030; Art. 5 still applies in the meantime.",
+   "roles": [
+    "any"
+   ],
+   "applies_if": {
+    "field": "annex_x_large_scale_it",
+    "eq": true
+   },
+   "provisions": [
+    "art_111.par_1"
+   ],
+   "anchor_node": "art_111.par_1",
+   "quote": "shall be brought into compliance with this Regulation by 31 December 2030.",
+   "timing": {
+    "basis": "transition",
+    "date": "2030-12-31",
+    "source_node": "art_111.par_1"
+   }
+  },
+  {
+   "id": "transition-legacy-hrai-significant-change",
+   "kind": "transition",
+   "title": "Legacy high-risk systems: duties only after significant design changes",
+   "summary": "High-risk systems placed on the market before the date Chapter III applies fall under the Regulation only if, from that date, they undergo significant design changes. Art. 5 prohibitions apply regardless.",
+   "roles": [
+    "any"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "high_risk",
+      "eq": true
+     },
+     {
+      "field": "placed_before_chapter_iii_date",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_111.par_2"
+   ],
+   "anchor_node": "art_111.par_2",
+   "quote": "only if, as from that date, those systems are subject to significant changes in their designs.",
+   "legal_assessment_needed": "Whether a change is a 'significant change in design' (distinct from 'substantial modification' in Art. 3(23)).",
+   "omnibus_note": "2026 text refers to 'the date of application of Chapter III referred to in Article 113', which the Omnibus shifted (2027-12-02 / 2028-08-02).",
+   "timing": {
+    "basis": "transition",
+    "date": null,
+    "source_node": "art_111.par_2"
+   }
+  },
+  {
+   "id": "transition-public-authority-2030",
+   "kind": "transition",
+   "title": "Public-authority HRAI must comply by 2 August 2030",
+   "summary": "Providers and deployers of high-risk systems intended for use by public authorities must in any case take steps to comply by 2 August 2030, even if the system is otherwise grandfathered.",
+   "roles": [
+    "provider",
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "high_risk",
+      "eq": true
+     },
+     {
+      "field": "placed_before_chapter_iii_date",
+      "eq": true
+     },
+     {
+      "field": "hrai_intended_for_public_authorities",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_111.par_2"
+   ],
+   "anchor_node": "art_111.par_2",
+   "quote": "shall take the necessary steps to comply with the requirements and obligations laid down in this Regulation by 2 August 2030.",
+   "timing": {
+    "basis": "transition",
+    "date": "2030-08-02",
+    "source_node": "art_111.par_2"
+   }
+  },
+  {
+   "id": "transition-gpai-legacy-models",
+   "kind": "transition",
+   "title": "Legacy GPAI models: comply by 2 August 2027",
+   "summary": "Providers of GPAI models placed on the market before 2 August 2025 must take the necessary steps to comply with the Regulation by 2 August 2027.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "field": "placed_on_market_before_2025_08_02",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_111.par_3"
+   ],
+   "anchor_node": "art_111.par_3",
+   "quote": "shall take the necessary steps in order to comply with the obligations laid down in this Regulation by 2 August 2027.",
+   "timing": {
+    "basis": "transition",
+    "date": "2027-08-02",
+    "source_node": "art_111.par_3"
+   }
+  },
+  {
+   "id": "transition-art50-2-legacy-generators",
+   "kind": "transition",
+   "title": "Legacy generative systems: Art. 50(2) marking by 2 December 2026",
+   "summary": "Providers of generative systems placed on the market before 2 August 2026 must comply with Art. 50(2) marking by 2 December 2026.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "art50_generates_synthetic_content",
+      "eq": true
+     },
+     {
+      "field": "placed_on_market_before_2026_08_02",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_111.par_4",
+    "art_50.par_2"
+   ],
+   "anchor_node": "art_111.par_4",
+   "quote": "shall take the necessary steps in order to comply with Article 50(2) by 2 December 2026.",
+   "new_in_2026": true,
+   "omnibus_note": "Grace period for Art. 50(2) added by the Omnibus.",
+   "timing": {
+    "basis": "transition",
+    "date": "2026-12-02",
+    "source_node": "art_111.par_4"
+   }
+  },
+  {
+   "id": "sme-smc-simplified-technical-documentation",
+   "kind": "relief",
+   "title": "Simplified Annex IV documentation for SMEs and SMCs",
+   "summary": "SMEs including start-ups, and SMCs, may provide Annex IV technical documentation in a simplified manner using the Commission's simplified form; if they opt in, they must use that form.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "enterprise_size",
+      "in": [
+       "sme",
+       "smc"
+      ]
+     }
+    ]
+   },
+   "provisions": [
+    "art_11.par_1.sub_2"
+   ],
+   "anchor_node": "art_11.par_1.sub_2",
+   "quote": "SMEs, including start-ups, and SMCs, may provide the elements of the technical documentation specified in Annex IV in a simplified manner.",
+   "anchor_node_2024": "art_11.par_1.sub_2",
+   "omnibus_note": "SMC extension added by the Omnibus (2024 text covered SMEs only).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "sme-smc-proportionate-qms",
+   "kind": "relief",
+   "title": "QMS implementation proportionate to size",
+   "summary": "QMS implementation is proportionate to organisation size, especially for SME providers and SMCs, but the degree of rigour needed for compliance must still be met.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "enterprise_size",
+      "in": [
+       "sme",
+       "smc"
+      ]
+     }
+    ]
+   },
+   "provisions": [
+    "art_17.par_2"
+   ],
+   "anchor_node": "art_17.par_2",
+   "quote": "The implementation of the aspects referred to in paragraph 1 shall be proportionate to the size of the provider's organisation",
+   "omnibus_note": "SMC reference added by the Omnibus.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "sme-simplified-qms-elements",
+   "kind": "relief",
+   "title": "Simplified QMS elements for SMEs without linked enterprises",
+   "summary": "SMEs including start-ups without partner or linked enterprises may meet certain QMS elements in a simplified manner under Commission guidelines; Arts. 9-15, 72 and 73 duties remain.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "enterprise_size",
+      "eq": "sme"
+     }
+    ]
+   },
+   "provisions": [
+    "art_63"
+   ],
+   "anchor_node": "art_63.par_1",
+   "quote": "may comply with certain elements of the quality management system required by Article 17 in a simplified manner",
+   "anchor_node_2024": "art_63.par_1",
+   "legal_assessment_needed": "Whether the enterprise has partner or linked enterprises (Recommendation 2003/361/EC); Art. 63 refers to SMEs only, not SMCs.",
+   "omnibus_note": "Extended by the Omnibus from microenterprises (2024 text: 'Microenterprises within the meaning of Recommendation 2003/361/EC') to SMEs including start-ups (2026 text).",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision (Chapter VI); in practice it only matters once the high-risk requirements apply on the route date."
+   }
+  },
+  {
+   "id": "sme-reduced-conformity-fees",
+   "kind": "relief",
+   "title": "Proportionately reduced conformity assessment fees for SMEs",
+   "summary": "Member States take SME provider needs into account when setting conformity assessment fees, reducing them proportionately to size and market size.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "enterprise_size",
+      "eq": "sme"
+     }
+    ]
+   },
+   "provisions": [
+    "art_62.par_2"
+   ],
+   "anchor_node": "art_62.par_2",
+   "quote": "reducing those fees proportionately to their size, market size and other relevant indicators.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision (Chapter VI); in practice it only matters once the high-risk requirements apply on the route date."
+   }
+  },
+  {
+   "id": "sme-smc-fine-cap",
+   "kind": "relief",
+   "title": "Lower-of cap on fines for SMEs and SMCs",
+   "summary": "For SMEs, each fine is capped at the lower of the percentage or fixed amount; for SMCs this lower-of rule applies to the Art. 99(4) and (5) fines.",
+   "roles": [
+    "any"
+   ],
+   "applies_if": {
+    "field": "enterprise_size",
+    "in": [
+     "sme",
+     "smc"
+    ]
+   },
+   "provisions": [
+    "art_99.par_6",
+    "art_99.par_6a"
+   ],
+   "anchor_node": "art_99.par_6a",
+   "quote": "In the case of SMCs, each fine referred to in paragraphs 4 and 5 shall be up to the percentages or amount referred therein, whichever is lower.",
+   "new_in_2026": true,
+   "omnibus_note": "SMC rule (Art. 99(6a)) added by the Omnibus.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78",
+    "not_before": "2026-07-27"
+   }
+  },
+  {
+   "id": "annex-i-section-b-limited-scope",
+   "kind": "scope",
+   "title": "Annex I Section B products: limited AI Act scope",
+   "summary": "For high-risk systems under Art. 6(1) related to Annex I Section B products, only Art. 6(1), 60a and 102-112 apply; sandbox Arts. 57-59 apply only if the sectoral law integrates the requirements. Chapter III Sections 2-3 duties do not apply.",
+   "roles": [
+    "any"
+   ],
+   "applies_if": {
+    "field": "annex_i_section",
+    "eq": "B"
+   },
+   "provisions": [
+    "art_2.par_2",
+    "anx_1.sec_b"
+   ],
+   "anchor_node": "art_2.par_2",
+   "quote": "only Article 6(1), Article 60a and Articles 102 to 112 shall apply",
+   "anchor_node_2024": "art_2.par_2",
+   "omnibus_note": "Machinery (Regulation (EU) 2023/1230) moved by VO 2026/1744 from Annex I Section A (2024: anx_1.sec_a.pt_1) to Section B (anx_1.sec_b.pt_21); machinery AI is therefore no longer subject to the Chapter III duties.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch1-2"
+   }
+  },
+  {
+   "id": "registration-non-public-section",
+   "kind": "obligation",
+   "title": "Register law-enforcement and migration systems in non-public section",
+   "summary": "High-risk systems under Annex III points 1, 6 and 7 are registered in a secure non-public section of the EU database with a reduced data set; only the Commission and designated authorities have access.",
+   "roles": [
+    "provider",
+    "authorised_representative",
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "high_risk_annex_iii",
+      "eq": true
+     },
+     {
+      "field": "annex_iii_area",
+      "in": [
+       "1",
+       "6",
+       "7"
+      ]
+     }
+    ]
+   },
+   "provisions": [
+    "art_49.par_4"
+   ],
+   "anchor_node": "art_49.par_4",
+   "quote": "shall be in a secure non-public section of the EU database referred to in Article 71",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "default",
+    "deadline_caveat": "Literally, the residual rule of Art. 113 second paragraph (2026-08-02) applies to this provision; in practice it is tied to the classification under Art. 6 (Chapter III Section 1, applicable from the route date) and to Art. 16; cf. Art. 111(2)."
+   }
+  },
+  {
+   "id": "importer-storage-transport",
+   "kind": "obligation",
+   "title": "Keep storage and transport from harming compliance",
+   "summary": "While a high-risk system is in their responsibility, importers ensure storage and transport conditions do not jeopardise compliance with the Section 2 requirements.",
+   "roles": [
+    "importer"
+   ],
+   "applies_if": {
+    "field": "hr_chapter_iii_in_scope",
+    "eq": true
+   },
+   "provisions": [
+    "art_23.par_4"
+   ],
+   "anchor_node": "art_23.par_4",
+   "quote": "storage or transport conditions, where applicable, do not jeopardise its compliance with the requirements set out in Section 2.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "gpai-authorised-representative-tasks",
+   "kind": "obligation",
+   "title": "Perform mandated tasks as GPAI authorised representative",
+   "summary": "The representative verifies the provider's documentation and Art. 53/55 duties, keeps Annex XI documentation 10 years, supplies information to the AI Office on request, cooperates, can be addressed instead of the provider, and terminates the mandate if the provider infringes.",
+   "roles": [
+    "authorised_representative"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "gpai_open_source_exemption_applies",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_54.par_3",
+    "art_54.par_4",
+    "art_54.par_5"
+   ],
+   "anchor_node": "art_54.par_3",
+   "quote": "The authorised representative shall perform the tasks specified in the mandate received from the provider.",
+   "timing": {
+    "basis": "deadline_table",
+    "literal_rule": "ch3s4-ch5-ch7-ch12-art78"
+   }
+  },
+  {
+   "id": "fi-qms-deemed-fulfilled",
+   "kind": "relief",
+   "title": "Financial institutions: QMS via internal governance rules",
+   "summary": "Providers that are financial institutions meet the QMS obligation by complying with Union financial-services internal governance rules, except Art. 17(1)(g), (h) and (i).",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "financial_institution",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_17.par_4"
+   ],
+   "anchor_node": "art_17.par_4",
+   "quote": "shall be deemed to be fulfilled by complying with the rules on internal governance arrangements or processes pursuant to the relevant Union financial services law.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "fi-technical-documentation-integrated",
+   "kind": "relief",
+   "title": "Financial institutions: keep technical documentation in financial records",
+   "summary": "Provider financial institutions maintain the Art. 18 technical documentation as part of the documentation kept under financial-services law.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "financial_institution",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_18.par_3"
+   ],
+   "anchor_node": "art_18.par_3",
+   "quote": "shall maintain the technical documentation as part of the documentation kept under the relevant",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "fi-provider-logs-integrated",
+   "kind": "relief",
+   "title": "Financial institutions: keep provider logs in financial records",
+   "summary": "Provider financial institutions keep the automatically generated logs as part of the documentation kept under financial-services law.",
+   "roles": [
+    "provider"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "financial_institution",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_19.par_2"
+   ],
+   "anchor_node": "art_19.par_2",
+   "quote": "shall maintain the logs automatically generated by their high-risk AI systems as part of the doc",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "fi-deployer-monitoring-deemed-fulfilled",
+   "kind": "relief",
+   "title": "Financial institutions: deployer monitoring via governance rules",
+   "summary": "Deployer financial institutions meet the Art. 26(5) monitoring obligation by complying with internal governance rules under financial-services law.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "financial_institution",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_26.par_5.sub_2"
+   ],
+   "anchor_node": "art_26.par_5.sub_2",
+   "quote": "the monitoring obligation set out in the first subparagraph shall be deemed to be fulfilled by complying with the rules on internal governance arrangements",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  },
+  {
+   "id": "fi-deployer-logs-integrated",
+   "kind": "relief",
+   "title": "Financial institutions: deployer logs in financial records",
+   "summary": "Deployer financial institutions maintain the system logs as part of the documentation kept under the relevant financial-services law.",
+   "roles": [
+    "deployer"
+   ],
+   "applies_if": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "financial_institution",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_26.par_6.sub_2"
+   ],
+   "anchor_node": "art_26.par_6.sub_2",
+   "quote": "shall maintain the logs as part of the documentation kept pursuant to the relevant Union financial service law.",
+   "timing": {
+    "basis": "hr_route",
+    "literal_rule": "ch3s1-3"
+   }
+  }
+ ],
+ "classification": [
+  {
+   "id": "annex-iii-area-set",
+   "derives": "annex_iii_area_set",
+   "rule": {
+    "not": {
+     "field": "annex_iii_area",
+     "eq": null
+    }
+   },
+   "provisions": [
+    "art_6.par_2",
+    "anx_3"
+   ],
+   "anchor_node": "art_6.par_2",
+   "quote": "In addition to the high-risk AI systems referred to in paragraph 1, AI systems referred to in Annex III shall be considered to be high-risk.",
+   "legal_assessment_needed": "Whether the intended purpose falls within an Annex III use case (sub-points a-e per area)."
+  },
+  {
+   "id": "high-risk-annex-i",
+   "derives": "high_risk_annex_i",
+   "rule": {
+    "all": [
+     {
+      "field": "annex_i_section",
+      "eq": "A"
+     },
+     {
+      "field": "annex_i_third_party_conformity_assessment",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_6.par_1",
+    "art_6.par_1a",
+    "art_6.par_1b",
+    "art_6.par_1c",
+    "anx_1.sec_a",
+    "art_2.par_2"
+   ],
+   "anchor_node": "art_6.par_1.a",
+   "quote": "the AI system is intended to be used as a safety component of a product, or the AI system is itself a product, covered by the Union harmonisation legislation listed in Annex I;",
+   "legal_assessment_needed": "Both Art. 6(1) conditions hold; 'safety component' per Art. 6(1a)/(1b); third-party assessment solely for non-safety risks does not count (Art. 6(1c)).",
+   "note": "Only Section A products carry the full Chapter III duties; Section B products fall under Art. 2(2) (entry annex-i-section-b-limited-scope). Omnibus added Art. 6(1a)-(1c) and moved machinery to Section B."
+  },
+  {
+   "id": "art6-3-exception",
+   "derives": "art6_3_exception_applies",
+   "rule": {
+    "all": [
+     {
+      "not": {
+       "field": "annex_iii_area",
+       "eq": null
+      }
+     },
+     {
+      "field": "annex_iii_art6_3_exception_concluded",
+      "eq": true
+     },
+     {
+      "field": "annex_iii_performs_profiling",
+      "eq": false
+     }
+    ]
+   },
+   "provisions": [
+    "art_6.par_3",
+    "art_6.par_3.sub_2",
+    "art_6.par_3.sub_3"
+   ],
+   "anchor_node": "art_6.par_3",
+   "quote": "By derogation from paragraph 2, an AI system referred to in Annex III shall not be considered to be high-risk where it does not pose a significant risk of harm to the health, safety or fundamental rights of natural persons",
+   "legal_assessment_needed": "Core legal assessment: provider's own judgement that one of the four conditions (narrow procedural task, improving a human activity, pattern detection, preparatory task) applies and that no significant risk exists. Profiling always overrides (Art. 6(3) third subparagraph)."
+  },
+  {
+   "id": "high-risk-annex-iii",
+   "derives": "high_risk_annex_iii",
+   "rule": {
+    "all": [
+     {
+      "field": "annex_iii_area_set",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "art6_3_exception_applies",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_6.par_2",
+    "art_6.par_3"
+   ],
+   "anchor_node": "art_6.par_2",
+   "quote": "In addition to the high-risk AI systems referred to in paragraph 1, AI systems referred to in Annex III shall be considered to be high-risk."
+  },
+  {
+   "id": "high-risk",
+   "derives": "high_risk",
+   "rule": {
+    "any": [
+     {
+      "field": "high_risk_annex_i",
+      "eq": true
+     },
+     {
+      "field": "high_risk_annex_iii",
+      "eq": true
+     }
+    ]
+   },
+   "provisions": [
+    "art_6.par_1",
+    "art_6.par_2"
+   ],
+   "anchor_node": "art_6.par_2",
+   "quote": "In addition to the high-risk AI systems referred to in paragraph 1, AI systems referred to in Annex III shall be considered to be high-risk."
+  },
+  {
+   "id": "legacy-before-chapter-iii",
+   "derives": "placed_before_chapter_iii_date",
+   "rule": {
+    "computed": "placed_on_market_before is earlier than the Chapter III date from deadlines.json for the route (Annex III: rule art6-par2-annex3; Annex I A: rule art6-par1-annex1); false when placed_on_market_before is null"
+   },
+   "provisions": [
+    "art_111.par_2"
+   ],
+   "anchor_node": "art_111.par_2",
+   "quote": "that have been placed on the market or put into service before the date of application of Chapter III referred to in Article 113",
+   "legal_assessment_needed": "Which Chapter III date applies for systems on both routes."
+  },
+  {
+   "id": "legacy-art111-2",
+   "derives": "legacy_art111_2",
+   "rule": {
+    "all": [
+     {
+      "field": "placed_before_chapter_iii_date",
+      "eq": true
+     },
+     {
+      "field": "significant_design_change_since_application",
+      "eq": false
+     }
+    ]
+   },
+   "provisions": [
+    "art_111.par_2"
+   ],
+   "anchor_node": "art_111.par_2",
+   "quote": "only if, as from that date, those systems are subject to significant changes in their designs.",
+   "legal_assessment_needed": "'Significant changes in their designs' (distinct from 'substantial modification', Art. 3(23)).",
+   "note": "Public-authority systems must still comply by 2030-08-02 (transition entry)."
+  },
+  {
+   "id": "hr-chapter-iii-in-scope",
+   "derives": "hr_chapter_iii_in_scope",
+   "rule": {
+    "all": [
+     {
+      "field": "high_risk",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "annex_x_large_scale_it",
+       "eq": true
+      }
+     },
+     {
+      "not": {
+       "field": "legacy_art111_2",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_111.par_1",
+    "art_111.par_2"
+   ],
+   "anchor_node": "art_111.par_2",
+   "quote": "In any case, the providers and deployers of high-risk AI systems intended to be used by public authorities shall take the necessary steps to comply with the requirements and obligations laid down in this Regulation by 2 August 2030.",
+   "note": "Annex X systems have their own transition (Art. 111(1))."
+  },
+  {
+   "id": "fria-required",
+   "derives": "fria_required",
+   "rule": {
+    "all": [
+     {
+      "field": "hr_chapter_iii_in_scope",
+      "eq": true
+     },
+     {
+      "field": "high_risk_annex_iii",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "annex_iii_area",
+       "eq": "2"
+      }
+     },
+     {
+      "any": [
+       {
+        "field": "deployer_public_body_or_public_service",
+        "eq": true
+       },
+       {
+        "all": [
+         {
+          "field": "annex_iii_area",
+          "eq": "5"
+         },
+         {
+          "field": "annex_iii_point5_bc",
+          "eq": true
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "provisions": [
+    "art_27.par_1"
+   ],
+   "anchor_node": "art_27.par_1",
+   "quote": "deployers that are bodies governed by public law, or are private entities providing public services, and deployers of high-risk AI systems referred to in points 5 (b) and (c) of Annex III",
+   "legal_assessment_needed": "'Private entities providing public services'; scope of points 5(b),(c)."
+  },
+  {
+   "id": "gpai-systemic-risk",
+   "derives": "gpai_systemic_risk",
+   "rule": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "any": [
+       {
+        "field": "gpai_systemic_risk_threshold_met",
+        "eq": true
+       },
+       {
+        "field": "gpai_commission_designated",
+        "eq": true
+       }
+      ]
+     }
+    ]
+   },
+   "provisions": [
+    "art_51.par_1",
+    "art_51.par_2",
+    "art_52.par_1"
+   ],
+   "anchor_node": "art_51.par_1.a",
+   "quote": "it has high impact capabilities evaluated on the basis of appropriate technical tools and methodologies, including indicators and benchmarks;",
+   "legal_assessment_needed": "Presumption at the FLOP threshold (Art. 51(2)) is rebuttable (Art. 52(2)); designation under Art. 51(1)(b)."
+  },
+  {
+   "id": "gpai-open-source-exemption-applies",
+   "derives": "gpai_open_source_exemption_applies",
+   "rule": {
+    "all": [
+     {
+      "field": "gpai_model",
+      "eq": true
+     },
+     {
+      "field": "open_source_model",
+      "eq": true
+     },
+     {
+      "not": {
+       "field": "gpai_systemic_risk",
+       "eq": true
+      }
+     }
+    ]
+   },
+   "provisions": [
+    "art_53.par_2",
+    "art_54.par_6"
+   ],
+   "anchor_node": "art_53.par_2",
+   "quote": "The obligations set out in paragraph 1, points (a) and (b), shall not apply to providers of AI models that are released under a free and open-source licence",
+   "legal_assessment_needed": "Free and open-source licence test; applies only to Art. 53(1)(a),(b) and Art. 54."
+  }
+ ]
+}
