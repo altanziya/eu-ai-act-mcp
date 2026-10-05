@@ -3,6 +3,9 @@ import { parseRef } from "../tools/refParser.js";
 import type { ModelAnswer } from "./answer.js";
 import type { EvalCase } from "./cases.js";
 
+/** Changing scoring behaviour requires a new SCORER_VERSION (stored in results.json and report.md). */
+export const SCORER_VERSION = "eval-scorer-v2";
+
 export type VersionId = "32024R1689" | "02024R1689-20260727";
 
 /** Consolidated/Omnibus hints win over Official Journal hints; no hint at all: null. */

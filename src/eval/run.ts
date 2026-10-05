@@ -18,7 +18,7 @@ import type { Arm, ModelInfo } from "./openrouter.js";
 import { PROMPT_VERSION, buildSystemPrompt, buildUserPrompt } from "./prompts.js";
 import { computeE1, latestRuns, renderReport, runKey, summarize } from "./report.js";
 import type { RunRecord } from "./report.js";
-import { scoreCase } from "./score.js";
+import { SCORER_VERSION, scoreCase } from "./score.js";
 
 const MAX_TOKENS = 3000;
 const PROBE_JSON = join(REPO_ROOT, "scripts/cost-probe/results/2026-10-05.json");
@@ -122,8 +122,14 @@ export async function main(argv: string[]): Promise<number> {
 
   const estimator = o.dryRun ? new Estimator() : Estimator.fromFile(PROBE_JSON);
   const existing = o.resume ? readLines(runsPath) : [];
+  let rescored = 0;
   if (o.resume) {
+    const stale = [...new Set(existing.filter((r) => r.prompt_version !== PROMPT_VERSION).map((r) => r.prompt_version ?? "none"))];
+    if (stale.length > 0) throw new Error(`--resume: ${runsPath} holds runs made with prompt_version ${stale.join(", ")}, current is ${PROMPT_VERSION}; results of different prompts must not be mixed (use a new --out)`);
+    const resultsPath = join(out, "results.json");
+    if (existsSync(resultsPath)) rescored = Number((JSON.parse(readFileSync(resultsPath, "utf8")) as { rescored_runs?: number }).rescored_runs ?? 0) || 0;
     const n = rescore(existing, cases);
+    rescored += n;
     if (n > 0) {
       writeFileSync(runsPath, existing.map((r) => `${JSON.stringify(r)}\n`).join(""), "utf8");
       console.log(`resume: re-scored ${n} stored runs with the current scorer`);
@@ -187,7 +193,7 @@ export async function main(argv: string[]): Promise<number> {
       break;
     }
     let rec: RunRecord;
-    const base = { case_id: t.c.id, subset: t.c.subset, knowable_before_omnibus: t.c.knowable_before_omnibus, kind: t.c.kind, model: t.model, arm: t.arm, rep: t.rep };
+    const base = { prompt_version: PROMPT_VERSION, case_id: t.c.id, subset: t.c.subset, knowable_before_omnibus: t.c.knowable_before_omnibus, kind: t.c.kind, model: t.model, arm: t.arm, rep: t.rep };
     if (o.dryRun) {
       const raw = mockAnswer(t.c, t.index);
       const parsed = parseAnswer(raw);
@@ -233,7 +239,7 @@ export async function main(argv: string[]): Promise<number> {
   const latest = latestRuns(lines);
   const total = lines.reduce((s, r) => s + r.cost, 0);
   const e1 = o.primaryModel !== null ? computeE1(lines, o.primaryModel) : null;
-  const meta = { cases_file: o.cases, prompt_version: PROMPT_VERSION, status, dry_run: o.dryRun, reps: o.reps, max_usd: o.maxUsd, total_cost_usd: total, primary_model: o.primaryModel, e1, ...(note ? { note } : {}) };
+  const meta = { cases_file: o.cases, prompt_version: PROMPT_VERSION, scorer_version: SCORER_VERSION, rescored_runs: rescored, status, dry_run: lines.length > 0 && lines.every((r) => r.mock === true), reps: o.reps, max_usd: o.maxUsd, total_cost_usd: total, primary_model: o.primaryModel, e1, ...(note ? { note } : {}) };
   writeFileSync(
     join(out, "results.json"),
     `${JSON.stringify({ ...meta, runs: latest.length, planned_runs: cases.length * o.models.length * o.arms.length * o.reps, models: o.models, arms: o.arms, cases: cases.length, max_tokens: MAX_TOKENS, request_params: modelParams, estimates, cells: summarize(lines) }, null, 2)}\n`,

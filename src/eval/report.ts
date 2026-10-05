@@ -133,6 +133,9 @@ export function computeE1(lines: RunRecord[], model: string): E1Result | null {
 export interface ReportMeta {
   cases_file: string;
   prompt_version: string;
+  scorer_version?: string;
+  /** Stored runs whose score was recomputed on --resume (cumulative over resumes). */
+  rescored_runs?: number;
   status: string;
   dry_run: boolean;
   reps: number;
@@ -178,6 +181,9 @@ export function renderReport(meta: ReportMeta, lines: RunRecord[]): string {
   L.push(
     `- Cases file: ${meta.cases_file}`,
     `- Prompt version: ${meta.prompt_version}`,
+    `- Scorer version: ${meta.scorer_version ?? "unknown"}`,
+    `- Re-scored runs (on resume): ${meta.rescored_runs ?? 0}`,
+    `- Dry run (all runs mock): ${meta.dry_run}`,
     `- Status: ${meta.status}`,
     `- Repetitions per case: ${meta.reps}`,
     `- Total cost (sum of usage.cost): ${f4(meta.total_cost_usd)} USD (cap ${meta.max_usd} USD)`,
