@@ -136,11 +136,7 @@ function render(record: EvidenceRecord, report: RecomputeReport, files: FileChec
     ),
   );
 
-  $("creator").replaceChildren(
-    el("h2", "ungeprüfte Angaben des Erstellers / unverified statements by the creator"),
-    table(["", ""], [["question", show(record.question)], ["creator", show(record.creator)], ["created_at", show(record.created_at)]]),
-    el("p", "Diese Angaben stammen vom Ersteller und wurden hier nicht geprüft. / These statements come from the creator and were not checked here."),
-  );
+  $("creator-body").replaceChildren(table(["", ""], [["question", show(record.question)], ["creator", show(record.creator)], ["created_at", show(record.created_at)]]));
 
   $("record-notice").replaceChildren(el("h2", "Hinweis im Record / notice in the record"), el("p", record.notice?.de ?? "–"), el("p", record.notice?.en ?? "–"));
 }
