@@ -26,15 +26,12 @@ createServer((req, res) => {
     res.writeHead(302, { Location: "/verify/" }).end();
     return;
   }
+  // Anything that could leave site/ is simply not found: parent segments, backslashes, NUL bytes.
+  const notFound = (): void => void res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("not found");
+  if (rel.includes("\0") || rel.includes("\\") || rel.split("/").includes("..")) return notFound();
   let file = normalize(join(ROOT, rel));
-  if (file !== ROOT && !file.startsWith(ROOT + sep)) {
-    res.writeHead(403).end("forbidden");
-    return;
-  }
+  if (file !== ROOT && !file.startsWith(ROOT + sep)) return notFound();
   if (existsSync(file) && statSync(file).isDirectory()) file = join(file, "index.html");
-  if (!existsSync(file) || !statSync(file).isFile()) {
-    res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" }).end("not found");
-    return;
-  }
+  if (!existsSync(file) || !statSync(file).isFile()) return notFound();
   res.writeHead(200, { "Content-Type": TYPES[extname(file)] ?? "application/octet-stream", "Cache-Control": "no-cache" }).end(readFileSync(file));
 }).listen(PORT, "127.0.0.1", () => console.log(`serving site/ at http://127.0.0.1:${PORT}/verify/  (build first: npm run build:site)`));
