@@ -68,7 +68,13 @@ export function ancestorChain(idx: CorpusIndex, id: string): ProvisionNode[] {
   return chain;
 }
 
-export const isIsoDate = (s: string): boolean => /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(`${s}T00:00:00Z`));
+/** YYYY-MM-DD that is a real calendar date (2026-02-30 and 2026-09-31 are not). */
+export const isIsoDate = (s: string): boolean => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if (!m) return false;
+  const d = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+  return d.getUTCFullYear() === Number(m[1]) && d.getUTCMonth() === Number(m[2]) - 1 && d.getUTCDate() === Number(m[3]);
+};
 
 /** Version checked for an `as_of` date: before the consolidated version existed, the Official Journal version. */
 export const versionForDate = (asOf: string): Version => (asOf < CONSOLIDATED_FROM ? V2024 : V2026);

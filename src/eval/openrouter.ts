@@ -35,7 +35,8 @@ export const TOOL_DEFS = [
         `Returns one provision of Regulation (EU) 2024/1689 by id or citation (e.g. "art_50.par_1" or "Article 50(1)"), with all descendants. ` +
         `as_of: reference date; without version the text in force on that date is returned (before 2026-07-27 the Official Journal version 32024R1689, after it the consolidated version 02024R1689-20260727); default today. ` +
         `version: 32024R1689 (Official Journal) or 02024R1689-20260727 (consolidated after the Omnibus); an explicit version wins over as_of. Recitals exist only in 32024R1689; asking for one in 02024R1689-20260727 returns found=false with a fallback. ` +
-        `The result carries applicability: whether the provision applies on as_of (from the deadline table).`,
+        `The result carries applicability: whether the provision applies on as_of (from the deadline table). ` +
+        `The response lists neighbouring provisions (including ones inserted by the 2026 amendment, such as paragraph 6a); check them before concluding that the Act says nothing more.`,
       parameters: {
         type: "object",
         properties: {

@@ -1,6 +1,6 @@
 /**
  * MCP server (stdio) for the EU AI Act provision tree: aiact_get_provision, aiact_diff, aiact_verify_citation and, in
- * extended mode (`npm run mcp:extended`, `--extended`, `AIACT_MCP_EXTENDED=1`), aiact_search and aiact_audit_text.
+ * extended mode (`npm run mcp:extended`, `--extended`, `AIACT_MCP_EXTENDED=1`), aiact_search, aiact_audit_text and aiact_obligations.
  * The default stays the three tools of the frozen day-2 golden test (exactly three tools listed). All tools are read-only. Results are JSON text in content[0]. Start: `npm run mcp`.
  * stdout carries the protocol only; nothing else may be written to it.
  */
@@ -12,7 +12,9 @@ import { V2024, V2026 } from "../config.js";
 import { auditText } from "../tools/audit.js";
 import { diffProvision } from "../tools/diffProvision.js";
 import { getProvision } from "../tools/getProvision.js";
+import { aiactObligations, describeProfile } from "../tools/obligations.js";
 import { aiactSearch } from "../tools/search.js";
+import { isIsoDate } from "../tools/corpus.js";
 import { todayIso } from "../tools/today.js";
 import { verifyCitation } from "../tools/verifyCitation.js";
 
@@ -22,14 +24,31 @@ const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: 
 
 const localDateIso = todayIso;
 
+/** zod schema of the company profile, generated from `profile_fields` of data/obligations.json (loose: the tool names the allowed fields itself). */
+function profileSchema(): z.ZodType<Record<string, unknown>> {
+  const shape: Record<string, z.ZodType> = {};
+  for (const [name, f] of Object.entries(describeProfile())) {
+    let t: z.ZodType;
+    if (f.type === "boolean") t = z.boolean().nullable();
+    else if (f.type === "enum_array") t = z.array(z.enum(f.values as [string, ...string[]])).min(1);
+    else if (f.type === "enum") t = z.enum(f.values as [string, ...string[]]).nullable();
+    else if (f.type === "date") t = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(isIsoDate, "not a valid calendar date").nullable();
+    else t = z.unknown();
+    shape[name] = (f.required ? t : t.optional()).describe(f.description);
+  }
+  return z.looseObject(shape) as unknown as z.ZodType<Record<string, unknown>>;
+}
+
 const json = (value: unknown): { content: Array<{ type: "text"; text: string }> } => ({ content: [{ type: "text", text: JSON.stringify(value, null, 2) }] });
+/** Minified JSON (the obligations result is large; no indentation saves a third). */
+const jsonCompact = (value: unknown): { content: Array<{ type: "text"; text: string }> } => ({ content: [{ type: "text", text: JSON.stringify(value) }] });
 const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; text: string }> } => ({
   isError: true,
   content: [{ type: "text", text: JSON.stringify({ error: e instanceof Error ? e.message : String(e) }) }],
 });
 
 export interface ServerOptions {
-  /** Also register aiact_search and aiact_audit_text (day 5a). Default false: tests/golden/day2 expects exactly three tools. */
+  /** Also register aiact_search, aiact_audit_text (day 5a) and aiact_obligations (day 5b). Default false: tests/golden/day2 expects exactly three tools. */
   extended?: boolean;
 }
 
@@ -44,7 +63,8 @@ export function createServer(options: ServerOptions = {}): McpServer {
         `Returns one provision of Regulation (EU) 2024/1689 by id or citation (e.g. "art_50.par_1" or "Article 50(1)"), with all descendants. ` +
         `as_of: reference date; without version the text in force on that date is returned (before 2026-07-27 the Official Journal version ${V2024}, after it the consolidated version ${V2026}); default today. ` +
         `version: ${V2024} (Official Journal) or ${V2026} (consolidated after the Omnibus); an explicit version wins over as_of. Recitals exist only in ${V2024}; asking for one in ${V2026} returns found=false with a fallback. ` +
-        `The result carries applicability: whether the provision applies on as_of (from the deadline table).`,
+        `The result carries applicability: whether the provision applies on as_of (from the deadline table). ` +
+        `The response lists neighbouring provisions (including ones inserted by the 2026 amendment, such as paragraph 6a); check them before concluding that the Act says nothing more.`,
       inputSchema: {
         id: z.string().min(1).describe("Node id (art_50.par_1.a, anx_3.pt_1, rec_12, cpt_3.sct_2) or citation (Article 50(1)(a), Anhang III Nummer 1)"),
         as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD; default today. Selects the version (before 2026-07-27 the Official Journal version, after it the consolidated version) unless version is given."),
@@ -149,6 +169,31 @@ export function createServer(options: ServerOptions = {}): McpServer {
       (args) => {
         try {
           return json(auditText({ ...args, as_of: args.as_of ?? localDateIso() }));
+        } catch (e) {
+          return failure(e);
+        }
+      },
+    );
+
+    server.registerTool(
+      "aiact_obligations",
+      {
+        title: "Obligations navigator",
+        description:
+          "For a company profile, returns the applicable and upcoming obligations of the AI Act with citation, verbatim quotation, application date on as_of and notes where a legal assessment is needed. " +
+          "Dates follow Article 113 and the classification route (Annex III / Annex I); where the literal rule differs the entry carries applies_from_literal and a caveat. Covers the consolidated text from 2026-07-27. " +
+          "Deterministic, no language model. Orientation only, not legal advice; it flags legal assessments, it does not make them.",
+        inputSchema: {
+          profile: profileSchema().describe("Company profile; `role` (array of provider|deployer|importer|distributor|authorised_representative|product_manufacturer) is required, missing flags count as false (uses_or_provides_ai_system: true), other missing fields as unknown"),
+          as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD, not before 2026-07-27; default today"),
+          lang: lang.optional().describe("Language of the citations; en (default) or de (quotations stay in English)"),
+          detail: z.enum(["compact", "full"]).optional().describe("compact (default): without summary, omnibus_note and profile_echo, quotations cut to 300 characters; full: everything"),
+        },
+        annotations: READ_ONLY,
+      },
+      (args) => {
+        try {
+          return jsonCompact(aiactObligations({ ...args, as_of: args.as_of ?? localDateIso(), detail: args.detail ?? "compact" }));
         } catch (e) {
           return failure(e);
         }

@@ -9,6 +9,8 @@ import { buildIndex } from "../../src/tools/corpus.js";
 import { loadCorpus } from "../../src/tools/corpus-fs.js";
 import type { CorpusIndex, Lang, Version } from "../../src/tools/corpus.js";
 import { verifyCitation } from "../../src/tools/verifyCitation.js";
+import { Postings, overlaps } from "../../src/tools/verifyCore.js";
+import { prepareQuote, tokenize } from "../../src/tools/match.js";
 
 let order = 0;
 const n = (id: string, parent: string | null, type: ProvisionNode["type"], text: string): ProvisionNode => ({
@@ -223,4 +225,29 @@ describe("verifyCitation: recitals (F66)", () => {
     expect(r.warnings).toBeUndefined();
     expect(r.version_checked).toBe(V2026);
   });
+});
+
+describe("verify: token prefilter (inverted index)", () => {
+  const sets = (idx: CorpusIndex) => idx.nodes.filter((n) => n.text !== "").map((n) => new Set(tokenize(n.text).map((t) => t.norm)));
+  const quotes = [
+    "A risk management system shall be established, implemented, documented and maintained in relation to high-risk AI systems.",
+    "Providers shall always keep entirely unrelated imaginary wording about bananas",
+    "the the the the the the the the the the",
+    "Fines of up to 7 500 000 EUR or 1 % of the total worldwide annual turnover for the supply of incorrect information",
+    "shall be [...] pursuant to Article 9 and the national competent authorities shall cooperate",
+    "Betreiber von Hochrisiko-KI-Systemen treffen geeignete technische und organisatorische Maßnahmen",
+  ];
+  for (const [version, lang] of [[V2026, "en"], [V2024, "en"], [V2026, "de"]] as Array<[Version, Lang]>) {
+    it(`finds every set that overlaps the quote enough, as testing all sets does (${version}.${lang})`, () => {
+      const all = sets(loadCorpus(version, lang));
+      const postings = new Postings(all);
+      for (const q of quotes) {
+        const pq = prepareQuote(q);
+        const brute = all.map((set, i) => (overlaps(pq, set) ? i : -1)).filter((i) => i >= 0);
+        const cands = postings.candidates(pq);
+        expect(cands).toEqual([...cands].sort((a, b) => a - b));
+        expect(cands.filter((i) => overlaps(pq, all[i] as Set<string>))).toEqual(brute);
+      }
+    });
+  }
 });

@@ -6,7 +6,7 @@ import { buildIndex } from "../../src/tools/corpus.js";
 import type { CorpusIndex, Lang, Version } from "../../src/tools/corpus.js";
 import type { DeadlineTable } from "../../src/tools/deadlines.js";
 import { aiactSearch } from "../../src/tools/search.js";
-import { aiactSearchWith, snippetOf, stem } from "../../src/tools/searchCore.js";
+import { aiactSearchWith, detectLang, snippetOf, stem } from "../../src/tools/searchCore.js";
 
 let order = 0;
 const n = (id: string, parent: string | null, type: ProvisionNode["type"], text: string, heading = ""): ProvisionNode => ({
@@ -185,5 +185,26 @@ describe("search core stays isomorphic", () => {
     const res = await build({ entryPoints: ["src/tools/searchCore.ts"], bundle: true, write: false, format: "esm", platform: "browser", target: "es2022", outdir: "out", logLevel: "silent", metafile: true });
     expect(Object.keys(res.metafile.inputs).filter((i) => /(-fs\.ts|config\.ts)$/.test(i))).toEqual([]);
     for (const f of res.outputFiles) expect(f.text).not.toMatch(/from\s*["']node:|require\(["'](node:|fs["'])/);
+  });
+});
+
+describe("language detection without lang", () => {
+  it("detects German by umlauts, stopwords, word parts and endings, else English", () => {
+    for (const q of ["Pflichten Betreiber Hochrisiko", "Wer muss die Konformität nachweisen", "Geldbußen", "Kennzeichnung von Deepfakes", "Übergangsfristen", "Registrierung Datenbank", "Verbotene Praktiken"]) expect(detectLang(q), q).toBe("de");
+    for (const q of ["deployer obligations", "risk management system", "penalties for providers", "AI literacy", "what must the provider do when", "registration database"]) expect(detectLang(q), q).toBe("en");
+  });
+  it("an explicit lang wins; an unknown lang is an error", () => {
+    expect(aiactSearchWith({ query: "Pflichten Betreiber", as_of: "2026-10-05", lang: "en" }, mini, TABLE).lang).toBe("en");
+    expect(() => aiactSearchWith({ query: "x", as_of: "2026-10-05", lang: "fr" as Lang }, mini, TABLE)).toThrow(/lang/);
+  });
+  it("searches the German text for a German query and reports the language", () => {
+    const r = aiactSearchWith({ query: "Aufsicht der zuständigen Behörde", as_of: "2026-10-05" }, mini, TABLE);
+    expect(r.lang).toBe("de");
+    expect(r.results[0]?.id).toBe("art_1.par_1");
+  });
+  it("on the real corpus, a German duty query finds Article 26 in the top three", () => {
+    const r = aiactSearch({ query: "Pflichten Betreiber Hochrisiko", as_of: "2026-10-05" });
+    expect(r.lang).toBe("de");
+    expect(r.results.slice(0, 3).some((h) => h.id === "art_26" || h.id.startsWith("art_26."))).toBe(true);
   });
 });
