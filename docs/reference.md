@@ -199,7 +199,7 @@ quotation, application date on `as_of` and the places where a legal assessment i
 - **`open_questions`**: `[{ id, kind, question }]`. `kind: "classification"`: one question per open profile field (not provided, no assumed default), only if setting the
   field to another admissible value (booleans both ways, every enum value, a date before everything) changes the list of obligation ids or one of their
   `applies_from` for this profile (probe per field; so only fields that matter for the profile's roles come up; a pair of fields that matter only together is not
-  detected). `id` is the field, the text is the open legal question of the classification rule that names the field, else the field description.
+  detected). `id` is the field, the text is `Not set: <field> – <field description without its type prefix>` (the classification rules are not consulted: one that only mentions the field in passing would give it a foreign text).
   `kind: "legal_assessment"`: the `legal_assessment_needed` of each listed entry (`id` = obligation id), after the classification questions.
 - **Limits**: the map does not decide classification, significance of design changes, "substantial modification", public-service status or open-source
   status; those are flagged. Not covered: duties of Member States, the Commission, notified bodies and authorities; penalty amounts (see `work/obligations/notes.md`,
@@ -235,7 +235,7 @@ call (about 30 ms).
 | `not_yet_in_force` | warning | exists only in the consolidated version and `as_of` is before 2026-07-27 (inserted by Regulation (EU) 2026/1744) |
 | `deadline_ok` | ok | the date in the sentence is the current date of a subject of its clause; also the date of a descendant's rule (partial application, said in the message) |
 | `outdated_deadline` | error | the date is the one of the other (older) version; `expected` is the current date, `found` the date in the text, `sources` the nodes of both versions; message "changed by Regulation (EU) 2026/1744" |
-| `unverified_date` | warning | a date in a sentence with apply/applies/applicable/from/by/gilt/ab that matches nothing known (`expected` is the application date); also a date that exists only in the consolidated version when `as_of` is before 2026-07-27 |
+| `unverified_date` | warning | a date shortly after a trigger word (apply, applicable, from, by, take effect, effective, comply, since, deadline; gilt, gelten, ab, seit, anwendbar, wirksam, Frist, bis, spätestens) that matches nothing known (`expected` is the application date); no such warning for the both-routes and carried subjects below; also a date that exists only in the consolidated version when `as_of` is before 2026-07-27 |
 | `quote_ok` | ok | `verifyCitation` says `exact` (also `multi_node`, `multiple_matches`) |
 | `outdated_quote` | error | `found_other_version`: the quotation is the wording of the other version; `expected` is the current wording, `suggestion` (for removed text) where it moved |
 | `wrong_pinpoint` | warning | `found_at_other_provision`; `expected` is the right citation, `found` the claimed one |
@@ -254,23 +254,33 @@ Machinery Regulation, Datenschutz-Grundverordnung, treaties) or preceded by "GDP
 no subjects. *Dates*: ISO, `2 August 2026`, `2nd August 2026`, `August 2, 2026`, `2.8.2026`, `2. August 2026` (EN and DE month
 names). A date is judged only where its clause has a cited provision or an anchor term (`Annex III` -> Article 6(2); `Annex I` with
 high-risk -> Article 6(1); general-purpose AI -> Chapter V; prohibited practices -> Article 5; AI literacy -> Article 4;
-transparency obligations -> Article 50). Clauses end at `;`, `, while`, `, whereas`, `, but`, `, während`, `, aber` and at "and"/"und"
+transparency obligations -> Article 50; "high-risk" / "high risk" / "Hochrisiko" (also as a word part: Hochrisiko-KI-Systeme) without Annex I/III and without Article 6(1)/(2) in the sentence -> both routes, see below). Clauses end at `;`, `, while`, `, whereas`, `, but`, `, während`, `, aber` and at "and"/"und"
 when a date precedes it and another subject follows. The subjects of the clause (before the date first) are tried: per subject a date
 written in the text of the cited node or its descendants (in either version) goes first, then the application date (`applies_from`
 and later class dates) of the matching rule of the deadline table in both versions. The date is `deadline_ok` if it fits any subject
 (then rules of descendants count too, as partial application); `outdated_deadline` only if no subject fits and it is the date of
 the other version of one of them (`expected` falls back to the rule when the text gives no unique counterpart); otherwise
-`unverified_date`, only if a trigger word stands at most three words before the date. A date inside a checked quotation is left to
+`unverified_date`, only if a trigger word stands at most six words before the date (itself included) in the same clause. A date inside a checked quotation is left to
 the quotation check. *Quotations*: text in `" "`, `“ ”`, `„ “` or `« »` of at least 6 words, with a citation in the same or the previous
 sentence (a citation inside the quotation does not count), is passed to `verifyCitation` with that citation as `claimed_ref` (at
 most 200 per text, identical ones once). Sentences are split at `. ! ?` (not after abbreviations such as Art., Abs., Nr.; not in
 "2. August"), at blank lines, and never inside a checked quotation.
+*Both routes* (`high-risk` without an annex): the subject has the dates of both routes of Article 6 (`art_6.par_2` = Annex III and `art_6.par_1` = Annex I,
+from the deadline table, nothing in the code). A date of a route in the version in force is `deadline_ok` (the message names the route); a date that
+is only a date of the other version is `outdated_deadline` with `expected` = the Annex III date of the version in force, the message names both
+current dates ("2 December 2027 for Annex III systems and 2 August 2028 for Annex I products"). Such a finding needs a trigger word in the clause of
+the date and the term before the date in that clause (or a date opening the sentence: "From 2 August 2026, high-risk ..."); a general application date
+("The AI Act applies from 2 August 2026, with high-risk systems following later") is not flagged. *Subject from the previous sentence*: a
+date with a trigger word whose sentence has no subject takes the subjects of the sentence before it, if that is in the same paragraph (no blank line)
+and has no date of its own; at most one sentence back, only date findings, no new citation findings, no `unverified_date` for carried subjects.
+*Messages* name dates in reading form ("2 August 2026", "2. August 2026"); `found` and `expected` stay ISO.
 Speed: `verifyCitation` finds the nodes that can match a quote through an inverted token index per corpus (a node needs at least half
 of the quote's tokens, so only nodes holding one of the rarest quote tokens are tested), and searches the four corpora of the precedence
 order only until one decides. Results are the same as testing every node (`tests/unit/verify.test.ts`); 150 different quotations in
 a 5000-word text take about 0.2 s on a developer machine (the audit tests keep their limit of 2 s).
 Known gaps: no recitals, no relative dates ("two years after entry into force"), no check of
-which provision applies to a system; a date without trigger word is not reported when it matches nothing.
+which provision applies to a system; a date without trigger word is not reported when it matches nothing; "high-risk" is a subject only for
+dates with a trigger word, and a subject mentioned only after the date (other than a date opening the sentence) is ignored.
 
 ## Verification levels V0-V2
 
