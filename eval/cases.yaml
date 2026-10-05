@@ -1,0 +1,786 @@
+# Eval A case set (frozen 2026-10-05). Ground truth from the Official Journal (32024R1689, 32026R1744).
+# Scored: date, claim, provision (article level unless the question asks for the exact provision). Version is descriptive only.
+- id: A01
+  kind: generation
+  subset: version_deadline
+  question: I launch a new text-generating AI system on the EU market in September 2026. From which date must providers mark its outputs in a
+    machine-readable format under Article 50(2) of the EU AI Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #3; https://github.com/ggml-org/llama.cpp/discussions/27826 ; https://news.ycombinator.com/item?id=47170356"
+  expected:
+    date: 2026-08-02
+    articles:
+      - art_50
+      - art_113
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, second paragraph
+    quote: It shall apply from 2 August 2026.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 50 is not among the exceptions in Art. 113(3) (amended by
+    Art. 1(40) of 32026R1744), so the default date applies. Date unchanged by the Omnibus, but the Omnibus proposal of 2025 discussed
+    delaying Art. 50(2); a model with stale knowledge may err. Class restricted to systems placed on the market after 2026-08-02 (legacy
+    systems: A02)."
+- id: A02
+  kind: generation
+  subset: version_deadline
+  question: My company has had a text-generating AI system on the EU market since March 2026. By which date must we mark its outputs in a
+    machine-readable format as artificially generated under Article 50(2) of the EU AI Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #4 (Marking-Schonfrist Bestandssysteme); https://github.com/open-webui/open-webui/discussions/13818 (Marking-Thema)"
+  expected:
+    date: 2026-12-02
+    articles:
+      - art_111
+      - art_50
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(39)(b) (new Art. 111(4))
+    quote: that have been placed on the market before 2 August 2026 shall take the necessary steps in order to comply with Article 50(2) by 2
+      December 2026
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. deadlines.json resolves art_50.par_2 and art_111.par_4 to the
+    default 2026-08-02 and has no per-system-class date for the legacy transition (structural gap, F69 excludes Art. 111). Class restricted
+    to systems placed on the market before 2026-08-02."
+- id: A03
+  kind: generation
+  subset: version_deadline
+  question: A company places a new customer-service chatbot on the EU market in October 2026. From which date does the obligation in Article
+    50(1) of the EU AI Act (informing users that they are interacting with an AI system) apply?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #2; https://github.com/open-webui/open-webui/discussions/13818"
+  expected:
+    date: 2026-08-02
+    articles:
+      - art_50
+      - art_113
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, second paragraph
+    quote: It shall apply from 2 August 2026.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 50(1) not excepted in Art. 113(3); default date. Unchanged by
+    the Omnibus (Art. 1(20) amends only Art. 50(7))."
+- id: A04
+  kind: generation
+  subset: version_deadline
+  question: From what date do the high-risk requirements of Chapter III, Sections 1 to 3 of the EU AI Act apply to an AI system used to screen
+    job applicants (Annex III)?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #6 und #4; https://elevateconsult.com/insights/eu-ai-act-article-50-icp-impact/ (Omnibus-Verwirrung)"
+  expected:
+    date: 2027-12-02
+    articles:
+      - art_113
+      - art_6
+      - anx_3
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(b) (new Art. 113(3)(c)(i))
+    quote: 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Agreement holds for the operative node art_6.par_2 (rule
+    art6-par2-annex3); the annex node anx_3.pt_4 itself resolves to the default 2026-08-02 in the table (gap). Annex III point 4
+    (employment) verified in corpus. Original date 2026-08-02."
+- id: A05
+  kind: generation
+  subset: version_deadline
+  question: A manufacturer builds an AI safety component for a medical device regulated under Regulation (EU) 2017/745, which makes it
+    high-risk under Article 6(1) and Annex I of the EU AI Act. From what date do the high-risk requirements of Chapter III, Sections 1 to 3
+    apply to such a system?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2028-08-02
+    articles:
+      - art_113
+      - art_6
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(b) (new Art. 113(3)(c)(ii))
+    quote: 2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Agreement only for the nodes art_6.par_1 and art_113.sub_3.c.ii.
+    deadlines.json maps whole Chapter III Sections 1-3 to 2027-12-02 (rule ch3s1-3), which would be wrong for Annex I systems (structural
+    gap, see md)."
+- id: A06
+  kind: generation
+  subset: version_deadline
+  question: "As of 1 June 2026: from what date does Article 6(1) of the EU AI Act (classification of AI systems as high-risk when they are
+    safety components of products under Annex I) apply?"
+  as_of: 2026-06-01
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2027-08-02
+    articles:
+      - art_113
+      - art_6
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, third paragraph, point (c)
+    quote: Article 6(1) and the corresponding obligations in this Regulation shall apply from 2 August 2027.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 32024R1689. Law in force on 2026-06-01 is the original text."
+- id: A07
+  kind: generation
+  subset: version_deadline
+  question: As of 15 March 2026, from what date do the high-risk obligations for AI systems listed in Annex III apply under the EU AI Act?
+  as_of: 2026-03-15
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2026-08-02
+    articles:
+      - art_113
+      - anx_3
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, second paragraph
+    quote: It shall apply from 2 August 2026.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 32024R1689. Original text; the Omnibus proposal (pending at that date) is not law.
+    Pre-Omnibus control for A04."
+- id: A08
+  kind: generation
+  subset: version_deadline
+  question: From what date does the prohibition in Article 5(1), first subparagraph, point (ba) of the EU AI Act (AI systems generating
+    intimate or sexually explicit imagery of identifiable persons without consent) apply?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2026-12-02
+    articles:
+      - art_5
+      - art_113
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(a) (new Art. 113(3)(a))
+    quote: with the exception of Article 5(1), first subparagraph, points (ba) and (bb), and Article 5(1a) and (1b) which shall apply from 2
+      December 2026
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Point (ba) inserted by Art. 1(7)(a)."
+- id: A09
+  kind: generation
+  subset: version_deadline
+  question: Since what date have the prohibitions of Article 5(1)(a) of the EU AI Act (harmful subliminal manipulation) applied?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2025-02-02
+    articles:
+      - art_5
+      - art_113
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, third paragraph, point (a)
+    quote: Chapters I and II shall apply from 2 February 2025
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Point (a) replaced by the Omnibus but keeps 2 February 2025 for
+    Art. 5(1)(a); see A08 for the new points."
+- id: A10
+  kind: generation
+  subset: version_deadline
+  question: A provider places a new general-purpose AI model on the EU market in October 2026. From what date do the obligations of Article 53
+    of the EU AI Act apply?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #5; https://github.com/ggml-org/llama.cpp/discussions/27826"
+  expected:
+    date: 2025-08-02
+    articles:
+      - art_53
+      - art_113
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, third paragraph, point (b)
+    quote: Chapter III Section 4, Chapter V, Chapter VII and Chapter XII and Article 78 shall apply from 2 August 2025, with the exception of
+      Article 101
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 53 is in Chapter V. Unchanged by the Omnibus (point (b) not
+    amended)."
+- id: A11
+  kind: generation
+  subset: version_deadline
+  question: A general-purpose AI model was placed on the EU market in March 2025. By what date must its provider have taken the necessary
+    steps to comply with the obligations of the EU AI Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #5; https://github.com/ggml-org/llama.cpp/discussions/27826"
+  expected:
+    date: 2027-08-02
+    articles:
+      - art_111
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 111(3)
+    quote: Providers of general-purpose AI models that have been placed on the market before 2 August 2025 shall take the necessary steps in
+      order to comply with the obligations laid down in this Regulation by 2 August 2027.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 111 not in deadlines.json (F69). Art. 111(3) unchanged (Art.
+    1(39) amends paras 2 and adds 4). Model placed in March 2025 is before 2025-08-02."
+- id: A12
+  kind: generation
+  subset: version_deadline
+  question: From what date do Articles 102 to 110 of the EU AI Act (amendments to other Union acts) apply?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2026-07-27
+    articles:
+      - art_102
+      - art_110
+      - art_113
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(c) (new Art. 113(3)(d))
+    quote: Articles 102 to 110 shall apply from 27 July 2026.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Low practical interest; kept as a clean inserted-provision case.
+    Candidate for replacement if Altan prefers."
+- id: A13
+  kind: generation
+  subset: version_deadline
+  question: A provider places a new AI system that ranks job applicants (Annex III, point 4) on the EU market in 2027. It is high-risk under
+    Article 6(2) and no derogation applies. From what date must the system technically allow the automatic recording of events (logs) under
+    Article 12 of the EU AI Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #7; https://news.ycombinator.com/item?id=47230438"
+  expected:
+    date: 2027-12-02
+    articles:
+      - art_12
+      - art_113
+      - anx_3
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(b) (new Art. 113(3)(c)(i))
+    quote: 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 12 text unchanged (32024R1689 Art. 12(1): 'shall technically
+    allow for the automatic recording of events (logs)'). Class restricted to Annex III."
+- id: A14
+  kind: generation
+  subset: version_deadline
+  question: A company deploys a newly placed AI-based CV-screening system that is high-risk under Article 6(2) and Annex III. From what date
+    do the deployer obligations of Article 26 of the EU AI Act apply to it?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #9; https://github.com/langchain-ai/langchain/issues/36173"
+  expected:
+    date: 2027-12-02
+    articles:
+      - art_26
+      - art_113
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(b) (new Art. 113(3)(c)(i))
+    quote: 2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 26 is in Chapter III Section 3, covered by the lead-in of
+    point (c). Class restricted to Annex III."
+- id: A15
+  kind: generation
+  subset: version_deadline
+  question: By what date must the European Commission adopt guidance, including a template, on the post-market monitoring plan referred to in
+    Article 72(3) of the EU AI Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2027-09-02
+    articles:
+      - art_72
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(30) (new Art. 72(3))
+    quote: shall adopt guidance, including a template, on the post-market monitoring plan by 2 September 2027
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Original: implementing act by 2 February 2026 (32024R1689 Art.
+    72(3)). Commission deadline, not in deadlines.json."
+- id: A16
+  kind: generation
+  subset: version_deadline
+  question: By what date must each Member State have at least one national AI regulatory sandbox operational under Article 57(1) of the EU AI Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2027-08-02
+    articles:
+      - art_57
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(22)(a) (new Art. 57(1))
+    quote: which shall be operational by 2 August 2027
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Original: 2026-08-02 (32024R1689 Art. 57(1)). Member State
+    deadline, not in deadlines.json (F69)."
+- id: A17
+  kind: generation
+  subset: version_deadline
+  question: By what date must the Commission adopt delegated acts specifying which high-risk AI systems under Article 6(1) may have certain
+    requirements limited because of equivalent sectoral legislation (Article 2(13) of the EU AI Act)?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2027-08-02
+    articles:
+      - art_2
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(3) (new Art. 2(13))
+    quote: By 2 August 2027, the Commission shall adopt delegated acts in accordance with Article 97
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Provision did not exist in 2024; not in deadlines.json."
+- id: A18
+  kind: generation
+  subset: version_deadline
+  question: By what date must providers and deployers of high-risk AI systems intended for use by public authorities, placed on the market
+    before the high-risk rules apply, comply with the EU AI Act (Article 111(2))?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2030-08-02
+    articles:
+      - art_111
+  ground_truth:
+    celex: 02024R1689-20260727
+    pinpoint: Art. 111(2), as replaced by Art. 1(39)(a)
+    quote: the providers and deployers of high-risk AI systems intended to be used by public authorities shall take the necessary steps to
+      comply with the requirements and obligations laid down in this Regulation by 2 August 2030
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Date 2030-08-02 identical in 2024 and 2026 text; reference point
+    of the first sentence changed. Art. 111 not in deadlines.json."
+- id: A19
+  kind: generation
+  subset: version_deadline
+  question: As of 20 July 2026, from what date do the high-risk obligations for Annex III AI systems (such as credit scoring) apply under the
+    EU AI Act?
+  as_of: 2026-07-20
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2026-08-02
+    articles:
+      - art_113
+      - anx_3
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, second paragraph
+    quote: It shall apply from 2 August 2026.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 32024R1689. Boundary case: 32026R1744 was signed 2026-07-08 and published 2026-07-24
+    (OJ date on the act), in force 2026-07-27 (third day after publication; Art. 4). On 2026-07-20 the original text governs. RISKY: depends
+    on in-force date, see md."
+- id: A20
+  kind: generation
+  subset: version_deadline
+  question: AI systems that are components of the large-scale IT systems listed in Annex X were placed on the market before 2 August 2027. By
+    what date must they be brought into compliance with the EU AI Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2030-12-31
+    articles:
+      - art_111
+      - anx_10
+  ground_truth:
+    celex: 02024R1689-20260727
+    pinpoint: Art. 111(1)
+    quote: that have been placed on the market or put into service before 2 August 2027 shall be brought into compliance with this Regulation by
+      31 December 2030
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Unchanged by the Omnibus; Art. 111 not in deadlines.json."
+- id: A21
+  kind: generation
+  subset: version_deadline
+  question: Does Article 4 of the EU AI Act require providers and deployers to guarantee a specific level of AI literacy of each individual
+    staff member? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #9; https://github.com/langchain-ai/langchain/issues/36173"
+  expected:
+    articles:
+      - art_4
+    claim: no
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(5) (new Art. 4(1))
+    quote: This obligation does not require providers or deployers to guarantee any specific level of AI literacy of any individual.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Non-date case. Original Art. 4: 'shall take measures to ensure, to
+    their best extent, a sufficient level of AI literacy'."
+- id: A22
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, which article of the EU AI Act allows providers of high-risk AI systems to exceptionally process special
+    categories of personal data for bias detection and correction? Give the article number.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_4a.par_1
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(6) (new Art. 4a(1)); Art. 1(9)(b)
+    quote: providers of such systems may exceptionally process special categories of personal data
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 10(5) was deleted by Art. 1(9)(b). Answer: Article 4a (not
+    Article 10(5))."
+- id: A23
+  kind: generation
+  subset: version_deadline
+  question: As of 15 March 2026, which article of the EU AI Act allows providers of high-risk AI systems to exceptionally process special
+    categories of personal data for bias detection and correction? Give the article and paragraph.
+  as_of: 2026-03-15
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    articles:
+      - art_10.par_5
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 10(5)
+    quote: the providers of such systems may exceptionally process special categories of personal data
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 32024R1689. Pre-Omnibus control for A22. Answer: Article 10(5)."
+- id: A24
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, which authority is exclusively competent to supervise and enforce the EU AI Act for AI systems that are
+    integrated into a very large online platform designated under the Digital Services Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_75
+    claim: AI Office
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(31)(b) (new Art. 75(1), second point)
+    quote: The AI Office shall be exclusively competent for the supervision and enforcement of the obligations under this Regulation in relation
+      to the following AI systems
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Second point (VLOP/VLOSE) is new; 2024 Art. 75(1) covered only
+    GPAI-based systems of the same provider. Answer: the AI Office."
+- id: A25
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, is Directive 2006/42/EC (the former Machinery Directive) still listed in Section A of Annex I to the EU AI
+    Act? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - anx_1
+    claim: no
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(41)(a), (b)
+    quote: in Section A, point 1 is deleted
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Directive 2006/42/EC was Section A point 1 in 2024; now Regulation
+    (EU) 2023/1230 is Section B point 21. Answer: no."
+- id: A26
+  kind: generation
+  subset: version_deadline
+  question: On what date did the Digital Omnibus on AI (Regulation (EU) 2026/1744), which amends the EU AI Act, enter into force?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: real_user_question
+  origin_ref: "Bericht 06 Top-10 #4 und #10; https://elevateconsult.com/insights/eu-ai-act-article-50-icp-impact/ ;
+    https://www.theaienterprise.io/p/eu-ai-act-omnibus-reprieve-strategy"
+  expected:
+    date: 2026-07-27
+    articles:
+      - art_113
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 4; OJ L, 24.7.2026
+    quote: This Regulation shall enter into force on the third day following that of its publication in the Official Journal of the European Union
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Publication 24.7.2026 (date on the act, read from the XHTML
+    header) plus third day = 27.7.2026, matches consolidated version name 02024R1689-20260727. Derived date, not stated in the act itself.
+    RISKY."
+- id: A27
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, which provision of Article 5 of the EU AI Act limits the prohibition on placing on the market AI systems
+    that generate intimate or sexually explicit imagery to systems where this is the intended purpose or a reasonably foreseeable and
+    reproducible outcome without adequate safeguards? Give the paragraph.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_5.par_1a
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(7)(b) (new Art. 5(1a))
+    quote: "is only prohibited where: (i) that generation or manipulation is the intended purpose of the AI system"
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Answer: Article 5(1a)."
+- id: A28
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, does an AI system that is solely used for non-safety related aspects such as convenience or quality control
+    qualify as a safety component under the EU AI Act? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_6
+    claim: no
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(8) (new Art. 6(1a))
+    quote: AI systems that are solely used for non-safety related aspects of user assistance, performance optimisation, service efficiency,
+      automation or convenience or quality control shall not qualify as safety components.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 6(1b) carve-back: systems whose failure would endanger health
+    and safety do qualify; the question is restricted to the 'solely non-safety' class. Answer: no."
+- id: A29
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, may small mid-cap enterprises (SMCs) provide the elements of the Annex IV technical documentation of a
+    high-risk AI system in a simplified manner under the EU AI Act? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_11
+    claim: yes
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(10) (amended Art. 11(1))
+    quote: SMEs, including start-ups, and SMCs, may provide the elements of the technical documentation specified in Annex IV in a simplified
+      manner.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. 2024 text covered only SMEs including start-ups. Answer: yes."
+- id: A30
+  kind: generation
+  subset: version_deadline
+  question: As of 15 March 2026, since what date does the AI literacy obligation of Article 4 of the EU AI Act apply?
+  as_of: 2026-03-15
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2025-02-02
+    articles:
+      - art_4
+      - art_113
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, third paragraph, point (a)
+    quote: Chapters I and II shall apply from 2 February 2025
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 32024R1689. Pre-Omnibus date control; Art. 4 is in Chapter I."
+- id: E01
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 113, third paragraph, point (c)(i)
+    provides: "Chapter III, Sections 1, 2, and 3, with the exception of Article 6(5), shall apply from: (i) 2 December 2027 as regards AI
+    systems classified as high-risk pursuant to Article 6(2) and Annex III" (Regulation (EU) 2024/1689, Art. 113(3)(c)(i)).'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: correct
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(b)
+    quote: "Chapter III, Sections 1, 2, and 3, with the exception of Article 6(5), shall apply from: (i) 2 December 2027 as regards AI systems
+      classified as high-risk pursuant to Article 6(2) and Annex III"
+  legal_review: llm_second_rater
+  notes: "Error type: -. Verbatim quote with correct pinpoint. Provisions concerned: art_113.sub_3.c.i."
+- id: E02
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 113, third paragraph, point (c)
+    provides: "Article 6(1) and the corresponding obligations in this Regulation shall apply from 2 August 2027." (Regulation (EU)
+    2024/1689, Art. 113(3)(c)).'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: incorrect
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(b) (point (c) replaced)
+    quote: 2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I
+  legal_review: llm_second_rater
+  notes: "Error type: old_deadline. Quote is the superseded 2024 wording. Current: 2028-08-02 for Annex I systems. Provisions concerned:
+    art_113.sub_3.c.ii."
+- id: E03
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: In the current consolidated version of
+    Regulation (EU) 2024/1689, Article 111(2) reads: "this Regulation shall apply to operators of high-risk AI systems, other than the
+    systems referred to in paragraph 1 of this Article, that have been placed on the market or put into service before 2 August 2026, only
+    if, as from that date, those systems are subject to significant changes in their designs".'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: incorrect
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(39)(a) (new Art. 111(2))
+    quote: that have been placed on the market or put into service before the date of application of Chapter III referred to in Article 113
+  legal_review: llm_second_rater
+  notes: "Error type: wrong_version. Quote is the 2024 wording (verified in 32024R1689 Art. 111(2)); current text refers to the date of
+    application of Chapter III. Provisions concerned: art_111.par_2."
+- id: E04
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 50(4) of the EU AI Act provides:
+    "Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, shall ensure
+    that the outputs of the AI system are marked in a machine-readable format and detectable as artificially generated or manipulated.".'
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    verdict: incorrect
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 50(2)
+    quote: Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, shall ensure
+      that the outputs of the AI system are marked in a machine-readable format
+  legal_review: llm_second_rater
+  notes: "Error type: wrong_pinpoint. Quote is verbatim but sits in Art. 50(2); Art. 50(4) concerns deployers of deep fakes. Provisions
+    concerned: art_50.par_2."
+- id: E05
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 111(4) of the EU AI Act provides:
+    "Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, that have been
+    placed on the market before 2 August 2026 shall take the necessary steps in order to comply with Article 50(2) by 2 December 2027.".'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: incorrect
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(39)(b) (new Art. 111(4))
+    quote: that have been placed on the market before 2 August 2026 shall take the necessary steps in order to comply with Article 50(2) by 2
+      December 2026
+  legal_review: llm_second_rater
+  notes: "Error type: changed_number. Year altered (2027 instead of 2026). Provisions concerned: art_111.par_4."
+- id: E06
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 4(1) of the EU AI Act provides: "This
+    obligation requires providers or deployers to guarantee a specific level of AI literacy of any individual.".'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: incorrect
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(5) (new Art. 4(1))
+    quote: This obligation does not require providers or deployers to guarantee any specific level of AI literacy of any individual.
+  legal_review: llm_second_rater
+  notes: "Error type: missing_negation. Negation removed. Provisions concerned: art_4.par_1."
+- id: E07
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 111(4) of the EU AI Act provides:
+    "Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, that have been
+    placed on the market before 2 August 2026 shall take the necessary steps in order to comply with Article 50(2) by 2 December 2026.".'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: correct
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(39)(b) (new Art. 111(4))
+    quote: that have been placed on the market before 2 August 2026 shall take the necessary steps in order to comply with Article 50(2) by 2
+      December 2026
+  legal_review: llm_second_rater
+  notes: "Error type: -. Verbatim (as quoted in the statement). Same fact as A02 in evaluation form. Provisions concerned: art_111.par_4."
+- id: E08
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 113, third paragraph, point (a)
+    provides: "Chapters I and II shall apply from 2 February 2025, with the exception of Article 5(1), first subparagraph, points (ba) and
+    (bb), and Article 5(1a) and (1b) which shall apply from 2 December 2026".'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: correct
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(40)(a)
+    quote: Chapters I and II shall apply from 2 February 2025, with the exception of Article 5(1), first subparagraph, points (ba) and (bb), and
+      Article 5(1a) and (1b) which shall apply from 2 December 2026
+  legal_review: llm_second_rater
+  notes: "Error type: -. Verbatim. Provisions concerned: art_113.sub_3.a."
+- id: E09
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 10(5) of the EU AI Act has been
+    deleted; Article 4a(1) now provides: "To the extent strictly necessary to ensure bias detection and correction in relation to high-risk
+    AI systems in accordance with Article 10(2), points (f) and (g), of this Regulation, providers of such systems may exceptionally process
+    special categories of personal data".'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: correct
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(6); Art. 1(9)(b)
+    quote: To the extent strictly necessary to ensure bias detection and correction in relation to high-risk AI systems [...] providers of such
+      systems may exceptionally process special categories of personal data
+  legal_review: llm_second_rater
+  notes: "Error type: -. Both parts verified (deletion and new Art. 4a(1) wording). Note: art_10.par_5 exists only in the 2024 corpus.
+    Provisions concerned: art_4a.par_1, art_10.par_5."
+- id: E10
+  kind: evaluation
+  subset: evaluation
+  question: 'Is the following statement about the EU AI Act correct as of 2026-10-05? Statement: Article 72(3) of the EU AI Act provides: "The
+    Commission, taking utmost account of the opinion of the Board, shall adopt guidance, including a template, on the post-market monitoring
+    plan by 2 September 2027.".'
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    verdict: correct
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(30) (new Art. 72(3))
+    quote: The Commission, taking utmost account of the opinion of the Board, shall adopt guidance, including a template, on the post-market
+      monitoring plan by 2 September 2027.
+  legal_review: llm_second_rater
+  notes: "Error type: -. Verbatim. Provisions concerned: art_72.par_3."
