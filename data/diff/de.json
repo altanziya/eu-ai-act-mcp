@@ -1,0 +1,3550 @@
+{
+  "lang": "de",
+  "from": "32024R1689",
+  "to": "02024R1689-20260727",
+  "counts": {
+    "added": 170,
+    "removed": 200,
+    "changed": 51,
+    "moved": 1,
+    "unchanged": 1365
+  },
+  "ambiguous_hash_matches": 0,
+  "added": [
+    {
+      "id": "art_2.par_13",
+      "type": "paragraph",
+      "node_hash": "cd885081a4be5430f635cc8803add902a8514d64da91c859e5a202c43e8f4a3e"
+    },
+    {
+      "id": "art_2.par_13.a",
+      "type": "point",
+      "node_hash": "6c0cc7b5073f5caf370b38daedb8899bb94225c975e36602aa334edfb74da187"
+    },
+    {
+      "id": "art_2.par_13.b",
+      "type": "point",
+      "node_hash": "a01f43e3841fcbaf9b409c838c7e2bc73d6c734763d3463501d731d98c56f615"
+    },
+    {
+      "id": "art_2.par_13.sub_2",
+      "type": "subparagraph",
+      "node_hash": "7e8e7532540749168b1d2f5d7252cade8caf5a740e8cf35cadba892a3abbc4d9"
+    },
+    {
+      "id": "art_3.pt_14a",
+      "type": "point",
+      "node_hash": "a3a92ae28cc1385c33c7a5060dd2c47ca16d0910b4a30eae6cab1ceb88dd5575"
+    },
+    {
+      "id": "art_3.pt_14b",
+      "type": "point",
+      "node_hash": "6fa436dd91850fc090c3f3278f22f32e345e428567411a9077b19ad016ad9e44"
+    },
+    {
+      "id": "art_4.par_1",
+      "type": "paragraph",
+      "node_hash": "e2cf20c1e16332889bcc156056f337876be0042b871adfa79a8ba1d08db50fc2"
+    },
+    {
+      "id": "art_4.par_2",
+      "type": "paragraph",
+      "node_hash": "74bdae03abef88e6fbec49bf9ed664cdecf26ca3487f624250490ed1ae33148f"
+    },
+    {
+      "id": "art_4.par_3",
+      "type": "paragraph",
+      "node_hash": "4caf13e8fd11277598f4c2fe8e4a1706d28308af967ef46bffb092790b4733fb"
+    },
+    {
+      "id": "art_4a",
+      "type": "article",
+      "node_hash": "e8a6d4cc75dc98a51db9c9413cb25b203911692fe3b46b32ce04e8750ef64d8b"
+    },
+    {
+      "id": "art_4a.par_1",
+      "type": "paragraph",
+      "node_hash": "609a997d161f8d12e0bb9735d8c907ff3719f151a5525e71331ece5b9f02a036"
+    },
+    {
+      "id": "art_4a.par_1.a",
+      "type": "point",
+      "node_hash": "d228e97df6ebeaebb2f374b94e54401d4ad2bd4783f38fee1c696363485dfdce"
+    },
+    {
+      "id": "art_4a.par_1.b",
+      "type": "point",
+      "node_hash": "c267208829cb5ade92335312ba602b7d04148631f3b9635854bf5890e0089007"
+    },
+    {
+      "id": "art_4a.par_1.c",
+      "type": "point",
+      "node_hash": "3663732de551654fdcd9b1526ef7ba1a55ce2636db8109d8d0c06a5d55c35298"
+    },
+    {
+      "id": "art_4a.par_1.d",
+      "type": "point",
+      "node_hash": "7a455da655e26fa9d8d35ddadf57dbe107d972c92ef6001d25488e43d2173925"
+    },
+    {
+      "id": "art_4a.par_1.e",
+      "type": "point",
+      "node_hash": "c7542c43b0af978bd9c0c504699628b59bb43eb9ce02e6b88de1c36df7cd4089"
+    },
+    {
+      "id": "art_4a.par_2",
+      "type": "paragraph",
+      "node_hash": "f76a5976ca9717bcc55620dd56476ec7d67c3378ed6deb5a2b58dd50ff0c7b87"
+    },
+    {
+      "id": "art_4a.par_2.a",
+      "type": "point",
+      "node_hash": "0139bf19c0e9b52fab6ffb35dfd5388f08f7751bc29ecd345f07e687603c43da"
+    },
+    {
+      "id": "art_4a.par_2.b",
+      "type": "point",
+      "node_hash": "8c69f393036fed41f9235eb3ba0f9df374cc0d09d65668a5e4ef066535965e96"
+    },
+    {
+      "id": "art_4a.par_2.sub_2",
+      "type": "subparagraph",
+      "node_hash": "5aa4dc3e5b044d0897e4b457766935fce60ade1e712bb41c3e93f0f582e88406"
+    },
+    {
+      "id": "art_5.par_1.ba",
+      "type": "point",
+      "node_hash": "5a3ab6074fbbf2cf568fba8d855a1fe116f7824c1f15dbc4cc52700e3e9447cf"
+    },
+    {
+      "id": "art_5.par_1.bb",
+      "type": "point",
+      "node_hash": "69ff8f6a91d48dfd35192964292f5544d60b7da946d07150e02034650696249a"
+    },
+    {
+      "id": "art_5.par_1a",
+      "type": "paragraph",
+      "node_hash": "9baeab176664c1ef6a0c42d0ed3d44ae50ec110f1e9a7d7faa391e24e9f9535b"
+    },
+    {
+      "id": "art_5.par_1a.a",
+      "type": "point",
+      "node_hash": "bfb63e88732cf4d10a5923317ef7814613e06fff456c013b88dc1c9086020263"
+    },
+    {
+      "id": "art_5.par_1a.a.i",
+      "type": "point",
+      "node_hash": "72a0a54dcd77cf77e44ca17ae3ad837b1f9c76eb0f27558852faea8968184837"
+    },
+    {
+      "id": "art_5.par_1a.a.ii",
+      "type": "point",
+      "node_hash": "9d03b95eaf4cf510943a5de7c46ed9e63df03c63787467d8246849d21ba06c32"
+    },
+    {
+      "id": "art_5.par_1a.b",
+      "type": "point",
+      "node_hash": "d35575fd1c94ac4f697faabd1b35892c9c81ad9d4d36b2abb2397dd661e42cf7"
+    },
+    {
+      "id": "art_5.par_1b",
+      "type": "paragraph",
+      "node_hash": "fe5b990a5781b0996b0e4834c8d2d2bed65ce7c7de25ab41ef3be09c5a6ad478"
+    },
+    {
+      "id": "art_6.par_1a",
+      "type": "paragraph",
+      "node_hash": "67802d05f9bea78977cfb3748a9addddd249ed9de70fa8269ce17ff8a38c7256"
+    },
+    {
+      "id": "art_6.par_1b",
+      "type": "paragraph",
+      "node_hash": "ff07cd7042683ec918296b772025f0a69ca9945a571b0a27bee7510b72011376"
+    },
+    {
+      "id": "art_6.par_1c",
+      "type": "paragraph",
+      "node_hash": "7358827a529c264da73ed15c62ad030b2a5049ac79a86f12a0e7a273f7907a6f"
+    },
+    {
+      "id": "art_25.par_2.sub_2",
+      "type": "subparagraph",
+      "node_hash": "3cdcec0dda7e0f97e47ac25176ee73d245c82b9b38f0e124afe4ef70e623f9d4"
+    },
+    {
+      "id": "art_25.par_2.sub_3",
+      "type": "subparagraph",
+      "node_hash": "10c66d9829d6195c5bce95572534feef99bc5980f4ff6cdefbce8aa51cd74069"
+    },
+    {
+      "id": "art_25.par_2.sub_3.a",
+      "type": "point",
+      "node_hash": "34feaae9fd3169a5dee99ec7aa686bd5b053a9a37eff0d201485ba606106214a"
+    },
+    {
+      "id": "art_25.par_2.sub_3.b",
+      "type": "point",
+      "node_hash": "0f177739686282304851d2189300c6699f47c561858056e2c289bfd8ea478127"
+    },
+    {
+      "id": "art_25.par_2.sub_3.c",
+      "type": "point",
+      "node_hash": "fe50b69827e98eabf5525cbc84147559075081be53892db1267201b8abb0948c"
+    },
+    {
+      "id": "art_25.par_2.sub_4",
+      "type": "subparagraph",
+      "node_hash": "f1d37668f555ff14dbbe6fde4361cb0b5f45b6694cbd2690b09b2e515efda598"
+    },
+    {
+      "id": "art_28.par_8",
+      "type": "paragraph",
+      "node_hash": "1dab6ad7b374fcbe27101d9b784a73c66df604ed5b014af12e3dfb4152663bb1"
+    },
+    {
+      "id": "art_28.par_8.sub_2",
+      "type": "subparagraph",
+      "node_hash": "2e3862aaf313fc19a98e6f7ad03e59126047e3e4dbff15d25ba4f59e2cc98994"
+    },
+    {
+      "id": "art_28.par_8.sub_3",
+      "type": "subparagraph",
+      "node_hash": "1a3a85984d1bc54b1fe64a77c3f7c2f3daff87931180c955114d7c7123bfcacc"
+    },
+    {
+      "id": "art_28.par_8.sub_4",
+      "type": "subparagraph",
+      "node_hash": "f38a5c3e4d033e5a73a1ed434ee3dc39af737e1f3c5fd3e41a92ba5e7cb4be87"
+    },
+    {
+      "id": "art_28.par_9",
+      "type": "paragraph",
+      "node_hash": "1ab2be206ab02f5d20fa109e8746ab9b30af6e0074d4b2efa0a5556d82d2b39a"
+    },
+    {
+      "id": "art_29.par_4.sub_2",
+      "type": "subparagraph",
+      "node_hash": "5f1ef8eeee45712f7b413254ce5bdf5e02b0c68baaea7a05dfcfae8b06fc0f67"
+    },
+    {
+      "id": "art_29.par_4.sub_3",
+      "type": "subparagraph",
+      "node_hash": "9fc4361e64cf6f5b4a01dd74af7663e12c31e45835cef7d8e77f99d5a8dbd123"
+    },
+    {
+      "id": "art_30.par_2.sub_2",
+      "type": "subparagraph",
+      "node_hash": "7517133dfa2bdc77edf7f2eea6de3053baff7e7f91eba6c86e80d39e1d04db45"
+    },
+    {
+      "id": "art_40.par_2.sub_4",
+      "type": "subparagraph",
+      "node_hash": "718d8491e18ed401f0465de71b7ca9529336ab37ad9c6aaa73101400a49a68bb"
+    },
+    {
+      "id": "art_42.par_3",
+      "type": "paragraph",
+      "node_hash": "736570f3fc49659ea6ff8131198140629de4dbaf2723f50c8a6a9a132d98ffec"
+    },
+    {
+      "id": "art_43.par_3.sub_4",
+      "type": "subparagraph",
+      "node_hash": "6305a2d6f7b07601892df46b4eabf7f286125d0d38062ff402b8a5404716e1af"
+    },
+    {
+      "id": "art_57.par_3a",
+      "type": "paragraph",
+      "node_hash": "8726b15b4215750c03be80c6c20460569dc3544bd8f5097a95c21eb5f657cf1d"
+    },
+    {
+      "id": "art_57.par_3a.sub_2",
+      "type": "subparagraph",
+      "node_hash": "4e7fc32e38dbca2e0ae0e95d153f149b77104c9402cc10ace730439ad514af2f"
+    },
+    {
+      "id": "art_58.par_1.d",
+      "type": "point",
+      "node_hash": "e95130efe65c967d9b95edefb87bcb3f1b51f51a3760aa9ce089709a0580d342"
+    },
+    {
+      "id": "art_60a",
+      "type": "article",
+      "node_hash": "92018c3a3a60ac50770f77719c46b141748c2b68df34b5cfd94025c166ec2948"
+    },
+    {
+      "id": "art_60a.par_1",
+      "type": "paragraph",
+      "node_hash": "70abe0f13d42bc21587f480492c4c6818b0e0ce1b4fbe63442c573851ea936b2"
+    },
+    {
+      "id": "art_60a.par_2",
+      "type": "paragraph",
+      "node_hash": "533da75c6aca444b863a0c4a207cdabfc651db257cd8c495c9df42272189e97b"
+    },
+    {
+      "id": "art_60a.par_3",
+      "type": "paragraph",
+      "node_hash": "a0d47b6d45a3ebc879f473916c9282ad1dd25ec02e1d49ceb316800170beb309"
+    },
+    {
+      "id": "art_60a.par_4",
+      "type": "paragraph",
+      "node_hash": "4a520fa7d30a911787ed5ae2f1a71bd736a3170da059b5743ecbaf9cd97ac99a"
+    },
+    {
+      "id": "art_60a.par_5",
+      "type": "paragraph",
+      "node_hash": "2743850318e452bb809dc03bcc61db413b2a846f13185d7da21f3a3b102e4488"
+    },
+    {
+      "id": "art_60a.par_5.a",
+      "type": "point",
+      "node_hash": "c47bdf8aa7f135dfac41d2e29f15ef6e54b7283a7b46830f84a47b79207c875d"
+    },
+    {
+      "id": "art_60a.par_5.b",
+      "type": "point",
+      "node_hash": "a9ea7d8dbd057103b04fe9cd6c136fb8a2eac4b49d971bf6e4ddbcc67e37e3f2"
+    },
+    {
+      "id": "art_60a.par_5.c",
+      "type": "point",
+      "node_hash": "af0af8390f069a78aa3b86dc4afa002bf9364ffa373d276d524e9320fd07baa0"
+    },
+    {
+      "id": "art_60a.par_5.d",
+      "type": "point",
+      "node_hash": "9913bdc8381dfd3f2993ae9085b8be02e00ee2befe717e4f68fc7b31b0c24185"
+    },
+    {
+      "id": "art_60a.par_6",
+      "type": "paragraph",
+      "node_hash": "0b49cf37394bb484d8acb4f948f1b3febca17432d0681cb7e9310f3bc6832583"
+    },
+    {
+      "id": "art_64.par_3",
+      "type": "paragraph",
+      "node_hash": "dbfb54c5d30385fdfcd8e161da961650533b61ec5dd6684a9ad806e70646470d"
+    },
+    {
+      "id": "art_75.par_1.a",
+      "type": "point",
+      "node_hash": "02ec04c563216b12a44885d1a5f2af398d61982e3ed5e63e9f0a19f6e97b1d0d"
+    },
+    {
+      "id": "art_75.par_1.a.i",
+      "type": "point",
+      "node_hash": "c76df58b7c43a9ba5cb2800cf9c24ec82c406d567410edb7abab275a33958df9"
+    },
+    {
+      "id": "art_75.par_1.a.ii",
+      "type": "point",
+      "node_hash": "28349c31abdcae6008b7ba5b47d09682d0a05d5049d36640e75fc55b108c1891"
+    },
+    {
+      "id": "art_75.par_1.a.iii",
+      "type": "point",
+      "node_hash": "8174b8fda2361a36c953886ef77f00ffad83669b5fbd3342ac3b6e5c6d83320e"
+    },
+    {
+      "id": "art_75.par_1.a.iv",
+      "type": "point",
+      "node_hash": "7acce6ac692e47e4273141b9c92b9249826ad5ea8ade9efc924a399a802673ba"
+    },
+    {
+      "id": "art_75.par_1.b",
+      "type": "point",
+      "node_hash": "05455a09fb19dcd5470d6b5a71023ca4dba151432e58b059a1f9508c7fbc055b"
+    },
+    {
+      "id": "art_75.par_1.sub_2",
+      "type": "subparagraph",
+      "node_hash": "c026075ebe0bfaa68e095865934ff05c36ac6c9f0ec6e3122e21237985ddaf33"
+    },
+    {
+      "id": "art_75.par_1a",
+      "type": "paragraph",
+      "node_hash": "7aba96118f1d24f7968473227577cf2bd0de7433027bd7c87536b0fd5b94b2d9"
+    },
+    {
+      "id": "art_75.par_1b",
+      "type": "paragraph",
+      "node_hash": "38f9122b2ebf0c54cd7a0baa1b41700a0a064e29c1381fb51bcd4dbd5ef10a7e"
+    },
+    {
+      "id": "art_75.par_1c",
+      "type": "paragraph",
+      "node_hash": "b2d2294022f55dd1698a6ae043f0460989160f231e751fab30843813235fc2a3"
+    },
+    {
+      "id": "art_75.par_1d",
+      "type": "paragraph",
+      "node_hash": "de93fa6871f54cf034e30ff6639a5df2907e263ee81912277551b009d04141e7"
+    },
+    {
+      "id": "art_75.par_1e",
+      "type": "paragraph",
+      "node_hash": "7f9d9ad6d5a9929973ac2cac0028f82c38308dbb61bb8dfaca62a9cf64279325"
+    },
+    {
+      "id": "art_75.par_1e.sub_2",
+      "type": "subparagraph",
+      "node_hash": "fc2383e58348f73cbf161f442ae805069bbac6de1bf7ba4e76258d67e799ea72"
+    },
+    {
+      "id": "art_75.par_2a",
+      "type": "paragraph",
+      "node_hash": "142197869ca57b75056fcf90e46676678ae5656e7b2ee0debc1dbc8aa3ab7882"
+    },
+    {
+      "id": "art_75.par_2a.a",
+      "type": "point",
+      "node_hash": "76b9388d791ab4fb4b3dff04c432d9e5422d8abd2b8b2093c2bed22c71389d5f"
+    },
+    {
+      "id": "art_75.par_2a.b",
+      "type": "point",
+      "node_hash": "0c87fc09b88b741520f6eb527f492ae7fd0499475c0e326acb8a515ca817b9d5"
+    },
+    {
+      "id": "art_75.par_2a.c",
+      "type": "point",
+      "node_hash": "d207a008e23c14e01f5bb40f6c3b18051d66b3e0b6cdb7613e92b288bbc4a307"
+    },
+    {
+      "id": "art_75.par_2a.sub_2",
+      "type": "subparagraph",
+      "node_hash": "bcdc62e4f78cc2b66c8838d9e8a7984fbb73650d525dd6e498578844fa726cf2"
+    },
+    {
+      "id": "art_75.par_2a.sub_3",
+      "type": "subparagraph",
+      "node_hash": "a81ef07b1886b7cab730eca92c670e807cbc24da56059a28d0226249caf37d93"
+    },
+    {
+      "id": "art_75a",
+      "type": "article",
+      "node_hash": "24b46f6282e28e3d1a0ae1d949045ded5474f87e5bb669e849d47b9699253003"
+    },
+    {
+      "id": "art_75a.par_1",
+      "type": "paragraph",
+      "node_hash": "e2cdd694a0a21939a6c1e868ee317b45962bd92a859c8336b9f72f9956c74b2e"
+    },
+    {
+      "id": "art_75a.par_2",
+      "type": "paragraph",
+      "node_hash": "adde1b672dce836fb7d5f88ae4be456e7a46979df76a646e6073539d0c52b0fc"
+    },
+    {
+      "id": "art_75a.par_2.sub_2",
+      "type": "subparagraph",
+      "node_hash": "1e83ca8810edb5064d210180b31c1f43375b8ab3cd1ca81cb1383dc454a97bbd"
+    },
+    {
+      "id": "art_75a.par_3",
+      "type": "paragraph",
+      "node_hash": "e49b8512298548b6ad927d17aae058386b951310bac20eb26783ad9a01c7babd"
+    },
+    {
+      "id": "art_75a.par_3.sub_2",
+      "type": "subparagraph",
+      "node_hash": "701497e7e2b4026798734a0ebb5b64004f4f2059f599d8c6058431cdce088168"
+    },
+    {
+      "id": "art_75a.par_4",
+      "type": "paragraph",
+      "node_hash": "095dec72400c04f1c7ce71a3fa79aef694bb0590052b1ccbad7b1c681c6a2488"
+    },
+    {
+      "id": "art_75a.par_4.sub_2",
+      "type": "subparagraph",
+      "node_hash": "5043715844cc501592a838771ae3b90cd8ab0665dac90e408cdcc5ffefdd2ea8"
+    },
+    {
+      "id": "art_75a.par_4.sub_2.a",
+      "type": "point",
+      "node_hash": "4b0596b3b80b98afb0ff94fcf51e8e57ea45fdd99fea7debc75ba7e7ae574131"
+    },
+    {
+      "id": "art_75a.par_4.sub_2.b",
+      "type": "point",
+      "node_hash": "d915868290b515f71e346d8ad7038f656ae11543b52d89ad4f3c35af21a704ca"
+    },
+    {
+      "id": "art_75a.par_4.sub_2.c",
+      "type": "point",
+      "node_hash": "35058a8875513456284b2035e031c03ff845f9d11cfb4b6c9174bcc8054a01eb"
+    },
+    {
+      "id": "art_75a.par_4.sub_2.d",
+      "type": "point",
+      "node_hash": "074810d2b20a8cd00cce45b0e218905c6a5c3015407cb7ec1f911d83609263ef"
+    },
+    {
+      "id": "art_75a.par_4.sub_2.e",
+      "type": "point",
+      "node_hash": "ad0f78e2c3300963dbdf05a4c8a57a6fa5e481dc1a10ba2317313fb6293ba750"
+    },
+    {
+      "id": "art_75a.par_4.sub_3",
+      "type": "subparagraph",
+      "node_hash": "3ab75227fcca9fa014d7210767e524a809e13dd21c14fc78f7c4f58730a3f8fd"
+    },
+    {
+      "id": "art_75a.par_4.sub_4",
+      "type": "subparagraph",
+      "node_hash": "e6e6866413a9ef74df6f9051e1e6535503f64376702e8c8f4aed927b87c4d279"
+    },
+    {
+      "id": "art_75a.par_5",
+      "type": "paragraph",
+      "node_hash": "5c5799a1e0f9425b80000fad36bfc4557776c7c96f84ee7e24c1a669c3de9ffb"
+    },
+    {
+      "id": "art_75a.par_6",
+      "type": "paragraph",
+      "node_hash": "3d8eac2e76eae1c42a808ca28bd639659cac88a1686ed643d1634c6a36086037"
+    },
+    {
+      "id": "art_75a.par_6.a",
+      "type": "point",
+      "node_hash": "124b7bec0a6e3d856b102ca4d24936b7b5641fb1ad347781868ced6ba8de8e6f"
+    },
+    {
+      "id": "art_75a.par_6.b",
+      "type": "point",
+      "node_hash": "81cd8843a507a91f11d47ecf019a926bbb55c926a442fe9439a02b3a90738027"
+    },
+    {
+      "id": "art_75a.par_7",
+      "type": "paragraph",
+      "node_hash": "a640ce50e3c5cadcdc1927005fe5820cb1cd0a3616ed6872501877f4e8441bd8"
+    },
+    {
+      "id": "art_75a.par_8",
+      "type": "paragraph",
+      "node_hash": "d61e97af5fe7a343779e41e2c622423e45fe10371389c93145db665b3a22c9c7"
+    },
+    {
+      "id": "art_75b",
+      "type": "article",
+      "node_hash": "4384e1da208aa34d22060abd451639d03563d92b5ce546758d8fc19ec66b3c34"
+    },
+    {
+      "id": "art_75b.a",
+      "type": "point",
+      "node_hash": "c98e76f13447a6739053d808fdd316945413ed038509b7cf274bc5a9efebc96f"
+    },
+    {
+      "id": "art_75b.b",
+      "type": "point",
+      "node_hash": "e6923d9300d6e5596d29d7c1174b5b4800b4eaa237ef24e6420a55375faa6156"
+    },
+    {
+      "id": "art_75b.c",
+      "type": "point",
+      "node_hash": "a8e462a04290f817925a29ff1f80c8a7164fabcffda6eda8a528df15f5674021"
+    },
+    {
+      "id": "art_75b.sub_2",
+      "type": "subparagraph",
+      "node_hash": "3f0024cf237c09dbdd3a690ab67895bbf25e7cf204965f50d35c2f2e5db581d4"
+    },
+    {
+      "id": "art_75c",
+      "type": "article",
+      "node_hash": "ccef648c114c204e6f61d1017c15625de680586965415603221975d7a1c5423e"
+    },
+    {
+      "id": "art_75c.par_1",
+      "type": "paragraph",
+      "node_hash": "8d6bec871364fe75b342eef8300154475e55d8e0e3af52bc462b0579089f9811"
+    },
+    {
+      "id": "art_75c.par_2",
+      "type": "paragraph",
+      "node_hash": "e252f457040a52266400548b5a1391761b616b7f6414046524dd09947441781b"
+    },
+    {
+      "id": "art_75c.par_3",
+      "type": "paragraph",
+      "node_hash": "2a704b1cd55da2836bbef4ae01029ea7a79dba19a938d36f15c3b211eb650f29"
+    },
+    {
+      "id": "art_75c.par_4",
+      "type": "paragraph",
+      "node_hash": "d9e8641c5db4e6d2bdbd695839bb8f8438125bec61b8462408b99dc94ca3d93f"
+    },
+    {
+      "id": "art_75c.par_4.sub_2",
+      "type": "subparagraph",
+      "node_hash": "2d37546df9c8ae0bc5ddc377a1f306946392285894616adf542c76eed9886717"
+    },
+    {
+      "id": "art_75c.par_4.sub_2.a",
+      "type": "point",
+      "node_hash": "ae58607d1125cb09899ee96e5b6b660e9abdefab3a4667bc11a11700311b9635"
+    },
+    {
+      "id": "art_75c.par_4.sub_2.b",
+      "type": "point",
+      "node_hash": "b6da68026eff1db521475e7c0dbd42d9d41c39719f80f18d6a4038b2bb817fb0"
+    },
+    {
+      "id": "art_75c.par_4.sub_2.c",
+      "type": "point",
+      "node_hash": "6101d60618fbfffd16e93617eb998f25fd8a079aaba3609f43fc627749964f64"
+    },
+    {
+      "id": "art_75c.par_4.sub_3",
+      "type": "subparagraph",
+      "node_hash": "5aa92fb5b21abefec0dbb298b53d73f02641e5d7174cbe73a175f220a8e90f8c"
+    },
+    {
+      "id": "art_75c.par_5",
+      "type": "paragraph",
+      "node_hash": "0be580cd3393310c0eb4f60a93fc9aa43f6f69bd66ea53598a44d303ce8b40df"
+    },
+    {
+      "id": "art_75c.par_5.a",
+      "type": "point",
+      "node_hash": "eafbf685804ce041843c5020d2f413a9078c4dcc9d6c3362a7c6f30a8a8a029f"
+    },
+    {
+      "id": "art_75c.par_5.b",
+      "type": "point",
+      "node_hash": "9ced93620fc53fa6fc44441d0e11e8377be4c227188bd3caf132c604cbacb1c3"
+    },
+    {
+      "id": "art_75c.par_5.c",
+      "type": "point",
+      "node_hash": "49cb595356afd0fd44a0ea65f8ac984d69e43180aee4715f7a870f71c4daadf6"
+    },
+    {
+      "id": "art_75c.par_5.d",
+      "type": "point",
+      "node_hash": "7a31aa8a56d268fe6f00c1dda222874b2896b056a70a588cda70c782ab4656d2"
+    },
+    {
+      "id": "art_75c.par_5.e",
+      "type": "point",
+      "node_hash": "6c52b46b5a384d1d9d2472ac7c731fdfb6875f58ee4ca0f5080b2be2875a2232"
+    },
+    {
+      "id": "art_75c.par_5.f",
+      "type": "point",
+      "node_hash": "1a023dbf1e87508fc772a41e71298d69abbb43b840d4cecdc5d061d7d7156819"
+    },
+    {
+      "id": "art_75c.par_5.g",
+      "type": "point",
+      "node_hash": "9b462a1e7a81d0cba71c35254a86ba0021c6e9fccf02a6c7d43a6d493de53733"
+    },
+    {
+      "id": "art_75c.par_5.sub_2",
+      "type": "subparagraph",
+      "node_hash": "b71adbe7e2d58ae74f4d24c34cb1d756379ca6b2758cd167cd9756f7719ff166"
+    },
+    {
+      "id": "art_75c.par_6",
+      "type": "paragraph",
+      "node_hash": "ab8412adeec83c6c3c9fb79a960d16053966caa6e8831510bd4e279885d11e92"
+    },
+    {
+      "id": "art_75c.par_7",
+      "type": "paragraph",
+      "node_hash": "3cd1e1fdfba107434b7726614c72a6c16a23ec4344a529e87bfff96d0f3bd49a"
+    },
+    {
+      "id": "art_75c.par_8",
+      "type": "paragraph",
+      "node_hash": "de0ad02b4774bec15e1cc5f80393e5616b57be73f6989def2c18ec4725343277"
+    },
+    {
+      "id": "art_75c.par_8.sub_2",
+      "type": "subparagraph",
+      "node_hash": "d54db3521006969c9dafa9c48b5ebbd31678b530dc29840e79d510f8dd84bb2d"
+    },
+    {
+      "id": "art_75c.par_8.sub_3",
+      "type": "subparagraph",
+      "node_hash": "051670c1a652437e3200961d476e2327273f601b57a8cf3284d205992d2b6738"
+    },
+    {
+      "id": "art_75c.par_9",
+      "type": "paragraph",
+      "node_hash": "121ba47d4752d1331662bcc391c9e2d9acb579015245fd36ccea2f211ad4423f"
+    },
+    {
+      "id": "art_75d",
+      "type": "article",
+      "node_hash": "2c55bdb48a5227fd13e3882ecedef93b6211c4186bebe6315f80802dae0b1a91"
+    },
+    {
+      "id": "art_75d.par_1",
+      "type": "paragraph",
+      "node_hash": "256bbc60d5a14aaaa56541ca173217748cfc6027d5427b35cd9433bc8319291c"
+    },
+    {
+      "id": "art_75d.par_2",
+      "type": "paragraph",
+      "node_hash": "b8de0e539c8ba6dfdc621562ecc78f0e2bfddba53106dc5e2d986001b81b0b18"
+    },
+    {
+      "id": "art_75d.par_3",
+      "type": "paragraph",
+      "node_hash": "ed310cd5e9fbf62a1514eb99b125fea11bb0f1f3c35a82043fdd98b2441ca002"
+    },
+    {
+      "id": "art_75d.par_4",
+      "type": "paragraph",
+      "node_hash": "f4b39fdde83a3695cba0373c205ae207d06e895bb10f345984ae7a61ade57543"
+    },
+    {
+      "id": "art_76.par_1.sub_2",
+      "type": "subparagraph",
+      "node_hash": "44ac587cb03e17dd689ebf3d4adafe7222e013b4fde9e7319cf02a098eb6e655"
+    },
+    {
+      "id": "art_77.par_1a",
+      "type": "paragraph",
+      "node_hash": "30a737cbbd1cf36da29549872faa69286a2e67b41901cab9be22341df076ec39"
+    },
+    {
+      "id": "art_77.par_1b",
+      "type": "paragraph",
+      "node_hash": "93f1a0a21c98418e2de2ee0b3d880590889530fa644ad7ba755e75bfc8227c18"
+    },
+    {
+      "id": "art_96.par_1.g",
+      "type": "point",
+      "node_hash": "39692ab7e3c8ec8bcddf25f517d322da838ebdaa6cd12f3964d43ea4c36f52ff"
+    },
+    {
+      "id": "art_99.par_4.da",
+      "type": "point",
+      "node_hash": "12ee6ca971b847e21602729db2d0e174e1222cc96ba17fb563ab8ebd0f1f3f06"
+    },
+    {
+      "id": "art_99.par_6a",
+      "type": "paragraph",
+      "node_hash": "d705c8a82e5c8b14d5fa9b2fdba47918708c7b6c352af6e42f9c6bdfcb18bc86"
+    },
+    {
+      "id": "art_105.pt_1",
+      "type": "paragraph",
+      "node_hash": "b26c2d544a840062f6b6662e585c46c21364a7e0858a73af6499cef8043bcb87"
+    },
+    {
+      "id": "art_106.pt_1",
+      "type": "paragraph",
+      "node_hash": "e3f353be0a8303ca2ca820b5ee277321723282e1d663287b9d6e9599677552f4"
+    },
+    {
+      "id": "art_107.pt_1",
+      "type": "paragraph",
+      "node_hash": "e8db89b1eefe0adc18b703a3ebb8ac972a811e6767ad178bbcc1522d85aa9ac9"
+    },
+    {
+      "id": "art_108.pt_1.pt_1",
+      "type": "point",
+      "node_hash": "0954863eb46b1f915555848c05ff5ba8b60c611ade12cd8aa0a09903e8818a15"
+    },
+    {
+      "id": "art_108.pt_2.pt_1",
+      "type": "point",
+      "node_hash": "80c86d9b19d1dbce1b0de1b82ca9d1e01cd768b1ebff835ecbdfbd5620a663ee"
+    },
+    {
+      "id": "art_108.pt_3.pt_1",
+      "type": "point",
+      "node_hash": "bd4b6a21a65633832ca31386e0ff6fbb9a02ccb282793021496c61c8adb6984b"
+    },
+    {
+      "id": "art_108.pt_4.pt_1",
+      "type": "point",
+      "node_hash": "80c86d9b19d1dbce1b0de1b82ca9d1e01cd768b1ebff835ecbdfbd5620a663ee"
+    },
+    {
+      "id": "art_108.pt_6.pt_1",
+      "type": "point",
+      "node_hash": "80c86d9b19d1dbce1b0de1b82ca9d1e01cd768b1ebff835ecbdfbd5620a663ee"
+    },
+    {
+      "id": "art_109.pt_1",
+      "type": "paragraph",
+      "node_hash": "9694ccd7e9c4782732aff79ec1407fe2b986a2e119651283d49deb4e780cedc0"
+    },
+    {
+      "id": "art_110.pt_1",
+      "type": "point",
+      "node_hash": "1f885bfa416a68b43600bd7989f5819a01e9ace3d9eab28728261a7351d09c25"
+    },
+    {
+      "id": "art_111.par_4",
+      "type": "paragraph",
+      "node_hash": "dbf1cf5be74a290dd3c9cd99b3417928c90035bd6f9502de3c3b64a3f84994ef"
+    },
+    {
+      "id": "art_113.sub_3.c.i",
+      "type": "point",
+      "node_hash": "5faedbc77d64520698fd9f9b6a5c51479b346d67efc5cdbfaf2a79767deacfed"
+    },
+    {
+      "id": "art_113.sub_3.c.ii",
+      "type": "point",
+      "node_hash": "4a55d5b8bc1c94c721dacd129667de7905cddf89cdb9f971c145699cb1870b0c"
+    },
+    {
+      "id": "art_113.sub_3.d",
+      "type": "point",
+      "node_hash": "0afc37caa982f971f6f0a3586139679bb5748cc5298bd977a0d20023443a1791"
+    },
+    {
+      "id": "anx_1.sec_b.pt_21",
+      "type": "annex_point",
+      "node_hash": "d4848d58ee42e0dfda07e58927702ea9343cc5a55b6217b1132f653c909d374b"
+    },
+    {
+      "id": "anx_14",
+      "type": "annex",
+      "node_hash": "a27c20a4a5b01ea0df5a44b32656b592df91628b2ee4e58bccf81aec6ceb435a"
+    },
+    {
+      "id": "anx_14.pt_1",
+      "type": "annex_point",
+      "node_hash": "7b9d5677514b0618fb8123ea6cb3392cc1142d825a3f6a9c6b348ec6653a6456"
+    },
+    {
+      "id": "anx_14.pt_2",
+      "type": "annex_point",
+      "node_hash": "337afc752d908fd7783e9770397424d057ea653dc645ef33b5d8177a8cf67e1f"
+    },
+    {
+      "id": "anx_14.pt_2.a",
+      "type": "annex_point",
+      "node_hash": "5954b1aed050820b54bbfe796535a23d1d83cbc006ab1f194367829a4e7212e6"
+    },
+    {
+      "id": "anx_14.pt_2.b",
+      "type": "annex_point",
+      "node_hash": "98ab50bcdde2cb18672d9d956f09fde3b23f2daa1e5188ade127d9a49b2972de"
+    },
+    {
+      "id": "anx_14.pt_3",
+      "type": "annex_point",
+      "node_hash": "059c243ebc831b5721278677622971c6d5080e5ef5cf6b5f7bdc388444888f9c"
+    },
+    {
+      "id": "anx_14.pt_3.a",
+      "type": "annex_point",
+      "node_hash": "9b2bd497dc7198cbf2668c7522485278172cb80263eb96c6686ebe2419e4dfb7"
+    },
+    {
+      "id": "anx_14.pt_3.b",
+      "type": "annex_point",
+      "node_hash": "19a050418a5fa50134c94c55c75028518dd74216bf58674209ce582432e2ec7e"
+    },
+    {
+      "id": "anx_14.pt_3.c",
+      "type": "annex_point",
+      "node_hash": "17136c098e8e4dc487d1d34b5b3d1278a1e4b1dc80f2c4827d68845477b8b0c9"
+    },
+    {
+      "id": "anx_14.pt_3.d",
+      "type": "annex_point",
+      "node_hash": "88afab97b0bfe92e51dce2c41de0728b8f8ae42d3db7f2011c8b0beac7efae10"
+    },
+    {
+      "id": "anx_14.pt_4",
+      "type": "annex_point",
+      "node_hash": "87fd005c9b4578e8bf2bbe56b04e99b19e5318b30205c95971d08792baad3325"
+    }
+  ],
+  "removed": [
+    {
+      "id": "rec_1",
+      "type": "recital",
+      "node_hash": "eacd7fdd83a31821a04c58167ab1922a3e31b85129edfae403c6ee21eb81ee6b"
+    },
+    {
+      "id": "rec_2",
+      "type": "recital",
+      "node_hash": "594de2f9e092a81f58905a94bd20fe609c3188af8e91e480658b415b7ebc8bf2"
+    },
+    {
+      "id": "rec_3",
+      "type": "recital",
+      "node_hash": "1dd5751bdee8d676ae6ea769707b30a6ba32530c795f23498d4a04f9ef2e96e4"
+    },
+    {
+      "id": "rec_4",
+      "type": "recital",
+      "node_hash": "1e735fd5a142363792a633686f0fc3530a895892261452ffb093d8d87af87840"
+    },
+    {
+      "id": "rec_5",
+      "type": "recital",
+      "node_hash": "d524755a29e3394f410d6b5d466049582c1a1dd68c4b2843d43c2f7f50a398d5"
+    },
+    {
+      "id": "rec_6",
+      "type": "recital",
+      "node_hash": "38457220f404cf5cb36e3f206806391ff970c50ec73461808439a754f728e3b5"
+    },
+    {
+      "id": "rec_7",
+      "type": "recital",
+      "node_hash": "f570ca831a4bb9013909712d041ae915f987beaa970d09aaa1caa9d64a4f24db"
+    },
+    {
+      "id": "rec_8",
+      "type": "recital",
+      "node_hash": "a1a846793908ffac1a22bc8a0efb154c717b4dd4abdb6097644803f448c18feb"
+    },
+    {
+      "id": "rec_9",
+      "type": "recital",
+      "node_hash": "6cf8d8727adbbb379918105cab70ff9fb1fc6431fd9c5a16732ba4cd1c8ab7f8"
+    },
+    {
+      "id": "rec_10",
+      "type": "recital",
+      "node_hash": "01765213ff3160748af9ab4e12437a7b4fc16444ae9b7a952622087016b36266"
+    },
+    {
+      "id": "rec_11",
+      "type": "recital",
+      "node_hash": "0b0bbb401c6eb688219528b1753f829935743e69407aa0283502f78493170c66"
+    },
+    {
+      "id": "rec_12",
+      "type": "recital",
+      "node_hash": "89421836674fe24becad6ac3c96f0f8f69316c788740e726a1a70a32708a9714"
+    },
+    {
+      "id": "rec_13",
+      "type": "recital",
+      "node_hash": "045c3714fb91d3e4b8b5bf33f981aa5761687fd29566424cbc5d5d1ff7623b0e"
+    },
+    {
+      "id": "rec_14",
+      "type": "recital",
+      "node_hash": "475803f87e6d7a0db3645647646eee59163de4498f7c9d834c43abce094b1eb0"
+    },
+    {
+      "id": "rec_15",
+      "type": "recital",
+      "node_hash": "d1c9ce263ac6b788ae275bf77eed7ce30184c736182c76d3daa0546d156325f5"
+    },
+    {
+      "id": "rec_16",
+      "type": "recital",
+      "node_hash": "d3aaef90e688a9bd8ccba437141f6c0741ab9f90c39a5d560c0c9db253698348"
+    },
+    {
+      "id": "rec_17",
+      "type": "recital",
+      "node_hash": "df05c984957ab56581e5aa613c8698e4baf4e7487ef210c95883d39eb535cf60"
+    },
+    {
+      "id": "rec_18",
+      "type": "recital",
+      "node_hash": "33e80a220b6d8c93be2145200e44d0c39f4086c6b26c7f24586c516c68ae8950"
+    },
+    {
+      "id": "rec_19",
+      "type": "recital",
+      "node_hash": "3bc3d8655f48fedecfe725994ffc2e58994ebe164830083bd1ed4a824338f83f"
+    },
+    {
+      "id": "rec_20",
+      "type": "recital",
+      "node_hash": "7d17847d005c0cd74cc0fa932ecc3e3cb3dc59990cd85a908b14058e61171c71"
+    },
+    {
+      "id": "rec_21",
+      "type": "recital",
+      "node_hash": "c266847423f4804dfa9048b2956624604012e05e0642aa85ffbf6dc0b813ffb0"
+    },
+    {
+      "id": "rec_22",
+      "type": "recital",
+      "node_hash": "305df0ed6be6393b759a85d3e7e469083e4942d1fb79f206203c1b2a7a0f398c"
+    },
+    {
+      "id": "rec_23",
+      "type": "recital",
+      "node_hash": "cfa57a319ae4c6e66b5219df148c5f8362e1ad09bc4398d078ecb0d190c876af"
+    },
+    {
+      "id": "rec_24",
+      "type": "recital",
+      "node_hash": "3b77f8b136d6df161dd2f991615d19e42cdbe9dfb685ea71b13612d51b9b4cea"
+    },
+    {
+      "id": "rec_25",
+      "type": "recital",
+      "node_hash": "9d651a5c35b0e81deeee250165797d53b54fe66ce8a3d044b4b5341682b87dfb"
+    },
+    {
+      "id": "rec_26",
+      "type": "recital",
+      "node_hash": "bc172892630ef798db6e09528cf87bc2a54f9b6149e4eebf0ab3841bfaf038c6"
+    },
+    {
+      "id": "rec_27",
+      "type": "recital",
+      "node_hash": "75a302bba6cb923a6cb9473a59971fc134487cfd266a268a256f9134c6c71241"
+    },
+    {
+      "id": "rec_28",
+      "type": "recital",
+      "node_hash": "e6a682d329942fdcc6f47c282d6179defda1f0cbff0cad64c4629ae560331dec"
+    },
+    {
+      "id": "rec_29",
+      "type": "recital",
+      "node_hash": "e6d78475903a3349575f214e3506ab2d1e0d52e5ea59e5721dd4d1a610efbe7b"
+    },
+    {
+      "id": "rec_30",
+      "type": "recital",
+      "node_hash": "7b045eaa2261a91386c7068abd7f8bd9a477f3a97b52572f449f5c44192b4f6a"
+    },
+    {
+      "id": "rec_31",
+      "type": "recital",
+      "node_hash": "8cf79250872c2f078d93b98e09cdd396548b056c611c5b1557e648f5993802e6"
+    },
+    {
+      "id": "rec_32",
+      "type": "recital",
+      "node_hash": "c438c53d3eb55ffeaff80c455fce656bc079d7d386fae0b0f0b8705551ede75c"
+    },
+    {
+      "id": "rec_33",
+      "type": "recital",
+      "node_hash": "2b554a0e8f78cf505483b4c740660a0b13db1e992cc2e928330270ed79670164"
+    },
+    {
+      "id": "rec_34",
+      "type": "recital",
+      "node_hash": "129439b58939085037f9377cc36a59659de25db8e67cf0b62254fed915945f70"
+    },
+    {
+      "id": "rec_35",
+      "type": "recital",
+      "node_hash": "839396c96ee28f99d617d07639f1a87cc8df541b02258c2541a25defab4f6c96"
+    },
+    {
+      "id": "rec_36",
+      "type": "recital",
+      "node_hash": "a0247fecfb6b31f9528549e0e571dc12b52e23068c4c70d3494dc63187b83cc7"
+    },
+    {
+      "id": "rec_37",
+      "type": "recital",
+      "node_hash": "9f1788abfc3ddf460f72227262a7509f71bf74f9f4768f2b191a03f488c9b8fc"
+    },
+    {
+      "id": "rec_38",
+      "type": "recital",
+      "node_hash": "d622c1572ee76fca9e560be2c0daf170e9d579409ceeaefe051892524b1dd785"
+    },
+    {
+      "id": "rec_39",
+      "type": "recital",
+      "node_hash": "d828b750289409fee4f76ddffb5f8c759bf8756485422a6f62ede5373a12fdc0"
+    },
+    {
+      "id": "rec_40",
+      "type": "recital",
+      "node_hash": "f62044532e826085f36a75f796010173339ca4ffc9b8fbd9e37f41da8770dfb5"
+    },
+    {
+      "id": "rec_41",
+      "type": "recital",
+      "node_hash": "515c224f738beccbfe9837094d7e841d3eb78cbb1c8fb2d3e5cb8a973911741c"
+    },
+    {
+      "id": "rec_42",
+      "type": "recital",
+      "node_hash": "041f69a55a98130173bf73a949728df25f246f3d9f98204cf33249f04ef1edf1"
+    },
+    {
+      "id": "rec_43",
+      "type": "recital",
+      "node_hash": "c4983a63105ac4caa34a918427c6b7bdaa8d8d3675a38a5ffb86b788ce144ce6"
+    },
+    {
+      "id": "rec_44",
+      "type": "recital",
+      "node_hash": "2bc755b7cc4767212fa0b4442b86d43fc32c3d20babcd146fa32a8b32b9a32b5"
+    },
+    {
+      "id": "rec_45",
+      "type": "recital",
+      "node_hash": "418774853851e886fc5dd5695586ad623c78db7d31ec3f57b091cd79a5d3f829"
+    },
+    {
+      "id": "rec_46",
+      "type": "recital",
+      "node_hash": "6ec3e46f50da3b4458716159a99bdbd85406e2ae57f616c9b8215b2c6163c71d"
+    },
+    {
+      "id": "rec_47",
+      "type": "recital",
+      "node_hash": "72af36c58123ab5cea7ac0a182169b7ece534e5f618ec4f8ac7a2752c6cc168b"
+    },
+    {
+      "id": "rec_48",
+      "type": "recital",
+      "node_hash": "f10d3addf231072bb4e16ffdd901efd70fb253a3093d4493140fc916b8152ef0"
+    },
+    {
+      "id": "rec_49",
+      "type": "recital",
+      "node_hash": "205d02a33e61e7ecd171d637fe4acdb17f8f4b115d9a20a166bfc03ae2533edb"
+    },
+    {
+      "id": "rec_50",
+      "type": "recital",
+      "node_hash": "3e953256ee68f2ece5663aa601da1b54a4c7444b458519a5c3ab07cb55e69dce"
+    },
+    {
+      "id": "rec_51",
+      "type": "recital",
+      "node_hash": "bee60634a8879333e87e485da1639855bfe60816be8fc51e2b52be582a91cdbc"
+    },
+    {
+      "id": "rec_52",
+      "type": "recital",
+      "node_hash": "4d243c58d6e96376542b42bc28e9e4ba23b44f0927dd04df81a058d8507ae000"
+    },
+    {
+      "id": "rec_53",
+      "type": "recital",
+      "node_hash": "8e149a681a60dea1948a6ec3b19620390c7bb3e82bd8b9f7994a2df851e39e86"
+    },
+    {
+      "id": "rec_54",
+      "type": "recital",
+      "node_hash": "95b30c6762c198f65ef612891f100bb21259c3358a5328f7c286fc178eb5002f"
+    },
+    {
+      "id": "rec_55",
+      "type": "recital",
+      "node_hash": "b70714ae593c4f6337440f55e860f90946622e664258b8de84ad7e69537c6013"
+    },
+    {
+      "id": "rec_56",
+      "type": "recital",
+      "node_hash": "36927b69672a81dcbd9dc887fb1e6314f9934316b95af24ecc3a30b8e28f9a3e"
+    },
+    {
+      "id": "rec_57",
+      "type": "recital",
+      "node_hash": "3cdf451ae39f62b19587a18d16f956069a184d37efa17d2004cae70dd46cbdad"
+    },
+    {
+      "id": "rec_58",
+      "type": "recital",
+      "node_hash": "01503a700eaca62db8999dfe32d7faca9984486ef2ad0fb986938abd816284b5"
+    },
+    {
+      "id": "rec_59",
+      "type": "recital",
+      "node_hash": "65230701c85ff61aa520c640a7bf75ea0f9e280002976dfe390f96743118b1c8"
+    },
+    {
+      "id": "rec_60",
+      "type": "recital",
+      "node_hash": "d595403c37292f4a9672efb2907cba7b4c17013ee7b3d03e598d52039531cae7"
+    },
+    {
+      "id": "rec_61",
+      "type": "recital",
+      "node_hash": "1ae46781be314a3006a672255b7c42f4ea6b6153d18874a3877d40393130913a"
+    },
+    {
+      "id": "rec_62",
+      "type": "recital",
+      "node_hash": "1ba6660932cba0809376028c492464c8b706cb214380bbfbf397997579842c64"
+    },
+    {
+      "id": "rec_63",
+      "type": "recital",
+      "node_hash": "7e6dfcfe40a9e242f977a6ab34492ed24714d79743cd3f680b19c185df76ef30"
+    },
+    {
+      "id": "rec_64",
+      "type": "recital",
+      "node_hash": "4be208b3058cabebbe99984717701e0e2cab88a04e1c401913359dd90c6a3f48"
+    },
+    {
+      "id": "rec_65",
+      "type": "recital",
+      "node_hash": "432b392639467fd03c985708b3a9f081eb011db400a5d1fba49b19408506c12b"
+    },
+    {
+      "id": "rec_66",
+      "type": "recital",
+      "node_hash": "033d652e8aca4a95de93ed8cc5d56e2f5f5dc8bf48d9a6d9cbbb13d84de5b333"
+    },
+    {
+      "id": "rec_67",
+      "type": "recital",
+      "node_hash": "be2ffed6288486d4ed2f2ce090e0e01b9173fda2332bd699d7d88b6624f60beb"
+    },
+    {
+      "id": "rec_68",
+      "type": "recital",
+      "node_hash": "95ea586425a9ac40381ec7dffa1c51c23ef6ca116e6d1dd4a1bab80a10badf04"
+    },
+    {
+      "id": "rec_69",
+      "type": "recital",
+      "node_hash": "255522d30c6a29ca27917dad37f1506f2637c1cb7ec47068258d92eae1cd9a9a"
+    },
+    {
+      "id": "rec_70",
+      "type": "recital",
+      "node_hash": "39791694c827c88d8bdb4958f48ce9f58a86cfcee3d93b91e82939e44d07d543"
+    },
+    {
+      "id": "rec_71",
+      "type": "recital",
+      "node_hash": "43723aa59c1342b4e61453541a2a493f2b031167b15d9cc141f66705ef3d0519"
+    },
+    {
+      "id": "rec_72",
+      "type": "recital",
+      "node_hash": "fd1c34c6b9619d4f3764d9f8dc15c0da703626ab6ad87e0ae57b1504cf8666e1"
+    },
+    {
+      "id": "rec_73",
+      "type": "recital",
+      "node_hash": "4fe3a13f3f25a89b8c334e7a5e0c3aeeb413ab4fa7f652a67309efe1f02b9ef3"
+    },
+    {
+      "id": "rec_74",
+      "type": "recital",
+      "node_hash": "d0d460fa7ef81bbb020c9abe2d197dc7827bf771ac61c4453b85fb1500115d7b"
+    },
+    {
+      "id": "rec_75",
+      "type": "recital",
+      "node_hash": "3db2cc53351f70af3fd05f1bd7d7de40e5f50504666c5f24e2ebecb92efac1ab"
+    },
+    {
+      "id": "rec_76",
+      "type": "recital",
+      "node_hash": "e131bd35bdb6816393d1e6376bb2a77b425052d7ffb2267bec93fdfd053c2888"
+    },
+    {
+      "id": "rec_77",
+      "type": "recital",
+      "node_hash": "f7aa081aa67e6db85fce9dcd0e73441850bc5e49dfab4fbc77864f6ae27e6d4c"
+    },
+    {
+      "id": "rec_78",
+      "type": "recital",
+      "node_hash": "9ee28451ded41e27c8f2ebd8c48e52707b110c2112478db252a98cdf3f4f4d35"
+    },
+    {
+      "id": "rec_79",
+      "type": "recital",
+      "node_hash": "76a10f2366adc36b02e2bb018e623696eb1a0f4c80648093c8d009140ed3dfd2"
+    },
+    {
+      "id": "rec_80",
+      "type": "recital",
+      "node_hash": "13aace68487f92d0b0a07203a938f82089c30625c5511d77008dc3adfabef85d"
+    },
+    {
+      "id": "rec_81",
+      "type": "recital",
+      "node_hash": "7d7fbf152229dfeca47414a83069ab9f847dc33aac7c2866f815912992fe6303"
+    },
+    {
+      "id": "rec_82",
+      "type": "recital",
+      "node_hash": "9e0e72fab0f7c15a2f998d1fe4d06821289cb85496a1379b900e37683bd9e4ee"
+    },
+    {
+      "id": "rec_83",
+      "type": "recital",
+      "node_hash": "421fb623b44e412f394cfe4bb2f37bc2739bd71f5f0adbd5fbe12b91ed9d7d89"
+    },
+    {
+      "id": "rec_84",
+      "type": "recital",
+      "node_hash": "27e291a0eb988fca557cd4672da9e8b607837517dff6de3f957b77320cf87e38"
+    },
+    {
+      "id": "rec_85",
+      "type": "recital",
+      "node_hash": "23ec46aba5c6a450a567da73a62357683668db4538ff043abe4c02fa11e5554f"
+    },
+    {
+      "id": "rec_86",
+      "type": "recital",
+      "node_hash": "b4d4eb2397eafef73485624dda64b89427534499673d965dd6c90d31940f4410"
+    },
+    {
+      "id": "rec_87",
+      "type": "recital",
+      "node_hash": "0c151395a17b03864d8d40a4a4ed745c58d5243317c113d0322ba3eb77d62e5d"
+    },
+    {
+      "id": "rec_88",
+      "type": "recital",
+      "node_hash": "c26d5644ddf193abe749c2377b6572496563a0da25408d94104409d435f00710"
+    },
+    {
+      "id": "rec_89",
+      "type": "recital",
+      "node_hash": "69832013c95a6598326afe2a4d0ed677007fd89e8bd8a4252b5c4a132391291d"
+    },
+    {
+      "id": "rec_90",
+      "type": "recital",
+      "node_hash": "4fd1de73a3a982e50de007c26989e38b0c15b19c795dbecc39cb24bbfb0a25c2"
+    },
+    {
+      "id": "rec_91",
+      "type": "recital",
+      "node_hash": "b6e3a0790f5da9bb10573118db10f2cbac7a69ebd0e873a3131dece2609e0cac"
+    },
+    {
+      "id": "rec_92",
+      "type": "recital",
+      "node_hash": "ccd063f5f6f2f9dbaed7243934f8e24ad9ffc51e289ac5bd8dcbd9ddcf2c02d5"
+    },
+    {
+      "id": "rec_93",
+      "type": "recital",
+      "node_hash": "b3d889e047a3a14ca5fb985c1bf4027669fec4489d5224b45f7cdc99624bc737"
+    },
+    {
+      "id": "rec_94",
+      "type": "recital",
+      "node_hash": "ed05fc5ee7c8e3fa7cf14062e997ec2f3203c1fa682bbb03bcf2dfe0880f46d8"
+    },
+    {
+      "id": "rec_95",
+      "type": "recital",
+      "node_hash": "7e9eaa0f8e16d553817a577b402eba2cb685d40872544e0c47257f9c2e68e994"
+    },
+    {
+      "id": "rec_96",
+      "type": "recital",
+      "node_hash": "474a93c7697d3a48551d70d0f6c0df1167b380a27aada0974a4f2d2545af6054"
+    },
+    {
+      "id": "rec_97",
+      "type": "recital",
+      "node_hash": "914da7ce2c9061769ad40f6094c7302ec2c134d3d69ee36802d13cd9d874f47d"
+    },
+    {
+      "id": "rec_98",
+      "type": "recital",
+      "node_hash": "c5b764feca35b2becbaae1c56fbbbc69c9679b5f57b82733627e148c3ebeef8b"
+    },
+    {
+      "id": "rec_99",
+      "type": "recital",
+      "node_hash": "bb2c1f8eb99d54a043d8be4d84b5ff43a571f3f5e7020ea5989fb240ff16153f"
+    },
+    {
+      "id": "rec_100",
+      "type": "recital",
+      "node_hash": "a74b8ccdea52dda6d553e98822d7bb073e95722ea2cd7143fc626ca3d91818cb"
+    },
+    {
+      "id": "rec_101",
+      "type": "recital",
+      "node_hash": "c00c2a696ab316a4c25881bc1850d51ba94fd90ee25a1e433c6c60b65c4d9a7b"
+    },
+    {
+      "id": "rec_102",
+      "type": "recital",
+      "node_hash": "ca490eac445376263486966e0bb9c623c02ac2c95381357fee25316cd022fe6f"
+    },
+    {
+      "id": "rec_103",
+      "type": "recital",
+      "node_hash": "afc47f9f2a4b26bec73466fcc97e337000c929476854494cc6e794191d7b4fc4"
+    },
+    {
+      "id": "rec_104",
+      "type": "recital",
+      "node_hash": "4fcde15d0d4749faaf94134d24ccd22904ca1e5c67bc7859429cd036ac5c2a1e"
+    },
+    {
+      "id": "rec_105",
+      "type": "recital",
+      "node_hash": "fd3528d83378655d6ab3a72130d0809bac8920b45eccf849cd1ef73c6185723c"
+    },
+    {
+      "id": "rec_106",
+      "type": "recital",
+      "node_hash": "0fdba3ab4c2519c32f69a32e32031e96228f9bd669b7244730282f12e571beef"
+    },
+    {
+      "id": "rec_107",
+      "type": "recital",
+      "node_hash": "f6af1bfc2047375ea663aab09b49457dcffe21bf61b36401103aeac1f38be1b0"
+    },
+    {
+      "id": "rec_108",
+      "type": "recital",
+      "node_hash": "e8ac44e73cbfef86ba1d65af6de4df979d3492194c62d83eea27394e8cbfdcfd"
+    },
+    {
+      "id": "rec_109",
+      "type": "recital",
+      "node_hash": "79850a7ec40986c9da4967b5b44be2f47ccd104595d9cda519be07ffa01286f9"
+    },
+    {
+      "id": "rec_110",
+      "type": "recital",
+      "node_hash": "78790f6dabf56f1d8ef8aa5c9b87ac734d692ff336e1ef75f1a90f096b0b34db"
+    },
+    {
+      "id": "rec_111",
+      "type": "recital",
+      "node_hash": "064c250392aa3d9e687297b72275d10d6b5ad94fb39e9344225c15d024991b98"
+    },
+    {
+      "id": "rec_112",
+      "type": "recital",
+      "node_hash": "ff0a0c4fdde5362fe8d56134d98b76efbd1ea8b851e69d8a2e4db5de18c80e12"
+    },
+    {
+      "id": "rec_113",
+      "type": "recital",
+      "node_hash": "f878b567509972054c71124ccf264e71a0c0294b51c0499246c4dd1190a7aad6"
+    },
+    {
+      "id": "rec_114",
+      "type": "recital",
+      "node_hash": "b61af05c6059c0bec6f982ed592ee6372233cc250d0244358c6f5e2f9f88f706"
+    },
+    {
+      "id": "rec_115",
+      "type": "recital",
+      "node_hash": "d8c573e54605cbb5704a43a0c74b77fedfe9b43b8144f66f15d918f3d7dd6d99"
+    },
+    {
+      "id": "rec_116",
+      "type": "recital",
+      "node_hash": "5f65a1fad56ee38cd0bc671d081357f2a09aa91e0ff8f4c556c0a1525e39673c"
+    },
+    {
+      "id": "rec_117",
+      "type": "recital",
+      "node_hash": "c356e3876b30a5facc43104d423ee8dce338f746da565925dec4fca92f87a1e2"
+    },
+    {
+      "id": "rec_118",
+      "type": "recital",
+      "node_hash": "8e701645028bb488b3631ba0751c63b8a4e9f30d6d8b1e113c77d2fc70336f38"
+    },
+    {
+      "id": "rec_119",
+      "type": "recital",
+      "node_hash": "60f5c034ddaf4c896b9ad89aff6dae4d2f8a439dd37cae36afba82ac60b159c1"
+    },
+    {
+      "id": "rec_120",
+      "type": "recital",
+      "node_hash": "638899fe5a85784dc0905bb63fbc82c7b9118c364f1c7df7d61c24a7ea1dd6a6"
+    },
+    {
+      "id": "rec_121",
+      "type": "recital",
+      "node_hash": "3acab55bc9a686747be71f3b4fe36352182b40ea707d684dfb749430ad435175"
+    },
+    {
+      "id": "rec_122",
+      "type": "recital",
+      "node_hash": "0cf97f9ee37ab2054b054c23b3ec332196b8c964c43e897f2108b9c15ca23c1d"
+    },
+    {
+      "id": "rec_123",
+      "type": "recital",
+      "node_hash": "230c827a1e1314092f4c2eca8408ba4a914a0cfce1cb709945c21e159be58d80"
+    },
+    {
+      "id": "rec_124",
+      "type": "recital",
+      "node_hash": "6a8913d859be0d7a43220c0c19db706648ffbc268f0e4492813b8ac14cdc5051"
+    },
+    {
+      "id": "rec_125",
+      "type": "recital",
+      "node_hash": "ce5bad8ec4ec48d4555a385457ec6754800359882113801523526cd42be1d705"
+    },
+    {
+      "id": "rec_126",
+      "type": "recital",
+      "node_hash": "9e3e6139fb3b45d90ec1110f073dfd427d12913a76f2ca8534b0b99a0451a4c6"
+    },
+    {
+      "id": "rec_127",
+      "type": "recital",
+      "node_hash": "f1f8225348a9469b2873cba59fcae69c1b806954325a8535f551d8554c28f66f"
+    },
+    {
+      "id": "rec_128",
+      "type": "recital",
+      "node_hash": "6916e8400efce6067718fd7a048fa32bcc6d5daba250fe18d88c982068faaec6"
+    },
+    {
+      "id": "rec_129",
+      "type": "recital",
+      "node_hash": "f957f6ce5f514c66b7cac1c6d118c6368352a1a3e892a611c59ac970e247b1c0"
+    },
+    {
+      "id": "rec_130",
+      "type": "recital",
+      "node_hash": "bb1b515733346eb41da12df07326ffcbcc1d5354572606dc31da61cd18b9107c"
+    },
+    {
+      "id": "rec_131",
+      "type": "recital",
+      "node_hash": "4200efc48df2f5660685e550a32375ab83f499cbe2898cddbb361b67cbdc117c"
+    },
+    {
+      "id": "rec_132",
+      "type": "recital",
+      "node_hash": "44668af55bdfec018e8a09c7bc81bc49da0ff7f49538e4ef38ed745003f6d481"
+    },
+    {
+      "id": "rec_133",
+      "type": "recital",
+      "node_hash": "cf790c0cccec1664f399af1f4db6b7ce97b31b11dfa286c12080554e1d47b2e8"
+    },
+    {
+      "id": "rec_134",
+      "type": "recital",
+      "node_hash": "15c8c5f94b77565b00b752ed830d1e8775701227bccabc5380cda5f59afd6139"
+    },
+    {
+      "id": "rec_135",
+      "type": "recital",
+      "node_hash": "f20b8d1d3fedd211d239fbac30008582c34735d9769fbac9c1fff0049d568c0b"
+    },
+    {
+      "id": "rec_136",
+      "type": "recital",
+      "node_hash": "c2c8c46f56694183f0bd41f84b36b9753c8a9f1c3bfaed2b601d246c5fe6e5d1"
+    },
+    {
+      "id": "rec_137",
+      "type": "recital",
+      "node_hash": "c329fe353e2514133b258b6aef6a5ccd71a3f805c30f2e081a38d89f3ae8629c"
+    },
+    {
+      "id": "rec_138",
+      "type": "recital",
+      "node_hash": "a1ead554362309ff71e4e91018d5a5c9465737d7e0a2024e7a48b529e4e7d6c1"
+    },
+    {
+      "id": "rec_139",
+      "type": "recital",
+      "node_hash": "ab8cf5bafa101a6a6a55528d9f4212797ac7365d354382e5466ad4e98c19fe26"
+    },
+    {
+      "id": "rec_140",
+      "type": "recital",
+      "node_hash": "7f6ed2e69276dfe1038dcdfe3b3d2f01a1348f2d814b0605a5c9f400f5eef84b"
+    },
+    {
+      "id": "rec_141",
+      "type": "recital",
+      "node_hash": "38f4ecf7facb0c0ffb97fc3e61268db747ab0d88d40d99d4740b956fddad6f60"
+    },
+    {
+      "id": "rec_142",
+      "type": "recital",
+      "node_hash": "cc6f6ee3aca82d8ba9b080dd0c5ad3459b1a505a28042e7cd91cc5610c9d83f6"
+    },
+    {
+      "id": "rec_143",
+      "type": "recital",
+      "node_hash": "54866016b25ce005efee9a43a51391a3f9ec80927d38afbf817f9f2664c9507e"
+    },
+    {
+      "id": "rec_144",
+      "type": "recital",
+      "node_hash": "5bc66548014b668260a8b555e2e4bb67ec2a7846ab1402d43111d35cef0befa9"
+    },
+    {
+      "id": "rec_145",
+      "type": "recital",
+      "node_hash": "cde57221bd2b5ac0603fd60d3ce11b20661ad43452772f880889581c60d22fdc"
+    },
+    {
+      "id": "rec_146",
+      "type": "recital",
+      "node_hash": "159f47a6af39f31c3a789e21c363c8a9a1c1f990936fde7ec890a79ea73e1b1b"
+    },
+    {
+      "id": "rec_147",
+      "type": "recital",
+      "node_hash": "d7a87a8c658439b92c0334c1b7d44464c7458640bf705f645312bd194a17cd6a"
+    },
+    {
+      "id": "rec_148",
+      "type": "recital",
+      "node_hash": "5f9e30235c73911103cc1fd7c4afed57014926bdae29e2369a0a62042f6388b3"
+    },
+    {
+      "id": "rec_149",
+      "type": "recital",
+      "node_hash": "e431e071ea01884c64b5ea9403ff93ffe8d4b0eea4a6cdb2d99431c5e3cfa15c"
+    },
+    {
+      "id": "rec_150",
+      "type": "recital",
+      "node_hash": "2efd6100ffaa4c5714eed922c2d6d19036cfae08186e2727a22ab938bb6f0acf"
+    },
+    {
+      "id": "rec_151",
+      "type": "recital",
+      "node_hash": "e1901a15e7908e39d2da3461f9033db473be1f56d6b4e75e9a004aa06ccc49fd"
+    },
+    {
+      "id": "rec_152",
+      "type": "recital",
+      "node_hash": "e057fd0865692e113f1ac5805d6da30f41c7d19836e932b906db6f2ab78e206a"
+    },
+    {
+      "id": "rec_153",
+      "type": "recital",
+      "node_hash": "0b01cb54190a7f9dd69e4dc98bc7df9c38045c291c6375d651f2cb49078e91b4"
+    },
+    {
+      "id": "rec_154",
+      "type": "recital",
+      "node_hash": "33562f75bd93591b2d95acf24d0cbb79e9fefca59b1d856fed3884073268807a"
+    },
+    {
+      "id": "rec_155",
+      "type": "recital",
+      "node_hash": "2998933a3fabc2295a4c75a6186933a1510eee86581755b8f3b0b337bbf3b582"
+    },
+    {
+      "id": "rec_156",
+      "type": "recital",
+      "node_hash": "d1303bf51500a84e274ae84975b2c7b4c782b750f62b06ebfb0d779a093a9e03"
+    },
+    {
+      "id": "rec_157",
+      "type": "recital",
+      "node_hash": "c1fd0a8265561eeeeb982a6873efc3204e25eb851de4c92cdc7e74ac48ba82bc"
+    },
+    {
+      "id": "rec_158",
+      "type": "recital",
+      "node_hash": "ca52d5edd9d2e65ebb11159aa1bc1491487d17f42ad6ea4b127992ed73e13fbf"
+    },
+    {
+      "id": "rec_159",
+      "type": "recital",
+      "node_hash": "2c408d8fedfb3e723256abcfbafb0d4dd79f66d966ab9032a4b82bbcc0489ca3"
+    },
+    {
+      "id": "rec_160",
+      "type": "recital",
+      "node_hash": "4bfba24687d40542ce377773524863fb998d981c65bedbd29042b0967578d724"
+    },
+    {
+      "id": "rec_161",
+      "type": "recital",
+      "node_hash": "35953af9f9ce23a1743dbc82cfb84bf99a2fa3045c468242a3953984df642aa4"
+    },
+    {
+      "id": "rec_162",
+      "type": "recital",
+      "node_hash": "8587679504ee2564b950a560cec03d7e6edbd0b0c39e03b7cf5863299d069ad6"
+    },
+    {
+      "id": "rec_163",
+      "type": "recital",
+      "node_hash": "c615f3b72f905c58543574d34e2bcfcce9a9a34ce049b8ccbe25a4752f9b4f68"
+    },
+    {
+      "id": "rec_164",
+      "type": "recital",
+      "node_hash": "de9e409b569ad35e2a28fc1847effd54cc0559766b462f54f1f46e6dbb14e490"
+    },
+    {
+      "id": "rec_165",
+      "type": "recital",
+      "node_hash": "c26df6e84942b24ebaff4d69ef5df1cfe27e52806c9b93b55c34c0fbfe33edf7"
+    },
+    {
+      "id": "rec_166",
+      "type": "recital",
+      "node_hash": "441d2ec0937bf5d5e56640d0354dbc76a5a55370411ad0a972a91e479cd2c915"
+    },
+    {
+      "id": "rec_167",
+      "type": "recital",
+      "node_hash": "1413c30cad0cfc81bf4e3afdf0d41341ca3a03f02655a21776347484a5d083c5"
+    },
+    {
+      "id": "rec_168",
+      "type": "recital",
+      "node_hash": "e2ae3af5cf3b57c97d6817b185e82abca213c3e80d3104ff7cb290d20f71e10e"
+    },
+    {
+      "id": "rec_169",
+      "type": "recital",
+      "node_hash": "a06a36d2d3c309a0eb0ab6e4ce751196d64dea00a4237657c211c56b4d5d90ca"
+    },
+    {
+      "id": "rec_170",
+      "type": "recital",
+      "node_hash": "cbfa6c1adb76bb98d807785301efeab4710652f97dd1cd6bd6b9260b7f3c5312"
+    },
+    {
+      "id": "rec_171",
+      "type": "recital",
+      "node_hash": "d21973f0d1591902fed72ac6bb7c591bba4fc25c8cd64a5843c9ac904dc9767c"
+    },
+    {
+      "id": "rec_172",
+      "type": "recital",
+      "node_hash": "4761093120b4ce5cd906f28818bae4f06c505ceaba0efbd7fc56afc9378d78bb"
+    },
+    {
+      "id": "rec_173",
+      "type": "recital",
+      "node_hash": "e8e0ed7617018e6d695516ba27e8abdf0472489ec9ef58415a97e752ba115690"
+    },
+    {
+      "id": "rec_174",
+      "type": "recital",
+      "node_hash": "4352cd414fd445b024b3988d38800b0ed1f10f3262b49e1ec4153a9f8a2f9822"
+    },
+    {
+      "id": "rec_175",
+      "type": "recital",
+      "node_hash": "88a38a2cfb4e80082285140ed08a8d6cde586504471e2a41f28457cfc23cf58a"
+    },
+    {
+      "id": "rec_176",
+      "type": "recital",
+      "node_hash": "0f5a307c08a1826e58151006bc86a697ad1f9deace4c3516476bcd58bad59363"
+    },
+    {
+      "id": "rec_177",
+      "type": "recital",
+      "node_hash": "ccc254b6a5501c59f9d99aa55c160f304dec450df72ac3391d8e240481b1db7a"
+    },
+    {
+      "id": "rec_178",
+      "type": "recital",
+      "node_hash": "a4ce2129013d0c87342c84e49ce3762948ed651e964fda368c1c475669b0edff"
+    },
+    {
+      "id": "rec_179",
+      "type": "recital",
+      "node_hash": "24a80d55e0549c9ea0e263bcfa087f80dd7518b3c7ad10d99adcd5fc3e516797"
+    },
+    {
+      "id": "rec_180",
+      "type": "recital",
+      "node_hash": "fef8bbb0f6c52ddb2560d1f506540a36fa2b51f004c2e6d1195b2e83f0e61c84"
+    },
+    {
+      "id": "art_10.par_5",
+      "type": "paragraph",
+      "node_hash": "847fc9ae493e25e610533e1481c6db889e4ee8addc7dd19c297c9e67e84fedd2"
+    },
+    {
+      "id": "art_10.par_5.a",
+      "type": "point",
+      "node_hash": "291bb4a7d32992fea5270a07c13c770e83448d4ec7aea7de52b9a58db412fdc1"
+    },
+    {
+      "id": "art_10.par_5.b",
+      "type": "point",
+      "node_hash": "eeae8cf2978297d51cb5cc93668bc427d0f971cafac8e372cdda61a7894f6d92"
+    },
+    {
+      "id": "art_10.par_5.c",
+      "type": "point",
+      "node_hash": "a47f42d33ff12a8fd63af69fcef87d8edd1728df9c5bd8a68e672d338d32e0db"
+    },
+    {
+      "id": "art_10.par_5.d",
+      "type": "point",
+      "node_hash": "b35fcf8608aa6e5fefb693d05db90721fb3ceff40b9e7d2483aa3a21af8c1d14"
+    },
+    {
+      "id": "art_10.par_5.e",
+      "type": "point",
+      "node_hash": "d82b9ef07a714c99c93035daaf341df667c2521d73a381310561611bc8c3317d"
+    },
+    {
+      "id": "art_56.par_6.sub_2",
+      "type": "subparagraph",
+      "node_hash": "5cf29a49d8938394e2585f6c839b5d880509488dcf589b0b24cabcd287115e1b"
+    },
+    {
+      "id": "art_105.sub_2",
+      "type": "subparagraph",
+      "node_hash": "0b583dc0bd7eca701fd5fb221f56aa8f61965df4cb28c33e44b97b77b38b89a0"
+    },
+    {
+      "id": "art_106.sub_2",
+      "type": "subparagraph",
+      "node_hash": "2ac5a69c3d5718e295bbb7c871550ac586845b0f5b08d24abdfdcc0686bd79aa"
+    },
+    {
+      "id": "art_107.sub_2",
+      "type": "subparagraph",
+      "node_hash": "b8cf9384f14ae7ef4d6abb3964e143efad059cffa72955b9f7371b1bb4d12340"
+    },
+    {
+      "id": "art_108.pt_1.sub_2",
+      "type": "subparagraph",
+      "node_hash": "732c9b79c5fd1d05a14dd6b166861dd9cdb694c22ee52b579b12d7aca293f814"
+    },
+    {
+      "id": "art_108.pt_2.sub_2",
+      "type": "subparagraph",
+      "node_hash": "4c1b596f2083cb94c630bfe756a391d9ead0bb61a68a163649677b70d8c624d5"
+    },
+    {
+      "id": "art_108.pt_3.sub_2",
+      "type": "subparagraph",
+      "node_hash": "2295d83b1fbf3bd7da1bc4257b71695e56cdfeeb1564ce90346c7e888d1ef0ed"
+    },
+    {
+      "id": "art_108.pt_4.sub_2",
+      "type": "subparagraph",
+      "node_hash": "fd304c5f1599335bc7356077e428524098b584c4384648c1f29949b2235f6473"
+    },
+    {
+      "id": "art_108.pt_6.sub_2",
+      "type": "subparagraph",
+      "node_hash": "fd304c5f1599335bc7356077e428524098b584c4384648c1f29949b2235f6473"
+    },
+    {
+      "id": "art_109.sub_2",
+      "type": "subparagraph",
+      "node_hash": "83eed3e218f0ec5d9581c7f2a33a9803f03863d5a4f7ca24727b165e8b77c1ba"
+    },
+    {
+      "id": "art_110.sub_2",
+      "type": "subparagraph",
+      "node_hash": "4691bed4f5992298c5db8f44089dce7bf277ab686d8f20b4adf0c26d207dce2e"
+    },
+    {
+      "id": "anx_1.sec_a.pt_1",
+      "type": "annex_point",
+      "node_hash": "f53b7b8aa8c2b134ea1270f90b716a52bc98f9f046562d8351a6b3409eb7846f"
+    },
+    {
+      "id": "anx_8.sec_b.pt_7",
+      "type": "annex_point",
+      "node_hash": "730d96b262a98a23338ee820e7b52c3c47632d71112ea13a45f32866ae720eac"
+    },
+    {
+      "id": "anx_8.sec_b.pt_9",
+      "type": "annex_point",
+      "node_hash": "9c03f8e51723795b7298ae65e5af50899af09a6256f146010b04d0e67875cf67"
+    }
+  ],
+  "changed": [
+    {
+      "id": "art_1.par_2.g",
+      "type": "point",
+      "from_node_hash": "592f73d21e7d99790d1ccc9aafd4f6165497ffc555513db4495141bc46d1e84c",
+      "to_node_hash": "705fdc868d8788798b8b981cb1bdf6ca8b23c3dda5f65fa24f8e0c00a0563649"
+    },
+    {
+      "id": "art_2.par_2",
+      "type": "paragraph",
+      "from_node_hash": "9671e9e1c0f4ae06c201546401a59efe6fcda235e60be537e8be778ba4d38f45",
+      "to_node_hash": "de89cbed6f8946916a66f91f9d52ffa3533fafe29b8bcab3e48a25e55a7dcbd6"
+    },
+    {
+      "id": "art_2.par_7",
+      "type": "paragraph",
+      "from_node_hash": "cb348439e17d39150df2615a8541a201646ff6299712b6da219d906878b4216a",
+      "to_node_hash": "8eefcff336a641bf407c5aadc3adc4f279e0447e6ae9101f7f814b4bbbc1d5cb"
+    },
+    {
+      "id": "art_3.pt_14",
+      "type": "point",
+      "from_node_hash": "e5390886f2b5aa0642ce61f0b1651c3dd8579c5d75e8972f4265a3e982f0e0ad",
+      "to_node_hash": "7e8b90f500de681d2ee3fdb8e24ccb03d8817c9140c4efc1b6b235bd29c392c8"
+    },
+    {
+      "id": "art_3.pt_40",
+      "type": "point",
+      "from_node_hash": "b08a630e1bf0d40cc7847d085241f03791e4a46dccfcd4d64d1a5662e7433021",
+      "to_node_hash": "f16e5311e6ceaf378e533392a85a26dbe518bf175bd0a77d77497786a68cc8c1"
+    },
+    {
+      "id": "art_4",
+      "type": "article",
+      "from_node_hash": "6e8fcc765263d93ae700b9000c9a7d8d8a167de847f1145300a6705d9518e6e0",
+      "to_node_hash": "f3627137c9d9c988545598faf027c01a73e4f6c9268327bbfb108771fae26721"
+    },
+    {
+      "id": "art_10.par_1",
+      "type": "paragraph",
+      "from_node_hash": "abe66c64fd995164e5aee7937da822e904cf990737285456e139d807d89f7c28",
+      "to_node_hash": "7db7bc06c6c54b751ed35c26b6e56fb40b9e814bf8e934222b619c7e6b71b5f0"
+    },
+    {
+      "id": "art_10.par_6",
+      "type": "paragraph",
+      "from_node_hash": "7912404aebded1baa7c2c504f3e10d28d62967c7f10dd1d7a0864fab29d7cdfa",
+      "to_node_hash": "d1dc5e819f778129a24361ba00aa0cf4ed7769d03878881403e803f2eaa1c04a"
+    },
+    {
+      "id": "art_11.par_1.sub_2",
+      "type": "subparagraph",
+      "from_node_hash": "401a54afced3e7847d95907f77ff884a0f90aa0904afb3cdf660052bc02a000a",
+      "to_node_hash": "b430d0b1ccdc5c2d25f91a235d4ace642a4ac88a0e00bc3bf2a9991629a2502c"
+    },
+    {
+      "id": "art_17.par_2",
+      "type": "paragraph",
+      "from_node_hash": "47de3ded2d737896da34bc0a6c1b5cac8ad4248b6ec2087703e215b8c798e57f",
+      "to_node_hash": "20c8d04011c053d35d6f12b5aa4a3880cc32c5157ecbc433fde017005f43f922"
+    },
+    {
+      "id": "art_25.par_2",
+      "type": "paragraph",
+      "from_node_hash": "f53d4c1840d1203ff9f1311b3bf9138877103352353a633ee96c68673e0903b0",
+      "to_node_hash": "85662fdd52c30a1e422160505cac0135e6d958c5ae3323ba2834c9f42c7946fe"
+    },
+    {
+      "id": "art_25.par_4",
+      "type": "paragraph",
+      "from_node_hash": "8365db11f3e6b5146bfdce3406babfed43f71717b6e5dd93e95f937a53cbea27",
+      "to_node_hash": "5c876c655ee6f8857e7765699989a99b454d962ff12a4f33b27e3133f938c8e0"
+    },
+    {
+      "id": "art_27.par_4",
+      "type": "paragraph",
+      "from_node_hash": "ef45ed949b466311617cff5a7ba29b46d475d428d924b7e781cc0c087fc09495",
+      "to_node_hash": "1007f978dcc5ea6c95c86f7aee63618986f256c9380fe3491f75e2f73f395e9d"
+    },
+    {
+      "id": "art_27.par_5",
+      "type": "paragraph",
+      "from_node_hash": "bb09e2e7205f31088e4d57bb482246366f986f892d4936f28bf0b5f838df6975",
+      "to_node_hash": "198f4bea2f07890b0594d4c7474e92d901e695c78783a6a1576d3719379c25f7"
+    },
+    {
+      "id": "art_29.par_4",
+      "type": "paragraph",
+      "from_node_hash": "e7dda1e4ca04f54d1a72e2a3f3a0a6004d33bcc532e5345169dd69f197ba60f6",
+      "to_node_hash": "ed974410ef191b9f53631fc214c03d8ccbf1a3c9b5c77f22b94517082d11123a"
+    },
+    {
+      "id": "art_30.par_2",
+      "type": "paragraph",
+      "from_node_hash": "35d3f0bfe5681879dc1250b44e8ce717ba451e96b87b45d84df4d8c82bbdc85a",
+      "to_node_hash": "f572200456f58c6c1501df44f9f13520184357b541b56c6b6aba26c1dd8bedb2"
+    },
+    {
+      "id": "art_43.par_3",
+      "type": "paragraph",
+      "from_node_hash": "58edf32a330a413378a8b29b6cfee85a00cc5aa1fd3b574213df479f02c70802",
+      "to_node_hash": "76b7aeae6d35abf75393ae354534d3b71a7e9ab1307ec62f80cac7f545cb760e"
+    },
+    {
+      "id": "art_43.par_3.sub_2",
+      "type": "subparagraph",
+      "from_node_hash": "3d028edb9b7a975a170760d9fb646bfbaa0a861084fd8385636e4b7dccea7c89",
+      "to_node_hash": "c4d7d4cd5c8b7a666604b88fb0fdd652bf98811ecdc3ace8ebd94ce25e04df4e"
+    },
+    {
+      "id": "art_43.par_3.sub_3",
+      "type": "subparagraph",
+      "from_node_hash": "2eda6a2d98d1fac52599160855c0ec6bd38c37248a81a09af5f3231508b62329",
+      "to_node_hash": "d11d7f9f071f3ccda7b28e2c8fd61d69f6f38abf21c22eeb2584c98a1723ef5f"
+    },
+    {
+      "id": "art_50.par_7",
+      "type": "paragraph",
+      "from_node_hash": "ca27ccd512ca174078d15a15fbbb724716d5cd0eb013bec91b0de01f8a9e8b30",
+      "to_node_hash": "dcae1813784ee12776ef89454043b2e149dc2e4a491d2e901efaa264ebd6657f"
+    },
+    {
+      "id": "art_56.par_6",
+      "type": "paragraph",
+      "from_node_hash": "3ef7eed4991ef2f4cb6add64c6b8a528c1ba3f448709bf42364d81c1392af8d6",
+      "to_node_hash": "563e416ad40be22ab32c9cbcb1cbfbe0bc2895a95ae2ef9aa35963d3468c3a39"
+    },
+    {
+      "id": "art_57.par_1",
+      "type": "paragraph",
+      "from_node_hash": "1bb3ca1f32e05bd020655a74b4300aa2e954af81f168af215c04fcce9f973497",
+      "to_node_hash": "03cbfb5f7b89c2f018acee56ad34325d01c756fb90348a7695e69947a86c272d"
+    },
+    {
+      "id": "art_57.par_3",
+      "type": "paragraph",
+      "from_node_hash": "0bd6c0ac03853a2164f04c119efeac53b666166bd8708b4cf8c75534f5aba9e9",
+      "to_node_hash": "5e29e91347ae4f17d7e72de7dc16dc0ebb3e7e4a27bef227dd2f5c24f73ac289"
+    },
+    {
+      "id": "art_57.par_5",
+      "type": "paragraph",
+      "from_node_hash": "5211eb6be6bcc1ecb34ad2023d33a5c625ef06e27e855ff33df4d2f634bb2cad",
+      "to_node_hash": "4361422afd34e02482888ddd423e36918b05714abdd750d12882b2204537f661"
+    },
+    {
+      "id": "art_57.par_9.e",
+      "type": "point",
+      "from_node_hash": "85d242e8bca1493f2f3f8b0beec4523dbd6177900e955329ad316f957f998d57",
+      "to_node_hash": "28a17b4ebb68a123523dd638ed8b2e33526d2052243ee2fb122097f72afd5e6f"
+    },
+    {
+      "id": "art_57.par_10",
+      "type": "paragraph",
+      "from_node_hash": "80f7a8d9e741881daf18729d9b56d5cf352476df89448f20cdfda4c633d2cf68",
+      "to_node_hash": "64f843f0a3266b00ec0bd6fc2918a625c66ca6da1ae78b628aea9896259f2985"
+    },
+    {
+      "id": "art_57.par_14",
+      "type": "paragraph",
+      "from_node_hash": "1a1bb85127f65bc5b195fd913f26b1dbf129e604368f82e6873f6b02767abf57",
+      "to_node_hash": "7cb0ef49511dd146709530de4f936a17b99084d2eb8f4f1c6cf1ba431efe503a"
+    },
+    {
+      "id": "art_58.par_1",
+      "type": "paragraph",
+      "from_node_hash": "49c7eab9b283a6dd0a9455d14dfb5f58ba218d2c0b687f190a83688a5a65f15b",
+      "to_node_hash": "ec4de53360a6a6058cc352fe4c7819e529e8f2e8c325cda8614be361f34e08ff"
+    },
+    {
+      "id": "art_58.par_1.c",
+      "type": "point",
+      "from_node_hash": "f1ccf5c00e8595bfa282f28cf967326ae5adee2a08f5f2d624342a962db39826",
+      "to_node_hash": "9ec77ea3602f1f7087f70d78b29d7520a2e1e752ce4727443aff574356881f56"
+    },
+    {
+      "id": "art_60.par_1",
+      "type": "paragraph",
+      "from_node_hash": "af4ba4ce7ab46c52a1c32bf2a77e293e1f83c90ce8e75db1a6bb74d8b19d1041",
+      "to_node_hash": "996f3f6bd055c2be2da44abb3a0b8d0b2f9b94943372087402ee1a46cca79f8e"
+    },
+    {
+      "id": "art_60.par_2",
+      "type": "paragraph",
+      "from_node_hash": "abe39e205b6817a6766d138dc7ad566fc21509c4040f874aa862d67d794ee655",
+      "to_node_hash": "f02bcba1f4f836b1d181a0917c4132e6f012e73432b4324f5dd247cc82f6c249"
+    },
+    {
+      "id": "art_63.par_1",
+      "type": "paragraph",
+      "from_node_hash": "cca3424c51cf4a961589cafd5c6c7090a11a34403187408cc249d4068f6dc3f9",
+      "to_node_hash": "c8a0031a290f385178c8e29dacd9aba7174e3aec2d064faa4eae34710f183808"
+    },
+    {
+      "id": "art_69.par_2",
+      "type": "paragraph",
+      "from_node_hash": "48439ec86df976b8db90163dee34b497ac81ee4bd381e9c226cff8b3bf4cf819",
+      "to_node_hash": "f32ba49a23db4b918d7790cd4b08ba718238c1cbc5b1969157ed41d017779a1a"
+    },
+    {
+      "id": "art_70.par_8",
+      "type": "paragraph",
+      "from_node_hash": "4a0aabaf4bb0f1bf1cd86abef7cf07bc377ce9d93fc7c4ac0f6a6a38e60fe54f",
+      "to_node_hash": "88b0c8f76161614ac9cc7ddbc5869b4c7ee958a7004096efd68751d4292ef8bb"
+    },
+    {
+      "id": "art_72.par_3",
+      "type": "paragraph",
+      "from_node_hash": "e6308a409326676cd743e6b5307c7340ac77101a4fdd94c07243df875c98b7f1",
+      "to_node_hash": "2fa61803b305ad40b9d70bfa50d2096ddc1f0a18d8e1a76d954d22bb8b41663d"
+    },
+    {
+      "id": "art_75",
+      "type": "article",
+      "from_node_hash": "39fb0b6cd9cff49d9e1781aff570c49d18477c554ef8b2cbb2f3497d7c34453f",
+      "to_node_hash": "a87e9eb982f839476da5ae45126c63fe3494c20c950373244e8475362a7f4d89"
+    },
+    {
+      "id": "art_75.par_1",
+      "type": "paragraph",
+      "from_node_hash": "ae89ed9cdb5cb0c81ed3d0c3b181f306875e014760d37469b2f82c0d4c9bf881",
+      "to_node_hash": "b723b642c72af7c969ed098f7531444c1e2491bd09cc95556e45253852d5c369"
+    },
+    {
+      "id": "art_77",
+      "type": "article",
+      "from_node_hash": "86b95ef3c6c4a26363e54459ef778d5697cac5908baff4c65cdfe05e4eeccebc",
+      "to_node_hash": "9a2b7bdf74f9097e6d60006a68e8899e1ea4875869254414fe66285178cc3601"
+    },
+    {
+      "id": "art_77.par_1",
+      "type": "paragraph",
+      "from_node_hash": "5e7cceddb9256cf3e74ecff20cf08750eb82d9aebc5029990c88b8d346c489cc",
+      "to_node_hash": "c9224bc00a1b27323ff6a87322ec4273a391c3b43d363f183904952aa5fdc1a1"
+    },
+    {
+      "id": "art_95.par_4",
+      "type": "paragraph",
+      "from_node_hash": "6dfdb10e36525746f57b0b60fe74a55ca93920e964aaa5582bcb3467a28e5813",
+      "to_node_hash": "d492bc0fa8b55011c7e23d82ea823af95bde1b94f4e60b0c6f6183d0962363d1"
+    },
+    {
+      "id": "art_96.par_1.a",
+      "type": "point",
+      "from_node_hash": "7b8682d0e4284cbc692e9aee8d7a700da4d84e5b7f477d3f469c50016f13892d",
+      "to_node_hash": "f0c7fbfa22c91d892327901aed4b7ae842ca7fc0abc2c4ff958fafb78673c9de"
+    },
+    {
+      "id": "art_96.par_1.f",
+      "type": "point",
+      "from_node_hash": "820002353bd9f97f93666b4184de547f325a5ea5e029e7c66a1fdcdd9d92ed02",
+      "to_node_hash": "ca96c96aeb8f70a06a3d8c9ee1b2b45021fabc1f30ebf9ebe88abc0e07b36e32"
+    },
+    {
+      "id": "art_96.par_1.sub_2",
+      "type": "subparagraph",
+      "from_node_hash": "db66c269bdda50b5ba8ab17accc41b0374da47a2d0d09221ef5588bf07d75b69",
+      "to_node_hash": "fec8054624b5c87607b945d0f7ee07baa5774988cc4d70fd38e60386039b71d5"
+    },
+    {
+      "id": "art_97.par_2",
+      "type": "paragraph",
+      "from_node_hash": "8f929bcc5b03fe8c80585f66592ea132c8214d6b917f0747556599b4c8a7ace9",
+      "to_node_hash": "81984a6c0646f93aa90d7f5f704ccaa26522a22c43acf79ad64e6052e6a27930"
+    },
+    {
+      "id": "art_97.par_3",
+      "type": "paragraph",
+      "from_node_hash": "cdf662f10e26af023e53509d91d328dab8b879f5084c854f33a2e4ccc980d671",
+      "to_node_hash": "6e2f8b42a63c0843724f0c45eaf7e012efbba6f214bac9501288887be6dead18"
+    },
+    {
+      "id": "art_97.par_6",
+      "type": "paragraph",
+      "from_node_hash": "dc20aa0131b99568bb63b13475b9a6d0c5cb60cd2ad97dfe36d3354dafa44257",
+      "to_node_hash": "e791434b0fd6c01375752d4c0abf5e393f7b3f5a90b077bb00f06083db86331e"
+    },
+    {
+      "id": "art_99.par_1",
+      "type": "paragraph",
+      "from_node_hash": "93d96cea731d9755d5968891e93aef6e8d7d5057b84e1337b08eb8d2cca3ff2a",
+      "to_node_hash": "cae2750ae3d146781461ec82c260138d50ba15d8cffa5f473fab0c2fde858241"
+    },
+    {
+      "id": "art_111.par_2",
+      "type": "paragraph",
+      "from_node_hash": "db0aaee5316ff093f01d60778a3148908a93b3b32581768f833106d158c28a3a",
+      "to_node_hash": "86a8d62ae19495bead0fb75cc85396521c75cb79dc509b3cca7aeff072a2b9ab"
+    },
+    {
+      "id": "art_113.sub_3.a",
+      "type": "point",
+      "from_node_hash": "c2e7e08be17c731dc89e511a0a6bc73077b77b65fa56753ae89916d55f78916a",
+      "to_node_hash": "4cedec0fb75aa3369dd72aaaf20999deb4807ba716a22fa47d39a533ff9e52d8"
+    },
+    {
+      "id": "art_113.sub_3.c",
+      "type": "point",
+      "from_node_hash": "b0724fb6769bc44c22f988abf09c2e26d8e3b128e528e646c83a71612979b4c8",
+      "to_node_hash": "185e7b2d747c34e83f1dd8185f81269f761d2add524b08011675cc6791a5fbc6"
+    },
+    {
+      "id": "anx_8.sec_b.pt_8",
+      "type": "annex_point",
+      "from_node_hash": "30e046cf93b7bc25c9d55a2a7792c2db837332ca8c87794f0911da5c7e3363f8",
+      "to_node_hash": "9bfb5a942c04d497808eda1a2c4c30fc1320e6a2e7c243ea5705b5ba49e9fd2d"
+    }
+  ],
+  "moved": [
+    {
+      "from_id": "art_10.par_5.f",
+      "to_id": "art_4a.par_1.f",
+      "type": "point",
+      "node_hash": "278b176d25ee00ede9b6dd7d5a8154085ecaf1849d09f62620fd9de76aa3e5bb"
+    }
+  ],
+  "unchanged": [
+    "cpt_1",
+    "art_1",
+    "art_1.par_1",
+    "art_1.par_2",
+    "art_1.par_2.a",
+    "art_1.par_2.b",
+    "art_1.par_2.c",
+    "art_1.par_2.d",
+    "art_1.par_2.e",
+    "art_1.par_2.f",
+    "art_2",
+    "art_2.par_1",
+    "art_2.par_1.a",
+    "art_2.par_1.b",
+    "art_2.par_1.c",
+    "art_2.par_1.d",
+    "art_2.par_1.e",
+    "art_2.par_1.f",
+    "art_2.par_1.g",
+    "art_2.par_3",
+    "art_2.par_3.sub_2",
+    "art_2.par_3.sub_3",
+    "art_2.par_4",
+    "art_2.par_5",
+    "art_2.par_6",
+    "art_2.par_8",
+    "art_2.par_9",
+    "art_2.par_10",
+    "art_2.par_11",
+    "art_2.par_12",
+    "art_3",
+    "art_3.pt_1",
+    "art_3.pt_2",
+    "art_3.pt_3",
+    "art_3.pt_4",
+    "art_3.pt_5",
+    "art_3.pt_6",
+    "art_3.pt_7",
+    "art_3.pt_8",
+    "art_3.pt_9",
+    "art_3.pt_10",
+    "art_3.pt_11",
+    "art_3.pt_12",
+    "art_3.pt_13",
+    "art_3.pt_15",
+    "art_3.pt_16",
+    "art_3.pt_17",
+    "art_3.pt_18",
+    "art_3.pt_19",
+    "art_3.pt_20",
+    "art_3.pt_21",
+    "art_3.pt_22",
+    "art_3.pt_23",
+    "art_3.pt_24",
+    "art_3.pt_25",
+    "art_3.pt_26",
+    "art_3.pt_27",
+    "art_3.pt_28",
+    "art_3.pt_29",
+    "art_3.pt_30",
+    "art_3.pt_31",
+    "art_3.pt_32",
+    "art_3.pt_33",
+    "art_3.pt_34",
+    "art_3.pt_35",
+    "art_3.pt_36",
+    "art_3.pt_37",
+    "art_3.pt_38",
+    "art_3.pt_39",
+    "art_3.pt_41",
+    "art_3.pt_42",
+    "art_3.pt_43",
+    "art_3.pt_44",
+    "art_3.pt_45",
+    "art_3.pt_45.a",
+    "art_3.pt_45.b",
+    "art_3.pt_46",
+    "art_3.pt_47",
+    "art_3.pt_48",
+    "art_3.pt_49",
+    "art_3.pt_49.a",
+    "art_3.pt_49.b",
+    "art_3.pt_49.c",
+    "art_3.pt_49.d",
+    "art_3.pt_50",
+    "art_3.pt_51",
+    "art_3.pt_52",
+    "art_3.pt_53",
+    "art_3.pt_54",
+    "art_3.pt_55",
+    "art_3.pt_56",
+    "art_3.pt_57",
+    "art_3.pt_58",
+    "art_3.pt_59",
+    "art_3.pt_60",
+    "art_3.pt_61",
+    "art_3.pt_61.a",
+    "art_3.pt_61.a.i",
+    "art_3.pt_61.a.ii",
+    "art_3.pt_61.a.iii",
+    "art_3.pt_61.b",
+    "art_3.pt_62",
+    "art_3.pt_63",
+    "art_3.pt_64",
+    "art_3.pt_65",
+    "art_3.pt_66",
+    "art_3.pt_67",
+    "art_3.pt_68",
+    "cpt_2",
+    "art_5",
+    "art_5.par_1",
+    "art_5.par_1.a",
+    "art_5.par_1.b",
+    "art_5.par_1.c",
+    "art_5.par_1.c.i",
+    "art_5.par_1.c.ii",
+    "art_5.par_1.d",
+    "art_5.par_1.e",
+    "art_5.par_1.f",
+    "art_5.par_1.g",
+    "art_5.par_1.h",
+    "art_5.par_1.h.i",
+    "art_5.par_1.h.ii",
+    "art_5.par_1.h.iii",
+    "art_5.par_1.sub_2",
+    "art_5.par_2",
+    "art_5.par_2.a",
+    "art_5.par_2.b",
+    "art_5.par_2.sub_2",
+    "art_5.par_3",
+    "art_5.par_3.sub_2",
+    "art_5.par_4",
+    "art_5.par_5",
+    "art_5.par_6",
+    "art_5.par_7",
+    "art_5.par_8",
+    "cpt_3",
+    "cpt_3.sct_1",
+    "art_6",
+    "art_6.par_1",
+    "art_6.par_1.a",
+    "art_6.par_1.b",
+    "art_6.par_2",
+    "art_6.par_3",
+    "art_6.par_3.sub_2",
+    "art_6.par_3.sub_2.a",
+    "art_6.par_3.sub_2.b",
+    "art_6.par_3.sub_2.c",
+    "art_6.par_3.sub_2.d",
+    "art_6.par_3.sub_3",
+    "art_6.par_4",
+    "art_6.par_5",
+    "art_6.par_6",
+    "art_6.par_7",
+    "art_6.par_8",
+    "art_7",
+    "art_7.par_1",
+    "art_7.par_1.a",
+    "art_7.par_1.b",
+    "art_7.par_2",
+    "art_7.par_2.a",
+    "art_7.par_2.b",
+    "art_7.par_2.c",
+    "art_7.par_2.d",
+    "art_7.par_2.e",
+    "art_7.par_2.f",
+    "art_7.par_2.g",
+    "art_7.par_2.h",
+    "art_7.par_2.i",
+    "art_7.par_2.j",
+    "art_7.par_2.k",
+    "art_7.par_2.k.i",
+    "art_7.par_2.k.ii",
+    "art_7.par_3",
+    "art_7.par_3.a",
+    "art_7.par_3.b",
+    "cpt_3.sct_2",
+    "art_8",
+    "art_8.par_1",
+    "art_8.par_2",
+    "art_9",
+    "art_9.par_1",
+    "art_9.par_2",
+    "art_9.par_2.a",
+    "art_9.par_2.b",
+    "art_9.par_2.c",
+    "art_9.par_2.d",
+    "art_9.par_3",
+    "art_9.par_4",
+    "art_9.par_5",
+    "art_9.par_5.sub_2",
+    "art_9.par_5.sub_2.a",
+    "art_9.par_5.sub_2.b",
+    "art_9.par_5.sub_2.c",
+    "art_9.par_5.sub_3",
+    "art_9.par_6",
+    "art_9.par_7",
+    "art_9.par_8",
+    "art_9.par_9",
+    "art_9.par_10",
+    "art_10",
+    "art_10.par_2",
+    "art_10.par_2.a",
+    "art_10.par_2.b",
+    "art_10.par_2.c",
+    "art_10.par_2.d",
+    "art_10.par_2.e",
+    "art_10.par_2.f",
+    "art_10.par_2.g",
+    "art_10.par_2.h",
+    "art_10.par_3",
+    "art_10.par_4",
+    "art_11",
+    "art_11.par_1",
+    "art_11.par_2",
+    "art_11.par_3",
+    "art_12",
+    "art_12.par_1",
+    "art_12.par_2",
+    "art_12.par_2.a",
+    "art_12.par_2.b",
+    "art_12.par_2.c",
+    "art_12.par_3",
+    "art_12.par_3.a",
+    "art_12.par_3.b",
+    "art_12.par_3.c",
+    "art_12.par_3.d",
+    "art_13",
+    "art_13.par_1",
+    "art_13.par_2",
+    "art_13.par_3",
+    "art_13.par_3.a",
+    "art_13.par_3.b",
+    "art_13.par_3.b.i",
+    "art_13.par_3.b.ii",
+    "art_13.par_3.b.iii",
+    "art_13.par_3.b.iv",
+    "art_13.par_3.b.v",
+    "art_13.par_3.b.vi",
+    "art_13.par_3.b.vii",
+    "art_13.par_3.c",
+    "art_13.par_3.d",
+    "art_13.par_3.e",
+    "art_13.par_3.f",
+    "art_14",
+    "art_14.par_1",
+    "art_14.par_2",
+    "art_14.par_3",
+    "art_14.par_3.a",
+    "art_14.par_3.b",
+    "art_14.par_4",
+    "art_14.par_4.a",
+    "art_14.par_4.b",
+    "art_14.par_4.c",
+    "art_14.par_4.d",
+    "art_14.par_4.e",
+    "art_14.par_5",
+    "art_14.par_5.sub_2",
+    "art_15",
+    "art_15.par_1",
+    "art_15.par_2",
+    "art_15.par_3",
+    "art_15.par_4",
+    "art_15.par_4.sub_2",
+    "art_15.par_4.sub_3",
+    "art_15.par_5",
+    "art_15.par_5.sub_2",
+    "art_15.par_5.sub_3",
+    "cpt_3.sct_3",
+    "art_16",
+    "art_16.a",
+    "art_16.b",
+    "art_16.c",
+    "art_16.d",
+    "art_16.e",
+    "art_16.f",
+    "art_16.g",
+    "art_16.h",
+    "art_16.i",
+    "art_16.j",
+    "art_16.k",
+    "art_16.l",
+    "art_17",
+    "art_17.par_1",
+    "art_17.par_1.a",
+    "art_17.par_1.b",
+    "art_17.par_1.c",
+    "art_17.par_1.d",
+    "art_17.par_1.e",
+    "art_17.par_1.f",
+    "art_17.par_1.g",
+    "art_17.par_1.h",
+    "art_17.par_1.i",
+    "art_17.par_1.j",
+    "art_17.par_1.k",
+    "art_17.par_1.l",
+    "art_17.par_1.m",
+    "art_17.par_3",
+    "art_17.par_4",
+    "art_18",
+    "art_18.par_1",
+    "art_18.par_1.a",
+    "art_18.par_1.b",
+    "art_18.par_1.c",
+    "art_18.par_1.d",
+    "art_18.par_1.e",
+    "art_18.par_2",
+    "art_18.par_3",
+    "art_19",
+    "art_19.par_1",
+    "art_19.par_2",
+    "art_20",
+    "art_20.par_1",
+    "art_20.par_2",
+    "art_21",
+    "art_21.par_1",
+    "art_21.par_2",
+    "art_21.par_3",
+    "art_22",
+    "art_22.par_1",
+    "art_22.par_2",
+    "art_22.par_3",
+    "art_22.par_3.a",
+    "art_22.par_3.b",
+    "art_22.par_3.c",
+    "art_22.par_3.d",
+    "art_22.par_3.e",
+    "art_22.par_3.sub_2",
+    "art_22.par_4",
+    "art_23",
+    "art_23.par_1",
+    "art_23.par_1.a",
+    "art_23.par_1.b",
+    "art_23.par_1.c",
+    "art_23.par_1.d",
+    "art_23.par_2",
+    "art_23.par_3",
+    "art_23.par_4",
+    "art_23.par_5",
+    "art_23.par_6",
+    "art_23.par_7",
+    "art_24",
+    "art_24.par_1",
+    "art_24.par_2",
+    "art_24.par_3",
+    "art_24.par_4",
+    "art_24.par_5",
+    "art_24.par_6",
+    "art_25",
+    "art_25.par_1",
+    "art_25.par_1.a",
+    "art_25.par_1.b",
+    "art_25.par_1.c",
+    "art_25.par_3",
+    "art_25.par_3.a",
+    "art_25.par_3.b",
+    "art_25.par_4.sub_2",
+    "art_25.par_5",
+    "art_26",
+    "art_26.par_1",
+    "art_26.par_2",
+    "art_26.par_3",
+    "art_26.par_4",
+    "art_26.par_5",
+    "art_26.par_5.sub_2",
+    "art_26.par_6",
+    "art_26.par_6.sub_2",
+    "art_26.par_7",
+    "art_26.par_8",
+    "art_26.par_9",
+    "art_26.par_10",
+    "art_26.par_10.sub_2",
+    "art_26.par_10.sub_3",
+    "art_26.par_10.sub_4",
+    "art_26.par_10.sub_5",
+    "art_26.par_10.sub_6",
+    "art_26.par_10.sub_7",
+    "art_26.par_11",
+    "art_26.par_12",
+    "art_27",
+    "art_27.par_1",
+    "art_27.par_1.a",
+    "art_27.par_1.b",
+    "art_27.par_1.c",
+    "art_27.par_1.d",
+    "art_27.par_1.e",
+    "art_27.par_1.f",
+    "art_27.par_2",
+    "art_27.par_3",
+    "cpt_3.sct_4",
+    "art_28",
+    "art_28.par_1",
+    "art_28.par_2",
+    "art_28.par_3",
+    "art_28.par_4",
+    "art_28.par_5",
+    "art_28.par_6",
+    "art_28.par_7",
+    "art_29",
+    "art_29.par_1",
+    "art_29.par_2",
+    "art_29.par_2.sub_2",
+    "art_29.par_3",
+    "art_30",
+    "art_30.par_1",
+    "art_30.par_3",
+    "art_30.par_4",
+    "art_30.par_5",
+    "art_31",
+    "art_31.par_1",
+    "art_31.par_2",
+    "art_31.par_3",
+    "art_31.par_4",
+    "art_31.par_5",
+    "art_31.par_6",
+    "art_31.par_7",
+    "art_31.par_8",
+    "art_31.par_9",
+    "art_31.par_10",
+    "art_31.par_11",
+    "art_31.par_12",
+    "art_32",
+    "art_33",
+    "art_33.par_1",
+    "art_33.par_2",
+    "art_33.par_3",
+    "art_33.par_4",
+    "art_34",
+    "art_34.par_1",
+    "art_34.par_2",
+    "art_34.par_3",
+    "art_35",
+    "art_35.par_1",
+    "art_35.par_2",
+    "art_36",
+    "art_36.par_1",
+    "art_36.par_2",
+    "art_36.par_2.sub_2",
+    "art_36.par_3",
+    "art_36.par_4",
+    "art_36.par_5",
+    "art_36.par_6",
+    "art_36.par_7",
+    "art_36.par_7.a",
+    "art_36.par_7.b",
+    "art_36.par_7.c",
+    "art_36.par_7.d",
+    "art_36.par_7.e",
+    "art_36.par_8",
+    "art_36.par_8.a",
+    "art_36.par_8.b",
+    "art_36.par_9",
+    "art_36.par_9.a",
+    "art_36.par_9.b",
+    "art_36.par_9.sub_2",
+    "art_36.par_9.sub_3",
+    "art_37",
+    "art_37.par_1",
+    "art_37.par_2",
+    "art_37.par_3",
+    "art_37.par_4",
+    "art_38",
+    "art_38.par_1",
+    "art_38.par_2",
+    "art_38.par_3",
+    "art_39",
+    "cpt_3.sct_5",
+    "art_40",
+    "art_40.par_1",
+    "art_40.par_2",
+    "art_40.par_2.sub_2",
+    "art_40.par_2.sub_3",
+    "art_40.par_3",
+    "art_41",
+    "art_41.par_1",
+    "art_41.par_1.a",
+    "art_41.par_1.a.i",
+    "art_41.par_1.a.ii",
+    "art_41.par_1.a.iii",
+    "art_41.par_1.a.iv",
+    "art_41.par_1.b",
+    "art_41.par_1.sub_2",
+    "art_41.par_1.sub_3",
+    "art_41.par_2",
+    "art_41.par_3",
+    "art_41.par_4",
+    "art_41.par_5",
+    "art_41.par_6",
+    "art_42",
+    "art_42.par_1",
+    "art_42.par_2",
+    "art_43",
+    "art_43.par_1",
+    "art_43.par_1.a",
+    "art_43.par_1.b",
+    "art_43.par_1.sub_2",
+    "art_43.par_1.sub_2.a",
+    "art_43.par_1.sub_2.b",
+    "art_43.par_1.sub_2.c",
+    "art_43.par_1.sub_2.d",
+    "art_43.par_1.sub_3",
+    "art_43.par_2",
+    "art_43.par_4",
+    "art_43.par_4.sub_2",
+    "art_43.par_5",
+    "art_43.par_6",
+    "art_44",
+    "art_44.par_1",
+    "art_44.par_2",
+    "art_44.par_3",
+    "art_44.par_3.sub_2",
+    "art_45",
+    "art_45.par_1",
+    "art_45.par_1.a",
+    "art_45.par_1.b",
+    "art_45.par_1.c",
+    "art_45.par_1.d",
+    "art_45.par_1.e",
+    "art_45.par_2",
+    "art_45.par_2.a",
+    "art_45.par_2.b",
+    "art_45.par_3",
+    "art_45.par_4",
+    "art_46",
+    "art_46.par_1",
+    "art_46.par_2",
+    "art_46.par_3",
+    "art_46.par_4",
+    "art_46.par_5",
+    "art_46.par_6",
+    "art_46.par_7",
+    "art_47",
+    "art_47.par_1",
+    "art_47.par_2",
+    "art_47.par_3",
+    "art_47.par_4",
+    "art_47.par_5",
+    "art_48",
+    "art_48.par_1",
+    "art_48.par_2",
+    "art_48.par_3",
+    "art_48.par_4",
+    "art_48.par_5",
+    "art_49",
+    "art_49.par_1",
+    "art_49.par_2",
+    "art_49.par_3",
+    "art_49.par_4",
+    "art_49.par_4.a",
+    "art_49.par_4.b",
+    "art_49.par_4.c",
+    "art_49.par_4.d",
+    "art_49.par_4.sub_2",
+    "art_49.par_5",
+    "cpt_4",
+    "art_50",
+    "art_50.par_1",
+    "art_50.par_2",
+    "art_50.par_3",
+    "art_50.par_4",
+    "art_50.par_4.sub_2",
+    "art_50.par_5",
+    "art_50.par_6",
+    "cpt_5",
+    "cpt_5.sct_1",
+    "art_51",
+    "art_51.par_1",
+    "art_51.par_1.a",
+    "art_51.par_1.b",
+    "art_51.par_2",
+    "art_51.par_3",
+    "art_52",
+    "art_52.par_1",
+    "art_52.par_2",
+    "art_52.par_3",
+    "art_52.par_4",
+    "art_52.par_4.sub_2",
+    "art_52.par_5",
+    "art_52.par_6",
+    "cpt_5.sct_2",
+    "art_53",
+    "art_53.par_1",
+    "art_53.par_1.a",
+    "art_53.par_1.b",
+    "art_53.par_1.b.i",
+    "art_53.par_1.b.ii",
+    "art_53.par_1.c",
+    "art_53.par_1.d",
+    "art_53.par_2",
+    "art_53.par_3",
+    "art_53.par_4",
+    "art_53.par_5",
+    "art_53.par_6",
+    "art_53.par_7",
+    "art_54",
+    "art_54.par_1",
+    "art_54.par_2",
+    "art_54.par_3",
+    "art_54.par_3.a",
+    "art_54.par_3.b",
+    "art_54.par_3.c",
+    "art_54.par_3.d",
+    "art_54.par_4",
+    "art_54.par_5",
+    "art_54.par_6",
+    "cpt_5.sct_3",
+    "art_55",
+    "art_55.par_1",
+    "art_55.par_1.a",
+    "art_55.par_1.b",
+    "art_55.par_1.c",
+    "art_55.par_1.d",
+    "art_55.par_2",
+    "art_55.par_3",
+    "cpt_5.sct_4",
+    "art_56",
+    "art_56.par_1",
+    "art_56.par_2",
+    "art_56.par_2.a",
+    "art_56.par_2.b",
+    "art_56.par_2.c",
+    "art_56.par_2.d",
+    "art_56.par_3",
+    "art_56.par_4",
+    "art_56.par_5",
+    "art_56.par_7",
+    "art_56.par_8",
+    "art_56.par_9",
+    "art_56.par_9.sub_2",
+    "cpt_6",
+    "art_57",
+    "art_57.par_1.sub_2",
+    "art_57.par_2",
+    "art_57.par_4",
+    "art_57.par_6",
+    "art_57.par_7",
+    "art_57.par_7.sub_2",
+    "art_57.par_8",
+    "art_57.par_9",
+    "art_57.par_9.a",
+    "art_57.par_9.b",
+    "art_57.par_9.c",
+    "art_57.par_9.d",
+    "art_57.par_11",
+    "art_57.par_12",
+    "art_57.par_13",
+    "art_57.par_15",
+    "art_57.par_16",
+    "art_57.par_17",
+    "art_58",
+    "art_58.par_1.a",
+    "art_58.par_1.b",
+    "art_58.par_1.sub_2",
+    "art_58.par_2",
+    "art_58.par_2.a",
+    "art_58.par_2.b",
+    "art_58.par_2.c",
+    "art_58.par_2.d",
+    "art_58.par_2.e",
+    "art_58.par_2.f",
+    "art_58.par_2.g",
+    "art_58.par_2.h",
+    "art_58.par_2.i",
+    "art_58.par_3",
+    "art_58.par_4",
+    "art_59",
+    "art_59.par_1",
+    "art_59.par_1.a",
+    "art_59.par_1.a.i",
+    "art_59.par_1.a.ii",
+    "art_59.par_1.a.iii",
+    "art_59.par_1.a.iv",
+    "art_59.par_1.a.v",
+    "art_59.par_1.b",
+    "art_59.par_1.c",
+    "art_59.par_1.d",
+    "art_59.par_1.e",
+    "art_59.par_1.f",
+    "art_59.par_1.g",
+    "art_59.par_1.h",
+    "art_59.par_1.i",
+    "art_59.par_1.j",
+    "art_59.par_2",
+    "art_59.par_3",
+    "art_60",
+    "art_60.par_1.sub_2",
+    "art_60.par_1.sub_3",
+    "art_60.par_3",
+    "art_60.par_4",
+    "art_60.par_4.a",
+    "art_60.par_4.b",
+    "art_60.par_4.c",
+    "art_60.par_4.d",
+    "art_60.par_4.e",
+    "art_60.par_4.f",
+    "art_60.par_4.g",
+    "art_60.par_4.h",
+    "art_60.par_4.i",
+    "art_60.par_4.j",
+    "art_60.par_4.k",
+    "art_60.par_5",
+    "art_60.par_6",
+    "art_60.par_7",
+    "art_60.par_8",
+    "art_60.par_9",
+    "art_61",
+    "art_61.par_1",
+    "art_61.par_1.a",
+    "art_61.par_1.b",
+    "art_61.par_1.c",
+    "art_61.par_1.d",
+    "art_61.par_1.e",
+    "art_61.par_2",
+    "art_62",
+    "art_62.par_1",
+    "art_62.par_1.a",
+    "art_62.par_1.b",
+    "art_62.par_1.c",
+    "art_62.par_1.d",
+    "art_62.par_2",
+    "art_62.par_3",
+    "art_62.par_3.a",
+    "art_62.par_3.b",
+    "art_62.par_3.c",
+    "art_62.par_3.d",
+    "art_63",
+    "art_63.par_2",
+    "cpt_7",
+    "cpt_7.sct_1",
+    "art_64",
+    "art_64.par_1",
+    "art_64.par_2",
+    "art_65",
+    "art_65.par_1",
+    "art_65.par_2",
+    "art_65.par_3",
+    "art_65.par_4",
+    "art_65.par_4.a",
+    "art_65.par_4.b",
+    "art_65.par_4.c",
+    "art_65.par_5",
+    "art_65.par_6",
+    "art_65.par_6.sub_2",
+    "art_65.par_6.sub_3",
+    "art_65.par_7",
+    "art_65.par_8",
+    "art_66",
+    "art_66.a",
+    "art_66.b",
+    "art_66.c",
+    "art_66.d",
+    "art_66.e",
+    "art_66.e.i",
+    "art_66.e.ii",
+    "art_66.e.iii",
+    "art_66.e.iv",
+    "art_66.e.v",
+    "art_66.e.vi",
+    "art_66.e.vii",
+    "art_66.f",
+    "art_66.g",
+    "art_66.h",
+    "art_66.i",
+    "art_66.j",
+    "art_66.k",
+    "art_66.l",
+    "art_66.m",
+    "art_66.n",
+    "art_66.o",
+    "art_67",
+    "art_67.par_1",
+    "art_67.par_2",
+    "art_67.par_3",
+    "art_67.par_4",
+    "art_67.par_5",
+    "art_67.par_6",
+    "art_67.par_7",
+    "art_67.par_8",
+    "art_67.par_9",
+    "art_67.par_10",
+    "art_68",
+    "art_68.par_1",
+    "art_68.par_2",
+    "art_68.par_2.a",
+    "art_68.par_2.b",
+    "art_68.par_2.c",
+    "art_68.par_2.sub_2",
+    "art_68.par_3",
+    "art_68.par_3.a",
+    "art_68.par_3.a.i",
+    "art_68.par_3.a.ii",
+    "art_68.par_3.a.iii",
+    "art_68.par_3.a.iv",
+    "art_68.par_3.a.v",
+    "art_68.par_3.b",
+    "art_68.par_3.c",
+    "art_68.par_3.d",
+    "art_68.par_4",
+    "art_68.par_5",
+    "art_69",
+    "art_69.par_1",
+    "art_69.par_3",
+    "cpt_7.sct_2",
+    "art_70",
+    "art_70.par_1",
+    "art_70.par_2",
+    "art_70.par_3",
+    "art_70.par_4",
+    "art_70.par_5",
+    "art_70.par_6",
+    "art_70.par_7",
+    "art_70.par_9",
+    "cpt_8",
+    "art_71",
+    "art_71.par_1",
+    "art_71.par_2",
+    "art_71.par_3",
+    "art_71.par_4",
+    "art_71.par_5",
+    "art_71.par_6",
+    "cpt_9",
+    "cpt_9.sct_1",
+    "art_72",
+    "art_72.par_1",
+    "art_72.par_2",
+    "art_72.par_4",
+    "art_72.par_4.sub_2",
+    "cpt_9.sct_2",
+    "art_73",
+    "art_73.par_1",
+    "art_73.par_2",
+    "art_73.par_2.sub_2",
+    "art_73.par_3",
+    "art_73.par_4",
+    "art_73.par_5",
+    "art_73.par_6",
+    "art_73.par_6.sub_2",
+    "art_73.par_7",
+    "art_73.par_8",
+    "art_73.par_9",
+    "art_73.par_10",
+    "art_73.par_11",
+    "cpt_9.sct_3",
+    "art_74",
+    "art_74.par_1",
+    "art_74.par_1.a",
+    "art_74.par_1.b",
+    "art_74.par_2",
+    "art_74.par_3",
+    "art_74.par_3.sub_2",
+    "art_74.par_4",
+    "art_74.par_5",
+    "art_74.par_6",
+    "art_74.par_7",
+    "art_74.par_7.sub_2",
+    "art_74.par_8",
+    "art_74.par_9",
+    "art_74.par_10",
+    "art_74.par_11",
+    "art_74.par_12",
+    "art_74.par_13",
+    "art_74.par_13.a",
+    "art_74.par_13.b",
+    "art_74.par_14",
+    "art_75.par_2",
+    "art_75.par_3",
+    "art_76",
+    "art_76.par_1",
+    "art_76.par_2",
+    "art_76.par_3",
+    "art_76.par_3.a",
+    "art_76.par_3.b",
+    "art_76.par_4",
+    "art_76.par_5",
+    "art_77.par_2",
+    "art_77.par_3",
+    "art_77.par_4",
+    "art_78",
+    "art_78.par_1",
+    "art_78.par_1.a",
+    "art_78.par_1.b",
+    "art_78.par_1.c",
+    "art_78.par_1.d",
+    "art_78.par_1.e",
+    "art_78.par_2",
+    "art_78.par_3",
+    "art_78.par_3.sub_2",
+    "art_78.par_4",
+    "art_78.par_5",
+    "art_79",
+    "art_79.par_1",
+    "art_79.par_2",
+    "art_79.par_2.sub_2",
+    "art_79.par_2.sub_3",
+    "art_79.par_3",
+    "art_79.par_4",
+    "art_79.par_5",
+    "art_79.par_6",
+    "art_79.par_6.a",
+    "art_79.par_6.b",
+    "art_79.par_6.c",
+    "art_79.par_6.d",
+    "art_79.par_7",
+    "art_79.par_8",
+    "art_79.par_9",
+    "art_80",
+    "art_80.par_1",
+    "art_80.par_2",
+    "art_80.par_3",
+    "art_80.par_4",
+    "art_80.par_5",
+    "art_80.par_6",
+    "art_80.par_7",
+    "art_80.par_8",
+    "art_81",
+    "art_81.par_1",
+    "art_81.par_2",
+    "art_81.par_3",
+    "art_82",
+    "art_82.par_1",
+    "art_82.par_2",
+    "art_82.par_3",
+    "art_82.par_4",
+    "art_82.par_5",
+    "art_83",
+    "art_83.par_1",
+    "art_83.par_1.a",
+    "art_83.par_1.b",
+    "art_83.par_1.c",
+    "art_83.par_1.d",
+    "art_83.par_1.e",
+    "art_83.par_1.f",
+    "art_83.par_1.g",
+    "art_83.par_2",
+    "art_84",
+    "art_84.par_1",
+    "art_84.par_2",
+    "cpt_9.sct_4",
+    "art_85",
+    "art_85.sub_2",
+    "art_86",
+    "art_86.par_1",
+    "art_86.par_2",
+    "art_86.par_3",
+    "art_87",
+    "cpt_9.sct_5",
+    "art_88",
+    "art_88.par_1",
+    "art_88.par_2",
+    "art_89",
+    "art_89.par_1",
+    "art_89.par_2",
+    "art_89.par_2.a",
+    "art_89.par_2.b",
+    "art_89.par_2.c",
+    "art_90",
+    "art_90.par_1",
+    "art_90.par_1.a",
+    "art_90.par_1.b",
+    "art_90.par_2",
+    "art_90.par_3",
+    "art_90.par_3.a",
+    "art_90.par_3.b",
+    "art_90.par_3.c",
+    "art_91",
+    "art_91.par_1",
+    "art_91.par_2",
+    "art_91.par_3",
+    "art_91.par_4",
+    "art_91.par_5",
+    "art_92",
+    "art_92.par_1",
+    "art_92.par_1.a",
+    "art_92.par_1.b",
+    "art_92.par_2",
+    "art_92.par_3",
+    "art_92.par_4",
+    "art_92.par_5",
+    "art_92.par_6",
+    "art_92.par_7",
+    "art_93",
+    "art_93.par_1",
+    "art_93.par_1.a",
+    "art_93.par_1.b",
+    "art_93.par_1.c",
+    "art_93.par_2",
+    "art_93.par_3",
+    "art_94",
+    "cpt_10",
+    "art_95",
+    "art_95.par_1",
+    "art_95.par_2",
+    "art_95.par_2.a",
+    "art_95.par_2.b",
+    "art_95.par_2.c",
+    "art_95.par_2.d",
+    "art_95.par_2.e",
+    "art_95.par_3",
+    "art_96",
+    "art_96.par_1",
+    "art_96.par_1.b",
+    "art_96.par_1.c",
+    "art_96.par_1.d",
+    "art_96.par_1.e",
+    "art_96.par_1.sub_3",
+    "art_96.par_2",
+    "cpt_11",
+    "art_97",
+    "art_97.par_1",
+    "art_97.par_4",
+    "art_97.par_5",
+    "art_98",
+    "art_98.par_1",
+    "art_98.par_2",
+    "cpt_12",
+    "art_99",
+    "art_99.par_2",
+    "art_99.par_3",
+    "art_99.par_4",
+    "art_99.par_4.a",
+    "art_99.par_4.b",
+    "art_99.par_4.c",
+    "art_99.par_4.d",
+    "art_99.par_4.e",
+    "art_99.par_4.f",
+    "art_99.par_4.g",
+    "art_99.par_5",
+    "art_99.par_6",
+    "art_99.par_7",
+    "art_99.par_7.a",
+    "art_99.par_7.b",
+    "art_99.par_7.c",
+    "art_99.par_7.d",
+    "art_99.par_7.e",
+    "art_99.par_7.f",
+    "art_99.par_7.g",
+    "art_99.par_7.h",
+    "art_99.par_7.i",
+    "art_99.par_7.j",
+    "art_99.par_8",
+    "art_99.par_9",
+    "art_99.par_10",
+    "art_99.par_11",
+    "art_100",
+    "art_100.par_1",
+    "art_100.par_1.a",
+    "art_100.par_1.b",
+    "art_100.par_1.c",
+    "art_100.par_1.d",
+    "art_100.par_1.e",
+    "art_100.par_1.f",
+    "art_100.par_1.g",
+    "art_100.par_2",
+    "art_100.par_3",
+    "art_100.par_4",
+    "art_100.par_5",
+    "art_100.par_6",
+    "art_100.par_7",
+    "art_101",
+    "art_101.par_1",
+    "art_101.par_1.a",
+    "art_101.par_1.b",
+    "art_101.par_1.c",
+    "art_101.par_1.d",
+    "art_101.par_1.sub_2",
+    "art_101.par_2",
+    "art_101.par_3",
+    "art_101.par_4",
+    "art_101.par_5",
+    "art_101.par_6",
+    "cpt_13",
+    "art_102",
+    "art_102.sub_2",
+    "art_103",
+    "art_103.sub_2",
+    "art_104",
+    "art_104.sub_2",
+    "art_105",
+    "art_106",
+    "art_107",
+    "art_108",
+    "art_108.pt_1",
+    "art_108.pt_2",
+    "art_108.pt_3",
+    "art_108.pt_4",
+    "art_108.pt_5",
+    "art_108.pt_5.sub_2",
+    "art_108.pt_6",
+    "art_109",
+    "art_110",
+    "art_111",
+    "art_111.par_1",
+    "art_111.par_1.sub_2",
+    "art_111.par_3",
+    "art_112",
+    "art_112.par_1",
+    "art_112.par_2",
+    "art_112.par_2.a",
+    "art_112.par_2.b",
+    "art_112.par_2.c",
+    "art_112.par_3",
+    "art_112.par_4",
+    "art_112.par_4.a",
+    "art_112.par_4.b",
+    "art_112.par_4.c",
+    "art_112.par_4.d",
+    "art_112.par_5",
+    "art_112.par_6",
+    "art_112.par_7",
+    "art_112.par_8",
+    "art_112.par_9",
+    "art_112.par_10",
+    "art_112.par_11",
+    "art_112.par_11.a",
+    "art_112.par_11.b",
+    "art_112.par_11.c",
+    "art_112.par_12",
+    "art_112.par_13",
+    "art_113",
+    "art_113.sub_2",
+    "art_113.sub_3",
+    "art_113.sub_3.b",
+    "anx_1",
+    "anx_1.sec_a",
+    "anx_1.sec_a.pt_2",
+    "anx_1.sec_a.pt_3",
+    "anx_1.sec_a.pt_4",
+    "anx_1.sec_a.pt_5",
+    "anx_1.sec_a.pt_6",
+    "anx_1.sec_a.pt_7",
+    "anx_1.sec_a.pt_8",
+    "anx_1.sec_a.pt_9",
+    "anx_1.sec_a.pt_10",
+    "anx_1.sec_a.pt_11",
+    "anx_1.sec_a.pt_12",
+    "anx_1.sec_b",
+    "anx_1.sec_b.pt_13",
+    "anx_1.sec_b.pt_14",
+    "anx_1.sec_b.pt_15",
+    "anx_1.sec_b.pt_16",
+    "anx_1.sec_b.pt_17",
+    "anx_1.sec_b.pt_18",
+    "anx_1.sec_b.pt_19",
+    "anx_1.sec_b.pt_20",
+    "anx_2",
+    "anx_2.pt_1",
+    "anx_2.pt_2",
+    "anx_2.pt_3",
+    "anx_2.pt_4",
+    "anx_2.pt_5",
+    "anx_2.pt_6",
+    "anx_2.pt_7",
+    "anx_2.pt_8",
+    "anx_2.pt_9",
+    "anx_2.pt_10",
+    "anx_2.pt_11",
+    "anx_2.pt_12",
+    "anx_2.pt_13",
+    "anx_2.pt_14",
+    "anx_2.pt_15",
+    "anx_2.pt_16",
+    "anx_3",
+    "anx_3.pt_1",
+    "anx_3.pt_1.a",
+    "anx_3.pt_1.a.sub_2",
+    "anx_3.pt_1.b",
+    "anx_3.pt_1.c",
+    "anx_3.pt_2",
+    "anx_3.pt_3",
+    "anx_3.pt_3.a",
+    "anx_3.pt_3.b",
+    "anx_3.pt_3.c",
+    "anx_3.pt_3.d",
+    "anx_3.pt_4",
+    "anx_3.pt_4.a",
+    "anx_3.pt_4.b",
+    "anx_3.pt_5",
+    "anx_3.pt_5.a",
+    "anx_3.pt_5.b",
+    "anx_3.pt_5.c",
+    "anx_3.pt_5.d",
+    "anx_3.pt_6",
+    "anx_3.pt_6.a",
+    "anx_3.pt_6.b",
+    "anx_3.pt_6.c",
+    "anx_3.pt_6.d",
+    "anx_3.pt_6.e",
+    "anx_3.pt_7",
+    "anx_3.pt_7.a",
+    "anx_3.pt_7.b",
+    "anx_3.pt_7.c",
+    "anx_3.pt_7.d",
+    "anx_3.pt_8",
+    "anx_3.pt_8.a",
+    "anx_3.pt_8.b",
+    "anx_4",
+    "anx_4.pt_1",
+    "anx_4.pt_1.a",
+    "anx_4.pt_1.b",
+    "anx_4.pt_1.c",
+    "anx_4.pt_1.d",
+    "anx_4.pt_1.e",
+    "anx_4.pt_1.f",
+    "anx_4.pt_1.g",
+    "anx_4.pt_1.h",
+    "anx_4.pt_2",
+    "anx_4.pt_2.a",
+    "anx_4.pt_2.b",
+    "anx_4.pt_2.c",
+    "anx_4.pt_2.d",
+    "anx_4.pt_2.e",
+    "anx_4.pt_2.f",
+    "anx_4.pt_2.g",
+    "anx_4.pt_2.h",
+    "anx_4.pt_3",
+    "anx_4.pt_4",
+    "anx_4.pt_5",
+    "anx_4.pt_6",
+    "anx_4.pt_7",
+    "anx_4.pt_8",
+    "anx_4.pt_9",
+    "anx_5",
+    "anx_5.pt_1",
+    "anx_5.pt_2",
+    "anx_5.pt_3",
+    "anx_5.pt_4",
+    "anx_5.pt_5",
+    "anx_5.pt_6",
+    "anx_5.pt_7",
+    "anx_5.pt_8",
+    "anx_6",
+    "anx_6.pt_1",
+    "anx_6.pt_2",
+    "anx_6.pt_3",
+    "anx_6.pt_4",
+    "anx_7",
+    "anx_7.pt_1",
+    "anx_7.pt_2",
+    "anx_7.pt_3",
+    "anx_7.pt_3.pt_1",
+    "anx_7.pt_3.pt_1.a",
+    "anx_7.pt_3.pt_1.b",
+    "anx_7.pt_3.pt_1.c",
+    "anx_7.pt_3.pt_1.d",
+    "anx_7.pt_3.pt_1.e",
+    "anx_7.pt_3.pt_1.f",
+    "anx_7.pt_3.pt_2",
+    "anx_7.pt_3.pt_2.sub_2",
+    "anx_7.pt_3.pt_2.sub_3",
+    "anx_7.pt_3.pt_3",
+    "anx_7.pt_3.pt_4",
+    "anx_7.pt_3.pt_4.sub_2",
+    "anx_7.pt_3.pt_4.sub_3",
+    "anx_7.pt_4",
+    "anx_7.pt_4.pt_1",
+    "anx_7.pt_4.pt_2",
+    "anx_7.pt_4.pt_2.a",
+    "anx_7.pt_4.pt_2.b",
+    "anx_7.pt_4.pt_2.c",
+    "anx_7.pt_4.pt_3",
+    "anx_7.pt_4.pt_4",
+    "anx_7.pt_4.pt_5",
+    "anx_7.pt_4.pt_6",
+    "anx_7.pt_4.pt_6.sub_2",
+    "anx_7.pt_4.pt_6.sub_3",
+    "anx_7.pt_4.pt_6.sub_4",
+    "anx_7.pt_4.pt_6.sub_5",
+    "anx_7.pt_4.pt_7",
+    "anx_7.pt_5",
+    "anx_7.pt_5.pt_1",
+    "anx_7.pt_5.pt_2",
+    "anx_7.pt_5.pt_3",
+    "anx_8",
+    "anx_8.sec_a",
+    "anx_8.sec_a.pt_1",
+    "anx_8.sec_a.pt_2",
+    "anx_8.sec_a.pt_3",
+    "anx_8.sec_a.pt_4",
+    "anx_8.sec_a.pt_5",
+    "anx_8.sec_a.pt_6",
+    "anx_8.sec_a.pt_7",
+    "anx_8.sec_a.pt_8",
+    "anx_8.sec_a.pt_9",
+    "anx_8.sec_a.pt_10",
+    "anx_8.sec_a.pt_11",
+    "anx_8.sec_a.pt_12",
+    "anx_8.sec_a.pt_13",
+    "anx_8.sec_b",
+    "anx_8.sec_b.pt_1",
+    "anx_8.sec_b.pt_2",
+    "anx_8.sec_b.pt_3",
+    "anx_8.sec_b.pt_4",
+    "anx_8.sec_b.pt_5",
+    "anx_8.sec_b.pt_6",
+    "anx_8.sec_c",
+    "anx_8.sec_c.pt_1",
+    "anx_8.sec_c.pt_2",
+    "anx_8.sec_c.pt_3",
+    "anx_8.sec_c.pt_4",
+    "anx_8.sec_c.pt_5",
+    "anx_9",
+    "anx_9.pt_1",
+    "anx_9.pt_2",
+    "anx_9.pt_3",
+    "anx_9.pt_4",
+    "anx_9.pt_5",
+    "anx_10",
+    "anx_10.pt_1",
+    "anx_10.pt_1.a",
+    "anx_10.pt_1.b",
+    "anx_10.pt_1.c",
+    "anx_10.pt_2",
+    "anx_10.pt_2.a",
+    "anx_10.pt_2.b",
+    "anx_10.pt_3",
+    "anx_10.pt_4",
+    "anx_10.pt_5",
+    "anx_10.pt_5.a",
+    "anx_10.pt_5.b",
+    "anx_10.pt_6",
+    "anx_10.pt_7",
+    "anx_10.pt_7.a",
+    "anx_10.pt_7.b",
+    "anx_11",
+    "anx_11.sec_1",
+    "anx_11.sec_1.pt_1",
+    "anx_11.sec_1.pt_1.a",
+    "anx_11.sec_1.pt_1.b",
+    "anx_11.sec_1.pt_1.c",
+    "anx_11.sec_1.pt_1.d",
+    "anx_11.sec_1.pt_1.e",
+    "anx_11.sec_1.pt_1.f",
+    "anx_11.sec_1.pt_2",
+    "anx_11.sec_1.pt_2.a",
+    "anx_11.sec_1.pt_2.b",
+    "anx_11.sec_1.pt_2.c",
+    "anx_11.sec_1.pt_2.d",
+    "anx_11.sec_1.pt_2.e",
+    "anx_11.sec_1.pt_2.sub_2",
+    "anx_11.sec_2",
+    "anx_11.sec_2.pt_1",
+    "anx_11.sec_2.pt_2",
+    "anx_11.sec_2.pt_3",
+    "anx_12",
+    "anx_12.pt_1",
+    "anx_12.pt_1.a",
+    "anx_12.pt_1.b",
+    "anx_12.pt_1.c",
+    "anx_12.pt_1.d",
+    "anx_12.pt_1.e",
+    "anx_12.pt_1.f",
+    "anx_12.pt_1.g",
+    "anx_12.pt_1.h",
+    "anx_12.pt_2",
+    "anx_12.pt_2.a",
+    "anx_12.pt_2.b",
+    "anx_12.pt_2.c",
+    "anx_13",
+    "anx_13.a",
+    "anx_13.b",
+    "anx_13.c",
+    "anx_13.d",
+    "anx_13.e",
+    "anx_13.f",
+    "anx_13.g"
+  ]
+}

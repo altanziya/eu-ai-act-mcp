@@ -14,6 +14,7 @@
 | ADR-008 | 2026-10-03 | Ansatz: 48-Stunden-Beweis (A), danach öffentlicher Fassungs-Benchmark (C) mit SPEC-Kern darunter; Portfolio zuerst | entschieden | Altan (gstack /office-hours, Entscheidungen D2–D11) | Eval-Ergebnis an G2; Ergebnis der Prämisse-5-Tests; ein Name mit Zahlungsverhalten; ein We |
 | ADR-009 | 2026-10-03 | Hausaufgabe Teil 2 (drei Beobachtungsgespräche) optional statt Pflicht, nachdem Teil 1 das Kriterium F widerlegt hat; kein Arbeitgeber-/Berufsnetzwerk | entschieden | Altan (D15), Vorschlag Fable | Drei Personen melden sich auf den Post; oder ein AI-Act-nativer Einkäufer-Fragebogen mit v |
 | ADR-011 | 2026-10-05 | Build-Setup für Plan A: Fable dirigiert, drei feste Worker, Wände als Hooks, Zustand in Dateien | entschieden | Altan (Go, Commits erlaubt, Max 5x), Fable (Ausgestaltung) | CP1: Hook-Test schlägt fehl oder Builder umgeht Wand; CP2: Fable-Anteil > 25 % der Woche;  |
+| ADR-012 | 2026-10-05 | Tag 1 nachjustiert: H3 über operative Nodes, Hash über Text plus node_hash, ID-Schema v1 ohne ~N | entschieden | Fable (Vertragskennzahl und Datenmodell); Altan über STATUS informiert, Einspruch bis CP1 möglich | Operative Quote fällt nach dem ID-Schema v1 unter 0,98; Altan widerspricht bis CP1; eine s |
 
 ## Recherche-Berichte
 

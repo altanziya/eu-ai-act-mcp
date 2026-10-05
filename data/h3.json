@@ -1,0 +1,119 @@
+{
+  "mapped_2024_to_2026": {
+    "en": 0.984733,
+    "de": 0.986082
+  },
+  "en_de_2024": 0.997532,
+  "en_de_2026": 0.997486,
+  "details": {
+    "note": "mapped_2024_to_2026 is measured over operative nodes (all types except recital): the consolidated version contains no recitals. See mapped_2024_to_2026_all_nodes for the ratio including them.",
+    "mapped_2024_to_2026_all_nodes": {
+      "en": {
+        "total": 1621,
+        "mapped": 1419,
+        "ratio": 0.875386
+      },
+      "de": {
+        "total": 1617,
+        "mapped": 1417,
+        "ratio": 0.876314
+      }
+    },
+    "mapped_2024_to_2026_operative": {
+      "en": {
+        "total": 1441,
+        "mapped": 1419,
+        "ratio": 0.984733,
+        "unchanged": 1362,
+        "changed": 55,
+        "moved": 2,
+        "removed": [
+          "art_10.par_5",
+          "art_10.par_5.b",
+          "art_10.par_5.c",
+          "art_10.par_5.d",
+          "art_10.par_5.e",
+          "art_56.par_6.sub_2",
+          "art_105.sub_2",
+          "art_106.sub_2",
+          "art_107.sub_2",
+          "art_108.pt_1.sub_2",
+          "art_108.pt_2.sub_2",
+          "art_108.pt_2.sub_3",
+          "art_108.pt_3.sub_2",
+          "art_108.pt_3.sub_3",
+          "art_108.pt_4.sub_2",
+          "art_108.pt_4.sub_3",
+          "art_108.pt_6.sub_2",
+          "art_109.sub_2",
+          "art_110.sub_2",
+          "anx_1.sec_a.pt_1",
+          "anx_8.sec_b.pt_7",
+          "anx_8.sec_b.pt_9"
+        ],
+        "all_nodes": {
+          "total": 1621,
+          "mapped": 1419,
+          "ratio": 0.875386
+        }
+      },
+      "de": {
+        "total": 1437,
+        "mapped": 1417,
+        "ratio": 0.986082,
+        "unchanged": 1365,
+        "changed": 51,
+        "moved": 1,
+        "removed": [
+          "art_10.par_5",
+          "art_10.par_5.a",
+          "art_10.par_5.b",
+          "art_10.par_5.c",
+          "art_10.par_5.d",
+          "art_10.par_5.e",
+          "art_56.par_6.sub_2",
+          "art_105.sub_2",
+          "art_106.sub_2",
+          "art_107.sub_2",
+          "art_108.pt_1.sub_2",
+          "art_108.pt_2.sub_2",
+          "art_108.pt_3.sub_2",
+          "art_108.pt_4.sub_2",
+          "art_108.pt_6.sub_2",
+          "art_109.sub_2",
+          "art_110.sub_2",
+          "anx_1.sec_a.pt_1",
+          "anx_8.sec_b.pt_7",
+          "anx_8.sec_b.pt_9"
+        ],
+        "all_nodes": {
+          "total": 1617,
+          "mapped": 1417,
+          "ratio": 0.876314
+        }
+      }
+    },
+    "en_de_2024": {
+      "en_nodes": 1621,
+      "with_de_counterpart": 1617,
+      "ratio": 0.997532,
+      "missing_in_de": [
+        "art_108.pt_2.sub_3",
+        "art_108.pt_3.sub_3",
+        "art_108.pt_4.sub_3",
+        "art_108.pt_5.sub_3"
+      ]
+    },
+    "en_de_2026": {
+      "en_nodes": 1591,
+      "with_de_counterpart": 1587,
+      "ratio": 0.997486,
+      "missing_in_de": [
+        "art_108.pt_2.pt_1.sub_2",
+        "art_108.pt_3.pt_1.sub_2",
+        "art_108.pt_4.pt_1.sub_2",
+        "art_108.pt_5.sub_3"
+      ]
+    }
+  }
+}

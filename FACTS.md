@@ -66,6 +66,8 @@ Regeln: eine Zeile pro Fakt. `Prüfung`: **F** = von Fable selbst per Primärque
 | F35 | Allgemeiner Cohere-Reranker verschlechterte Ergebnisse in LegalBench-RAG gegenüber keinem Reranker; prompt-basierte Abstention wirkt nicht (LegalCiteBench) | Bericht 05 §1, §3 [5][10] | 2026-10-03 | B |
 | F36 | Bei ≈100 Goldset-Fällen ist "0 False Negatives" nicht belegbar (Clopper-Pearson 95 %-Obergrenze ≈3 %); Ziel als statistische Obergrenze formulieren | Bericht 05 §2 (Methodik) | 2026-10-03 | F (Mathematik geprüft) |
 | F37 | Sonnet 5.5 / Opus 5.5: keine Temperatur-Steuerung, kein erzwungenes `tool_choice` laut Bericht; Extraktion nicht bitgenau reproduzierbar | Bericht 05 [43] | 2026-10-03 | S (vor Architektur-ADR per claude-api-Skill prüfen) |
+| F66 | Die konsolidierte Fassung `02024R1689-20260727` (CELLAR-XHTML, EN und DE) enthält keine Erwägungsgründe: 0 `rct_`-Anker (Amtsblatt: 180), kein "Whereas"/"HAVE ADOPTED"; zwischen Titel und Kapitel I steht nur der Disclaimer, dass die authentischen Fassungen "including their preambles" im Amtsblatt stehen. Erwägungsgründe sind nur über `32024R1689` zitierbar | Reviewer-Prüfung im Roh-XHTML (`data/raw`, Commit de25b4e), Bericht 05.10. 02:35; ADR-012 | 2026-10-05 | F |
+| F67 | Parser Tag 1 (`feat/day-1-parser`, 8c90130, vor Nachtrag day-1b): Korpus 2024 EN = DE 113 Artikel, 180 Erwägungsgründe, 13 Anhänge, 1507 Nodes; 2026: 119 Artikel (neu `art_4a`, `art_60a`, `art_75a`–`75d`), 14 Anhänge, 1448 Nodes; ID-Mengen EN/DE identisch (`en_de` = 1,0). `mapped_2024_to_2026` operativ EN 0,994 (1319/1327), DE 0,993; über alle Nodes 0,875 (F66). Diff EN added/removed/changed/moved 129/188/70/2, `removed` ohne Erwägungsgründe 8 (Art. 10 Abs. 5 → Art. 4a; Anhang I: 2006/42/EG gestrichen, 2023/1230 neu). Wortabdeckung Rohtext→Korpus 0 Lücken in 4 Dateien | Gate-Lauf Fable 02:21, Builder- und Reviewer-Bericht 05.10.; `data/h3.json` | 2026-10-05 | F |
 
 ## Arbeitsweise und Tooling
 
@@ -112,6 +114,7 @@ Regeln: eine Zeile pro Fakt. `Prüfung`: **F** = von Fable selbst per Primärque
 | F39 | 2026-12-01 | Lexbeam-Releases (as_of?) |
 | F42 | 2026-12-01 | AI Act Radar aus Beta, Kundenzahlen |
 | F46 | 2026-12-31 | Hochrisiko-Leitlinien final "Ende 2026" |
+| F66 | 2027-01-15 | nächste Konsolidierung nach weiteren Omnibus-Runden |
 
 ## Offene Hypothesen (H-IDs)
 
@@ -119,7 +122,7 @@ Regeln: eine Zeile pro Fakt. `Prüfung`: **F** = von Fable selbst per Primärque
 |---|---|---|---|
 | H1 | Compliance-Tool-Hersteller zahlen für einen gepflegten AI-Act-Feed (Vendor-Tier) | 5–10 Interviews + Wartelisten-Landingpage **vor** Phase 2; Preisanker 500 €/Mo existiert (F42, F45), Kunden nirgends belegt, Holistic AI baut intern | **schwach belegt** (Bericht 06) |
 | H2 | Entwickler nutzen den MCP zur Build-Zeit (Pre-Release-Check) | Remote-Endpoint Free, Calls/Woche pro Kanal messen | offen |
-| H3 | Konsolidierte Fassung liegt in CELLAR als parsebares Formex oder AKN-XHTML vor | curl-Spike (F38) | **weitgehend bestätigt**: XHTML ja (EN/DE), Formex für Konsolidierung nein; offen: Stabilität der XHTML-IDs über Fassungen |
+| H3 | Konsolidierte Fassung liegt in CELLAR als parsebares Formex oder AKN-XHTML vor; logische IDs tragen über Fassungen | curl-Spike (F38), Parser Tag 1 (F67) | **bestätigt**: XHTML ja (EN/DE), Formex nein; ID-Stabilität 2024→2026 operativ 0,99, EN/DE 1,0 (F67); Erwägungsgründe nur im Amtsblatt (F66) |
 | H4 | Kommission liefert in den nächsten 12 Monaten keine API mit Versionierung und Soft Law | Watchlist Service Desk | offen |
 | H5 | PDF-Report verkauft sich an KMU trotz kostenloser Tools | Landingpage-Test | offen |
 | H6 | "Citator für den AI Act" (Zitat byte-genau gegen Fassung prüfen + Änderungsstatus) ist der stärkste Moat | Nutzerfeedback nach Launch; Vergleich mit Shepard's Verify (nur Existenzprüfung) | offen, von Bericht 01 gestützt |
