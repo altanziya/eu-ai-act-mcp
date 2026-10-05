@@ -102,7 +102,19 @@ const ANNEX_RULE: Array<{ prefix: string; id: string; needs?: RegExp }> = [
   { prefix: "anx_3", id: "art_6.par_2" },
   { prefix: "anx_1", id: "art_6.par_1", needs: HIGH_RISK },
 ];
-const TRIGGER = /(?<![\p{L}])(?:appl(?:y|ies|ied|icable|ication)|from|by|as of|effective|until|later than|ab|gilt|gelten|anwendbar|anzuwenden|spätestens|bis)(?![\p{L}])/iu;
+/** Words that say "from/until when" ("takes effect", "become applicable", "enters into application", "gelten ab", "bis zum", "Frist" are covered by their key word). */
+const TRIGGER = /(?<![\p{L}])(?:appl(?:y|ies|ied|icable|ication)|tak(?:e|es|ing|en)\s+effect|effective|compl(?:y|ies|ying|iance)|since|from|by|as of|until|later than|deadline|ab|gilt|gelten|seit|anwendbar|anzuwenden|wirksam|frist|spätestens|bis)(?![\p{L}])/iu;
+/** Words between a trigger word and its date (same clause). */
+const TRIGGER_DISTANCE = 6;
+/** "high-risk", "high risk", "Hochrisiko" (also as part of a word: Hochrisiko-KI-Systeme, Hochrisikosysteme). */
+const HIGH_RISK_TERM = /(?<![\p{L}])high[- ]risk(?![\p{L}])|hochrisiko/iu;
+/** An annex of the two routes written in the sentence; with it the annex rule decides, not the both-routes subject. */
+const ROUTE_ANNEX = /(?<![\p{L}])(?:annex|anhang)\s+(?:III|I)(?![\p{L}\p{N}])/iu;
+/** The two classification routes of Article 6, Annex III route first (its date is the one `expected` names). */
+const ROUTES: ReadonlyArray<{ id: string; annex: string }> = [
+  { id: "art_6.par_2", annex: "anx_3" },
+  { id: "art_6.par_1", annex: "anx_1" },
+];
 /** Clause breaks inside a sentence: "; ", ", while", ", whereas", ", but", ", während", ", wohingegen", ", aber", "while", "während". */
 const CLAUSE_BREAK = /;|,\s*(?:while|whereas|but|however|während|wohingegen|aber|jedoch|dagegen)(?![\p{L}])|(?<![\p{L}])(?:while|whereas|während|wohingegen)(?![\p{L}])/giu;
 const AND = /(?<![\p{L}])(?:and|und)(?![\p{L}])/giu;
@@ -217,6 +229,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   const de = lang === "de";
   const ACT = de ? "Verordnung (EU) 2026/1744" : "Regulation (EU) 2026/1744";
   const tr = (en: string, deText: string): string => (de ? deText : en);
+  const highRisk = tr("high-risk (both routes)", "Hochrisiko (beide Routen)");
   const D = (iso: string): string => readableDate(iso, lang);
 
   const version = versionForDate(asOf);
@@ -416,6 +429,10 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     /** Cited node, for the comparison with dates written in its text. */
     cited?: string;
     span: Span;
+    /** "high-risk" without an annex: the dates of both routes of Article 6 count. */
+    routes?: boolean;
+    /** The subject stems from the sentence before (same paragraph), not from the sentence of the date. */
+    carried?: boolean;
   }
   const dates = findDates(text).filter((d) => !insideChecked(d.span));
   const dist = (s: Span, d: Span): number => (s.end <= d.start ? d.start - s.end : s.start >= d.end ? s.start - d.end + 0.5 : 0);
@@ -441,6 +458,13 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
           const start = sentence.start + m.index;
           hit.push({ ruleId: a.id, span: { start, end: start + m[0].length } });
         }
+      }
+      // "high-risk" without an annex or Article 6(1)/(2): both routes
+      const hr = HIGH_RISK_TERM.exec(sText);
+      const routeCited = refs.some((r) => r.sentence === si && ROUTES.some((x) => r.mention.id === x.id || r.mention.id.startsWith(`${x.id}.`) || r.mention.id === x.annex || r.mention.id.startsWith(`${x.annex}.`)));
+      if (hr && !ROUTE_ANNEX.test(sText) && !routeCited) {
+        const start = sentence.start + hr.index;
+        hit.push({ ruleId: ROUTES[0]!.id, routes: true, span: { start, end: start + hr[0].length } });
       }
     }
     subjectCache.set(si, hit);
@@ -483,6 +507,15 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     | { kind: "ok"; s: Subject; partial?: { node: string; rule: DeadlineRule }; viaText: boolean; c?: { rule: DeadlineRule; dates: string[] } }
     | { kind: "outdated"; s: Subject; viaText: boolean; expected?: string; c?: { rule: DeadlineRule; dates: string[] }; o?: { rule: DeadlineRule; dates: string[] } };
   const judge = (s: Subject, found: string): Verdict | null => {
+    if (s.routes) {
+      const per = ROUTES.map((r) => ({ r, c: ruleDates(version, cur, r.id, deadlines), o: ruleDates(other, oth, r.id, deadlines) }));
+      const now = per.find((x) => x.c?.dates.includes(found));
+      if (now?.c) return { kind: "ok", s: { ...s, ruleId: now.r.id }, viaText: false, c: now.c };
+      const before = per.find((x) => x.o?.dates.includes(found));
+      const first = per[0]?.c;
+      if (before?.o && first) return { kind: "outdated", s, viaText: false, expected: first.dates[0] as string, c: first, o: before.o };
+      return null;
+    }
     const rc = ruleDates(version, cur, s.ruleId, deadlines);
     const ro = ruleDates(other, oth, s.ruleId, deadlines);
     if (s.cited) {
@@ -505,14 +538,26 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   for (const d of dates) {
     const si = sentenceAt(d.span.start);
     const sentence = sentences[si] as Span;
-    const all = subjectsOf(si);
-    if (all.length === 0) continue;
+    let all = subjectsOf(si);
     // the clause of the date; without a subject in it, the subjects of the sentence before the date
     const starts = clauseStarts(si);
     const from = [...starts].reverse().find((x) => x <= d.span.start) ?? sentence.start;
     const to = starts.find((x) => x > d.span.start) ?? sentence.end;
-    let subjects = all.filter((x) => x.span.start >= from && x.span.end <= to);
+    // a trigger word at most TRIGGER_DISTANCE words before the date, in the clause of the date
+    const wordsBefore = text.slice(from, d.span.start).match(/[\p{L}\p{N}.]+/gu) ?? [];
+    const triggered = TRIGGER.test(wordsBefore.slice(-TRIGGER_DISTANCE).join(" "));
+    // a date opening the sentence ("From 2 August 2026, high-risk systems ...") may name its subject after it
+    const leading = wordsBefore.length <= 2 && /^\s*,/.test(text.slice(d.span.end, d.span.end + 3));
+    if (all.length === 0) {
+      // no subject in the sentence: those of the sentence before, in the same paragraph, if that one carries no date of its own
+      const prev = si > 0 && !/\n[ \t]*\n/.test(text.slice((sentences[si - 1] as Span).end, sentence.start)) && !dates.some((x) => sentenceAt(x.span.start) === si - 1) ? subjectsOf(si - 1) : [];
+      if (prev.length === 0 || !triggered) continue;
+      all = prev.map((x) => ({ ...x, carried: true }));
+    }
+    let subjects = all.filter((x) => x.carried || (x.span.start >= from && x.span.end <= to));
     if (subjects.length === 0) subjects = all.filter((x) => x.span.end <= d.span.start);
+    // both-routes and carried subjects need a trigger word; both-routes ones stand in the clause, before the date
+    subjects = subjects.filter((x) => (!x.routes && !x.carried) || (triggered && (!x.routes || x.carried || (x.span.start >= from && (x.span.end <= d.span.start || leading)))));
     if (subjects.length === 0) continue;
     // subjects before the date first (nearest first), then those after it
     subjects = [...subjects].sort((x, y) => Number(x.span.start >= d.span.end) - Number(y.span.start >= d.span.end) || dist(x.span, d.span) - dist(y.span, d.span) || x.span.start - y.span.start);
@@ -538,7 +583,11 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
       const s = v.s;
       const refId = v.viaText && s.cited ? s.cited : s.ruleId;
       const ref = cite(refId);
-      if (v.partial) {
+      if (s.routes) {
+        const route = ROUTES.find((x) => x.id === s.ruleId) as { id: string; annex: string };
+        const annex = cite(route.annex);
+        add({ ...base, kind: "deadline_ok", severity: "ok", ref: highRisk, node: s.ruleId, sources: (v.c as { rule: DeadlineRule }).rule.source_nodes.map((n) => src(version, n)), message: tr(`${D(found)} is the application date of high-risk AI systems of the ${annex} route (${ref}) on ${D(asOf)}.`, `${D(found)} ist der Geltungsbeginn für Hochrisiko-KI-Systeme der Route ${annex} (${ref}) am ${D(asOf)}.`) });
+      } else if (v.partial) {
         const whole = ruleDates(version, cur, s.ruleId, deadlines);
         add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: s.ruleId, sources: v.partial.rule.source_nodes.map((n) => src(version, n)), message: tr(`${D(found)} is the application date of part of ${ref} (${cite(v.partial.node)}); ${whole ? `${ref} as a whole applies from ${D(whole.dates[0] as string)}` : "the rest follows other rules"}.`, `${D(found)} ist der Geltungsbeginn eines Teils von ${ref} (${cite(v.partial.node)}); ${whole ? `${ref} insgesamt gilt ab ${D(whole.dates[0] as string)}` : "der Rest folgt anderen Regeln"}.`) });
       } else if (v.viaText) {
@@ -556,18 +605,23 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
       const sources = v.viaText
         ? [src(other, refId), src(version, refId)]
         : [...(v.c?.rule.source_nodes ?? []).map((n) => src(version, n)), ...(v.o?.rule.source_nodes ?? []).map((n) => src(other, n))];
-      const common = { ...base, ref, node: refId, ...(expected ? { expected } : {}), sources };
-      if (laterAct) {
+      const common = { ...base, ref: s.routes ? highRisk : ref, node: refId, ...(expected ? { expected } : {}), sources };
+      if (s.routes && !laterAct) {
+        const cur1 = ruleDates(version, cur, (ROUTES[1] as { id: string }).id, deadlines)?.dates[0];
+        const a3 = cite((ROUTES[0] as { annex: string }).annex);
+        const a1 = cite((ROUTES[1] as { annex: string }).annex);
+        add({ ...common, kind: "outdated_deadline", severity: "error", message: tr(`High-risk AI systems: ${D(found)} was the date in the Official Journal version; on ${D(asOf)} it is ${expected ? D(expected) : "another date"} for ${a3} systems${cur1 ? ` and ${D(cur1)} for ${a1} products` : ""} (changed by ${ACT}).`, `Hochrisiko-KI-Systeme: ${D(found)} war das Datum der Amtsblattfassung; am ${D(asOf)} gilt ${expected ? D(expected) : "ein anderes Datum"} für Systeme nach ${a3}${cur1 ? ` und ${D(cur1)} für Produkte nach ${a1}` : ""} (geändert durch ${ACT}).`) });
+      } else if (laterAct) {
         add({ ...common, kind: "unverified_date", severity: "warning", message: tr(`${D(found)} is the ${v.viaText ? "date in the text" : "application date"} of the consolidated version (${ACT}, from ${D("2026-07-27")}); on ${D(asOf)} ${ref} ${expected ? `has ${D(expected)}` : "reads differently"}.`, `${D(found)} ist das ${v.viaText ? "Datum im Text" : "Geltungsdatum"} der konsolidierten Fassung (${ACT}, ab ${D("2026-07-27")}); am ${D(asOf)} ${expected ? `gilt für ${ref} der ${D(expected)}` : `lautet ${ref} anders`}.`) });
       } else {
         add({ ...common, kind: "outdated_deadline", severity: "error", message: tr(`${ref} gave ${D(found)}; on ${D(asOf)} it is ${expected ? D(expected) : "another date"} (changed by ${ACT}).`, `${ref} nannte ${D(found)}; am ${D(asOf)} gilt ${expected ? D(expected) : "ein anderes Datum"} (geändert durch ${ACT}).`) });
       }
       continue;
     }
-    // nothing matches: report only if a trigger word stands at most three words before the date
-    const before = text.slice(sentence.start, d.span.start).match(/[\p{L}\p{N}.]+/gu) ?? [];
-    if (!TRIGGER.test(before.slice(-3).join(" "))) continue;
+    // nothing matches: report only if a trigger word stands shortly before the date (same clause)
+    if (!triggered) continue;
     for (const s of subjects) {
+      if (s.routes || s.carried) continue; // no application date to compare with: stay silent
       const c = ruleDates(version, cur, s.ruleId, deadlines);
       if (!c) continue;
       const ref = cite(s.ruleId);
