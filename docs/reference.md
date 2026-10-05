@@ -218,7 +218,7 @@ extended for this (ordinal paragraphs such as "third paragraph", German "Ziffer"
 ### `aiact_audit_text` (`auditText`, core `auditCore.ts`, scanner `auditScan.ts`)
 
 Input `{ text, as_of, lang? }` (`as_of` required by the library function; the MCP server fills in today; `lang` selects
-the corpus and the language of the messages; without `lang` it is detected from the text (`detectLang`, see `aiact_search`), an explicit `lang` wins; citation and date notations of both languages are recognised in any case).
+the corpus and the language of the messages; without `lang` the messages follow the language of the text (`detectLang`, see `aiact_search`), deadlines and citations are checked against the English corpus and each quotation in its own detected language; an explicit `lang` decides all three; citation and date notations of both languages are recognised in any case).
 Output `{ as_of, version_checked, findings, summary: { error, warning, info, ok }, notice }`, `version_checked` = `versionForDate(as_of)`.
 A finding is `{ kind, severity, span: { start, end }, excerpt, message, ref?, node?, expected?, found?, sources, suggestion? }`; `span`
 offsets are UTF-16 positions in the input text, findings are ordered by `span.start`, `sources` are `<version>:<node id>`.
@@ -267,7 +267,9 @@ most 200 per text, identical ones once). Sentences are split at `. ! ?` (not aft
 "2. August"), at blank lines (LF and CRLF), at the start of every list item (`-`, `*`, `•`, `1.`, `1)`, `a)`) and table row (`|`), and never inside a checked quotation.
 *Trigger words*: hyphenated compounds count as one word; "by" only directly before the date and not after a passive participle
 ("reviewed by"); a date opening the sentence with a preposition (from, as of, ab (dem), seit (dem), bis (zum) …) acts as a trigger and the
-subject may follow without a comma; "on"/"am"/"vom" opening the sentence also need a verb of application or duty in the clause (apply, take effect, gelten, in Kraft treten, müssen …).
+subject may follow without a comma, but only if the clause states application: a verb of application (apply, take effect, enter into application, gelten, anwendbar,
+in Kraft, wirksam) without a first-person subject, or a duty modal (must, shall, have to; müssen) with the high-risk term as its subject and no first-person
+subject. Event dates ("Since 2 August 2026 we have trained staff …", "Am … müssen wir … berichten") and date ranges ("From … to …", "vom … bis …") stay silent.
 *Both routes* (`high-risk` without an annex): the subject has the dates of both routes of Article 6 (`art_6.par_2` = Annex III and `art_6.par_1` = Annex I,
 from the deadline table, nothing in the code). A date of a route in the version in force is `deadline_ok` (the message names the route); a date that
 is only a date of the other version is `outdated_deadline` with `expected` = the Annex III date of the version in force, the message names both
@@ -289,7 +291,8 @@ Known gaps: no recitals, no relative dates ("two years after entry into force"),
 which provision applies to a system; a date without trigger word is not reported when it matches nothing; "high-risk" is a subject only for
 dates with a trigger word, and a subject mentioned only after the date (other than a date opening the sentence) is ignored. Erring on the side of silence:
 "The AI Act requires high-risk AI systems to comply from 2 August 2026" (the Regulation is the subject), a German feminine genitive
-"der Verordnung" (read as subject), "completed by 2 August 2026" (passive participle before "by") and "before 2 August 2026" are not reported.
+"der Verordnung" (read as subject), "completed by 2 August 2026" (passive participle before "by"), "before 2 August 2026", a sentence continued over a list line
+("… must comply\n1) from 2 August 2026") and short or name-heavy quotations whose language `detectLang` misreads are not reported or checked as English.
 
 ## Verification levels V0-V2
 
