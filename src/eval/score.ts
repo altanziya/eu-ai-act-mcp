@@ -13,6 +13,28 @@ export function normalizeVersion(s: string): VersionId | null {
   return null;
 }
 
+export type VersionNamed = VersionId | "both" | null;
+
+const IDS_2026 = ["20260727", "2026/1744", "32026r1744"];
+const IDS_2024 = ["32024r1689", "2024/1689", "official journal", "amtsblatt"];
+
+/**
+ * Descriptive only (not part of `correct`): which version a model names, by explicit identifiers. Keywords such as
+ * "consolidated" or "omnibus" never count. A 2026 identifier together with "amended"/"geändert" or the full id
+ * 02024R1689-20260727 means 2026; 2024 identifiers alone mean 2024; 2024 and 2026 identifiers without that wording
+ * mean both; a 2026 identifier alone means 2026; no identifier: null.
+ */
+export function versionNamed(s: string): VersionNamed {
+  const t = s.toLowerCase();
+  const has2026 = IDS_2026.some((k) => t.includes(k));
+  const has2024 = IDS_2024.some((k) => t.includes(k));
+  if (has2026 && (t.includes("02024r1689-20260727") || t.includes("amended") || t.includes("geändert"))) return "02024R1689-20260727";
+  if (has2026 && has2024) return "both";
+  if (has2026) return "02024R1689-20260727";
+  if (has2024) return "32024R1689";
+  return null;
+}
+
 const MONTHS: Record<string, number> = {
   january: 1, januar: 1, jan: 1, february: 2, februar: 2, feb: 2, march: 3, märz: 3, maerz: 3, mar: 3, april: 4, apr: 4, may: 5, mai: 5,
   june: 6, juni: 6, jun: 6, july: 7, juli: 7, jul: 7, august: 8, aug: 8, september: 9, sep: 9, sept: 9, october: 10, oktober: 10, oct: 10, okt: 10,
