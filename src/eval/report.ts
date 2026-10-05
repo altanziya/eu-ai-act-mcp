@@ -27,6 +27,8 @@ export interface RunRecord {
   status: number;
   latency_ms: number;
   error?: string;
+  /** PROMPT_VERSION the run was made with. */
+  prompt_version?: string;
   /** Run cut short by the budget; re-run on --resume. */
   incomplete?: boolean;
   mock?: boolean;
@@ -46,11 +48,15 @@ export interface CellSummary {
   arm: string;
   /** Cases with at least one scored (parseable) run. */
   cases: number;
-  /** Cases wrong by majority of their scored runs (strictly more than half; 1 run: that run; 3 runs: at least 2). */
+  /** Cases in which no run could be scored (all unparseable or API errors); not part of `cases`. */
+  excluded_cases: number;
+  /** Cases wrong by majority: wrong runs > R/2, R = all runs of the case (unparseable runs do not count as wrong; 1 run: that run; 3 runs: at least 2). */
   errors_majority: number;
   /** Cases with at least one wrong scored run. */
   errors_any: number;
   ci: { lower: number; upper: number } | null;
+  /** Sensitivity: the same rule with every unparseable run (and API error run) counted as wrong; n includes the excluded cases. */
+  sensitivity: { errors: number; n: number; lower: number; upper: number } | null;
   e1: string | null;
   runs: number;
   unparseable_runs: number;
@@ -73,19 +79,28 @@ export function summarize(lines: RunRecord[], filter: Filter = () => true): Cell
     const byCase = new Map<string, RunRecord[]>();
     for (const r of runs) byCase.set(r.case_id, [...(byCase.get(r.case_id) ?? []), r]);
     let cases = 0;
+    let excluded = 0;
     let majority = 0;
     let any = 0;
+    let sensitivityErrors = 0;
     for (const rs of byCase.values()) {
       const scored = rs.filter((r) => r.score.correct !== null);
-      if (scored.length === 0) continue;
-      cases++;
+      const unscored = rs.length - scored.length;
       const wrong = scored.filter((r) => r.score.correct === false).length;
-      if (wrong * 2 > scored.length) majority++;
+      if ((wrong + unscored) * 2 > rs.length) sensitivityErrors++;
+      if (scored.length === 0) {
+        excluded++;
+        continue;
+      }
+      cases++;
+      if (wrong * 2 > rs.length) majority++;
       if (wrong >= 1) any++;
     }
+    const sensitivityN = cases + excluded;
     out.push({
-      model, arm, cases, errors_majority: majority, errors_any: any,
+      model, arm, cases, excluded_cases: excluded, errors_majority: majority, errors_any: any,
       ci: cases > 0 ? clopperPearson(majority, cases) : null,
+      sensitivity: sensitivityN > 0 ? { errors: sensitivityErrors, n: sensitivityN, ...clopperPearson(sensitivityErrors, sensitivityN) } : null,
       e1: cases > 0 ? decideE1({ errors: majority, n: cases }) : null,
       runs: runs.length,
       unparseable_runs: runs.filter((r) => r.parsed === null && !r.error).length,
@@ -113,15 +128,19 @@ const pct = (x: number | null): string => (x === null ? "-" : `${(x * 100).toFix
 
 function table(cells: CellSummary[]): string[] {
   const L = [
-    "| Model | Arm | Cases | Errors (majority) | Clopper-Pearson 95 % | Errors (>= 1 wrong run) | Unparseable runs | API error runs | Tool-call rate | Cost USD | E1 rule |",
-    "|---|---|---|---|---|---|---|---|---|---|---|",
+    "| Model | Arm | Cases | Excluded cases | Errors (majority) | Clopper-Pearson 95 % | Errors (>= 1 wrong run) | Unparseable runs | API error runs | Tool-call rate | Cost USD | E1 rule |",
+    "|---|---|---|---|---|---|---|---|---|---|---|---|",
   ];
   for (const c of cells) {
     L.push(
-      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${f4(c.cost_usd)} | ${c.e1 ?? "-"} |`,
+      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${f4(c.cost_usd)} | ${c.e1 ?? "-"} |`,
     );
+    if (c.sensitivity) {
+      const s = c.sensitivity;
+      L.push(`| ${c.model} | ${c.arm}: unparseable counted as wrong | ${s.n} | - | ${s.errors} | [${f4(s.lower)}, ${f4(s.upper)}] | - | - | - | - | - | - |`);
+    }
   }
-  if (cells.length === 0) L.push("| (no runs) | | | | | | | | | | |");
+  if (cells.length === 0) L.push("| (no runs) | | | | | | | | | | | |");
   return L;
 }
 
@@ -139,9 +158,10 @@ export function renderReport(meta: ReportMeta, lines: RunRecord[]): string {
   if (meta.note) L.push(`- Note: ${meta.note}`);
   L.push(
     "",
-    "Method: a case counts as an error if more than half of its scored runs are wrong (one repetition: that run; three: at least 2 of 3). " +
-      "Clopper-Pearson intervals (exact, 95 %) are computed over cases, not runs. Unparseable answers (no JSON object, including empty answers) are not scored and are listed separately; " +
-      "API error runs are listed separately. The tool-call rate is the share of runs with at least one tool call. " +
+    "Method: a case counts as an error if more than half of its runs are wrong (one repetition: that run; three: at least 2 of 3). " +
+      "Clopper-Pearson intervals (exact, 95 %) are computed over cases, not runs. Unparseable answers (no JSON object, including empty answers) are not scored and do not count as wrong; " +
+      "with R runs per case a case is an error if more than R/2 of its runs are wrong, and it is excluded only if no run of it could be scored. " +
+      "The second row of each cell (sensitivity) repeats the computation with every unparseable run and API error run counted as wrong (all cases, none excluded). API error runs are listed separately. The tool-call rate is the share of runs with at least one tool call. " +
       "The E1 rule column applies the pre-registered rule mechanically to the row (go if the lower bound >= 0.05; else undecided if cases < 45 and errors >= 1; else not supported) and is only meaningful on the full case set.",
     "",
     "## All cases",
