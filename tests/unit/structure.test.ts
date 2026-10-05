@@ -25,6 +25,10 @@ describe.each(ALL_CASES)("integrity: $label", (c) => {
     expect(nodes.filter((n) => n.heading === "" && n.text === "").map((n) => n.id)).toEqual([]);
   });
 
+  it("has no node without a letter or digit in heading and text (punctuation-only blocks are merged)", () => {
+    expect(nodes.filter((n) => !/[\p{L}\p{N}]/u.test(`${n.heading}${n.text}`)).map((n) => n.id)).toEqual([]);
+  });
+
   it("id path matches the parent chain (child id = parent id + one segment)", () => {
     const bad = nodes.filter((n) => n.parent !== null && n.type !== "section" && n.type !== "article" && !n.id.startsWith(`${n.parent}.`));
     expect(bad.map((n) => n.id)).toEqual([]);
@@ -109,6 +113,8 @@ describe("structure: EN 2024, EN 2026, DE 2024", () => {
     });
 
     it("anx_14 is structured: groups 1..4, level-2 letters below group 2 and 3, tables as text", () => {
+      expect(need("anx_14").heading).toMatch(/^The list of codes, categories and corresponding types/);
+      expect(need("anx_14").heading).not.toMatch(/^ANNEX/);
       expect(need("anx_14.pt_2").heading).toMatch(/^List of Codes/);
       expect(need("anx_14.pt_2.a").parent).toBe("anx_14.pt_2");
       expect(need("anx_14.pt_2.a").heading).toMatch(/Annex I/);

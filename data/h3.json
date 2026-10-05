@@ -1,17 +1,17 @@
 {
   "mapped_2024_to_2026": {
-    "en": 0.984733,
+    "en": 0.986778,
     "de": 0.986082
   },
-  "en_de_2024": 0.997532,
-  "en_de_2026": 0.997486,
+  "en_de_2024": 1,
+  "en_de_2026": 1,
   "details": {
     "note": "mapped_2024_to_2026 is measured over operative nodes (all types except recital): the consolidated version contains no recitals. See mapped_2024_to_2026_all_nodes for the ratio including them.",
     "mapped_2024_to_2026_all_nodes": {
       "en": {
-        "total": 1621,
-        "mapped": 1419,
-        "ratio": 0.875386
+        "total": 1617,
+        "mapped": 1418,
+        "ratio": 0.876933
       },
       "de": {
         "total": 1617,
@@ -21,10 +21,10 @@
     },
     "mapped_2024_to_2026_operative": {
       "en": {
-        "total": 1441,
-        "mapped": 1419,
-        "ratio": 0.984733,
-        "unchanged": 1362,
+        "total": 1437,
+        "mapped": 1418,
+        "ratio": 0.986778,
+        "unchanged": 1361,
         "changed": 55,
         "moved": 2,
         "removed": [
@@ -39,11 +39,8 @@
           "art_107.sub_2",
           "art_108.pt_1.sub_2",
           "art_108.pt_2.sub_2",
-          "art_108.pt_2.sub_3",
           "art_108.pt_3.sub_2",
-          "art_108.pt_3.sub_3",
           "art_108.pt_4.sub_2",
-          "art_108.pt_4.sub_3",
           "art_108.pt_6.sub_2",
           "art_109.sub_2",
           "art_110.sub_2",
@@ -52,9 +49,9 @@
           "anx_8.sec_b.pt_9"
         ],
         "all_nodes": {
-          "total": 1621,
-          "mapped": 1419,
-          "ratio": 0.875386
+          "total": 1617,
+          "mapped": 1418,
+          "ratio": 0.876933
         }
       },
       "de": {
@@ -94,26 +91,16 @@
       }
     },
     "en_de_2024": {
-      "en_nodes": 1621,
+      "en_nodes": 1617,
       "with_de_counterpart": 1617,
-      "ratio": 0.997532,
-      "missing_in_de": [
-        "art_108.pt_2.sub_3",
-        "art_108.pt_3.sub_3",
-        "art_108.pt_4.sub_3",
-        "art_108.pt_5.sub_3"
-      ]
+      "ratio": 1,
+      "missing_in_de": []
     },
     "en_de_2026": {
-      "en_nodes": 1591,
+      "en_nodes": 1587,
       "with_de_counterpart": 1587,
-      "ratio": 0.997486,
-      "missing_in_de": [
-        "art_108.pt_2.pt_1.sub_2",
-        "art_108.pt_3.pt_1.sub_2",
-        "art_108.pt_4.pt_1.sub_2",
-        "art_108.pt_5.sub_3"
-      ]
+      "ratio": 1,
+      "missing_in_de": []
     }
   }
 }

@@ -14076,21 +14076,10 @@
       "type": "point",
       "parent": "art_108.pt_2",
       "heading": "",
-      "text": "When adopting delegated acts pursuant to paragraphs 1 and 2 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.'",
-      "hash": "3a784f8a49934e1dd928b63abbe829c892a53d6b0e1c6c2d8379d679c363e139",
-      "node_hash": "47028e4a5bc983cad007cac1054dc7d6cd27be10bfc5e0f45fcdc270a2434d4c",
+      "text": "When adopting delegated acts pursuant to paragraphs 1 and 2 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.';",
+      "hash": "fddb39458b5c4d47ffdead87d2086e8bc5e79d8243d9857cadd3f64d430361f4",
+      "node_hash": "14838aa0dfb451303e710c4b3741c4b538585422dab82bc175187f7ca572db91",
       "order": 1279,
-      "source_anchor": "art_108"
-    },
-    {
-      "id": "art_108.pt_2.pt_1.sub_2",
-      "type": "subparagraph",
-      "parent": "art_108.pt_2.pt_1",
-      "heading": "",
-      "text": ";",
-      "hash": "41b805ea7ac014e23556e98bb374702a08344268f92489a02f0880849394a1e4",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37",
-      "order": 1280,
       "source_anchor": "art_108"
     },
     {
@@ -14101,7 +14090,7 @@
       "text": "in Article 43, the following paragraph is added:",
       "hash": "6591ac81d611cb6d61197a4e983a12afc2f88d47965debe04d2d7a307756375d",
       "node_hash": "b300536b0cfbf432b7886e90e0edf79726530be235e1290f9fa903370e5caed1",
-      "order": 1281,
+      "order": 1280,
       "source_anchor": "art_108"
     },
     {
@@ -14109,21 +14098,10 @@
       "type": "point",
       "parent": "art_108.pt_3",
       "heading": "",
-      "text": "When adopting implementing acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.'",
-      "hash": "21df676dab90f1fe9584dbbcb152856ba6ae262ddeefd708fc2158aa3044ab1d",
-      "node_hash": "192671d24d6c761a122d09aa49aedb977f91a863991e7a62031c498c24e515eb",
-      "order": 1282,
-      "source_anchor": "art_108"
-    },
-    {
-      "id": "art_108.pt_3.pt_1.sub_2",
-      "type": "subparagraph",
-      "parent": "art_108.pt_3.pt_1",
-      "heading": "",
-      "text": ";",
-      "hash": "41b805ea7ac014e23556e98bb374702a08344268f92489a02f0880849394a1e4",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37",
-      "order": 1283,
+      "text": "When adopting implementing acts pursuant to paragraph 1 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.';",
+      "hash": "d9def4f7c7753244c3f83fd0d1576097b571f57120b0727fc6ab9e9be19af78c",
+      "node_hash": "e3ad877634ed411b1ea87d1f5502a5b70d4c0b24f5159c4f97f0b1b5250cecbb",
+      "order": 1281,
       "source_anchor": "art_108"
     },
     {
@@ -14134,7 +14112,7 @@
       "text": "in Article 47, the following paragraph is added:",
       "hash": "c216b39a8ca433b8e9c656179d1d8fbc0bddfb55d6b574499e4da6cf19800d42",
       "node_hash": "fff14b80ada93f7d96e83d37ddb41d65887eee762c353582ae7d71605aba1d5c",
-      "order": 1284,
+      "order": 1282,
       "source_anchor": "art_108"
     },
     {
@@ -14142,21 +14120,10 @@
       "type": "point",
       "parent": "art_108.pt_4",
       "heading": "",
-      "text": "When adopting delegated acts pursuant to paragraphs 1 and 2 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.'",
-      "hash": "3a784f8a49934e1dd928b63abbe829c892a53d6b0e1c6c2d8379d679c363e139",
-      "node_hash": "47028e4a5bc983cad007cac1054dc7d6cd27be10bfc5e0f45fcdc270a2434d4c",
-      "order": 1285,
-      "source_anchor": "art_108"
-    },
-    {
-      "id": "art_108.pt_4.pt_1.sub_2",
-      "type": "subparagraph",
-      "parent": "art_108.pt_4.pt_1",
-      "heading": "",
-      "text": ";",
-      "hash": "41b805ea7ac014e23556e98bb374702a08344268f92489a02f0880849394a1e4",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37",
-      "order": 1286,
+      "text": "When adopting delegated acts pursuant to paragraphs 1 and 2 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.';",
+      "hash": "fddb39458b5c4d47ffdead87d2086e8bc5e79d8243d9857cadd3f64d430361f4",
+      "node_hash": "14838aa0dfb451303e710c4b3741c4b538585422dab82bc175187f7ca572db91",
+      "order": 1283,
       "source_anchor": "art_108"
     },
     {
@@ -14167,7 +14134,7 @@
       "text": "in Article 57, the following subparagraph is added:",
       "hash": "54eb8b1940cfc3346306bae167909263f99e0aca8d4708e81963fb48902d5897",
       "node_hash": "639f50a8634b967734237978898fe04c6981696bf59386aad7adcee6f6482f8a",
-      "order": 1287,
+      "order": 1284,
       "source_anchor": "art_108"
     },
     {
@@ -14175,21 +14142,10 @@
       "type": "subparagraph",
       "parent": "art_108.pt_5",
       "heading": "",
-      "text": "'When adopting those implementing acts concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.'",
-      "hash": "a5bc43db6e35a8ac3b544126a8f6d2433b55ddd08a6a29df02edec715a81c732",
-      "node_hash": "bf3a09495977ba22678a8dc0b8cb762a2f02616b8fa6f35746047c5f2a805288",
-      "order": 1288,
-      "source_anchor": "art_108"
-    },
-    {
-      "id": "art_108.pt_5.sub_3",
-      "type": "subparagraph",
-      "parent": "art_108.pt_5",
-      "heading": "",
-      "text": ";",
-      "hash": "41b805ea7ac014e23556e98bb374702a08344268f92489a02f0880849394a1e4",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37",
-      "order": 1289,
+      "text": "'When adopting those implementing acts concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.';",
+      "hash": "c7358136e7b8ebf8b809ad7bec46c86cef2a636768b30f9db92bf3b469dfa717",
+      "node_hash": "63f06a3b62d841338e4acc0d6642beb2da8dab6ee0840a66d7031d8211a83081",
+      "order": 1285,
       "source_anchor": "art_108"
     },
     {
@@ -14200,7 +14156,7 @@
       "text": "in Article 58, the following paragraph is added:",
       "hash": "d97c1ef91e99edabea8f37473eef7cd05d4563c08e210ca170191f96afb898bf",
       "node_hash": "ec50111cf5fd087b4e76b4aeb74d425cbf58cb42255eb41d05a1edb2dcdc4c5f",
-      "order": 1290,
+      "order": 1286,
       "source_anchor": "art_108"
     },
     {
@@ -14211,7 +14167,7 @@
       "text": "When adopting delegated acts pursuant to paragraphs 1 and 2 concerning Artificial Intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.'.",
       "hash": "55aca8e0bedceef5de391f83718a54a996c4f85e9dd37f857f19f86c55b701a4",
       "node_hash": "d3f2feafef6dff992b9fd27d5ebb4b240dea2e8bf39de2b1709d14e6a5de06fd",
-      "order": 1291,
+      "order": 1287,
       "source_anchor": "art_108"
     },
     {
@@ -14222,7 +14178,7 @@
       "text": "In Article 11 of Regulation (EU) 2019/2144, the following paragraph is added:",
       "hash": "fe033863c78709b35fc728b38d1b02ed7030bc21a62cc1b638a5ee8720911948",
       "node_hash": "b634eaf4f634c5812165cabf3118266a0ab0b8ac91d07e50d86865148b6f6ad5",
-      "order": 1292,
+      "order": 1288,
       "source_anchor": "art_109"
     },
     {
@@ -14233,7 +14189,7 @@
       "text": "When adopting the implementing acts pursuant to paragraph 2, concerning artificial intelligence systems which are safety components within the meaning of Regulation (EU) 2024/1689 of the European Parliament and of the Council, the requirements set out in Chapter III, Section 2, of that Regulation shall be taken into account.",
       "hash": "c0c9a67542c72a39b15ec258db749d29e273255615399aaafc0c27a5539b3ef3",
       "node_hash": "30949135aa6728d2f0b9e7471088119ca63d9c39c3337b97fd3b8c3825c46966",
-      "order": 1293,
+      "order": 1289,
       "source_anchor": "art_109"
     },
     {
@@ -14244,7 +14200,7 @@
       "text": "In Annex I to Directive (EU) 2020/1828 of the European Parliament and of the Council, the following point is added:",
       "hash": "671d300bf36cb33cb8db8fe347f704929c9c97c1678bd6f30a35559b9a4a9871",
       "node_hash": "551a44b6fe75cf22a0ada747fe9db75fb9d8c290b1771daec3b9b0f64abc5bed",
-      "order": 1294,
+      "order": 1290,
       "source_anchor": "art_110"
     },
     {
@@ -14255,7 +14211,7 @@
       "text": "Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence and amending Regulations (EC) No 300/2008, (EU) No 167/2013, (EU) No 168/2013, (EU) 2018/858, (EU) 2018/1139 and (EU) 2019/2144 and Directives 2014/90/EU, (EU) 2016/797 and (EU) 2020/1828 (Artificial Intelligence Act) (OJ L, 2024/1689, 12.7.2024, ELI: http://data.europa.eu/eli/reg/2024/1689/oj).'.",
       "hash": "567267a050eefa1743520de2d534dfda296b845f847ce61024bdec0bdea16c53",
       "node_hash": "40b0e0b3955e4731bafcf239808ef618d63eea22b2d7a3d90e7c0cdf985dc585",
-      "order": 1295,
+      "order": 1291,
       "source_anchor": "art_110"
     },
     {
@@ -14266,7 +14222,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "41b62171ce409731488894045976f6e590a1a940b3cee824c4376bffbad670b2",
-      "order": 1296,
+      "order": 1292,
       "source_anchor": "art_111"
     },
     {
@@ -14277,7 +14233,7 @@
       "text": "Without prejudice to the application of Article 5 as referred to in Article 113(3), point (a), AI systems which are components of the large-scale IT systems established by the legal acts listed in Annex X that have been placed on the market or put into service before 2 August 2027 shall be brought into compliance with this Regulation by 31 December 2030.",
       "hash": "ddd4e53cee7828acb098483d7616764d07ec26aea810df1f926eaa3ebfbdee3f",
       "node_hash": "0b88b4f66e43767ed885dcfbbd75bc72545e41b85a2d4a639547ee799afff25e",
-      "order": 1297,
+      "order": 1293,
       "source_anchor": "art_111"
     },
     {
@@ -14288,7 +14244,7 @@
       "text": "The requirements laid down in this Regulation shall be taken into account in the evaluation of each large-scale IT system established by the legal acts listed in Annex X to be undertaken as provided for in those legal acts and where those legal acts are replaced or amended.",
       "hash": "f59dbd4122533634736a18bf97301094a947a151b7d04f023d20fe69a7dee20d",
       "node_hash": "2a991883710259fd239043a39486b3852d48f314741418897158a488276fe721",
-      "order": 1298,
+      "order": 1294,
       "source_anchor": "art_111"
     },
     {
@@ -14299,7 +14255,7 @@
       "text": "Without prejudice to the application of Article 5 as referred to in Article 113, third paragraph, point (a), this Regulation shall apply to operators of high-risk AI systems, other than the systems referred to in paragraph 1 of this Article, that have been placed on the market or put into service before the date of application of Chapter III referred to in Article 113, only if, as from that date, those systems are subject to significant changes in their designs. In any case, the providers and deployers of high-risk AI systems intended to be used by public authorities shall take the necessary steps to comply with the requirements and obligations laid down in this Regulation by 2 August 2030.",
       "hash": "61667f08d39ce0bfdaeb120dcb2b69453a182ab99ba99af482554f1078b71a65",
       "node_hash": "1650f94e5a6a043bd883747f55117951eed839edd9fff7e6e36e1610490101f3",
-      "order": 1299,
+      "order": 1295,
       "source_anchor": "art_111"
     },
     {
@@ -14310,7 +14266,7 @@
       "text": "Providers of general-purpose AI models that have been placed on the market before 2 August 2025 shall take the necessary steps in order to comply with the obligations laid down in this Regulation by 2 August 2027.",
       "hash": "eba8e8b009e1189ceb9727269134b52c872c99355042ce233a85240203b0c187",
       "node_hash": "529e14c2eeeda422fb89dad84e7b4e6f7c2f381bb93b474c76f0779a80724ea5",
-      "order": 1300,
+      "order": 1296,
       "source_anchor": "art_111"
     },
     {
@@ -14321,7 +14277,7 @@
       "text": "Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, that have been placed on the market before 2 August 2026 shall take the necessary steps in order to comply with Article 50(2) by 2 December 2026.",
       "hash": "dff26af8b44e80fff350e4a6471f2ea11f44ad90d346abd31c5f76137538c2da",
       "node_hash": "0c34001b4eb3bbbdd97d3ef4a496d368c8bebb5f069bf2541710d92fb5effc1d",
-      "order": 1301,
+      "order": 1297,
       "source_anchor": "art_111"
     },
     {
@@ -14332,7 +14288,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "a4ffbcf133c8b5f1034d2c2dd6d2f23605fd6dfb097a8aebbb7c859ad9f59876",
-      "order": 1302,
+      "order": 1298,
       "source_anchor": "art_112"
     },
     {
@@ -14343,7 +14299,7 @@
       "text": "The Commission shall assess the need for amendment of the list set out in Annex III and of the list of prohibited AI practices laid down in Article 5, once a year following the entry into force of this Regulation, and until the end of the period of the delegation of power laid down in Article 97. The Commission shall submit the findings of that assessment to the European Parliament and the Council.",
       "hash": "6ec22e19ee38ee82bda1f81a73cec617a5f17af56b5dd1a1ccd26432439d752c",
       "node_hash": "62a4a417ea2e6af64d98b0e833e08a622d03599e3513a1696c6b4bc27a05106f",
-      "order": 1303,
+      "order": 1299,
       "source_anchor": "art_112"
     },
     {
@@ -14354,7 +14310,7 @@
       "text": "By 2 August 2028 and every four years thereafter, the Commission shall evaluate and report to the European Parliament and to the Council on the following:",
       "hash": "e902c85a762b5d6614f5bec060530895e925151bc2a10f31d6b9a02c4c8dbaa4",
       "node_hash": "7eedaeb8f4295f2fda787c8c0a6cb462ba7de0d99eb04b2d605a92e6fddcaf3c",
-      "order": 1304,
+      "order": 1300,
       "source_anchor": "art_112"
     },
     {
@@ -14365,7 +14321,7 @@
       "text": "the need for amendments extending existing area headings or adding new area headings in Annex III;",
       "hash": "acbaa2fb8636ceb2ea4d7e53e31714df549daee87cc0d43c727bfb4bd587adcc",
       "node_hash": "b28a7693d411b861142e9dd46eddd74bc4f346855f0a6a1f0e055ac1798ff799",
-      "order": 1305,
+      "order": 1301,
       "source_anchor": "art_112"
     },
     {
@@ -14376,7 +14332,7 @@
       "text": "amendments to the list of AI systems requiring additional transparency measures in Article 50;",
       "hash": "a219d29fb286cb664b653f0213887871b9aae5b7861712eeae3dd89bd0884a7e",
       "node_hash": "487dc73c89c862123decd1beddbfc22b574a2ff151e6bf1448e1097fcde059a4",
-      "order": 1306,
+      "order": 1302,
       "source_anchor": "art_112"
     },
     {
@@ -14387,7 +14343,7 @@
       "text": "amendments enhancing the effectiveness of the supervision and governance system.",
       "hash": "fb578156ddafe4108143ad8d585b2f621d79e0ccfbbe8e0988454ad77cfe4182",
       "node_hash": "5b25b405a288097b202ec14189dc0ceab816c93392acfdb08c77052d88199ad3",
-      "order": 1307,
+      "order": 1303,
       "source_anchor": "art_112"
     },
     {
@@ -14398,7 +14354,7 @@
       "text": "By 2 August 2029 and every four years thereafter, the Commission shall submit a report on the evaluation and review of this Regulation to the European Parliament and to the Council. The report shall include an assessment with regard to the structure of enforcement and the possible need for a Union agency to resolve any identified shortcomings. On the basis of the findings, that report shall, where appropriate, be accompanied by a proposal for amendment of this Regulation. The reports shall be made public.",
       "hash": "decf23c2b80b6a4616823aae17c1ae149b06bf2ea77873654df15a292d640ffc",
       "node_hash": "c00d499c5bbca22f1a16ef363298faeaeb309897d13da1bdb72679117cbc631e",
-      "order": 1308,
+      "order": 1304,
       "source_anchor": "art_112"
     },
     {
@@ -14409,7 +14365,7 @@
       "text": "The reports referred to in paragraph 2 shall pay specific attention to the following:",
       "hash": "f540b7e99ae4180256ebe8d41606d8d2f3578776dfe2ab6aedb6f3d03c567838",
       "node_hash": "f173a1482562c44331db28814154eefa810ee10a1bd4df2d2c3e01397cff08b9",
-      "order": 1309,
+      "order": 1305,
       "source_anchor": "art_112"
     },
     {
@@ -14420,7 +14376,7 @@
       "text": "the status of the financial, technical and human resources of the national competent authorities in order to effectively perform the tasks assigned to them under this Regulation;",
       "hash": "07843caf6df419b01a5edc7ba8c5167d3c5742929529b43da780401fc5f6a59c",
       "node_hash": "200a55265b08ea43046a7d33c8f125d267c43287ef3fc5c408dd86e2f9ef3329",
-      "order": 1310,
+      "order": 1306,
       "source_anchor": "art_112"
     },
     {
@@ -14431,7 +14387,7 @@
       "text": "the state of penalties, in particular administrative fines as referred to in Article 99(1), applied by Member States for infringements of this Regulation;",
       "hash": "4e3d38d1ff55099feaa5f3b6c69f72ef841944eb95320c444d64fa4df84c64b4",
       "node_hash": "00e84fc62f74ee40c8fb79e420e3f20945dd237ff4854b48b19ed95a9e93f6a6",
-      "order": 1311,
+      "order": 1307,
       "source_anchor": "art_112"
     },
     {
@@ -14442,7 +14398,7 @@
       "text": "adopted harmonised standards and common specifications developed to support this Regulation;",
       "hash": "c9c33f30c04a7fed3f622adc67c1a6b68770649aa569a95843a92551472609e9",
       "node_hash": "5a4df5cd1b3f5e682cf8b8991a621e2354591135f96a304a7ed2afc29e65e394",
-      "order": 1312,
+      "order": 1308,
       "source_anchor": "art_112"
     },
     {
@@ -14453,7 +14409,7 @@
       "text": "the number of undertakings that enter the market after the entry into application of this Regulation, and how many of them are SMEs.",
       "hash": "f763d185db0480d3bbcdc62ee4d331c5f5c057029e31f145af7c4f1622b9bfa4",
       "node_hash": "893fe9393aa79d4b9eb41b2f894c4b1239b17f40089c44e6ff386359243a5dfc",
-      "order": 1313,
+      "order": 1309,
       "source_anchor": "art_112"
     },
     {
@@ -14464,7 +14420,7 @@
       "text": "By 2 August 2028, the Commission shall evaluate the functioning of the AI Office, whether the AI Office has been given sufficient powers and competences to fulfil its tasks, and whether it would be relevant and needed for the proper implementation and enforcement of this Regulation to upgrade the AI Office and its enforcement competences and to increase its resources. The Commission shall submit a report on its evaluation to the European Parliament and to the Council.",
       "hash": "c99d221bc163d905b249a37a445ecf542eefb21d6d98400043ce7012905c00e1",
       "node_hash": "ce819fa01ef8f5f116f8c6c26eb72bd00103c137962c206c9db6b502d17fb3dd",
-      "order": 1314,
+      "order": 1310,
       "source_anchor": "art_112"
     },
     {
@@ -14475,7 +14431,7 @@
       "text": "By 2 August 2028 and every four years thereafter, the Commission shall submit a report on the review of the progress on the development of standardisation deliverables on the energy-efficient development of general-purpose AI models, and asses the need for further measures or actions, including binding measures or actions. The report shall be submitted to the European Parliament and to the Council, and it shall be made public.",
       "hash": "bf65c60af8d22fa6f27e5aca05004c66af6cb3d3e16983323a50022dc9c37ce5",
       "node_hash": "e209fafc28023c663db858405f623fec944dcb7a0cd7aeb044d98f133fbd611f",
-      "order": 1315,
+      "order": 1311,
       "source_anchor": "art_112"
     },
     {
@@ -14486,7 +14442,7 @@
       "text": "By 2 August 2028 and every three years thereafter, the Commission shall evaluate the impact and effectiveness of voluntary codes of conduct to foster the application of the requirements set out in Chapter III, Section 2 for AI systems other than high-risk AI systems and possibly other additional requirements for AI systems other than high-risk AI systems, including as regards environmental sustainability.",
       "hash": "235b356b706896ab0c2231b9e31e4b13dec00e08593127f28608d0979cdf539e",
       "node_hash": "53c8ca9a4a4060d5ce16f15d35d7bab37763eaaff688244ba8d27793d60b92f9",
-      "order": 1316,
+      "order": 1312,
       "source_anchor": "art_112"
     },
     {
@@ -14497,7 +14453,7 @@
       "text": "For the purposes of paragraphs 1 to 7, the Board, the Member States and national competent authorities shall provide the Commission with information upon its request and without undue delay.",
       "hash": "82ceeaeca4518e16ca69fce5dda40c5ff4b62b4b4b08f9fef7e53ece07f77d00",
       "node_hash": "265d0f71a22bd0c89f52a91777620102efc4d581304fb836e33856dc07958511",
-      "order": 1317,
+      "order": 1313,
       "source_anchor": "art_112"
     },
     {
@@ -14508,7 +14464,7 @@
       "text": "In carrying out the evaluations and reviews referred to in paragraphs 1 to 7, the Commission shall take into account the positions and findings of the Board, of the European Parliament, of the Council, and of other relevant bodies or sources.",
       "hash": "dbed4dba21ab3ea43a4976bd1fb2905eb2c88c10618df930a90049b13454abb1",
       "node_hash": "47e5a9796fac2ed90cf148e42022381e20a3b970d7f1e22ecd8e1627efe3b271",
-      "order": 1318,
+      "order": 1314,
       "source_anchor": "art_112"
     },
     {
@@ -14519,7 +14475,7 @@
       "text": "The Commission shall, if necessary, submit appropriate proposals to amend this Regulation, in particular taking into account developments in technology, the effect of AI systems on health and safety, and on fundamental rights, and in light of the state of progress in the information society.",
       "hash": "7c66fbe4d89af765d0cd2c927aea80d0e39f6138d48a79524dbb11e9ff65dc9d",
       "node_hash": "15283fc15bb2a050e04c530f2bdd87ac49b9d2030afc0bf40d5358d89a0e0a4e",
-      "order": 1319,
+      "order": 1315,
       "source_anchor": "art_112"
     },
     {
@@ -14530,7 +14486,7 @@
       "text": "To guide the evaluations and reviews referred to in paragraphs 1 to 7 of this Article, the AI Office shall undertake to develop an objective and participative methodology for the evaluation of risk levels based on the criteria outlined in the relevant Articles and the inclusion of new systems in:",
       "hash": "8f284edc05d4493cef3a5da0239df354394ae2f3baab6041b22fe4bc23dcab0b",
       "node_hash": "8eb5b6318798ccc87c67073d2c437e4754808dadecbbbd21d867b672afe9f59c",
-      "order": 1320,
+      "order": 1316,
       "source_anchor": "art_112"
     },
     {
@@ -14541,7 +14497,7 @@
       "text": "the list set out in Annex III, including the extension of existing area headings or the addition of new area headings in that Annex;",
       "hash": "d7961308982879dd4e4d7f5d0f55af93b086b4088bce0dabde38f6af081f31a0",
       "node_hash": "a1d0c87ee2ab8b5bfc1e176d7c2bf9fc13afe11d944173bb9e6d9eb12c40d182",
-      "order": 1321,
+      "order": 1317,
       "source_anchor": "art_112"
     },
     {
@@ -14552,7 +14508,7 @@
       "text": "the list of prohibited practices set out in Article 5; and",
       "hash": "75a44530e9e36e63787b865f7c9127dec1f7a8e000cb5eac467baf51a6513639",
       "node_hash": "d3707eb90417c07591c609b99ae7da9614f6b571a6767224b731aaa19505754e",
-      "order": 1322,
+      "order": 1318,
       "source_anchor": "art_112"
     },
     {
@@ -14563,7 +14519,7 @@
       "text": "the list of AI systems requiring additional transparency measures pursuant to Article 50.",
       "hash": "9f6ae4a3735ad32cfec90656124dbaee2606ccac9b6ab51955c49943b2b1357e",
       "node_hash": "8f1d3482e0c17a4ebd4787cc357b02486b4691c8cda5166aa0e35c2bf0ebed0d",
-      "order": 1323,
+      "order": 1319,
       "source_anchor": "art_112"
     },
     {
@@ -14574,7 +14530,7 @@
       "text": "Any amendment to this Regulation pursuant to paragraph 10, or relevant delegated or implementing acts, which concerns sectoral Union harmonisation legislation listed in Section B of Annex I shall take into account the regulatory specificities of each sector, and the existing governance, conformity assessment and enforcement mechanisms and authorities established therein.",
       "hash": "e03e847c2a82d7f142fdebbdbd00617c74263b39011b84234f21269d78f7cb60",
       "node_hash": "68831c08c8cb97bf9a99e8f43936aa85097d5dea8a67c64c14d1f2f9f37b73fa",
-      "order": 1324,
+      "order": 1320,
       "source_anchor": "art_112"
     },
     {
@@ -14585,7 +14541,7 @@
       "text": "By 2 August 2031, the Commission shall carry out an assessment of the enforcement of this Regulation and shall report on it to the European Parliament, the Council and the European Economic and Social Committee, taking into account the first years of application of this Regulation. On the basis of the findings, that report shall, where appropriate, be accompanied by a proposal for amendment of this Regulation with regard to the structure of enforcement and the need for a Union agency to resolve any identified shortcomings.",
       "hash": "e028e227823ce12d013689e4f7c841148e55e5c3b62a26c4afffb0c150dbb644",
       "node_hash": "b448dfbec312050b14c85f967accc50b96cc8f6d409f976bc077638a1e96a506",
-      "order": 1325,
+      "order": 1321,
       "source_anchor": "art_112"
     },
     {
@@ -14596,7 +14552,7 @@
       "text": "This Regulation shall enter into force on the twentieth day following that of its publication in the Official Journal of the European Union.",
       "hash": "7521c32a90f5ee981042548d552a96206956fd9a1b9c292a5454ee68610371f8",
       "node_hash": "dcd6a901dd0cfaeae35fb316859ea27755679be5d0f270bb8a505bdba2abbb3f",
-      "order": 1326,
+      "order": 1322,
       "source_anchor": "art_113"
     },
     {
@@ -14607,7 +14563,7 @@
       "text": "It shall apply from 2 August 2026.",
       "hash": "d84de11a084926a49c435b80c07c303e11fbbcb6114fcbc53ac9b55f8fe1ad8a",
       "node_hash": "8f94c1ab21874f777ac075302c60142f0b5373f1a471876cbec9f2bcc937e7af",
-      "order": 1327,
+      "order": 1323,
       "source_anchor": "art_113"
     },
     {
@@ -14618,7 +14574,7 @@
       "text": "However:",
       "hash": "fc60e56df42f434f3de1530620365e194f333ac4a91bef0541f083a99bd26929",
       "node_hash": "429f22cf6d44028e8e5e85605dd6f5ca925dfd9ac11c1105f8fc08137720c6d5",
-      "order": 1328,
+      "order": 1324,
       "source_anchor": "art_113"
     },
     {
@@ -14629,7 +14585,7 @@
       "text": "Chapters I and II shall apply from 2 February 2025, with the exception of Article 5(1), first subparagraph, points (ba) and (bb), and Article 5(1a) and (1b) which shall apply from 2 December 2026;",
       "hash": "567b7843370e06c02a74303cfd4f69c8bf58e1a0b04b66f5f6199465f047f9a4",
       "node_hash": "7f6b6bad2df83078e450a8d733c0d0b7842ca8fba2f9bfd66d817b17863e86e8",
-      "order": 1329,
+      "order": 1325,
       "source_anchor": "art_113"
     },
     {
@@ -14640,7 +14596,7 @@
       "text": "Chapter III Section 4, Chapter V, Chapter VII and Chapter XII and Article 78 shall apply from 2 August 2025, with the exception of Article 101;",
       "hash": "ddb09e8f07b0070ccff5d65cccd8e7ecad2a6f396e7ecdbf1790ad40e1c05b6e",
       "node_hash": "b2cf74238330c2689b1ea8f8a50474d77a5d5f0772e34f7267a4177e02fc69a3",
-      "order": 1330,
+      "order": 1326,
       "source_anchor": "art_113"
     },
     {
@@ -14651,7 +14607,7 @@
       "text": "Chapter III, Sections 1, 2, and 3, with the exception of Article 6(5), shall apply from:",
       "hash": "f4df3a331ff3cfedeee8a028ffcfe929ea2b50dd93acce7fbb11dbda5ef21eaf",
       "node_hash": "1b0eb9e42310a233ef8e264f7ef81eef14fdfacf0dc41d436dc54b581ad0096a",
-      "order": 1331,
+      "order": 1327,
       "source_anchor": "art_113"
     },
     {
@@ -14662,7 +14618,7 @@
       "text": "2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III; and",
       "hash": "2d54280e9ba1096cf4d3f30634c29fd049b81962349b412d66fc5b448d2a8f38",
       "node_hash": "b4709b33ebe36c9ffcf8891423ceb6f133f285adf6286cfaecb8ff3c0b5c83e0",
-      "order": 1332,
+      "order": 1328,
       "source_anchor": "art_113"
     },
     {
@@ -14673,7 +14629,7 @@
       "text": "2 August 2028 as regards AI systems classified as high-risk pursuant to Article 6(1) and Annex I;",
       "hash": "dcc3f393617f762c6c04c14ba14ff27d0c955fd30f39018ba60a3ab7fba101b7",
       "node_hash": "4b12524bc6fcbc184d45972ef47831f7d5e1407eaee620ea6d7ba7894844d60a",
-      "order": 1333,
+      "order": 1329,
       "source_anchor": "art_113"
     },
     {
@@ -14684,7 +14640,7 @@
       "text": "Articles 102 to 110 shall apply from 27 July 2026.",
       "hash": "62485b22f9b82f9d4636797fac5a540b84a433f8d67c4649fb45b26717b445a5",
       "node_hash": "d8f2785af29afcbd1b8620bc8fb626c228c424d2028b543c4a352355347337e1",
-      "order": 1334,
+      "order": 1330,
       "source_anchor": "art_113"
     },
     {
@@ -14695,7 +14651,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "965712126ce6b7c122990bea1df0be02aaf45077b506257f7abbf401c3f49cd0",
-      "order": 1335,
+      "order": 1331,
       "source_anchor": "anx_I"
     },
     {
@@ -14706,7 +14662,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "861d8952ac0e9f73ab47ca9360c4af4cc6a729f5077b7fd35e5a1846b5eb35e6",
-      "order": 1336,
+      "order": 1332,
       "source_anchor": "id-29bc56ee-78fb-437f-9baa-1b7fadc4c32f"
     },
     {
@@ -14717,7 +14673,7 @@
       "text": "Directive 2009/48/EC of the European Parliament and of the Council of 18 June 2009 on the safety of toys (OJ L 170, 30.6.2009, p. 1);",
       "hash": "3a71dbbd9380f0b0268de4f054b63ada7ba260061714f712e2d5206940dcc370",
       "node_hash": "fd0af742e0d52992a2328abb20101431a2559c5b151023e43b0e37676cf9bd69",
-      "order": 1337,
+      "order": 1333,
       "source_anchor": "anx_I"
     },
     {
@@ -14728,7 +14684,7 @@
       "text": "Directive 2013/53/EU of the European Parliament and of the Council of 20 November 2013 on recreational craft and personal watercraft and repealing Directive 94/25/EC (OJ L 354, 28.12.2013, p. 90);",
       "hash": "aed92cb01b1dac12a095079c208cc9103c534a490a93ec03262ac4c46ebbf1c2",
       "node_hash": "c718d2d062ba5eb69bfd123a5890bf96228bfe6a95daf0bf53e67dcba861ef1a",
-      "order": 1338,
+      "order": 1334,
       "source_anchor": "anx_I"
     },
     {
@@ -14739,7 +14695,7 @@
       "text": "Directive 2014/33/EU of the European Parliament and of the Council of 26 February 2014 on the harmonisation of the laws of the Member States relating to lifts and safety components for lifts (OJ L 96, 29.3.2014, p. 251);",
       "hash": "62a350fd70c06036af3ab1d2e46d7e380595daffe11daec578b68ca1439c96d6",
       "node_hash": "6bbdc77720de3809a87a51e2cbc11e9b54340587ae8b56cdbccdaf90bfe05b9f",
-      "order": 1339,
+      "order": 1335,
       "source_anchor": "anx_I"
     },
     {
@@ -14750,7 +14706,7 @@
       "text": "Directive 2014/34/EU of the European Parliament and of the Council of 26 February 2014 on the harmonisation of the laws of the Member States relating to equipment and protective systems intended for use in potentially explosive atmospheres (OJ L 96, 29.3.2014, p. 309);",
       "hash": "02f80eab6b1193bace583b87a86bcd9cd825702faf6a343a6b905589a257db21",
       "node_hash": "12de1f509d55e607a453361c3c573441ebff0e0301aaadca5aedad27c654917a",
-      "order": 1340,
+      "order": 1336,
       "source_anchor": "anx_I"
     },
     {
@@ -14761,7 +14717,7 @@
       "text": "Directive 2014/53/EU of the European Parliament and of the Council of 16 April 2014 on the harmonisation of the laws of the Member States relating to the making available on the market of radio equipment and repealing Directive 1999/5/EC (OJ L 153, 22.5.2014, p. 62);",
       "hash": "b8c28317975091f86e27180c74aceb14785a36b3c2cc045e6b073b58dfdd186b",
       "node_hash": "4c882f936c4e7b80ef2c32683bd68bd93b800ba7669ff7d7472c497381221322",
-      "order": 1341,
+      "order": 1337,
       "source_anchor": "anx_I"
     },
     {
@@ -14772,7 +14728,7 @@
       "text": "Directive 2014/68/EU of the European Parliament and of the Council of 15 May 2014 on the harmonisation of the laws of the Member States relating to the making available on the market of pressure equipment (OJ L 189, 27.6.2014, p. 164);",
       "hash": "eff84b9879b7ceef2ced68bf3fd4371abb5b54b260c774c0499608e101086010",
       "node_hash": "23cf78951ab65fa64b56842b7ca629780130a0eb76262c58da28989bcc1b3fc7",
-      "order": 1342,
+      "order": 1338,
       "source_anchor": "anx_I"
     },
     {
@@ -14783,7 +14739,7 @@
       "text": "Regulation (EU) 2016/424 of the European Parliament and of the Council of 9 March 2016 on cableway installations and repealing Directive 2000/9/EC (OJ L 81, 31.3.2016, p. 1);",
       "hash": "c99454a0d25952d5e00e898a2b5c562a53828e3af054253d722a994d00eff056",
       "node_hash": "f21876fd359607298607b35bd1a5f627f76b142608bebe5ebe04cbce1b7ea381",
-      "order": 1343,
+      "order": 1339,
       "source_anchor": "anx_I"
     },
     {
@@ -14794,7 +14750,7 @@
       "text": "Regulation (EU) 2016/425 of the European Parliament and of the Council of 9 March 2016 on personal protective equipment and repealing Council Directive 89/686/EEC (OJ L 81, 31.3.2016, p. 51);",
       "hash": "b95558eff6915d13c796c07488e9d127f98c5e0ddd63a2a7ec713e1ba8475830",
       "node_hash": "fd91c828741dda9f9b046431e182bd0a9bbf7f9a4b31d0630d5ae578d3d6e898",
-      "order": 1344,
+      "order": 1340,
       "source_anchor": "anx_I"
     },
     {
@@ -14805,7 +14761,7 @@
       "text": "Regulation (EU) 2016/426 of the European Parliament and of the Council of 9 March 2016 on appliances burning gaseous fuels and repealing Directive 2009/142/EC (OJ L 81, 31.3.2016, p. 99);",
       "hash": "9f13cd4c3825e438ca01cd0a6d02ea4f4411a6bb81c0bbe68830706a6044de3b",
       "node_hash": "ac5475eda8bc494f28cc14ae9fe5b05ede5aa75564595f8c1b6a1f3c651eb53f",
-      "order": 1345,
+      "order": 1341,
       "source_anchor": "anx_I"
     },
     {
@@ -14816,7 +14772,7 @@
       "text": "Regulation (EU) 2017/745 of the European Parliament and of the Council of 5 April 2017 on medical devices, amending Directive 2001/83/EC, Regulation (EC) No 178/2002 and Regulation (EC) No 1223/2009 and repealing Council Directives 90/385/EEC and 93/42/EEC (OJ L 117, 5.5.2017, p. 1);",
       "hash": "2ac3bd20058a00a6b6ddfe5000d80b8e099eb41384cd108e5e965229d0fcc18b",
       "node_hash": "083a52a6fcabdf196dbd423f06a5f9af2193eaddce767496ecbc3dbe0176d238",
-      "order": 1346,
+      "order": 1342,
       "source_anchor": "anx_I"
     },
     {
@@ -14827,7 +14783,7 @@
       "text": "Regulation (EU) 2017/746 of the European Parliament and of the Council of 5 April 2017 on in vitro diagnostic medical devices and repealing Directive 98/79/EC and Commission Decision 2010/227/EU (OJ L 117, 5.5.2017, p. 176).",
       "hash": "1d3ed109328922e6f4d825ba98e5451a3166006a78576f436631f9f01a1922b9",
       "node_hash": "79d69f53430c810ae6ab3119f506b987dc121296ed0469f39cca09d77c11655a",
-      "order": 1347,
+      "order": 1343,
       "source_anchor": "anx_I"
     },
     {
@@ -14838,7 +14794,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "522c3cd2ffb654d5e76d4979db24bb3796b4ee65da36a3041b9695fe56fab68e",
-      "order": 1348,
+      "order": 1344,
       "source_anchor": "id-65bc7028-18ba-4b51-b4d6-7e307a079e74"
     },
     {
@@ -14849,7 +14805,7 @@
       "text": "Regulation (EC) No 300/2008 of the European Parliament and of the Council of 11 March 2008 on common rules in the field of civil aviation security and repealing Regulation (EC) No 2320/2002 (OJ L 97, 9.4.2008, p. 72);",
       "hash": "7bd88f935ceb85e6c4845fd65ea24d57bf10e9f74b26097763b191f1855b85f0",
       "node_hash": "a49d65e4d59409a0890aa4df6192e8a4eb2326d8f1d2dc29d3e5f249555b003b",
-      "order": 1349,
+      "order": 1345,
       "source_anchor": "anx_I"
     },
     {
@@ -14860,7 +14816,7 @@
       "text": "Regulation (EU) No 168/2013 of the European Parliament and of the Council of 15 January 2013 on the approval and market surveillance of two- or three-wheel vehicles and quadricycles (OJ L 60, 2.3.2013, p. 52);",
       "hash": "604f92f6f2b180ad09fb9abd1f76ed667b7282734765e1a97e8598eb2319f007",
       "node_hash": "6b8fd096d8b589a9768b7f84bd488cee0edd22915f9e5af9c1ceabb1ba38c2d2",
-      "order": 1350,
+      "order": 1346,
       "source_anchor": "anx_I"
     },
     {
@@ -14871,7 +14827,7 @@
       "text": "Regulation (EU) No 167/2013 of the European Parliament and of the Council of 5 February 2013 on the approval and market surveillance of agricultural and forestry vehicles (OJ L 60, 2.3.2013, p. 1);",
       "hash": "f1517a23bd0114d0dba1390d31247f442817bf3efda89f34a6c23617ab1bcd4e",
       "node_hash": "7e9ee62fedc4fa02c430e788e66bf650ae062ca762683ca3809dab9fbd6067d6",
-      "order": 1351,
+      "order": 1347,
       "source_anchor": "anx_I"
     },
     {
@@ -14882,7 +14838,7 @@
       "text": "Directive 2014/90/EU of the European Parliament and of the Council of 23 July 2014 on marine equipment and repealing Council Directive 96/98/EC (OJ L 257, 28.8.2014, p. 146);",
       "hash": "51b470b5fbe429e3ed2df341eefb6def932936f49946a7efa31c19cbe5cca1c4",
       "node_hash": "bb8239f8f03df0e65f5ae130571ebee7a51d5318201b2d28cf5bc7a9f6afa451",
-      "order": 1352,
+      "order": 1348,
       "source_anchor": "anx_I"
     },
     {
@@ -14893,7 +14849,7 @@
       "text": "Directive (EU) 2016/797 of the European Parliament and of the Council of 11 May 2016 on the interoperability of the rail system within the European Union (OJ L 138, 26.5.2016, p. 44);",
       "hash": "9cd66ba92d1b1851a300ba551b636760066b4b26941048740d6b0b8b3a660963",
       "node_hash": "e08e1e13c6109d7927fc18d9a0cbeb1ff7c7b68f67ae7049167436cebcb91750",
-      "order": 1353,
+      "order": 1349,
       "source_anchor": "anx_I"
     },
     {
@@ -14904,7 +14860,7 @@
       "text": "Regulation (EU) 2018/858 of the European Parliament and of the Council of 30 May 2018 on the approval and market surveillance of motor vehicles and their trailers, and of systems, components and separate technical units intended for such vehicles, amending Regulations (EC) No 715/2007 and (EC) No 595/2009 and repealing Directive 2007/46/EC (OJ L 151, 14.6.2018, p. 1);",
       "hash": "8434c08fc05a2a4d721270bbccaa03bffe35a145d80038752113767280e2c113",
       "node_hash": "fb5d72f0509feae7ef0e2d904e274ac553730aba74c5cedfa927b0c5e1ab75f1",
-      "order": 1354,
+      "order": 1350,
       "source_anchor": "anx_I"
     },
     {
@@ -14915,7 +14871,7 @@
       "text": "Regulation (EU) 2019/2144 of the European Parliament and of the Council of 27 November 2019 on type-approval requirements for motor vehicles and their trailers, and systems, components and separate technical units intended for such vehicles, as regards their general safety and the protection of vehicle occupants and vulnerable road users, amending Regulation (EU) 2018/858 of the European Parliament and of the Council and repealing Regulations (EC) No 78/2009, (EC) No 79/2009 and (EC) No 661/2009 of the European Parliament and of the Council and Commission Regulations (EC) No 631/2009, (EU) No 406/2010, (EU) No 672/2010, (EU) No 1003/2010, (EU) No 1005/2010, (EU) No 1008/2010, (EU) No 1009/2010, (EU) No 19/2011, (EU) No 109/2011, (EU) No 458/2011, (EU) No 65/2012, (EU) No 130/2012, (EU) No 347/2012, (EU) No 351/2012, (EU) No 1230/2012 and (EU) 2015/166 (OJ L 325, 16.12.2019, p. 1);",
       "hash": "849b54d54de22e0f8d3805d33d28c8ef3b25f9fec5402bd4aa3963a2446d5ac7",
       "node_hash": "6fd4db3ac4e8c699b08a1e4c59611deed26a2349e2e06637f9841d29e853ea2f",
-      "order": 1355,
+      "order": 1351,
       "source_anchor": "anx_I"
     },
     {
@@ -14926,7 +14882,7 @@
       "text": "Regulation (EU) 2018/1139 of the European Parliament and of the Council of 4 July 2018 on common rules in the field of civil aviation and establishing a European Union Aviation Safety Agency, and amending Regulations (EC) No 2111/2005, (EC) No 1008/2008, (EU) No 996/2010, (EU) No 376/2014 and Directives 2014/30/EU and 2014/53/EU of the European Parliament and of the Council, and repealing Regulations (EC) No 552/2004 and (EC) No 216/2008 of the European Parliament and of the Council and Council Regulation (EEC) No 3922/91 (OJ L 212, 22.8.2018, p. 1), in so far as the design, production and placing on the market of aircrafts referred to in Article 2(1), points (a) and (b) thereof, where it concerns unmanned aircraft and their engines, propellers, parts and equipment to control them remotely, are concerned;",
       "hash": "fa3804a58e499c4c55cb7e8f8c22e955d81533345b0daa44a30841ee970aca29",
       "node_hash": "1dfcb822896887c19a0bcbb895a42dfb7cd334ebcc5eb7b0e54e41590f18c3a7",
-      "order": 1356,
+      "order": 1352,
       "source_anchor": "anx_I"
     },
     {
@@ -14937,7 +14893,7 @@
       "text": "Regulation (EU) 2023/1230 of the European Parliament and of the Council of 14 June 2023 on machinery and repealing Directive 2006/42/EC of the European Parliament and of the Council and Council Directive 73/361/EEC (OJ L 165, 29.6.2023, p. 1, ELI: http://data.europa.eu/eli/reg/2023/1230/oj).",
       "hash": "090ebd440978c8848b7d82f0594a00c08379eb65c24d7f04b8af9e0247bdf292",
       "node_hash": "b30f627d8fb71cfd97fe46c8fc8915074c743edeafcd34685178236a2106f325",
-      "order": 1357,
+      "order": 1353,
       "source_anchor": "anx_I"
     },
     {
@@ -14948,7 +14904,7 @@
       "text": "Criminal offences referred to in Article 5(1), first subparagraph, point (h)(iii):",
       "hash": "e4d28ef9c02c259fb623d888d2a5647b1e0140e2ab730bcec23a551849f27ec8",
       "node_hash": "e6ff0c18856200df752dbe6ffad396dd58ff19772211a40806bae0e7f35c083b",
-      "order": 1358,
+      "order": 1354,
       "source_anchor": "anx_II"
     },
     {
@@ -14959,7 +14915,7 @@
       "text": "terrorism,",
       "hash": "5f2b32fcc33af3c230eb731bd99fc75fe269c1017a8f6c33d724289af48b4e4d",
       "node_hash": "5cc1eff9f237fc50f09c90a47162835922466f36a233046f3e68267b59e6c172",
-      "order": 1359,
+      "order": 1355,
       "source_anchor": "anx_II"
     },
     {
@@ -14970,7 +14926,7 @@
       "text": "trafficking in human beings,",
       "hash": "766766490b1465d2e18a8ccf838c0a0dd8b3cb6998ad36a010d9cfcc4f349e2d",
       "node_hash": "7e2e570b045ce32a68ab011778a087524168ae046fa426270e4a284b4544870f",
-      "order": 1360,
+      "order": 1356,
       "source_anchor": "anx_II"
     },
     {
@@ -14981,7 +14937,7 @@
       "text": "sexual exploitation of children, and child pornography,",
       "hash": "85f8f4b399a52b21b3f346e33e17e1f6997a04694b158fc88aa0e827b72c6e92",
       "node_hash": "1371a6331b8d047b99ef5988d5f450ca6110fda772d604fad4e0e38ac76dfa25",
-      "order": 1361,
+      "order": 1357,
       "source_anchor": "anx_II"
     },
     {
@@ -14992,7 +14948,7 @@
       "text": "illicit trafficking in narcotic drugs or psychotropic substances,",
       "hash": "23df0ac285b42fadeeb8c2c827c4ea0eaf2b0f485495c3478387988ad4571aeb",
       "node_hash": "9e3e383cd4ad717042bcf618847c34165844844db0db441f1510128ae9e65a00",
-      "order": 1362,
+      "order": 1358,
       "source_anchor": "anx_II"
     },
     {
@@ -15003,7 +14959,7 @@
       "text": "illicit trafficking in weapons, munitions or explosives,",
       "hash": "57ee9f4543c7f0c820a6569d7e9f039d3575625f84f6db731db48fec36773ce6",
       "node_hash": "c39031d3b13083c323eebfcf454ebfac706c9e3cc9857c976c467397fe03730a",
-      "order": 1363,
+      "order": 1359,
       "source_anchor": "anx_II"
     },
     {
@@ -15014,7 +14970,7 @@
       "text": "murder, grievous bodily injury,",
       "hash": "358ee089cf60dec98bb6f4d3ad4bc733fd05ab1dc4daeefb1a67dabf721b8c97",
       "node_hash": "e700fae85c129e721c9c01969c2b6045a97262c3bd5fa3bf6f5f8a9b7b4e5841",
-      "order": 1364,
+      "order": 1360,
       "source_anchor": "anx_II"
     },
     {
@@ -15025,7 +14981,7 @@
       "text": "illicit trade in human organs or tissue,",
       "hash": "6ecfe077f68d6fcd52708e4b3ed8ab6a74c800434f654fa397c9d2b3e8af1488",
       "node_hash": "f24e081fcf75da109c5610483c365aa96db9a43670a6b8f5bf3dddfa4d8b2f55",
-      "order": 1365,
+      "order": 1361,
       "source_anchor": "anx_II"
     },
     {
@@ -15036,7 +14992,7 @@
       "text": "illicit trafficking in nuclear or radioactive materials,",
       "hash": "cd7376706cb97caec4c424e8e4539a041664e2c6f83799c452e498191ec71312",
       "node_hash": "72664de364240e80c8090d7a4c3d2707b4f698c5af256d57de13e48d656098b0",
-      "order": 1366,
+      "order": 1362,
       "source_anchor": "anx_II"
     },
     {
@@ -15047,7 +15003,7 @@
       "text": "kidnapping, illegal restraint or hostage-taking,",
       "hash": "eb4388a3f3e60b11b3be4a4d516b67716ddeffe13630feefbd15426628c465eb",
       "node_hash": "024398679c2fc71d8ea1c43245c73e96b0375f9a3cd37bba43385b6364ec0770",
-      "order": 1367,
+      "order": 1363,
       "source_anchor": "anx_II"
     },
     {
@@ -15058,7 +15014,7 @@
       "text": "crimes within the jurisdiction of the International Criminal Court,",
       "hash": "6e3e1c06de1fb765b35a1c656e8f1a342dd71ec3229a30bd94cf9e8fc0d8fae8",
       "node_hash": "700d4f4baf0ce8ca687a4ea1af369b4176c8e44dba444d5aab452183e9fd802a",
-      "order": 1368,
+      "order": 1364,
       "source_anchor": "anx_II"
     },
     {
@@ -15069,7 +15025,7 @@
       "text": "unlawful seizure of aircraft or ships,",
       "hash": "d26f1ca836cc5139726d574bf4290d022b3f288d9c401c135bf8c7556a50a7e0",
       "node_hash": "95c5d4620cbd79955e84515f025f6b587b75c50640ad636bc8b6d22962e6fd6e",
-      "order": 1369,
+      "order": 1365,
       "source_anchor": "anx_II"
     },
     {
@@ -15080,7 +15036,7 @@
       "text": "rape,",
       "hash": "d57fca98b38a4a960b1498f0a393ab1e4d137bd67b313826bd87cb24b2417f04",
       "node_hash": "39addf3bd6dcb669478820c105cea4559c66ee12111bdcbbc004615df4bac8bd",
-      "order": 1370,
+      "order": 1366,
       "source_anchor": "anx_II"
     },
     {
@@ -15091,7 +15047,7 @@
       "text": "environmental crime,",
       "hash": "7320f1c8afce366ce25625af3927859f26bd2b2bd6389bb74b5028a0625423b8",
       "node_hash": "0691961f43908a70476d9f73fe5b3b98295b5fc247a4d68f921a9ee4cccf69c1",
-      "order": 1371,
+      "order": 1367,
       "source_anchor": "anx_II"
     },
     {
@@ -15102,7 +15058,7 @@
       "text": "organised or armed robbery,",
       "hash": "bb649e4178722aefbbc243fe10e45046db3fcedd5175fbaa88dae0f228c771b1",
       "node_hash": "6258c57a416b9dadb0014e9faeb58fa47e6143f2f67a56b64adf5d1949e8c3bd",
-      "order": 1372,
+      "order": 1368,
       "source_anchor": "anx_II"
     },
     {
@@ -15113,7 +15069,7 @@
       "text": "sabotage,",
       "hash": "b241ded00b53f0e0c2d605e29c8067124bd3d51ac9c76d8e773b8819ec5017f6",
       "node_hash": "bbc1c9bec68f0c1b2fe6b2dbbb966c9e20092bdf748bc903f88d2dfde9363bc8",
-      "order": 1373,
+      "order": 1369,
       "source_anchor": "anx_II"
     },
     {
@@ -15124,7 +15080,7 @@
       "text": "participation in a criminal organisation involved in one or more of the offences listed above.",
       "hash": "45649cb4950168b8a44ec30527033ae2b2ded9d3d9d2c7d6d6e8b39a172dc8b5",
       "node_hash": "f3e6db1617260f4da8a1e155086648dfe0b3153dbe75cc611b42d6f032b6da02",
-      "order": 1374,
+      "order": 1370,
       "source_anchor": "anx_II"
     },
     {
@@ -15135,7 +15091,7 @@
       "text": "High-risk AI systems pursuant to Article 6(2) are the AI systems listed in any of the following areas:",
       "hash": "5240ae49a099ee7bd347efe4cfab1a163ef7ff24fb8ec3b254568eff4ef90c1a",
       "node_hash": "3510dfd9a95fa552f5d4350889e5a8685e5d0c8b67f9a27c004c2b4313e72e56",
-      "order": 1375,
+      "order": 1371,
       "source_anchor": "anx_III"
     },
     {
@@ -15146,7 +15102,7 @@
       "text": "Biometrics, in so far as their use is permitted under relevant Union or national law:",
       "hash": "85c5bbe8319afc2ed5467aad65be7bce697b2accb423af0e5458aa73e462bf35",
       "node_hash": "8161755e08ac7e05b36d2c4a2f5ed0e71f6c86104b7ed5c8b2747febdec88b74",
-      "order": 1376,
+      "order": 1372,
       "source_anchor": "anx_III"
     },
     {
@@ -15157,7 +15113,7 @@
       "text": "remote biometric identification systems.",
       "hash": "8868ce7321e9b9ff581c7d1e24f73ca969cb96afe54432323fb0c913ed9c8662",
       "node_hash": "1aeb19655cf459b3ae81bffa7183637ad2f50b5c038f5d4f23731160ccd0d054",
-      "order": 1377,
+      "order": 1373,
       "source_anchor": "anx_III"
     },
     {
@@ -15168,7 +15124,7 @@
       "text": "This shall not include AI systems intended to be used for biometric verification the sole purpose of which is to confirm that a specific natural person is the person he or she claims to be;",
       "hash": "3fdaf6346360265d8b0f16b5bb515b4443335cce58807d4710cf536e237a0072",
       "node_hash": "5ccf2fcf576780c5506bf4850bfa848a2a09ae2c274712e217154af958c3d993",
-      "order": 1378,
+      "order": 1374,
       "source_anchor": "anx_III"
     },
     {
@@ -15179,7 +15135,7 @@
       "text": "AI systems intended to be used for biometric categorisation, according to sensitive or protected attributes or characteristics based on the inference of those attributes or characteristics;",
       "hash": "13e97fe9feadc7358b824ec6f3e660212f0d164f82325b6d227129bfccb5809b",
       "node_hash": "a7680ec9ca2b39d089f3acec9b0a802aeb3063fdcda27eef67176c7011d86df9",
-      "order": 1379,
+      "order": 1375,
       "source_anchor": "anx_III"
     },
     {
@@ -15190,7 +15146,7 @@
       "text": "AI systems intended to be used for emotion recognition.",
       "hash": "edc7479138d1a144b314f1f33aad31ff527dbab6431620cecc9d1558a124e1a0",
       "node_hash": "766e5c76e73a392bedd34b778a4f98105b2f13f09053bdef4aa31f3e5b3d0c6e",
-      "order": 1380,
+      "order": 1376,
       "source_anchor": "anx_III"
     },
     {
@@ -15201,7 +15157,7 @@
       "text": "Critical infrastructure: AI systems intended to be used as safety components in the management and operation of critical digital infrastructure, road traffic, or in the supply of water, gas, heating or electricity.",
       "hash": "5a411edbd45cd09cc121ef113f7f311be55e368329cec01b97941c09ad820aad",
       "node_hash": "434300a0367cf19f7fa0c488fa392f998f6b7f36e7f6162655323cd70cb1032f",
-      "order": 1381,
+      "order": 1377,
       "source_anchor": "anx_III"
     },
     {
@@ -15212,7 +15168,7 @@
       "text": "Education and vocational training:",
       "hash": "53dd7c92fedc7be176f8e27766576e26843cba7d91f8ea352fd517d505bc5bce",
       "node_hash": "d9464c76f8da348555a62feaed7fda3cc1b0f18147ba007a27c20315b9cfcc36",
-      "order": 1382,
+      "order": 1378,
       "source_anchor": "anx_III"
     },
     {
@@ -15223,7 +15179,7 @@
       "text": "AI systems intended to be used to determine access or admission or to assign natural persons to educational and vocational training institutions at all levels;",
       "hash": "f43790a61f684fe79c9587c45c4bed61ff4abe180658ef29ae2b6600b6da5f0a",
       "node_hash": "3917a6e76ac2b9c2803a97148ce277afa583ea5a284d77a3ae034dc824cb5795",
-      "order": 1383,
+      "order": 1379,
       "source_anchor": "anx_III"
     },
     {
@@ -15234,7 +15190,7 @@
       "text": "AI systems intended to be used to evaluate learning outcomes, including when those outcomes are used to steer the learning process of natural persons in educational and vocational training institutions at all levels;",
       "hash": "4c4924d08d3f625c135409f7b029e3d0ff57916c9b445a750d4fc3c8ba194fa5",
       "node_hash": "e5ce0f5d8fd768cfbf51b8f9d661a3bc9890c00b85137cf4d09b42b33a78a669",
-      "order": 1384,
+      "order": 1380,
       "source_anchor": "anx_III"
     },
     {
@@ -15245,7 +15201,7 @@
       "text": "AI systems intended to be used for the purpose of assessing the appropriate level of education that an individual will receive or will be able to access, in the context of or within educational and vocational training institutions at all levels;",
       "hash": "ab508e0b9f70e90a427debe950158912275a2e99faaac4d2aeb352a9ba93bf5d",
       "node_hash": "6a193aaf6b9277552d60fee2ab8fd2eafae061e963af2790ae9fd41baa28d86a",
-      "order": 1385,
+      "order": 1381,
       "source_anchor": "anx_III"
     },
     {
@@ -15256,7 +15212,7 @@
       "text": "AI systems intended to be used for monitoring and detecting prohibited behaviour of students during tests in the context of or within educational and vocational training institutions at all levels.",
       "hash": "72775fcdc47139937810f7fd114b36dc15f0659d52bd3354590eb94a6ee9aafd",
       "node_hash": "e62277c0018b8cac09d076406437e9dd8e573b56a5f171dac38dcf46be7de4ec",
-      "order": 1386,
+      "order": 1382,
       "source_anchor": "anx_III"
     },
     {
@@ -15267,7 +15223,7 @@
       "text": "Employment, workers' management and access to self-employment:",
       "hash": "94513e500fdaae5b2e627d4b458dcab36edb343c210902c8f0a70e8047645a5b",
       "node_hash": "279b2eb8716abbda0f962bcf3ca3ed833c102179ccb5ed31db9f176e52b4cc92",
-      "order": 1387,
+      "order": 1383,
       "source_anchor": "anx_III"
     },
     {
@@ -15278,7 +15234,7 @@
       "text": "AI systems intended to be used for the recruitment or selection of natural persons, in particular to place targeted job advertisements, to analyse and filter job applications, and to evaluate candidates;",
       "hash": "280f9c98d9470d7e25692a1f1beda83dc35481a088fdbe9e7857cf3ded2bf9e5",
       "node_hash": "be2c598cdcdeb140d24165e42489efccdfd89226d64445f3bb8b97764578d963",
-      "order": 1388,
+      "order": 1384,
       "source_anchor": "anx_III"
     },
     {
@@ -15289,7 +15245,7 @@
       "text": "AI systems intended to be used to make decisions affecting terms of work-related relationships, the promotion or termination of work-related contractual relationships, to allocate tasks based on individual behaviour or personal traits or characteristics or to monitor and evaluate the performance and behaviour of persons in such relationships.",
       "hash": "35438987791cfded4c9485caeb9e5327ee94560a0645735777c0a1f0e69d0d1d",
       "node_hash": "e78ee431b4fbf39eed30bb6397184b7450ddae29a9c718907c27fd05f7da8795",
-      "order": 1389,
+      "order": 1385,
       "source_anchor": "anx_III"
     },
     {
@@ -15300,7 +15256,7 @@
       "text": "Access to and enjoyment of essential private services and essential public services and benefits:",
       "hash": "4dbe9c7348905fb5a33087e4e80dbd96a0b57d63ece0bdd17d0a8a8e6c71048b",
       "node_hash": "c8c310043c1868dcd7943596888505efd9471693f77f0885c23a98abe2e4857d",
-      "order": 1390,
+      "order": 1386,
       "source_anchor": "anx_III"
     },
     {
@@ -15311,7 +15267,7 @@
       "text": "AI systems intended to be used by public authorities or on behalf of public authorities to evaluate the eligibility of natural persons for essential public assistance benefits and services, including healthcare services, as well as to grant, reduce, revoke, or reclaim such benefits and services;",
       "hash": "43ae4f11e3dd77eb4d39718ed5de3bd9819971850627f23aac0175c16012ee2a",
       "node_hash": "57f104b0c3aba8495d1a79d4ce8d319fe92f529d50b1f2149b7de04df168afe0",
-      "order": 1391,
+      "order": 1387,
       "source_anchor": "anx_III"
     },
     {
@@ -15322,7 +15278,7 @@
       "text": "AI systems intended to be used to evaluate the creditworthiness of natural persons or establish their credit score, with the exception of AI systems used for the purpose of detecting financial fraud;",
       "hash": "dd63c3122d92d0ac6d19fbe4ce24105b58ab89a5bac9c670a8f8aac705b92f2d",
       "node_hash": "05b0a00ce09c4a9f8f350e1151924cccff2463e4e4a7fa350dfa78d5ed1ab91f",
-      "order": 1392,
+      "order": 1388,
       "source_anchor": "anx_III"
     },
     {
@@ -15333,7 +15289,7 @@
       "text": "AI systems intended to be used for risk assessment and pricing in relation to natural persons in the case of life and health insurance;",
       "hash": "0b0d0711c963f6eaed622b5dc9e277ee9c74d45af1f2594f08dadafe20473dc0",
       "node_hash": "cb8e2cadb4347bf8b4e3bfe379ff8aecf1c2c79729e3260aa39a6e0f1d5178f7",
-      "order": 1393,
+      "order": 1389,
       "source_anchor": "anx_III"
     },
     {
@@ -15344,7 +15300,7 @@
       "text": "AI systems intended to evaluate and classify emergency calls by natural persons or to be used to dispatch, or to establish priority in the dispatching of, emergency first response services, including by police, firefighters and medical aid, as well as of emergency healthcare patient triage systems.",
       "hash": "4858d5f7e99e5dbf0716bd3916dd80f37debba82abad2fa4b1f50deeb58757bf",
       "node_hash": "855bf3556dbc61fcea479f6de1b512309c5cdb3a4efe6f1bebd7d36690eaa8e7",
-      "order": 1394,
+      "order": 1390,
       "source_anchor": "anx_III"
     },
     {
@@ -15355,7 +15311,7 @@
       "text": "Law enforcement, in so far as their use is permitted under relevant Union or national law:",
       "hash": "6ba325adfddffd543730aada1c483b7ae3d103a58adbbcd9dbfd649fd82e1ed7",
       "node_hash": "884d14257f7ae033ba963996746cc48f86184cacefb99bf09dfd8065fc7b5f4a",
-      "order": 1395,
+      "order": 1391,
       "source_anchor": "anx_III"
     },
     {
@@ -15366,7 +15322,7 @@
       "text": "AI systems intended to be used by or on behalf of law enforcement authorities, or by Union institutions, bodies, offices or agencies in support of law enforcement authorities or on their behalf to assess the risk of a natural person becoming the victim of criminal offences;",
       "hash": "f381d27fce7d99eb1b542fea9bcbcd3383b0d7e7b2a29a5f5cdba0f347dc3aa6",
       "node_hash": "f21046eee2215df3c8c537f9a7c9eae6d17ecc4b649a5bdb2c636374431a6a46",
-      "order": 1396,
+      "order": 1392,
       "source_anchor": "anx_III"
     },
     {
@@ -15377,7 +15333,7 @@
       "text": "AI systems intended to be used by or on behalf of law enforcement authorities or by Union institutions, bodies, offices or agencies in support of law enforcement authorities as polygraphs or similar tools;",
       "hash": "ef5cab149ee0665b35a1bd959de9acb68661bed91571ac43e92f150975a1e131",
       "node_hash": "6c9960903678cef7706135cfc093dbbc669a5452e125acb6ecb4109c46c7144d",
-      "order": 1397,
+      "order": 1393,
       "source_anchor": "anx_III"
     },
     {
@@ -15388,7 +15344,7 @@
       "text": "AI systems intended to be used by or on behalf of law enforcement authorities, or by Union institutions, bodies, offices or agencies, in support of law enforcement authorities to evaluate the reliability of evidence in the course of the investigation or prosecution of criminal offences;",
       "hash": "4c4b675ca3c1a94763b5fece5eaffacc667754fecd003f6718956b59cad523f0",
       "node_hash": "1b37b058508a2c09ad91f00816c3007fc2ef653e4b76c6e58b3ea8bd38cc7697",
-      "order": 1398,
+      "order": 1394,
       "source_anchor": "anx_III"
     },
     {
@@ -15399,7 +15355,7 @@
       "text": "AI systems intended to be used by law enforcement authorities or on their behalf or by Union institutions, bodies, offices or agencies in support of law enforcement authorities for assessing the risk of a natural person offending or re-offending not solely on the basis of the profiling of natural persons as referred to in Article 3(4) of Directive (EU) 2016/680, or to assess personality traits and characteristics or past criminal behaviour of natural persons or groups;",
       "hash": "de939e9d7fc5752859366d32cf12a6037a3c67b1b4bcdfb513d8125d16e2b1ef",
       "node_hash": "742687f8cf975bc7d3956cb8e22b9732171a14a59b8bfc5678932d1af706548d",
-      "order": 1399,
+      "order": 1395,
       "source_anchor": "anx_III"
     },
     {
@@ -15410,7 +15366,7 @@
       "text": "AI systems intended to be used by or on behalf of law enforcement authorities or by Union institutions, bodies, offices or agencies in support of law enforcement authorities for the profiling of natural persons as referred to in Article 3(4) of Directive (EU) 2016/680 in the course of the detection, investigation or prosecution of criminal offences.",
       "hash": "9ef2ae6e4f3cbbc1f3b7699bbf5cbfb0fbe514d83e51065b507e09e080c93b3b",
       "node_hash": "ca8981d8ac073366927135cd9f3959c56ccc24fdb02392bc773b4f7530f885c3",
-      "order": 1400,
+      "order": 1396,
       "source_anchor": "anx_III"
     },
     {
@@ -15421,7 +15377,7 @@
       "text": "Migration, asylum and border control management, in so far as their use is permitted under relevant Union or national law:",
       "hash": "8a2b348209a645e2a0d860188678935f12ae0048c4130ea7273fc26a345ff2d8",
       "node_hash": "cca2cfb971b2c91efa1d99ff71c7a3526a170fc1fae1cfc5f4c9bb525f5a5489",
-      "order": 1401,
+      "order": 1397,
       "source_anchor": "anx_III"
     },
     {
@@ -15432,7 +15388,7 @@
       "text": "AI systems intended to be used by or on behalf of competent public authorities or by Union institutions, bodies, offices or agencies as polygraphs or similar tools;",
       "hash": "8c034277a3eb0b014e456f0e521dd57e10f20630dad66ae34804ae4a0efd5fd3",
       "node_hash": "db6b69c3051573013d41452854edd315c33582e3b0624281d22a11947e02815c",
-      "order": 1402,
+      "order": 1398,
       "source_anchor": "anx_III"
     },
     {
@@ -15443,7 +15399,7 @@
       "text": "AI systems intended to be used by or on behalf of competent public authorities or by Union institutions, bodies, offices or agencies to assess a risk, including a security risk, a risk of irregular migration, or a health risk, posed by a natural person who intends to enter or who has entered into the territory of a Member State;",
       "hash": "1952a66b2696c0f0fc3c86a1bd88fefb529ca6db4bc852bb4ec33bf70b7fd971",
       "node_hash": "617c9113c5f059d267c644c101a79bc5da8e03a67b817652a3a45523ce4cf82c",
-      "order": 1403,
+      "order": 1399,
       "source_anchor": "anx_III"
     },
     {
@@ -15454,7 +15410,7 @@
       "text": "AI systems intended to be used by or on behalf of competent public authorities or by Union institutions, bodies, offices or agencies to assist competent public authorities for the examination of applications for asylum, visa or residence permits and for associated complaints with regard to the eligibility of the natural persons applying for a status, including related assessments of the reliability of evidence;",
       "hash": "93391f2170e1ea388347bccfd4b0c9665559b4df4400e5e162853889b06e1d37",
       "node_hash": "7643f9a7dc3795b7587029482f47c95e47a8a00d5f9d7068ba887a609dda92de",
-      "order": 1404,
+      "order": 1400,
       "source_anchor": "anx_III"
     },
     {
@@ -15465,7 +15421,7 @@
       "text": "AI systems intended to be used by or on behalf of competent public authorities, or by Union institutions, bodies, offices or agencies, in the context of migration, asylum or border control management, for the purpose of detecting, recognising or identifying natural persons, with the exception of the verification of travel documents.",
       "hash": "9e9f6394ff4e4e1ae6a75cf7dc58a0e6903c9eea4a301ad42615febe47742af4",
       "node_hash": "215cc597aabfbb34d0ee4e1db5ff4bf4f51bf6edbba8c888776ad782aab81db2",
-      "order": 1405,
+      "order": 1401,
       "source_anchor": "anx_III"
     },
     {
@@ -15476,7 +15432,7 @@
       "text": "Administration of justice and democratic processes:",
       "hash": "a2f71876191c8bfa4d6796abbf01a9e823d25d5ccfe7cef2221a4522c6d0c82b",
       "node_hash": "397d13d734277a76cb0de4d3788ec826f559062e805e726a77415dd2b6bfc1e1",
-      "order": 1406,
+      "order": 1402,
       "source_anchor": "anx_III"
     },
     {
@@ -15487,7 +15443,7 @@
       "text": "AI systems intended to be used by a judicial authority or on their behalf to assist a judicial authority in researching and interpreting facts and the law and in applying the law to a concrete set of facts, or to be used in a similar way in alternative dispute resolution;",
       "hash": "3cf2988ffd5a1fe1969eb228ec2631ec8ceb1eea0dad7de9374a305a61ae2b09",
       "node_hash": "c02b242b7a48e7882ab3ed689b8666480a652768ec58bb3a4f0d53b2b641a525",
-      "order": 1407,
+      "order": 1403,
       "source_anchor": "anx_III"
     },
     {
@@ -15498,7 +15454,7 @@
       "text": "AI systems intended to be used for influencing the outcome of an election or referendum or the voting behaviour of natural persons in the exercise of their vote in elections or referenda. This does not include AI systems to the output of which natural persons are not directly exposed, such as tools used to organise, optimise or structure political campaigns from an administrative or logistical point of view.",
       "hash": "76e91d0cd7291a743f916a81a4254a0ab2c47ad9e81cfe09c3251d5ec1e7708a",
       "node_hash": "3049d92152f70e146a5a392669cbe82acaac1ca430d2652bc8b21198d2254169",
-      "order": 1408,
+      "order": 1404,
       "source_anchor": "anx_III"
     },
     {
@@ -15509,7 +15465,7 @@
       "text": "The technical documentation referred to in Article 11(1) shall contain at least the following information, as applicable to the relevant AI system:",
       "hash": "3ce83c730e41ff2c607b736f175919502a054f5409fb37bcfd71f4b0864a039f",
       "node_hash": "31c1306f430343ea1d4dbc4c6f95eb379764c8aff1ba6742889be8c391fbb4d8",
-      "order": 1409,
+      "order": 1405,
       "source_anchor": "anx_IV"
     },
     {
@@ -15520,7 +15476,7 @@
       "text": "A general description of the AI system including:",
       "hash": "8c78f0605e9b1675cb5938a3fbf825cef186ec566a857cdea5de65338aeb0737",
       "node_hash": "fcbadeaddb1eaa7d13cb23c2707609ea2fe478f8e2a5c432cea255ac7a55d572",
-      "order": 1410,
+      "order": 1406,
       "source_anchor": "anx_IV"
     },
     {
@@ -15531,7 +15487,7 @@
       "text": "its intended purpose, the name of the provider and the version of the system reflecting its relation to previous versions;",
       "hash": "bc09ae8eea21c1f7a0897f03d26c71a988a95c2fe41853a568c1d02101ce8190",
       "node_hash": "02d999fc625a24906ba2f8e0e6ba918d30346f56733ba28d1a8f8eef389ee4c2",
-      "order": 1411,
+      "order": 1407,
       "source_anchor": "anx_IV"
     },
     {
@@ -15542,7 +15498,7 @@
       "text": "how the AI system interacts with, or can be used to interact with, hardware or software, including with other AI systems, that are not part of the AI system itself, where applicable;",
       "hash": "cd91d9bdd16a9fea446d2895f62f56467ccd1b059af197adc9d7f926aa7eff52",
       "node_hash": "32aaf79ba0ae95cc2183b553a7aca377a432a542838e066ee8155c2fdeb69518",
-      "order": 1412,
+      "order": 1408,
       "source_anchor": "anx_IV"
     },
     {
@@ -15553,7 +15509,7 @@
       "text": "the versions of relevant software or firmware, and any requirements related to version updates;",
       "hash": "6782a210392ac8db9c4b086b87c817f20bfffea8ec963841d56385c6cc168b8b",
       "node_hash": "c989908fc219dc274569b72b69ab48f67764cd1a528d3040d345ba4ec3a60b65",
-      "order": 1413,
+      "order": 1409,
       "source_anchor": "anx_IV"
     },
     {
@@ -15564,7 +15520,7 @@
       "text": "the description of all the forms in which the AI system is placed on the market or put into service, such as software packages embedded into hardware, downloads, or APIs;",
       "hash": "e2d290f91e1e99adaf7b99f9dcd514b331aa9d0a02bb66082d6a834ebd8b123e",
       "node_hash": "5f27b6212356a3546c42820f4cde25c234b6911271c5e4b73c9dbd537190099c",
-      "order": 1414,
+      "order": 1410,
       "source_anchor": "anx_IV"
     },
     {
@@ -15575,7 +15531,7 @@
       "text": "the description of the hardware on which the AI system is intended to run;",
       "hash": "b7c0b7e7da82cb0d379b12ad025fcd175f3ef3558875282735c2c762564ff2e2",
       "node_hash": "ac86bf45cae7bd09bff50d9761ff081931db3838e4c86e5b71ead81bd51c16d1",
-      "order": 1415,
+      "order": 1411,
       "source_anchor": "anx_IV"
     },
     {
@@ -15586,7 +15542,7 @@
       "text": "where the AI system is a component of products, photographs or illustrations showing external features, the marking and internal layout of those products;",
       "hash": "cf9963b8ce8daa8e596f7d650fb847ee3c50817df4249897d273168faf755cc9",
       "node_hash": "ab3cf781c10a9ece64cdc8043ead3b0d34346113e7c9ace4a6edc12f1ad84b09",
-      "order": 1416,
+      "order": 1412,
       "source_anchor": "anx_IV"
     },
     {
@@ -15597,7 +15553,7 @@
       "text": "a basic description of the user-interface provided to the deployer;",
       "hash": "cc4a22d96b9aac07932d1186dacc458faa25a4a68d552366b1bca51553ce79f3",
       "node_hash": "e24b2e71dce2410850babf805ff8da1dc31f8cfaf6f99258bac05e78b853fc6e",
-      "order": 1417,
+      "order": 1413,
       "source_anchor": "anx_IV"
     },
     {
@@ -15608,7 +15564,7 @@
       "text": "instructions for use for the deployer, and a basic description of the user-interface provided to the deployer, where applicable;",
       "hash": "9c7fe01448b4c8d18c0986a2a69db4f42ff46f82200380144c91b417a9971420",
       "node_hash": "e25533a758c7ebf319126cc30ef24f850ac283c8e855b03a041c072738e56bf6",
-      "order": 1418,
+      "order": 1414,
       "source_anchor": "anx_IV"
     },
     {
@@ -15619,7 +15575,7 @@
       "text": "A detailed description of the elements of the AI system and of the process for its development, including:",
       "hash": "a34fff4af0ec493f3ed98f7108be7a23f529c80551195e370f97c85380bda1b0",
       "node_hash": "9c2c372d587e551bff74db982be51c5cad6bfb003a40acb33dfcb03887c36b53",
-      "order": 1419,
+      "order": 1415,
       "source_anchor": "anx_IV"
     },
     {
@@ -15630,7 +15586,7 @@
       "text": "the methods and steps performed for the development of the AI system, including, where relevant, recourse to pre-trained systems or tools provided by third parties and how those were used, integrated or modified by the provider;",
       "hash": "ceb06bb881a985e8f2df25fdb00f42dec271016db6e19505675935c83bf11c15",
       "node_hash": "e3b5102ee334bd71825e4f768596d52aefbc1a62da390d4ba5ee54239caf2bad",
-      "order": 1420,
+      "order": 1416,
       "source_anchor": "anx_IV"
     },
     {
@@ -15641,7 +15597,7 @@
       "text": "the design specifications of the system, namely the general logic of the AI system and of the algorithms; the key design choices including the rationale and assumptions made, including with regard to persons or groups of persons in respect of who, the system is intended to be used; the main classification choices; what the system is designed to optimise for, and the relevance of the different parameters; the description of the expected output and output quality of the system; the decisions about any possible trade-off made regarding the technical solutions adopted to comply with the requirements set out in Chapter III, Section 2;",
       "hash": "674903b4522ff0016c58d34c96481ffed28b40bd2dbf5571194c2fdc5a838f88",
       "node_hash": "51924b2f49a3fade1d5c0d3ce4e16ead07709ff4c4e91f09aa5123cd9a0c671e",
-      "order": 1421,
+      "order": 1417,
       "source_anchor": "anx_IV"
     },
     {
@@ -15652,7 +15608,7 @@
       "text": "the description of the system architecture explaining how software components build on or feed into each other and integrate into the overall processing; the computational resources used to develop, train, test and validate the AI system;",
       "hash": "4c538c7e5b63ed82ae3ac79ed1d40c20ac36eb8a49aa58a2bd0f11bd63a85041",
       "node_hash": "60f03c08223a82bf9ec3d1c303b7a419c980bc33ce0bb590f00567c719ecb62f",
-      "order": 1422,
+      "order": 1418,
       "source_anchor": "anx_IV"
     },
     {
@@ -15663,7 +15619,7 @@
       "text": "where relevant, the data requirements in terms of datasheets describing the training methodologies and techniques and the training data sets used, including a general description of these data sets, information about their provenance, scope and main characteristics; how the data was obtained and selected; labelling procedures (e.g. for supervised learning), data cleaning methodologies (e.g. outliers detection);",
       "hash": "b682d1825502afe9748f1c5dc41b5fb6dc3346e075445699a8ed42853dddfdad",
       "node_hash": "82a68ce086c1b05664214fdd7093e6ea838d9b6f481c44054850515d1476e614",
-      "order": 1423,
+      "order": 1419,
       "source_anchor": "anx_IV"
     },
     {
@@ -15674,7 +15630,7 @@
       "text": "assessment of the human oversight measures needed in accordance with Article 14, including an assessment of the technical measures needed to facilitate the interpretation of the outputs of AI systems by the deployers, in accordance with Article 13(3), point (d);",
       "hash": "08098637ae04ac0fb0896123d250096ab8422403094aa63afa00c7296e0c3425",
       "node_hash": "8c272951cf9fdd6c97877465a2f74bb8955c9b4de6dfa25944e03c1caa9d690b",
-      "order": 1424,
+      "order": 1420,
       "source_anchor": "anx_IV"
     },
     {
@@ -15685,7 +15641,7 @@
       "text": "where applicable, a detailed description of pre-determined changes to the AI system and its performance, together with all the relevant information related to the technical solutions adopted to ensure continuous compliance of the AI system with the relevant requirements set out in Chapter III, Section 2;",
       "hash": "dea5ad09129409104c0b390a031be20e3f0471fd5e367d446f85c103fa8b57b7",
       "node_hash": "983d226353d5174ad3c96ed6c073743a2a90c6caec4f0f211b9ba88fcd57f327",
-      "order": 1425,
+      "order": 1421,
       "source_anchor": "anx_IV"
     },
     {
@@ -15696,7 +15652,7 @@
       "text": "the validation and testing procedures used, including information about the validation and testing data used and their main characteristics; metrics used to measure accuracy, robustness and compliance with other relevant requirements set out in Chapter III, Section 2, as well as potentially discriminatory impacts; test logs and all test reports dated and signed by the responsible persons, including with regard to pre-determined changes as referred to under point (f);",
       "hash": "0f3c8a39e1b9133118725db144b99da5f4f355022b000e923941fdd380d4a6f9",
       "node_hash": "8618b2d87b9e791675df6c91e28d9ebcb849b43273f926dc598e8181641873be",
-      "order": 1426,
+      "order": 1422,
       "source_anchor": "anx_IV"
     },
     {
@@ -15707,7 +15663,7 @@
       "text": "cybersecurity measures put in place;",
       "hash": "c9b8bcccea03293bf476f59a23c71549b4eab1c374c405ebc25e22137d88b946",
       "node_hash": "e93f4713182d52c5ec18d496fd764c37f5ddd2ba91368156024b7da5a1f92f74",
-      "order": 1427,
+      "order": 1423,
       "source_anchor": "anx_IV"
     },
     {
@@ -15718,7 +15674,7 @@
       "text": "Detailed information about the monitoring, functioning and control of the AI system, in particular with regard to: its capabilities and limitations in performance, including the degrees of accuracy for specific persons or groups of persons on which the system is intended to be used and the overall expected level of accuracy in relation to its intended purpose; the foreseeable unintended outcomes and sources of risks to health and safety, fundamental rights and discrimination in view of the intended purpose of the AI system; the human oversight measures needed in accordance with Article 14, including the technical measures put in place to facilitate the interpretation of the outputs of AI systems by the deployers; specifications on input data, as appropriate;",
       "hash": "49f273930b12b80def48a7c35e94bd0c435fd5da393f3e2fd5a77dfafa6cb568",
       "node_hash": "5e4695c81af4db647b959bb448f8c8d2dce36331faabd954bbc6f7f1947a14a4",
-      "order": 1428,
+      "order": 1424,
       "source_anchor": "anx_IV"
     },
     {
@@ -15729,7 +15685,7 @@
       "text": "A description of the appropriateness of the performance metrics for the specific AI system;",
       "hash": "7d6cda6fe8ea40524e5504bf8263d8fcf034fd8681b180a913a81688bfe00244",
       "node_hash": "92908d3dbb57bcefbb5c642d113d49cf46c0b1d6c648ecf8b2ca1637bfcf156b",
-      "order": 1429,
+      "order": 1425,
       "source_anchor": "anx_IV"
     },
     {
@@ -15740,7 +15696,7 @@
       "text": "A detailed description of the risk management system in accordance with Article 9;",
       "hash": "e4031458ebec950bee9efef417eac57201e37f8ad33e1cdc92cc7bedba4dec68",
       "node_hash": "4437c88d89aa7486bc4e60f747e9d9f9c754292d917dbcc8dfe556f62ac50b38",
-      "order": 1430,
+      "order": 1426,
       "source_anchor": "anx_IV"
     },
     {
@@ -15751,7 +15707,7 @@
       "text": "A description of relevant changes made by the provider to the system through its lifecycle;",
       "hash": "7e8f86eb825c7293e3f80d1493242bc39009e9ee7c4b625cc32616f482f8af8f",
       "node_hash": "384d9e19407cc7febe71ee4cd1d9a0be3bb0d189859ecb4962fd81b7cf124132",
-      "order": 1431,
+      "order": 1427,
       "source_anchor": "anx_IV"
     },
     {
@@ -15762,7 +15718,7 @@
       "text": "A list of the harmonised standards applied in full or in part the references of which have been published in the Official Journal of the European Union; where no such harmonised standards have been applied, a detailed description of the solutions adopted to meet the requirements set out in Chapter III, Section 2, including a list of other relevant standards and technical specifications applied;",
       "hash": "a17b49a76a8c8cf1222c07a1f14fd224c9d67bd093c1a7672061c8c50782963b",
       "node_hash": "d31a1651bfb910ffe94f6ec811ac3fe8441cce155d015e7dde08bc74993e695b",
-      "order": 1432,
+      "order": 1428,
       "source_anchor": "anx_IV"
     },
     {
@@ -15773,7 +15729,7 @@
       "text": "A copy of the EU declaration of conformity referred to in Article 47;",
       "hash": "a031756283e2ea99e38221e54863ad45d8b6b2c3b7b46b7e1e53a43e519904d4",
       "node_hash": "0760f3252c1691d5d7d0a44de88b861b0d34bf3dddd918fb9831d68edf5aaf96",
-      "order": 1433,
+      "order": 1429,
       "source_anchor": "anx_IV"
     },
     {
@@ -15784,7 +15740,7 @@
       "text": "A detailed description of the system in place to evaluate the AI system performance in the post-market phase in accordance with Article 72, including the post-market monitoring plan referred to in Article 72(3).",
       "hash": "02c92916a9e67bc79d950374e9a66f9edee69b8de4f601a7d531bc88ab00dc09",
       "node_hash": "703b05373fcdf3a82711f98b8a9ee46fdc8ff5f438d8f1170f511d2dbfbdc03c",
-      "order": 1434,
+      "order": 1430,
       "source_anchor": "anx_IV"
     },
     {
@@ -15795,7 +15751,7 @@
       "text": "The EU declaration of conformity referred to in Article 47, shall contain all of the following information:",
       "hash": "db9fa475aa9a612b953f36015bb762febbf379feeff9eb5749f6316c3f29f589",
       "node_hash": "8ab96621f998036e070aeb71659ee9129bcf0035982f54fb632458a0219c325d",
-      "order": 1435,
+      "order": 1431,
       "source_anchor": "anx_V"
     },
     {
@@ -15806,7 +15762,7 @@
       "text": "AI system name and type and any additional unambiguous reference allowing the identification and traceability of the AI system;",
       "hash": "c197d533d0ca24d15090716241ed09bb3c851f9854b770bda943372974f4b132",
       "node_hash": "6c94ee90b7574b19dd6ab030a7203cc06f82d4e5b3456d09efda8c70d67d3cbc",
-      "order": 1436,
+      "order": 1432,
       "source_anchor": "anx_V"
     },
     {
@@ -15817,7 +15773,7 @@
       "text": "The name and address of the provider or, where applicable, of their authorised representative;",
       "hash": "1b33b76ee89d733689051ba13e2e65650d93aae84b08050e030b73b7f6126a3f",
       "node_hash": "8bfa47b57d62bc3aedc63ffac20a9187012e37377cabb4a122873ccbbaf2627b",
-      "order": 1437,
+      "order": 1433,
       "source_anchor": "anx_V"
     },
     {
@@ -15828,7 +15784,7 @@
       "text": "A statement that the EU declaration of conformity referred to in Article 47 is issued under the sole responsibility of the provider;",
       "hash": "1a4c21ed9d716b50f157ff1091546215128731734deb8dd80f168c7ec5bd09fd",
       "node_hash": "aa4d003187f5b2e8577d93dc0c20d787689cf37e901b8e5f180368a479c3b253",
-      "order": 1438,
+      "order": 1434,
       "source_anchor": "anx_V"
     },
     {
@@ -15839,7 +15795,7 @@
       "text": "A statement that the AI system is in conformity with this Regulation and, if applicable, with any other relevant Union law that provides for the issuing of the EU declaration of conformity referred to in Article 47;",
       "hash": "605e19b7a27a59f2149bd3b70109efac0886e6c080d921b2a7461bfae79e3adc",
       "node_hash": "e4b679ffe164efd2c1cc3ea7873dcd686621bbd758f48daa42ba157e0190d91c",
-      "order": 1439,
+      "order": 1435,
       "source_anchor": "anx_V"
     },
     {
@@ -15850,7 +15806,7 @@
       "text": "Where an AI system involves the processing of personal data, a statement that that AI system complies with Regulations (EU) 2016/679 and (EU) 2018/1725 and Directive (EU) 2016/680;",
       "hash": "e1a04f27517a0372348112a0b0e39e09f07bfdb70879d83e774763f679325300",
       "node_hash": "ae99f80210a2532753486e82acbc8125e8776a57d89a646d3e18bd2d5d33b7b7",
-      "order": 1440,
+      "order": 1436,
       "source_anchor": "anx_V"
     },
     {
@@ -15861,7 +15817,7 @@
       "text": "References to any relevant harmonised standards used or any other common specification in relation to which conformity is declared;",
       "hash": "82c4dba75835f21969313b38cdd5e1e99c5bd80c2e7982e99fd1f5b8a6c9bc45",
       "node_hash": "b5744683d8f0b057c4685a90db82577bc319bf3b20cd17b7c8e1789ba2da78b9",
-      "order": 1441,
+      "order": 1437,
       "source_anchor": "anx_V"
     },
     {
@@ -15872,7 +15828,7 @@
       "text": "Where applicable, the name and identification number of the notified body, a description of the conformity assessment procedure performed, and identification of the certificate issued;",
       "hash": "bcda51e574da0922004d7d24b3d53d2461d26b4cc1bf145f83d352fee02d62ab",
       "node_hash": "bcf17caad320f805d1952dd526475e7fc4bf91b48f2fed3d59a30f1189382a2d",
-      "order": 1442,
+      "order": 1438,
       "source_anchor": "anx_V"
     },
     {
@@ -15883,7 +15839,7 @@
       "text": "The place and date of issue of the declaration, the name and function of the person who signed it, as well as an indication for, or on behalf of whom, that person signed, a signature.",
       "hash": "c5fe6dc83353b5871b0a666d378d473d9cf418b5a8c152fecc32d141699151c1",
       "node_hash": "28582b29863b73097737bf590f8348eaba885f9c2c31d87ac3f74ce33bcbddd0",
-      "order": 1443,
+      "order": 1439,
       "source_anchor": "anx_V"
     },
     {
@@ -15894,7 +15850,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "de0fdd8d611e7c9b0d14285c3058b3127d768d22b7f08a8f59765af475aac14a",
-      "order": 1444,
+      "order": 1440,
       "source_anchor": "anx_VI"
     },
     {
@@ -15905,7 +15861,7 @@
       "text": "The conformity assessment procedure based on internal control is the conformity assessment procedure based on points 2, 3 and 4.",
       "hash": "906588b3639c2ccb9ced6b945699a0c0fe4263fa475aab8760144138dfa2c534",
       "node_hash": "8adef6f4752d2e2f57677957d8f8ae3143ccb3bcaedb68d2b1a285ba4f7142c6",
-      "order": 1445,
+      "order": 1441,
       "source_anchor": "anx_VI"
     },
     {
@@ -15916,7 +15872,7 @@
       "text": "The provider verifies that the established quality management system is in compliance with the requirements of Article 17.",
       "hash": "eab7b5871bfd48c3a659e220aee052512d04b5eb04271aabdb03e8928eb6655d",
       "node_hash": "119fa6069567ec9e79ece721c7c2cbece647fa86c7aa675b0619aa9076fd00ea",
-      "order": 1446,
+      "order": 1442,
       "source_anchor": "anx_VI"
     },
     {
@@ -15927,7 +15883,7 @@
       "text": "The provider examines the information contained in the technical documentation in order to assess the compliance of the AI system with the relevant essential requirements set out in Chapter III, Section 2.",
       "hash": "5748632070dfa04e1f3a591caa45d27d49c83193ebe544a5d6a6568738afb449",
       "node_hash": "8b1007ce3fd266bb4597e9f1c570ea7bf28c9c76d3dd55f1e052f3c9effd779b",
-      "order": 1447,
+      "order": 1443,
       "source_anchor": "anx_VI"
     },
     {
@@ -15938,7 +15894,7 @@
       "text": "The provider also verifies that the design and development process of the AI system and its post-market monitoring as referred to in Article 72 is consistent with the technical documentation.",
       "hash": "1ca12225f114640be3992323922452fae68682e5746b8a97497b13b09148d711",
       "node_hash": "5e37b28b1a9ac0902f7466b66d86b8c0705c0c200a90ad047353e09d947a2e3c",
-      "order": 1448,
+      "order": 1444,
       "source_anchor": "anx_VI"
     },
     {
@@ -15949,7 +15905,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "bb8d9716d52ec45499551110b85d32f799182e5c921bb0349b84ecfb51fcfe2e",
-      "order": 1449,
+      "order": 1445,
       "source_anchor": "anx_VII"
     },
     {
@@ -15960,7 +15916,7 @@
       "text": "Conformity based on an assessment of the quality management system and an assessment of the technical documentation is the conformity assessment procedure based on points 2 to 5.",
       "hash": "7d235e72a35f091c1f8ff7491251100d6add3fc56e16d3c3b6988bec57b6b576",
       "node_hash": "49ab816aee768d5591add592bfabb6d50966e98e4c70c85497538fb1e7891de1",
-      "order": 1450,
+      "order": 1446,
       "source_anchor": "anx_VII"
     },
     {
@@ -15971,7 +15927,7 @@
       "text": "The approved quality management system for the design, development and testing of AI systems pursuant to Article 17 shall be examined in accordance with point 3 and shall be subject to surveillance as specified in point 5. The technical documentation of the AI system shall be examined in accordance with point 4.",
       "hash": "37aac9466eecee5a5caaf4a81c5ffce10318e97d1c3c2f6aab3399b928fc9a85",
       "node_hash": "9b71b9aad889b3ed0e38cbfcab3848040c8b563654715ad41d4746ab7865a2d5",
-      "order": 1451,
+      "order": 1447,
       "source_anchor": "anx_VII"
     },
     {
@@ -15982,7 +15938,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "e96734fc1a8ab95d309702a177e4ed7c5a3148e989396817d575cf5fba8816c4",
-      "order": 1452,
+      "order": 1448,
       "source_anchor": "id-aafff34a-7060-4647-a100-dc0167d14177"
     },
     {
@@ -15993,7 +15949,7 @@
       "text": "The application of the provider shall include:",
       "hash": "d1a1ae0e8aca603cb4530c234f6c5e33a1781c2079ee7fb72a1ee7c6c33b22ce",
       "node_hash": "de7e53fd0e70663bbe18a22ac9e77a7e26d6fddfae1b899ccd8b51f29be8a245",
-      "order": 1453,
+      "order": 1449,
       "source_anchor": "anx_VII"
     },
     {
@@ -16004,7 +15960,7 @@
       "text": "the name and address of the provider and, if the application is lodged by an authorised representative, also their name and address;",
       "hash": "0b6066e3206e729a46d7400d56df775e1ce6de96255dbdb0a6047e042f56cf29",
       "node_hash": "40d3408ab0db7ec2cced3aa8c84ede355dda832825b9770d83b0810dea99b166",
-      "order": 1454,
+      "order": 1450,
       "source_anchor": "anx_VII"
     },
     {
@@ -16015,7 +15971,7 @@
       "text": "the list of AI systems covered under the same quality management system;",
       "hash": "61e6ba93b382d21cce6efe9c1ad9337fe54ea5a11990868b1eadec46bf8390ea",
       "node_hash": "8c977ac3594baefb72b8fc05a04f26932aba00a531c575009e49f418233c733e",
-      "order": 1455,
+      "order": 1451,
       "source_anchor": "anx_VII"
     },
     {
@@ -16026,7 +15982,7 @@
       "text": "the technical documentation for each AI system covered under the same quality management system;",
       "hash": "d26474509ee4327898d816e50c39c6fbaa98d69045370b6da780a406aa72ca8e",
       "node_hash": "e866a003d54a26d23f457bf2595236f6cbbae48b939fd56b0ad5b1204c533c02",
-      "order": 1456,
+      "order": 1452,
       "source_anchor": "anx_VII"
     },
     {
@@ -16037,7 +15993,7 @@
       "text": "the documentation concerning the quality management system which shall cover all the aspects listed under Article 17;",
       "hash": "1cfcd73b098f09e52c63881a89ed713cc3c285d284919fc4c8edafdd7a0a64c7",
       "node_hash": "04e55ac2c8c04382643d46f040485e8e587d24cba0e19c169e2702d0a6cbe22f",
-      "order": 1457,
+      "order": 1453,
       "source_anchor": "anx_VII"
     },
     {
@@ -16048,7 +16004,7 @@
       "text": "a description of the procedures in place to ensure that the quality management system remains adequate and effective;",
       "hash": "6a578f874c4c8e80fceaf814fe73515d8f4711e24f3452613d548a634a798582",
       "node_hash": "2a862d3677111a7cb599a6fa29adfc50109eeba65c996e27a97c179a7434ed62",
-      "order": 1458,
+      "order": 1454,
       "source_anchor": "anx_VII"
     },
     {
@@ -16059,7 +16015,7 @@
       "text": "a written declaration that the same application has not been lodged with any other notified body.",
       "hash": "2782e27b32826b27275f35e0793bd4c886a622a5f0d3827546f0170be9487762",
       "node_hash": "77352185b997e4daa5aea82362b21d1be13bc04fa011dcfced6730f635def7dd",
-      "order": 1459,
+      "order": 1455,
       "source_anchor": "anx_VII"
     },
     {
@@ -16070,7 +16026,7 @@
       "text": "The quality management system shall be assessed by the notified body, which shall determine whether it satisfies the requirements referred to in Article 17.",
       "hash": "616c442152060fadbce709c910fd210e4f7c200938fae1e50919507aa9e2290c",
       "node_hash": "044dd610d0e6bc338b5ead37a2bfbcbb0efba76c79f29140c473f459fbe5bceb",
-      "order": 1460,
+      "order": 1456,
       "source_anchor": "anx_VII"
     },
     {
@@ -16081,7 +16037,7 @@
       "text": "The decision shall be notified to the provider or its authorised representative.",
       "hash": "14b81d8c7be4135f3674fce5cea9543d62ec34c131fb4d1b9c1feb7dd8e48277",
       "node_hash": "ea821ccffd716f3f0d2e5a5b5a7086d89cb594e05040fc2832604b83f7cd5007",
-      "order": 1461,
+      "order": 1457,
       "source_anchor": "anx_VII"
     },
     {
@@ -16092,7 +16048,7 @@
       "text": "The notification shall contain the conclusions of the assessment of the quality management system and the reasoned assessment decision.",
       "hash": "b67af8df7a0a4e984495d956535572d1ab53a245bccac47efb8f5a0c7f2eeb01",
       "node_hash": "5c4e2bfa8f68435535eca5c5ecb7afb6812feeb3b1deb382f83740819ef85333",
-      "order": 1462,
+      "order": 1458,
       "source_anchor": "anx_VII"
     },
     {
@@ -16103,7 +16059,7 @@
       "text": "The quality management system as approved shall continue to be implemented and maintained by the provider so that it remains adequate and efficient.",
       "hash": "afbd1bf4ffaaa9824d29b8beb5f3baafed9eb3e3d021037c9b37d1508529b19c",
       "node_hash": "8b8097bbbc47d4f015a1cec19fb5ae9a35656d19152290c893904495550d4d85",
-      "order": 1463,
+      "order": 1459,
       "source_anchor": "anx_VII"
     },
     {
@@ -16114,7 +16070,7 @@
       "text": "Any intended change to the approved quality management system or the list of AI systems covered by the latter shall be brought to the attention of the notified body by the provider.",
       "hash": "1d38fa3c4bd4c901b236004858cb0bb8e160af13ee035c6fa94e3a4ee9edbbec",
       "node_hash": "346a5b22048f003d966aa08c9a5fdb755bb6cd158be1ae72bf7a77842ffda331",
-      "order": 1464,
+      "order": 1460,
       "source_anchor": "anx_VII"
     },
     {
@@ -16125,7 +16081,7 @@
       "text": "The proposed changes shall be examined by the notified body, which shall decide whether the modified quality management system continues to satisfy the requirements referred to in point 3.2 or whether a reassessment is necessary.",
       "hash": "177580df7deb2e8444cda43935c7bda78b466131423c3aa309060ef9ade92d73",
       "node_hash": "247fbea2dfaf3eaa4d595261c79ebc30c946c6930b8ab348fad69e34b0e8a163",
-      "order": 1465,
+      "order": 1461,
       "source_anchor": "anx_VII"
     },
     {
@@ -16136,7 +16092,7 @@
       "text": "The notified body shall notify the provider of its decision. The notification shall contain the conclusions of the examination of the changes and the reasoned assessment decision.",
       "hash": "f3450f3af3515d7eb3601949b47abc943b7033b42868fdf9c3ce6102093600b0",
       "node_hash": "72c128f402ad1f0156fbe791b0f920ea75c2aaafe4c6aec2bec89254939d3603",
-      "order": 1466,
+      "order": 1462,
       "source_anchor": "anx_VII"
     },
     {
@@ -16147,7 +16103,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "449aaba4cef3afc9ce7982d96f4c98afb5110a155c9c4f706017a49e2e12508f",
-      "order": 1467,
+      "order": 1463,
       "source_anchor": "id-683d5b39-b732-4055-9d30-1fab1794c2bf"
     },
     {
@@ -16158,7 +16114,7 @@
       "text": "In addition to the application referred to in point 3, an application with a notified body of their choice shall be lodged by the provider for the assessment of the technical documentation relating to the AI system which the provider intends to place on the market or put into service and which is covered by the quality management system referred to under point 3.",
       "hash": "0e0fd834605258132effa34afd43e106deb65f6af014a9591bfc8d6c89481ec4",
       "node_hash": "35d048cdd62ae4013835e9386a5b661f29b58f824be3d0cb208f31482055f301",
-      "order": 1468,
+      "order": 1464,
       "source_anchor": "anx_VII"
     },
     {
@@ -16169,7 +16125,7 @@
       "text": "The application shall include:",
       "hash": "973126de39a0d73f2e0aa1f4b6ab84895ad9a45f1c36b89ed6036692ffaefe72",
       "node_hash": "30c676b4226a76b7edd22ed3ad92bd2dab26a56eeb238125b6fbd980d4d64fac",
-      "order": 1469,
+      "order": 1465,
       "source_anchor": "anx_VII"
     },
     {
@@ -16180,7 +16136,7 @@
       "text": "the name and address of the provider;",
       "hash": "2e84da5c884d1cd8b47db17f335e03d2e33f9338e48074be510bcdf39dd7bfc7",
       "node_hash": "60de097e3e24ebfaa41b96efb3bb6b5c6f293799842db9f3c9efd5662d10d7d7",
-      "order": 1470,
+      "order": 1466,
       "source_anchor": "anx_VII"
     },
     {
@@ -16191,7 +16147,7 @@
       "text": "a written declaration that the same application has not been lodged with any other notified body;",
       "hash": "94108403daaef095fad0812e659ff9c7a660013db45ce63d16de0967bb102096",
       "node_hash": "71c274fb653684b32ca3d728a27de5ba33b6cc40fee6ff74bd7083185bc6e658",
-      "order": 1471,
+      "order": 1467,
       "source_anchor": "anx_VII"
     },
     {
@@ -16202,7 +16158,7 @@
       "text": "the technical documentation referred to in Annex IV.",
       "hash": "290667beac5a27776b04fc9b97d6573e7ddc8992003e8e73c5b6d598c22dcb79",
       "node_hash": "38f477b7eafa4a5dd4f5dcfc92ea4908c803727c628a2df9f3436ef749cc5193",
-      "order": 1472,
+      "order": 1468,
       "source_anchor": "anx_VII"
     },
     {
@@ -16213,7 +16169,7 @@
       "text": "The technical documentation shall be examined by the notified body. Where relevant, and limited to what is necessary to fulfil its tasks, the notified body shall be granted full access to the training, validation, and testing data sets used, including, where appropriate and subject to security safeguards, through API or other relevant technical means and tools enabling remote access.",
       "hash": "29806ffb014ef058819f5aec1863585e899854757c46a86283337b89ca257b78",
       "node_hash": "61b50c7ed9ab5959734415ee092ad0d45646639226bcd8220dd1eee50623cb14",
-      "order": 1473,
+      "order": 1469,
       "source_anchor": "anx_VII"
     },
     {
@@ -16224,7 +16180,7 @@
       "text": "In examining the technical documentation, the notified body may require that the provider supply further evidence or carry out further tests so as to enable a proper assessment of the conformity of the AI system with the requirements set out in Chapter III, Section 2. Where the notified body is not satisfied with the tests carried out by the provider, the notified body shall itself directly carry out adequate tests, as appropriate.",
       "hash": "71580e3ec601bbcfa35a41510cff40fb50eb3b676e6d011002009d9a54abf8e0",
       "node_hash": "aa2850cba4bc6d40bbec5335b0cf331f26cefcbcbde489be9a747fe68fca2d6c",
-      "order": 1474,
+      "order": 1470,
       "source_anchor": "anx_VII"
     },
     {
@@ -16235,7 +16191,7 @@
       "text": "Where necessary to assess the conformity of the high-risk AI system with the requirements set out in Chapter III, Section 2, after all other reasonable means to verify conformity have been exhausted and have proven to be insufficient, and upon a reasoned request, the notified body shall also be granted access to the training and trained models of the AI system, including its relevant parameters. Such access shall be subject to existing Union law on the protection of intellectual property and trade secrets.",
       "hash": "3e3b66ca580858bfa57f5fb226cb511c264841dfe07c6298587c1f4c096f8500",
       "node_hash": "1f3986f9f14df94d7eb1437eb01999d98565627b1f6ee696e6119dc53fb63556",
-      "order": 1475,
+      "order": 1471,
       "source_anchor": "anx_VII"
     },
     {
@@ -16246,7 +16202,7 @@
       "text": "The decision of the notified body shall be notified to the provider or its authorised representative. The notification shall contain the conclusions of the assessment of the technical documentation and the reasoned assessment decision.",
       "hash": "5dd3e70b2c0b0b70a65aaba558a98def9190c33df97b47dcec75c0f27f09e753",
       "node_hash": "96153686d324020bd5036bb38c72ef6cf0524da5758e2455980b9c068fac5f35",
-      "order": 1476,
+      "order": 1472,
       "source_anchor": "anx_VII"
     },
     {
@@ -16257,7 +16213,7 @@
       "text": "Where the AI system is in conformity with the requirements set out in Chapter III, Section 2, the notified body shall issue a Union technical documentation assessment certificate. The certificate shall indicate the name and address of the provider, the conclusions of the examination, the conditions (if any) for its validity and the data necessary for the identification of the AI system.",
       "hash": "6d2dd011379f76070dbf66899aad2eaaafb2869309d2befe2fd74f00b48c43e8",
       "node_hash": "b8a67dade13c3c401cd845a78febbe1c1c57308be891f20067b73947fbf2311b",
-      "order": 1477,
+      "order": 1473,
       "source_anchor": "anx_VII"
     },
     {
@@ -16268,7 +16224,7 @@
       "text": "The certificate and its annexes shall contain all relevant information to allow the conformity of the AI system to be evaluated, and to allow for control of the AI system while in use, where applicable.",
       "hash": "325911b0254d8e9fde11d10854f99f5003569fa7e68d4967bcac6e0211c8179c",
       "node_hash": "c075f76dd527982a37a91cb1af390ed13dd1d952dd2c1c397546956d8a1b5766",
-      "order": 1478,
+      "order": 1474,
       "source_anchor": "anx_VII"
     },
     {
@@ -16279,7 +16235,7 @@
       "text": "Where the AI system is not in conformity with the requirements set out in Chapter III, Section 2, the notified body shall refuse to issue a Union technical documentation assessment certificate and shall inform the applicant accordingly, giving detailed reasons for its refusal.",
       "hash": "ba0a4a68d399ab1ad8d66ba13e35487263d042071066c9fa03e9ddf71ca52182",
       "node_hash": "86aa8daece04498703c86fb639f058c9898adf3dfa434087a7735be2a4607de6",
-      "order": 1479,
+      "order": 1475,
       "source_anchor": "anx_VII"
     },
     {
@@ -16290,7 +16246,7 @@
       "text": "Where the AI system does not meet the requirement relating to the data used to train it, re-training of the AI system will be needed prior to the application for a new conformity assessment. In this case, the reasoned assessment decision of the notified body refusing to issue the Union technical documentation assessment certificate shall contain specific considerations on the quality data used to train the AI system, in particular on the reasons for non-compliance.",
       "hash": "a91ece52842fb5d98538acfb531514b7e1fcac8fbf26d464b20662fdaba727f3",
       "node_hash": "35dc8b2f03c839d64a2bc4ecfdc51c77190e6bd8a89d64e7cbd08e8d23f0d4ed",
-      "order": 1480,
+      "order": 1476,
       "source_anchor": "anx_VII"
     },
     {
@@ -16301,7 +16257,7 @@
       "text": "Any change to the AI system that could affect the compliance of the AI system with the requirements or its intended purpose shall be assessed by the notified body which issued the Union technical documentation assessment certificate. The provider shall inform such notified body of its intention to introduce any of the abovementioned changes, or if it otherwise becomes aware of the occurrence of such changes. The intended changes shall be assessed by the notified body, which shall decide whether those changes require a new conformity assessment in accordance with Article 43(4) or whether they could be addressed by means of a supplement to the Union technical documentation assessment certificate. In the latter case, the notified body shall assess the changes, notify the provider of its decision and, where the changes are approved, issue to the provider a supplement to the Union technical documentation assessment certificate.",
       "hash": "a73e958c75844bcbd808867ef6f05f2a0ceb93c7dd28fd759911f632c9f945b6",
       "node_hash": "b779dd2b396ea13f3d181e218228b98559b28a4ae00b1212efff8e46eb970219",
-      "order": 1481,
+      "order": 1477,
       "source_anchor": "anx_VII"
     },
     {
@@ -16312,7 +16268,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "e02b8b10873e315c15b9e5e995efc7aa4a18ee2bd5e4a292b972129e8410f4bf",
-      "order": 1482,
+      "order": 1478,
       "source_anchor": "id-658ee671-bc4e-4828-9dc2-e60e2d531039"
     },
     {
@@ -16323,7 +16279,7 @@
       "text": "The purpose of the surveillance carried out by the notified body referred to in Point 3 is to make sure that the provider duly complies with the terms and conditions of the approved quality management system.",
       "hash": "4672f2d9dc1bd112291407e256943dae2820ba214cdfb1b4d62fef5e6bb1bd8a",
       "node_hash": "383bef213b7939bcdd0919fd602c342e897dc08047c0c871a686c97f0ac907a0",
-      "order": 1483,
+      "order": 1479,
       "source_anchor": "anx_VII"
     },
     {
@@ -16334,7 +16290,7 @@
       "text": "For assessment purposes, the provider shall allow the notified body to access the premises where the design, development, testing of the AI systems is taking place. The provider shall further share with the notified body all necessary information.",
       "hash": "8e13fb837fb6277d154b20b72b630100fe6b75006f8075c691b75eb3a75af80e",
       "node_hash": "7472b4492292c87e18f2a396aef6e1b52f69ec8f0eda7f29e1d82d71908d57e6",
-      "order": 1484,
+      "order": 1480,
       "source_anchor": "anx_VII"
     },
     {
@@ -16345,7 +16301,7 @@
       "text": "The notified body shall carry out periodic audits to make sure that the provider maintains and applies the quality management system and shall provide the provider with an audit report. In the context of those audits, the notified body may carry out additional tests of the AI systems for which a Union technical documentation assessment certificate was issued.",
       "hash": "3075c753e76948732fe30b0b86bd925f784b48dae22acae78f4c7160087db6f0",
       "node_hash": "d008caf70b33289824cc1e7634e6b7037b2070e718b8ffb0019edc9c45c65eb3",
-      "order": 1485,
+      "order": 1481,
       "source_anchor": "anx_VII"
     },
     {
@@ -16356,7 +16312,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "b0ae0afd861c60d002201381bf67e2d472037fb6207a8343924d9dd69e7af6ed",
-      "order": 1486,
+      "order": 1482,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16367,7 +16323,7 @@
       "text": "The following information shall be provided and thereafter kept up to date with regard to high-risk AI systems to be registered in accordance with Article 49(1):",
       "hash": "67a58053eb48840c5641dec7174d48ea272baae0f8f5905efe4c743509480ee8",
       "node_hash": "b43756ec0e40e458319a32a84e65474c6eda3a7ede0f034f09ac0ce234683749",
-      "order": 1487,
+      "order": 1483,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16378,7 +16334,7 @@
       "text": "The name, address and contact details of the provider;",
       "hash": "7bcb2f883c6fd20b55eb8029c5ad63870a803acbb2e120a423c87bb8ebfaaee2",
       "node_hash": "3df695553b3e0f1e9f0a875080e984ef5b7774c9417339d062ad45c65a529c71",
-      "order": 1488,
+      "order": 1484,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16389,7 +16345,7 @@
       "text": "Where submission of information is carried out by another person on behalf of the provider, the name, address and contact details of that person;",
       "hash": "d446fb7c7d13e072e62d0db91463153e0d3f072e135bf93927f14d522923358e",
       "node_hash": "fe99b5bd66d25b8267c3f3ee375e1feafe805a00348ce471f9d13421b096d84a",
-      "order": 1489,
+      "order": 1485,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16400,7 +16356,7 @@
       "text": "The name, address and contact details of the authorised representative, where applicable;",
       "hash": "d654190c4d2bdc224bd40d933c7617fb1400624496b14147203e18f99b425251",
       "node_hash": "48d181f35219186336cf78c2312cb1d4b026afd11590e9a444679daad21ec1ef",
-      "order": 1490,
+      "order": 1486,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16411,7 +16367,7 @@
       "text": "The AI system trade name and any additional unambiguous reference allowing the identification and traceability of the AI system;",
       "hash": "dad638aa6596b34ad4a5355cf22ed02ded36e34d9bd567fdf187d473788cd8d8",
       "node_hash": "798cc399c284ea3e3881a60300a9aac5eca3890982e62680fbf95da1cb719a8c",
-      "order": 1491,
+      "order": 1487,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16422,7 +16378,7 @@
       "text": "A description of the intended purpose of the AI system and of the components and functions supported through this AI system;",
       "hash": "da714100279f9c6233ebc98be32100367b2ff61b04aa753fb56ca1e2ed4f0054",
       "node_hash": "e9d6ff4bd006d093d530d130426994d58efae51f680842793a05380ffdf56d76",
-      "order": 1492,
+      "order": 1488,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16433,7 +16389,7 @@
       "text": "A basic and concise description of the information used by the system (data, inputs) and its operating logic;",
       "hash": "3bbbf6de2611dde09c19da2d462afe503ef07eec6aff2f3de7307daba3373e0f",
       "node_hash": "2b784b905a12c7bc1705862ee6d2c30e35fd000c4e44105dae1d64e5141dec40",
-      "order": 1493,
+      "order": 1489,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16444,7 +16400,7 @@
       "text": "The status of the AI system (on the market, or in service; no longer placed on the market/in service, recalled);",
       "hash": "34658c36372e5a4826cf3e4413d6b03b43af4c8a1891704857a7d172adaee9ba",
       "node_hash": "8d85756c1f283c83bf096a2d3428fb54aa47f710571889e84c0dfd9002dcf907",
-      "order": 1494,
+      "order": 1490,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16455,7 +16411,7 @@
       "text": "The type, number and expiry date of the certificate issued by the notified body and the name or identification number of that notified body, where applicable;",
       "hash": "a70c859b07c689f4346e48cc00470eff13ed770c5ba10d03becb5b5dd466c36e",
       "node_hash": "336487c1a273ae51a3209a6d0b2be6d28017463d221ae06b8fee4d8c9285e9c9",
-      "order": 1495,
+      "order": 1491,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16466,7 +16422,7 @@
       "text": "A scanned copy of the certificate referred to in point 8, where applicable;",
       "hash": "07952c63a898c8ed60fbd15871e27f5ef286d4cf7f8e7ca48f56bcd73b7b81ad",
       "node_hash": "02505e4cd22bacf0b14ce2906988dc9235b9406ea58a6423c3830c3a686184f0",
-      "order": 1496,
+      "order": 1492,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16477,7 +16433,7 @@
       "text": "Any Member States in which the AI system has been placed on the market, put into service or made available in the Union;",
       "hash": "e3f49b1c680c785df584e712b9622de5c69164cf613238a7f125cda76cfcddce",
       "node_hash": "24d452bd988c8f3990e0f422df6039fc1d1064bb2f241c74d008149d21ec18b2",
-      "order": 1497,
+      "order": 1493,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16488,7 +16444,7 @@
       "text": "A copy of the EU declaration of conformity referred to in Article 47;",
       "hash": "a031756283e2ea99e38221e54863ad45d8b6b2c3b7b46b7e1e53a43e519904d4",
       "node_hash": "0760f3252c1691d5d7d0a44de88b861b0d34bf3dddd918fb9831d68edf5aaf96",
-      "order": 1498,
+      "order": 1494,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16499,7 +16455,7 @@
       "text": "Electronic instructions for use; this information shall not be provided for high-risk AI systems in the areas of law enforcement or migration, asylum and border control management referred to in Annex III, points 1, 6 and 7;",
       "hash": "05c0f1d2c0c6df8179645c07245f2827112d6ca3752720adf78b470e857c33f2",
       "node_hash": "0575451cae2d47f7b084f6c5ddc3fad79a67c5b3ecf65158ac453681cb49a7ae",
-      "order": 1499,
+      "order": 1495,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16510,7 +16466,7 @@
       "text": "A URL for additional information (optional).",
       "hash": "2749346987cd5d6c7f1f5e8258b5949fde006ae9a01f68beb579c137a487cc97",
       "node_hash": "28d300b5846933a147d32fff74b4e99bfdaebd6cb21d8e659b83ac1d64c4adad",
-      "order": 1500,
+      "order": 1496,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16521,7 +16477,7 @@
       "text": "The following information shall be provided and thereafter kept up to date with regard to AI systems to be registered in accordance with Article 49(2):",
       "hash": "8feda2856fc3046b46a62af083effa67ac466cc76cc05f4b2e4eac143ff2da30",
       "node_hash": "46c8e858d911b42bcc68030f12fbb0c40400459984f1b24f9656786559940908",
-      "order": 1501,
+      "order": 1497,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16532,7 +16488,7 @@
       "text": "The name, address and contact details of the provider;",
       "hash": "7bcb2f883c6fd20b55eb8029c5ad63870a803acbb2e120a423c87bb8ebfaaee2",
       "node_hash": "3df695553b3e0f1e9f0a875080e984ef5b7774c9417339d062ad45c65a529c71",
-      "order": 1502,
+      "order": 1498,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16543,7 +16499,7 @@
       "text": "Where submission of information is carried out by another person on behalf of the provider, the name, address and contact details of that person;",
       "hash": "d446fb7c7d13e072e62d0db91463153e0d3f072e135bf93927f14d522923358e",
       "node_hash": "fe99b5bd66d25b8267c3f3ee375e1feafe805a00348ce471f9d13421b096d84a",
-      "order": 1503,
+      "order": 1499,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16554,7 +16510,7 @@
       "text": "The name, address and contact details of the authorised representative, where applicable;",
       "hash": "d654190c4d2bdc224bd40d933c7617fb1400624496b14147203e18f99b425251",
       "node_hash": "48d181f35219186336cf78c2312cb1d4b026afd11590e9a444679daad21ec1ef",
-      "order": 1504,
+      "order": 1500,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16565,7 +16521,7 @@
       "text": "The AI system trade name and any additional unambiguous reference allowing the identification and traceability of the AI system;",
       "hash": "dad638aa6596b34ad4a5355cf22ed02ded36e34d9bd567fdf187d473788cd8d8",
       "node_hash": "798cc399c284ea3e3881a60300a9aac5eca3890982e62680fbf95da1cb719a8c",
-      "order": 1505,
+      "order": 1501,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16576,7 +16532,7 @@
       "text": "A description of the intended purpose of the AI system;",
       "hash": "12a961f4d8b9b3f291f73e8df84165c6a446b9912ee955a38ec29db76f1751ea",
       "node_hash": "0a15e72adbbbdc57fb63a49afb1f830be22697a9fc1a1fa6e848e41788e0052a",
-      "order": 1506,
+      "order": 1502,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16587,7 +16543,7 @@
       "text": "The condition or conditions under Article 6(3)based on which the AI system is considered to be not-high-risk;",
       "hash": "2c7f02a374e4a7c66b40fad8a8c1658e4f8148ddba35b5a917c3670c4b569659",
       "node_hash": "39d8fdb03e8773f49f7ba323d171cf0ec395807b9f4e205653dfd2da57f4c208",
-      "order": 1507,
+      "order": 1503,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16598,7 +16554,7 @@
       "text": "The status of the AI system (on the market, or in service; no longer placed on the market/in service, recalled).",
       "hash": "b00959f8c2c50dae2511ec482cfa20b30617d9c21ceb4ebe6a360715be370e18",
       "node_hash": "a1b7d4443101ea5997f6b1dfb1a21f4d864051452e6f82c03b56444c468882a8",
-      "order": 1508,
+      "order": 1504,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16609,7 +16565,7 @@
       "text": "The following information shall be provided and thereafter kept up to date with regard to high-risk AI systems to be registered in accordance with Article 49(3):",
       "hash": "0e697a40780bb837a23497478af85b12701cd54f838c0bfa846b8d5c90a7195c",
       "node_hash": "fe21cd36ba211a4471583a65efa3b0401e78b83e26b4b3f3c5cd42b8cf5e8f87",
-      "order": 1509,
+      "order": 1505,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16620,7 +16576,7 @@
       "text": "The name, address and contact details of the deployer;",
       "hash": "761faadc95d13e899e1a2c97ecd202b49c2c29211a14a1d6499337538062b0d4",
       "node_hash": "74fd275bfebcc72c36e0144e3040406c05889343dd95cce03a2745c3333d1fae",
-      "order": 1510,
+      "order": 1506,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16631,7 +16587,7 @@
       "text": "The name, address and contact details of the person submitting information on behalf of the deployer;",
       "hash": "c64059551e2fb005388b61d01869174892f04252211321e510c43ab68bb0fc5d",
       "node_hash": "3d198e04c33bf9e6ec82521094900ef703f6116c4e0697e035ea1aa186efbd6e",
-      "order": 1511,
+      "order": 1507,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16642,7 +16598,7 @@
       "text": "The URL of the entry of the AI system in the EU database by its provider;",
       "hash": "38f2de4c8c94a0adba36e9ba773ab4742a367a2031d0e553f73988aafbcab5b0",
       "node_hash": "a301b8fb24ea51e05a9385ca50c0b858d58a86b574b26004e8d668ba94012d90",
-      "order": 1512,
+      "order": 1508,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16653,7 +16609,7 @@
       "text": "A summary of the findings of the fundamental rights impact assessment conducted in accordance with Article 27;",
       "hash": "10bc754daedc0f723ffdc6d6729f6daacd7f2427229022495241cc09b6cc7a63",
       "node_hash": "ef1e15902161a6f8e849193a4290f476c1a88c6b24122f7ae47f935a256d3297",
-      "order": 1513,
+      "order": 1509,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16664,7 +16620,7 @@
       "text": "A summary of the data protection impact assessment carried out in accordance with Article 35 of Regulation (EU) 2016/679 or Article 27 of Directive (EU) 2016/680 as specified in Article 26(8) of this Regulation, where applicable.",
       "hash": "b559469eabe6f252adbf07720dd3b59eec25ce5e8c8c5a901181bfe61d81899c",
       "node_hash": "9cbe1fcc7cdd8492afd135cc0a3a9d98248acf91f3a44cc859b960f9d7d50565",
-      "order": 1514,
+      "order": 1510,
       "source_anchor": "anx_VIII"
     },
     {
@@ -16675,7 +16631,7 @@
       "text": "The following information shall be provided and thereafter kept up to date with regard to testing in real world conditions to be registered in accordance with Article 60:",
       "hash": "be4b06d6d0bc60408830d2b8f41be6e2eaf9b49fce855af528dd841fe523683e",
       "node_hash": "b722f1a258be25bc1b98968b8489fe96004ae801f17b8af712b19b2492bc2c80",
-      "order": 1515,
+      "order": 1511,
       "source_anchor": "anx_IX"
     },
     {
@@ -16686,7 +16642,7 @@
       "text": "A Union-wide unique single identification number of the testing in real world conditions;",
       "hash": "e3ba1597778d7a90d9b6c3dc8f6f28b06d5ecc6880d7e3a4becb99326d8d5e41",
       "node_hash": "34ac1f73538819e980bb77c4c7a469fa01dcf4ecccb4b5953f9dc98cb82bc67d",
-      "order": 1516,
+      "order": 1512,
       "source_anchor": "anx_IX"
     },
     {
@@ -16697,7 +16653,7 @@
       "text": "The name and contact details of the provider or prospective provider and of the deployers involved in the testing in real world conditions;",
       "hash": "91aac5892da662be6c6b67c0dcbc4b41360ad5574aaa14ae209ccee9e620dbda",
       "node_hash": "e7a921c59005f2f77d014af8342fa0a764b9ee6e976c2a8407b736f236bef9c0",
-      "order": 1517,
+      "order": 1513,
       "source_anchor": "anx_IX"
     },
     {
@@ -16708,7 +16664,7 @@
       "text": "A brief description of the AI system, its intended purpose, and other information necessary for the identification of the system;",
       "hash": "77b7ead32a524a0e35f456441337b08b5cbe0d5ad496d8df1f865027f519f901",
       "node_hash": "aff1199f56e524a5148f112bd7e1c396eb8446f8d2ec9f021d8dff65d7c9662e",
-      "order": 1518,
+      "order": 1514,
       "source_anchor": "anx_IX"
     },
     {
@@ -16719,7 +16675,7 @@
       "text": "A summary of the main characteristics of the plan for testing in real world conditions;",
       "hash": "782ec156046509740b03ae18bf3e96b9b51e331d199d0644eb7882346d8757d4",
       "node_hash": "724f8555f4b87160361242a74cd3e943c51128c775d4492896c963142a85b9b5",
-      "order": 1519,
+      "order": 1515,
       "source_anchor": "anx_IX"
     },
     {
@@ -16730,7 +16686,7 @@
       "text": "Information on the suspension or termination of the testing in real world conditions.",
       "hash": "6def50e0461f0d2ee261c679ba5aad04b5a980208de7b577f591b416967d5483",
       "node_hash": "d5b48ee3dbd293b1c160cfdab0b78816c378d595b4ab05e94e0c3c7d64522bd1",
-      "order": 1520,
+      "order": 1516,
       "source_anchor": "anx_IX"
     },
     {
@@ -16741,7 +16697,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "b8a023402ecd0d416bbdbd28a4ae998aff773d1a5950070e1fc47a91f428e91b",
-      "order": 1521,
+      "order": 1517,
       "source_anchor": "anx_X"
     },
     {
@@ -16752,7 +16708,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "6f3979d0e348eeb725d96b66ba791ade5e7fff33120b67ecd585b4b72c44b3bb",
-      "order": 1522,
+      "order": 1518,
       "source_anchor": "id-484ab03c-8997-45de-9700-7247f6661a1c"
     },
     {
@@ -16763,7 +16719,7 @@
       "text": "Regulation (EU) 2018/1860 of the European Parliament and of the Council of 28 November 2018 on the use of the Schengen Information System for the return of illegally staying third-country nationals (OJ L 312, 7.12.2018, p. 1).",
       "hash": "f95bb5b827e6359e4e9ee6c6499a11c323a5223ca4205e9f83a0d5fec37631f2",
       "node_hash": "8a2b1ba589b3f2c9658a2ff2d5dc6543ab7cdc2baffc64227270624e54054cb8",
-      "order": 1523,
+      "order": 1519,
       "source_anchor": "anx_X"
     },
     {
@@ -16774,7 +16730,7 @@
       "text": "Regulation (EU) 2018/1861 of the European Parliament and of the Council of 28 November 2018 on the establishment, operation and use of the Schengen Information System (SIS) in the field of border checks, and amending the Convention implementing the Schengen Agreement, and amending and repealing Regulation (EC) No 1987/2006 (OJ L 312, 7.12.2018, p. 14).",
       "hash": "adeb816ae4b137cbc89e764e806e55865dabe2718f82a04166a1bbdbaadaf405",
       "node_hash": "c55667acbf123fc44c4ddb86dd4b79fcf95773a2823b618b6ed99af42ea55928",
-      "order": 1524,
+      "order": 1520,
       "source_anchor": "anx_X"
     },
     {
@@ -16785,7 +16741,7 @@
       "text": "Regulation (EU) 2018/1862 of the European Parliament and of the Council of 28 November 2018 on the establishment, operation and use of the Schengen Information System (SIS) in the field of police cooperation and judicial cooperation in criminal matters, amending and repealing Council Decision 2007/533/JHA, and repealing Regulation (EC) No 1986/2006 of the European Parliament and of the Council and Commission Decision 2010/261/EU (OJ L 312, 7.12.2018, p. 56).",
       "hash": "232781aae702ecc6d27ec6dc1574d411c9cb885d61ee0d6bd04d4d5272e37a78",
       "node_hash": "b02c57b9e6921170adea39fa77d4eaee845c84ebfde1a2ad5a6c7eeb65018dbe",
-      "order": 1525,
+      "order": 1521,
       "source_anchor": "anx_X"
     },
     {
@@ -16796,7 +16752,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "ffc1d51687d1c47287d2b1e6ae917829a24fbb68b0af42c7171c14aaec54ff43",
-      "order": 1526,
+      "order": 1522,
       "source_anchor": "id-f1c83872-5023-46b0-b34a-165cef01dafb"
     },
     {
@@ -16807,7 +16763,7 @@
       "text": "Regulation (EU) 2021/1133 of the European Parliament and of the Council of 7 July 2021 amending Regulations (EU) No 603/2013, (EU) 2016/794, (EU) 2018/1862, (EU) 2019/816 and (EU) 2019/818 as regards the establishment of the conditions for accessing other EU information systems for the purposes of the Visa Information System (OJ L 248, 13.7.2021, p. 1).",
       "hash": "059e5379feb6b4d0c406c2ea959e30eb1ed39e5688ea75194431c9eba6efe660",
       "node_hash": "e84bf7bd10aa64a466a88c9ba57d41f537bc9996acb99ef48f63c6d7bee59a6f",
-      "order": 1527,
+      "order": 1523,
       "source_anchor": "anx_X"
     },
     {
@@ -16818,7 +16774,7 @@
       "text": "Regulation (EU) 2021/1134 of the European Parliament and of the Council of 7 July 2021 amending Regulations (EC) No 767/2008, (EC) No 810/2009, (EU) 2016/399, (EU) 2017/2226, (EU) 2018/1240, (EU) 2018/1860, (EU) 2018/1861, (EU) 2019/817 and (EU) 2019/1896 of the European Parliament and of the Council and repealing Council Decisions 2004/512/EC and 2008/633/JHA, for the purpose of reforming the Visa Information System (OJ L 248, 13.7.2021, p. 11).",
       "hash": "44f76720c624d9e27e6ff1bd44db72aeb31c72999c7d1b304e74345557af0c38",
       "node_hash": "8ee437553bf65e684679ba64542df7a2d64ac3cd803b4265ae5f4e7eb21eb788",
-      "order": 1528,
+      "order": 1524,
       "source_anchor": "anx_X"
     },
     {
@@ -16829,7 +16785,7 @@
       "text": "Regulation (EU) 2024/1358 of the European Parliament and of the Council of 14 May 2024 on the establishment of 'Eurodac' for the comparison of biometric data in order to effectively apply Regulations (EU) 2024/1315 and (EU) 2024/1350 of the European Parliament and of the Council and Council Directive 2001/55/EC and to identify illegally staying third-country nationals and stateless persons and on requests for the comparison with Eurodac data by Member States' law enforcement authorities and Europol for law enforcement purposes, amending Regulations (EU) 2018/1240 and (EU) 2019/818 of the European Parliament and of the Council and repealing Regulation (EU) No 603/2013 of the European Parliament and of the Council (OJ L, 2024/1358, 22.5.2024, ELI: http://data.europa.eu/eli/reg/2024/1358/oj).",
       "hash": "2dee8a98e7f7c2cc686f250565d563c7d615afb109f437acfddd6d084dd75ae8",
       "node_hash": "3efd301b1459707585a1808346f210d8be71e1b04fe66b44b28ae771115acc59",
-      "order": 1529,
+      "order": 1525,
       "source_anchor": "anx_X"
     },
     {
@@ -16840,7 +16796,7 @@
       "text": "Regulation (EU) 2017/2226 of the European Parliament and of the Council of 30 November 2017 establishing an Entry/Exit System (EES) to register entry and exit data and refusal of entry data of third-country nationals crossing the external borders of the Member States and determining the conditions for access to the EES for law enforcement purposes, and amending the Convention implementing the Schengen Agreement and Regulations (EC) No 767/2008 and (EU) No 1077/2011 (OJ L 327, 9.12.2017, p. 20).",
       "hash": "384fa22b6310c62ed319bb38ae1167904f589bc42fcf0a71dea4be317b5b6eb4",
       "node_hash": "136b0a1e6889c93861d4e9c5b4c26283dc541e6d4d59adc542141f3c3db15f88",
-      "order": 1530,
+      "order": 1526,
       "source_anchor": "anx_X"
     },
     {
@@ -16851,7 +16807,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "7e79c4782849a948e0eff3fcb6d6ade24c6efebe326e982f5853a65e35304704",
-      "order": 1531,
+      "order": 1527,
       "source_anchor": "id-de0736a7-e9cd-4ffe-a6cd-1c224a4f4662"
     },
     {
@@ -16862,7 +16818,7 @@
       "text": "Regulation (EU) 2018/1240 of the European Parliament and of the Council of 12 September 2018 establishing a European Travel Information and Authorisation System (ETIAS) and amending Regulations (EU) No 1077/2011, (EU) No 515/2014, (EU) 2016/399, (EU) 2016/1624 and (EU) 2017/2226 (OJ L 236, 19.9.2018, p. 1).",
       "hash": "c05b19cfe978ab0550a8447fc8ac85c1f65f6b16e9048deb5e7e4ce1a15f87cf",
       "node_hash": "62a85935af7653e75320f1fc8f4edff4911d7596235b527104fd20c842ef0c03",
-      "order": 1532,
+      "order": 1528,
       "source_anchor": "anx_X"
     },
     {
@@ -16873,7 +16829,7 @@
       "text": "Regulation (EU) 2018/1241 of the European Parliament and of the Council of 12 September 2018 amending Regulation (EU) 2016/794 for the purpose of establishing a European Travel Information and Authorisation System (ETIAS) (OJ L 236, 19.9.2018, p. 72).",
       "hash": "46d7b93717ef20f2b1188e39710252ffeb541802de6e697a6c5699351da7e6ce",
       "node_hash": "ac753fb6c560dbd07a05e25b50106bd3294ab184d1947ac22598bd68655e30e2",
-      "order": 1533,
+      "order": 1529,
       "source_anchor": "anx_X"
     },
     {
@@ -16884,7 +16840,7 @@
       "text": "Regulation (EU) 2019/816 of the European Parliament and of the Council of 17 April 2019 establishing a centralised system for the identification of Member States holding conviction information on third-country nationals and stateless persons (ECRIS-TCN) to supplement the European Criminal Records Information System and amending Regulation (EU) 2018/1726 (OJ L 135, 22.5.2019, p. 1).",
       "hash": "0e5bfc6dbafa95d8432b7febe2a2d479feb0a28eae89c888750892daec84e6bf",
       "node_hash": "2907ba2894b94d99f1e896efddb783ce20e40c5b6ef6fefb0734e743cd6d1d3c",
-      "order": 1534,
+      "order": 1530,
       "source_anchor": "anx_X"
     },
     {
@@ -16895,7 +16851,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "a277d29e3b422d28328b8a99b703d958ae1a8149f499eb80bade10ce1b0cae5e",
-      "order": 1535,
+      "order": 1531,
       "source_anchor": "id-c7eeec3a-26ce-4e57-8237-51b2b4fb35a3"
     },
     {
@@ -16906,7 +16862,7 @@
       "text": "Regulation (EU) 2019/817 of the European Parliament and of the Council of 20 May 2019 on establishing a framework for interoperability between EU information systems in the field of borders and visa and amending Regulations (EC) No 767/2008, (EU) 2016/399, (EU) 2017/2226, (EU) 2018/1240, (EU) 2018/1726 and (EU) 2018/1861 of the European Parliament and of the Council and Council Decisions 2004/512/EC and 2008/633/JHA (OJ L 135, 22.5.2019, p. 27).",
       "hash": "62476a7da80b5c6dd55cec53f52727b2d1b16777b9e21ab6af62fef700df561e",
       "node_hash": "2f541b640ca00e449fdbbdd998e0bcb2351edb65a471fddd88d7c2420046b270",
-      "order": 1536,
+      "order": 1532,
       "source_anchor": "anx_X"
     },
     {
@@ -16917,7 +16873,7 @@
       "text": "Regulation (EU) 2019/818 of the European Parliament and of the Council of 20 May 2019 on establishing a framework for interoperability between EU information systems in the field of police and judicial cooperation, asylum and migration and amending Regulations (EU) 2018/1726, (EU) 2018/1862 and (EU) 2019/816 (OJ L 135, 22.5.2019, p. 85).",
       "hash": "6abea849921f2f8bc03bb445b98933f48d04f402821b630d2cfdc55f05e02aa9",
       "node_hash": "7c2ae2d362171a516615c12175a3b643bb09c440c83922552780ac3433ccc0d1",
-      "order": 1537,
+      "order": 1533,
       "source_anchor": "anx_X"
     },
     {
@@ -16928,7 +16884,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "e128052731fef1267574d3cfc0caeaed50f6f88ed4d27ed07f59cb6c13124f96",
-      "order": 1538,
+      "order": 1534,
       "source_anchor": "anx_XI"
     },
     {
@@ -16939,7 +16895,7 @@
       "text": "The technical documentation referred to in Article 53(1), point (a) shall contain at least the following information as appropriate to the size and risk profile of the model:",
       "hash": "8e8e1df288f0431da48a02c65e0b863ae10334422b0fd403b73f57c0ef9b7f9c",
       "node_hash": "1e1d5977f8730da14434180a1f9cc52864f013d3f094eb367dd1e0fd31b28393",
-      "order": 1539,
+      "order": 1535,
       "source_anchor": "anx_XI"
     },
     {
@@ -16950,7 +16906,7 @@
       "text": "A general description of the general-purpose AI model including:",
       "hash": "4206181fded6586a825c141ca8dfeca561a6c747b17408e98c479e753273377d",
       "node_hash": "6f3a40aca89571b7703b76d915b4f318ab87d5928feb1d226d37f753489204ac",
-      "order": 1540,
+      "order": 1536,
       "source_anchor": "anx_XI"
     },
     {
@@ -16961,7 +16917,7 @@
       "text": "the tasks that the model is intended to perform and the type and nature of AI systems in which it can be integrated;",
       "hash": "71e8da87f97eba0ea100ccc9450ef3ed78f007353df2e821264ff67fd8af3024",
       "node_hash": "10c6c5f7bccba6e879704b03453f01cfdd0bca6b5231c02dda3dbef43e25c132",
-      "order": 1541,
+      "order": 1537,
       "source_anchor": "anx_XI"
     },
     {
@@ -16972,7 +16928,7 @@
       "text": "the acceptable use policies applicable;",
       "hash": "b88149aa9f0bab64802837701e1078fa5faa5b3884db2e8b5c53a5b1bf4194cc",
       "node_hash": "c3405031d77be242162693c1c5aa6a9c7ad5b9956bb0922c4d6bac2121e2d9c7",
-      "order": 1542,
+      "order": 1538,
       "source_anchor": "anx_XI"
     },
     {
@@ -16983,7 +16939,7 @@
       "text": "the date of release and methods of distribution;",
       "hash": "6aaa8a996ddd4ca2fe1ecca2a24324758b72a13ea96adb3ce4de1b3c727c5ebc",
       "node_hash": "74a663a29d6b2e2e39ea5a81450a541396e6eeed14e708916f91f89c3fc45da9",
-      "order": 1543,
+      "order": 1539,
       "source_anchor": "anx_XI"
     },
     {
@@ -16994,7 +16950,7 @@
       "text": "the architecture and number of parameters;",
       "hash": "f694fdc774a9ff4930c104d34a907c4cd553229029255122a974d9be640c30a4",
       "node_hash": "4b99e71e31bd60ecc410081ff825e33aaf7ac2654a39923131e71e14f12994c4",
-      "order": 1544,
+      "order": 1540,
       "source_anchor": "anx_XI"
     },
     {
@@ -17005,7 +16961,7 @@
       "text": "the modality (e.g. text, image) and format of inputs and outputs;",
       "hash": "c473e16860d3c3f5acbdf109f11011a6684c40dcb82f78ec123e4a5410c6857f",
       "node_hash": "d11d1bb4c12ea4d245c2457355782053a8e4231a901c569166287a83effe804f",
-      "order": 1545,
+      "order": 1541,
       "source_anchor": "anx_XI"
     },
     {
@@ -17016,7 +16972,7 @@
       "text": "the licence.",
       "hash": "4a0a61173db76e7fff2db23447bb58040dd148a58eb695c9c878265fac637195",
       "node_hash": "5bbcd1c49cff55f0c068d295f2eaa347bcc1dc6b6fb5f567d2e2f3c4f54599db",
-      "order": 1546,
+      "order": 1542,
       "source_anchor": "anx_XI"
     },
     {
@@ -17027,7 +16983,7 @@
       "text": "A detailed description of the elements of the model referred to in point 1, and relevant information of the process for the development, including the following elements:",
       "hash": "7f5a31e13756c60bc129a23394509a7d0660721f6348e3c790810934677f597b",
       "node_hash": "101bc58d4fe301232f9ee21ae8fe905720793da247edd6d9766badbc97ffc12e",
-      "order": 1547,
+      "order": 1543,
       "source_anchor": "anx_XI"
     },
     {
@@ -17038,7 +16994,7 @@
       "text": "the technical means (e.g. instructions of use, infrastructure, tools) required for the general-purpose AI model to be integrated in AI systems;",
       "hash": "27ea7f0fed0ad52112510bfca5459821cecf268add7c2c06fc825f91d5fb5baf",
       "node_hash": "5d9aebe4b3a3ac590c206db940fdb67b49060d65584c95661e9dda17174e7bd5",
-      "order": 1548,
+      "order": 1544,
       "source_anchor": "anx_XI"
     },
     {
@@ -17049,7 +17005,7 @@
       "text": "the design specifications of the model and training process, including training methodologies and techniques, the key design choices including the rationale and assumptions made; what the model is designed to optimise for and the relevance of the different parameters, as applicable;",
       "hash": "e9da5c1b81c5ce1b292cf01acf1026b204ccdef5421d4e118f32ef407d451b2c",
       "node_hash": "50118ae224f9232b331bd8197e3ca18341ae9cb3369d28263ed8d1247cee98bb",
-      "order": 1549,
+      "order": 1545,
       "source_anchor": "anx_XI"
     },
     {
@@ -17060,7 +17016,7 @@
       "text": "information on the data used for training, testing and validation, where applicable, including the type and provenance of data and curation methodologies (e.g. cleaning, filtering, etc.), the number of data points, their scope and main characteristics; how the data was obtained and selected as well as all other measures to detect the unsuitability of data sources and methods to detect identifiable biases, where applicable;",
       "hash": "f86de395670dc8350b45fc0e9e6c97cbd458b88c66fae3f423b6a1e587344f84",
       "node_hash": "32e44b950783d62d05c1e545f93a117fa45ae039345194eade3240daffc51b3b",
-      "order": 1550,
+      "order": 1546,
       "source_anchor": "anx_XI"
     },
     {
@@ -17071,7 +17027,7 @@
       "text": "the computational resources used to train the model (e.g. number of floating point operations), training time, and other relevant details related to the training;",
       "hash": "bcc4a82790db0a8a53f9a4161bd130eaea0662cc9286753093f094242e421399",
       "node_hash": "b228054773f0be6aa1ff83c2a1d0320aa81c0c24f72f0a1dcafdf15ff66a2ab6",
-      "order": 1551,
+      "order": 1547,
       "source_anchor": "anx_XI"
     },
     {
@@ -17082,7 +17038,7 @@
       "text": "known or estimated energy consumption of the model.",
       "hash": "e61a72d0bbb95c3e562dab4cb4e9515ac59659718b073142889d885e31a9374c",
       "node_hash": "d2246ed89bfe1ed89ed3fd9cc4aad01dbd64bf52647c73981db140c6e0568f2b",
-      "order": 1552,
+      "order": 1548,
       "source_anchor": "anx_XI"
     },
     {
@@ -17093,7 +17049,7 @@
       "text": "With regard to point (e), where the energy consumption of the model is unknown, the energy consumption may be based on information about computational resources used.",
       "hash": "e468b8dab1180b4bdfe6936d611d14d64b45ae3e046e89d032edcbf6301b25a0",
       "node_hash": "f2a1a04c862891015cc2f04b2381ad63b5334fb7c122b9b2dc221384974769c0",
-      "order": 1553,
+      "order": 1549,
       "source_anchor": "anx_XI"
     },
     {
@@ -17104,7 +17060,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "5725ddd02e0ef096c90265334936c694c03bc34af2928af799b57ba18bddd6f4",
-      "order": 1554,
+      "order": 1550,
       "source_anchor": "id-d1a1c5d5-73b0-46bc-bd1b-ba4196ec31a8"
     },
     {
@@ -17115,7 +17071,7 @@
       "text": "A detailed description of the evaluation strategies, including evaluation results, on the basis of available public evaluation protocols and tools or otherwise of other evaluation methodologies. Evaluation strategies shall include evaluation criteria, metrics and the methodology on the identification of limitations.",
       "hash": "98568afa8a74efc627672fde33afe57b327d3d9766393f50a8c44da4d33bf939",
       "node_hash": "a796af747605e90f523851dcf9bb4dd21d70c2efe6620a1383567205f401d0ad",
-      "order": 1555,
+      "order": 1551,
       "source_anchor": "anx_XI"
     },
     {
@@ -17126,7 +17082,7 @@
       "text": "Where applicable, a detailed description of the measures put in place for the purpose of conducting internal and/or external adversarial testing (e.g. red teaming), model adaptations, including alignment and fine-tuning.",
       "hash": "2bc6b251f8c08bf8d0e7e9c209c6e0b38d3805e768f47f2c9688bf29cd9bc66d",
       "node_hash": "b303cd346391e1026bb90252b3017df838245900aca407a5f4f4fc4ec6b3b9dc",
-      "order": 1556,
+      "order": 1552,
       "source_anchor": "anx_XI"
     },
     {
@@ -17137,7 +17093,7 @@
       "text": "Where applicable, a detailed description of the system architecture explaining how software components build or feed into each other and integrate into the overall processing.",
       "hash": "e0822fb3f6e322bb92d8fa2e63dbf5b92b21f392feb028771161206538945c3b",
       "node_hash": "a03a33ddbd27982ff42470c6e4fcf280f802f117a6ff3fede808df52b9d516ed",
-      "order": 1557,
+      "order": 1553,
       "source_anchor": "anx_XI"
     },
     {
@@ -17148,7 +17104,7 @@
       "text": "The information referred to in Article 53(1), point (b) shall contain at least the following:",
       "hash": "7378b5f83f62d4f11d2ff2294ae702d09cc363d46b4bd3c7abd278e5a07b9740",
       "node_hash": "8d65086bf7239dcc0c95fd54e6a03df3ad389a6b5a14c5f403eeace6a31510ac",
-      "order": 1558,
+      "order": 1554,
       "source_anchor": "anx_XII"
     },
     {
@@ -17159,7 +17115,7 @@
       "text": "A general description of the general-purpose AI model including:",
       "hash": "4206181fded6586a825c141ca8dfeca561a6c747b17408e98c479e753273377d",
       "node_hash": "6f3a40aca89571b7703b76d915b4f318ab87d5928feb1d226d37f753489204ac",
-      "order": 1559,
+      "order": 1555,
       "source_anchor": "anx_XII"
     },
     {
@@ -17170,7 +17126,7 @@
       "text": "the tasks that the model is intended to perform and the type and nature of AI systems into which it can be integrated;",
       "hash": "398b418aa2c67ba80a3603b8a67ed8f3ec4f5dfd3723acfcea143e215cc40929",
       "node_hash": "3ee7083ee5a7bbb3f3f1798ee842246ab495ab4a74d2f0a2a12e05bb60bb3cee",
-      "order": 1560,
+      "order": 1556,
       "source_anchor": "anx_XII"
     },
     {
@@ -17181,7 +17137,7 @@
       "text": "the acceptable use policies applicable;",
       "hash": "b88149aa9f0bab64802837701e1078fa5faa5b3884db2e8b5c53a5b1bf4194cc",
       "node_hash": "c3405031d77be242162693c1c5aa6a9c7ad5b9956bb0922c4d6bac2121e2d9c7",
-      "order": 1561,
+      "order": 1557,
       "source_anchor": "anx_XII"
     },
     {
@@ -17192,7 +17148,7 @@
       "text": "the date of release and methods of distribution;",
       "hash": "6aaa8a996ddd4ca2fe1ecca2a24324758b72a13ea96adb3ce4de1b3c727c5ebc",
       "node_hash": "74a663a29d6b2e2e39ea5a81450a541396e6eeed14e708916f91f89c3fc45da9",
-      "order": 1562,
+      "order": 1558,
       "source_anchor": "anx_XII"
     },
     {
@@ -17203,7 +17159,7 @@
       "text": "how the model interacts, or can be used to interact, with hardware or software that is not part of the model itself, where applicable;",
       "hash": "64f700952ec8eb9f472f9b1c4c277fed13c3845f4244d9e1ad661d9f50b25136",
       "node_hash": "6c87882d0aa71369b6a48fc6354170a0ae95a05ca1ab32439cc9a53e7e8a02cf",
-      "order": 1563,
+      "order": 1559,
       "source_anchor": "anx_XII"
     },
     {
@@ -17214,7 +17170,7 @@
       "text": "the versions of relevant software related to the use of the general-purpose AI model, where applicable;",
       "hash": "11aa55dcd0f3d872069d4b5901986e6bd5642e12f423679012856d28ed1a0695",
       "node_hash": "ded827863cc6d575b403e78539151e3015934b809ba3f55af2209c4c57f2a57f",
-      "order": 1564,
+      "order": 1560,
       "source_anchor": "anx_XII"
     },
     {
@@ -17225,7 +17181,7 @@
       "text": "the architecture and number of parameters;",
       "hash": "f694fdc774a9ff4930c104d34a907c4cd553229029255122a974d9be640c30a4",
       "node_hash": "4b99e71e31bd60ecc410081ff825e33aaf7ac2654a39923131e71e14f12994c4",
-      "order": 1565,
+      "order": 1561,
       "source_anchor": "anx_XII"
     },
     {
@@ -17236,7 +17192,7 @@
       "text": "the modality (e.g. text, image) and format of inputs and outputs;",
       "hash": "c473e16860d3c3f5acbdf109f11011a6684c40dcb82f78ec123e4a5410c6857f",
       "node_hash": "d11d1bb4c12ea4d245c2457355782053a8e4231a901c569166287a83effe804f",
-      "order": 1566,
+      "order": 1562,
       "source_anchor": "anx_XII"
     },
     {
@@ -17247,7 +17203,7 @@
       "text": "the licence for the model.",
       "hash": "2a3c2d3bb22efd3b64a9362df4185795179c75fd2c379ef786718d8aad1836a6",
       "node_hash": "b532b748529333f78d682d920334da6ce232c7bf7eff0e2949f2a2447a8ee5b9",
-      "order": 1567,
+      "order": 1563,
       "source_anchor": "anx_XII"
     },
     {
@@ -17258,7 +17214,7 @@
       "text": "A description of the elements of the model and of the process for its development, including:",
       "hash": "834a372244722a8c0c5d9c0978f1c6c2b792b8ec10f969b6113bfa44a0d927e9",
       "node_hash": "9bb1d780719fdbdae2663d6e598934707fce1b1137df22ca52cf9f329706343f",
-      "order": 1568,
+      "order": 1564,
       "source_anchor": "anx_XII"
     },
     {
@@ -17269,7 +17225,7 @@
       "text": "the technical means (e.g. instructions for use, infrastructure, tools) required for the general-purpose AI model to be integrated into AI systems;",
       "hash": "3d5821bdbf98064fbd78dd298221ce77cb34302df35446cb6f3b9c3b095688b2",
       "node_hash": "2cee502eb3f24c00a2bea23e211bfe2bf33291281f97117afa133b4921acbf26",
-      "order": 1569,
+      "order": 1565,
       "source_anchor": "anx_XII"
     },
     {
@@ -17280,7 +17236,7 @@
       "text": "the modality (e.g. text, image, etc.) and format of the inputs and outputs and their maximum size (e.g. context window length, etc.);",
       "hash": "538c6e39b18e96ebc6fd1a4e9f0a1d33a844945860856ecd9509453285fb7895",
       "node_hash": "8d1636ad8079dd92270f6356ba8aed0f9681cfb0a36e1fa5e48265e30931886b",
-      "order": 1570,
+      "order": 1566,
       "source_anchor": "anx_XII"
     },
     {
@@ -17291,7 +17247,7 @@
       "text": "information on the data used for training, testing and validation, where applicable, including the type and provenance of data and curation methodologies.",
       "hash": "96719f9b39bd670ed723a1024174a2af347484e0d535c589fa530ead3fda7164",
       "node_hash": "4a64f7cb068a68cc8b48de632ec6ce2db8de107a368f1b95ec420cd0e8cb4139",
-      "order": 1571,
+      "order": 1567,
       "source_anchor": "anx_XII"
     },
     {
@@ -17302,7 +17258,7 @@
       "text": "For the purpose of determining that a general-purpose AI model has capabilities or an impact equivalent to those set out in Article 51(1), point (a), the Commission shall take into account the following criteria:",
       "hash": "81eb0a8da01c76f3b38dd1daa39408c503768a4d18a6411a24c3e624cc857515",
       "node_hash": "e7c269e1d6f3cb8925b6de7cc47afe4b5a6c55c2d68237096cbd5f322e2a62d2",
-      "order": 1572,
+      "order": 1568,
       "source_anchor": "anx_XIII"
     },
     {
@@ -17313,7 +17269,7 @@
       "text": "the number of parameters of the model;",
       "hash": "305c33a340fad0625107abf36f1e3098d766d779c500d05f0422ae742c825eb4",
       "node_hash": "c74124e815f46f4797fc701088f44befa605aabfc1df8121a0b77138736c6d87",
-      "order": 1573,
+      "order": 1569,
       "source_anchor": "anx_XIII"
     },
     {
@@ -17324,7 +17280,7 @@
       "text": "the quality or size of the data set, for example measured through tokens;",
       "hash": "97d17ecdd1ea7c5637e9489bfd3c578c4f2d76b9c0ea46c6ba5b80ff56edfd0f",
       "node_hash": "2490bff50180cffdab58e3661bfa639ba98ba15bc471e2e5e1bb0720fce628d2",
-      "order": 1574,
+      "order": 1570,
       "source_anchor": "anx_XIII"
     },
     {
@@ -17335,7 +17291,7 @@
       "text": "the amount of computation used for training the model, measured in floating point operations or indicated by a combination of other variables such as estimated cost of training, estimated time required for the training, or estimated energy consumption for the training;",
       "hash": "ecfb728552f0226298213ded2e146f80e70ec82986784e9dd9d60dc3fc0653eb",
       "node_hash": "7c7587042efa3d24547421bcca96ceb5202a385669cfcfe5d224403390489995",
-      "order": 1575,
+      "order": 1571,
       "source_anchor": "anx_XIII"
     },
     {
@@ -17346,7 +17302,7 @@
       "text": "the input and output modalities of the model, such as text to text (large language models), text to image, multi-modality, and the state of the art thresholds for determining high-impact capabilities for each modality, and the specific type of inputs and outputs (e.g. biological sequences);",
       "hash": "0df125439a67df5e18ff2c8e903865e048e0a73007bac9eb97f84d750ade202d",
       "node_hash": "ee9611730be5cbd397588037d308c56f9fda473fdc921973aa63ba13b0b90851",
-      "order": 1576,
+      "order": 1572,
       "source_anchor": "anx_XIII"
     },
     {
@@ -17357,7 +17313,7 @@
       "text": "the benchmarks and evaluations of capabilities of the model, including considering the number of tasks without additional training, adaptability to learn new, distinct tasks, its level of autonomy and scalability, the tools it has access to;",
       "hash": "0dcaec29abedd2ba1fd768c0a6c6004d3702cfdfed5514d84e694a066c05ec91",
       "node_hash": "9d270e8ea117964f7249e3cde42780e87d6f79077ccaa9b6b001076bcfd91405",
-      "order": 1577,
+      "order": 1573,
       "source_anchor": "anx_XIII"
     },
     {
@@ -17368,7 +17324,7 @@
       "text": "whether it has a high impact on the internal market due to its reach, which shall be presumed when it has been made available to at least 10 000 registered business users established in the Union;",
       "hash": "a8b5de9f3ccaae1b78888c02f1fcbcce6e925684531bde7e79200b5905b90e32",
       "node_hash": "79dc2c83bfd70655e5230f28c4f426ef7f7b9850d5d37faf69e24ab416d14bf9",
-      "order": 1578,
+      "order": 1574,
       "source_anchor": "anx_XIII"
     },
     {
@@ -17379,18 +17335,18 @@
       "text": "the number of registered end-users.",
       "hash": "dfa626f2c6bd9572cc557841cbadac50235f1cd48a53ffb0a3d84b833e71ac95",
       "node_hash": "fb2efe0abdee4c65a1e8e2e90990a91ee5da44889d83dbe8606e24cf7f315c32",
-      "order": 1579,
+      "order": 1575,
       "source_anchor": "anx_XIII"
     },
     {
       "id": "anx_14",
       "type": "annex",
       "parent": null,
-      "heading": "ANNEX XIV",
-      "text": "The list of codes, categories and corresponding types of AI systems for the purpose of the notification procedure referred to in Article 30 specifying the scope of the designation as notified bodies",
-      "hash": "dd92a9627db2ba6b3694e18f4ad12a65bb29c6c995d59da5cf70946b302685a9",
-      "node_hash": "f346c6bdff57076322ac638f39d9c678b4b9c08eb6166ce98df851e0fe07d6a4",
-      "order": 1580,
+      "heading": "The list of codes, categories and corresponding types of AI systems for the purpose of the notification procedure referred to in Article 30 specifying the scope of the designation as notified bodies",
+      "text": "",
+      "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "node_hash": "1985d679803fb1f2d5280c4eacbd0d82e88355ad6372f99064f3177d9eb6c969",
+      "order": 1576,
       "source_anchor": "anx_XIV"
     },
     {
@@ -17401,7 +17357,7 @@
       "text": "Conformity assessment of high-risk AI systems pursuant to this Regulation may require the involvement of conformity assessment bodies. Only conformity assessment bodies that have been designated in accordance with this Regulation may carry out conformity assessments and only for the activities related to the types of AI systems concerned. The list of codes, categories, and corresponding types of AI systems sets the scope of the designation of conformity assessment bodies notified under Article 30.",
       "hash": "14e3b4ed31762d44b09bba67efb9ad95912383db289045e6e238cd83ac86d99f",
       "node_hash": "7162e53d39081d57b2c3b823e611b1f825491926a738803f00febf01ba66792b",
-      "order": 1581,
+      "order": 1577,
       "source_anchor": "anx_XIV"
     },
     {
@@ -17412,7 +17368,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "2dfb128ac3cf326e1dd6dc7cbc4afa97b515c85c95693e48c764bee860661f6a",
-      "order": 1582,
+      "order": 1578,
       "source_anchor": "id-6b2585bd-eef7-4aaf-a51b-e636565756f9"
     },
     {
@@ -17423,7 +17379,7 @@
       "text": "AIA Code\nAIP 0102 | AI systems subject to point 2 of Section A of Annex I\nAIP 0103 | AI systems subject to point 3 of Section A of Annex I\nAIP 0104 | AI systems subject to point 4 of Section A of Annex I\nAIP 0105 | AI systems subject to point 5 of Section A of Annex I\nAIP 0106 | AI systems subject to point 6 of Section A of Annex I\nAIP 0107 | AI systems subject to point 7 of Section A of Annex I\nAIP 0108 | AI systems subject to point 8 of Section A of Annex I\nAIP 0109 | AI systems subject to point 9 of Section A of Annex I\nAIP 0110 | AI systems subject to point 10 of Section A of Annex I\nAIP 0111 | AI systems subject to point 11 of Section A of Annex I\nAIP 0112 | AI systems subject to point 12 of Section A of Annex I",
       "hash": "e85bd7c983671bc7a385183c927ba577380b33ecb8bd74485c754a4d46479375",
       "node_hash": "75195b0c9cc3b4a1286636bf75babcffb6f8b7daa391de2f896d8fa738334691",
-      "order": 1583,
+      "order": 1579,
       "source_anchor": "anx_XIV"
     },
     {
@@ -17434,7 +17390,7 @@
       "text": "AIA Code\nAIB 0201 | Remote biometric identification systems\nAIB 0202 | Biometric categorisation AI systems\nAIB 0203 | Emotion recognition AI systems",
       "hash": "cda17efb0dcdc5fdabd74362dc7d34eaa6d539b6d5aa6b0a42dda10ca67ca8f2",
       "node_hash": "b945460dea1d26690f34788b3753a2d733748c8ce3a20fef4eff7637fa11f95f",
-      "order": 1584,
+      "order": 1580,
       "source_anchor": "anx_XIV"
     },
     {
@@ -17445,7 +17401,7 @@
       "text": "",
       "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "node_hash": "9f7e76f03d28107b7046507b46c528b048633d07d7e3b2d0332e7dca9051cb1b",
-      "order": 1585,
+      "order": 1581,
       "source_anchor": "id-2ef315d9-d24a-4e56-b316-f3b2b4863224"
     },
     {
@@ -17456,7 +17412,7 @@
       "text": "AIA Code\nAIH 0101 | AI systems based on symbolic AI, expert and knowledge-based systems, and AI systems based on search and optimisation",
       "hash": "eff1cdb3df126bde836d8ae3950bc94060ab6d4c0da44b1ce40d2543aa2ec880",
       "node_hash": "b476214b3e9e6b47cd737bf302fa8f62ae412dacf87d1e9c856593a42446da03",
-      "order": 1586,
+      "order": 1582,
       "source_anchor": "anx_XIV"
     },
     {
@@ -17467,7 +17423,7 @@
       "text": "AIA Code\nAIH 0201 | AI systems that process structured data\nAIH 0202 | AI systems that process signal and audio data\nAIH 0203 | AI systems that process text data\nAIH 0204 | AI systems that process image and video\nAIH 0205 | AI systems that learn from their environment, excluding AI systems covered under AIH 0401",
       "hash": "5b7db3670af40c0c62cb9ffedc98afe36b1235fe818f4109496a94e5211c65b9",
       "node_hash": "5032ce0c5f5a00ecb183779df06b96bb0faa16890bc1f3d3b4ccb621194409ad",
-      "order": 1587,
+      "order": 1583,
       "source_anchor": "anx_XIV"
     },
     {
@@ -17478,7 +17434,7 @@
       "text": "AIA Code\nAIH 0301 | generative AI systems, including AI systems based on general-purpose AI models",
       "hash": "db940c74a34b564aca440adbce47f34e8e5428c3a40a8ce567d096e0607b897d",
       "node_hash": "1d6e3ebe501fe7152c38a90550eff4ff7a940c2542c782c1597d5575ce102680",
-      "order": 1588,
+      "order": 1584,
       "source_anchor": "anx_XIV"
     },
     {
@@ -17489,7 +17445,7 @@
       "text": "AIA Code\nAIH 0401 | AI systems based on other emerging AI technologies not covered by other codes, including Agentic AI",
       "hash": "a821267c752f87091e24ff109befd25875a56f7729bc9521c5862559aa44454c",
       "node_hash": "d6cf393623e306035319b95a14bc8282880a1727015aadcf8564d6cc6d47d13c",
-      "order": 1589,
+      "order": 1585,
       "source_anchor": "anx_XIV"
     },
     {
@@ -17500,7 +17456,7 @@
       "text": "Conformity assessment bodies shall use the lists of codes, categories and corresponding types of AI systems set out in this Annex when specifying the types of AI systems in the application for designation referred to in Article 29.",
       "hash": "7cf1e8cb9aec260d83fc9a519c317d31b59627109c3e046c8c3cba9b4700ebbb",
       "node_hash": "bb9be01c80047e41cdee58b5f636f373a397290d7918c7320e7969cbf86409fa",
-      "order": 1590,
+      "order": 1586,
       "source_anchor": "anx_XIV"
     }
   ]

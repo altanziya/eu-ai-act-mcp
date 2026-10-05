@@ -43,6 +43,20 @@ const LIST_LABEL = /^(\(?[0-9A-Za-z]{1,6}[.)]|\d+(\.\d+)+\.|[—–‒\-•·])$
 const PAR_LABEL = /^(?:\((\d+[a-z]{0,2})\)|(\d+(?:\.\d+)*[a-z]{0,2})\.)(?:\s+|$)/;
 const PAR_DIV_ID = /^\d{3}\.\d{3}$/;
 
+const PUNCTUATION_ONLY = /^[\p{P}\p{S}\s]+$/u;
+
+/** Appends `s` (no separating space) to the last text block, descending into the last item; false if there is none. */
+function appendToLastText(blocks: Block[], s: string): boolean {
+  const last = blocks[blocks.length - 1];
+  if (!last) return false;
+  if (last.kind === "text") {
+    last.text = `${last.text.replace(/\s+$/, "")}${s}`;
+    return true;
+  }
+  if (last.kind === "item") return appendToLastText(last.item.blocks, s);
+  return false;
+}
+
 function isSkipped(n: DomNode): boolean {
   return classMatches(n, SKIP_CLASS) || hasClass(n, "eli-title");
 }
@@ -178,7 +192,10 @@ function readBody(children: DomNode[], anchor: string): Block[] {
     } else target().push(b);
   };
   const pushText = (text: string, a: string): void => {
-    if (text.trim() !== "") pushBlock({ kind: "text", text, anchor: a });
+    if (text.trim() === "") return;
+    // A block of punctuation only (the ";" that closes a quoted amendment) belongs to the preceding text.
+    if (PUNCTUATION_ONLY.test(text) && appendToLastText(target(), text.trim())) return;
+    pushBlock({ kind: "text", text, anchor: a });
   };
   const flush = (a: string): void => pushText(buf.take(), a);
 
@@ -399,7 +416,8 @@ function parseAnnex(el: DomNode, b: Builder): void {
   const n = romanToInt(idOf(el).slice("anx_".length));
   const ps = tagChildren(el).filter((c) => c.name === "p" && classMatches(c, /(oj-doc-ti|title-annex-1|title-annex-2)/));
   const labelP = ps[0];
-  const titleP = ps[1];
+  // Consolidated Annex XIV carries its title as a plain <p class="norm"> line right after the label line.
+  const titleP = ps[1] ?? tagChildren(el).slice(tagChildren(el).indexOf(labelP as DomNode) + 1).find((c) => c.name === "p" && headingText(c) !== "");
   const rest = kids(el).filter((c) => c !== labelP && c !== titleP);
   const blocks = readBody(rest, idOf(el));
   const aid = annexId(n);

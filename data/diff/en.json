@@ -3,13 +3,13 @@
   "from": "32024R1689",
   "to": "02024R1689-20260727",
   "counts": {
-    "added": 172,
-    "removed": 202,
+    "added": 169,
+    "removed": 199,
     "changed": 55,
     "moved": 2,
-    "unchanged": 1362
+    "unchanged": 1361
   },
-  "ambiguous_hash_matches": 3,
+  "ambiguous_hash_matches": 0,
   "added": [
     {
       "id": "art_2.par_13",
@@ -749,32 +749,17 @@
     {
       "id": "art_108.pt_2.pt_1",
       "type": "point",
-      "node_hash": "47028e4a5bc983cad007cac1054dc7d6cd27be10bfc5e0f45fcdc270a2434d4c"
-    },
-    {
-      "id": "art_108.pt_2.pt_1.sub_2",
-      "type": "subparagraph",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37"
+      "node_hash": "14838aa0dfb451303e710c4b3741c4b538585422dab82bc175187f7ca572db91"
     },
     {
       "id": "art_108.pt_3.pt_1",
       "type": "point",
-      "node_hash": "192671d24d6c761a122d09aa49aedb977f91a863991e7a62031c498c24e515eb"
-    },
-    {
-      "id": "art_108.pt_3.pt_1.sub_2",
-      "type": "subparagraph",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37"
+      "node_hash": "e3ad877634ed411b1ea87d1f5502a5b70d4c0b24f5159c4f97f0b1b5250cecbb"
     },
     {
       "id": "art_108.pt_4.pt_1",
       "type": "point",
-      "node_hash": "47028e4a5bc983cad007cac1054dc7d6cd27be10bfc5e0f45fcdc270a2434d4c"
-    },
-    {
-      "id": "art_108.pt_4.pt_1.sub_2",
-      "type": "subparagraph",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37"
+      "node_hash": "14838aa0dfb451303e710c4b3741c4b538585422dab82bc175187f7ca572db91"
     },
     {
       "id": "art_108.pt_6.pt_1",
@@ -819,7 +804,7 @@
     {
       "id": "anx_14",
       "type": "annex",
-      "node_hash": "f346c6bdff57076322ac638f39d9c678b4b9c08eb6166ce98df851e0fe07d6a4"
+      "node_hash": "1985d679803fb1f2d5280c4eacbd0d82e88355ad6372f99064f3177d9eb6c969"
     },
     {
       "id": "anx_14.pt_1",
@@ -1826,32 +1811,17 @@
     {
       "id": "art_108.pt_2.sub_2",
       "type": "subparagraph",
-      "node_hash": "c17ceece0a62eb3b28cc26dd114944125288fa91144ea9f2f3d0cbd18e74975f"
-    },
-    {
-      "id": "art_108.pt_2.sub_3",
-      "type": "subparagraph",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37"
+      "node_hash": "0ea202c867820b1783937fd923bbc78422c9f7960ba45bbbd8dce91daa7ad023"
     },
     {
       "id": "art_108.pt_3.sub_2",
       "type": "subparagraph",
-      "node_hash": "fe87b62c58e64c3bff6600af3615a998518b44bf22c3f290659bbfd579e7c31c"
-    },
-    {
-      "id": "art_108.pt_3.sub_3",
-      "type": "subparagraph",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37"
+      "node_hash": "f2f87fcc35e9c75cee934b974bbebbd97956c1567d56c5c00f789061cdceb2f9"
     },
     {
       "id": "art_108.pt_4.sub_2",
       "type": "subparagraph",
-      "node_hash": "0822cdb52e487fb554a893a5e740f55acf2ef57d1a2def7721ff69d5a3a34992"
-    },
-    {
-      "id": "art_108.pt_4.sub_3",
-      "type": "subparagraph",
-      "node_hash": "174c79e9b08a882180cfd6b6f19c6f6cc94573134b6543b163c43b87ba06cd37"
+      "node_hash": "21ac5370e92f9fda105cc21147144d7d800e012618c2d4e7db695fcc7cb65360"
     },
     {
       "id": "art_108.pt_6.sub_2",
@@ -3315,7 +3285,6 @@
     "art_108.pt_4",
     "art_108.pt_5",
     "art_108.pt_5.sub_2",
-    "art_108.pt_5.sub_3",
     "art_108.pt_6",
     "art_109",
     "art_110",
