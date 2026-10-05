@@ -12,6 +12,7 @@ Full specification of data format, ID scheme, tools, verification levels, deadli
     npm run sign -- --release <id> --key-file <pem>
     npm run record -- --quote "..." --as-of YYYY-MM-DD --lang en --release <id>
     npm run build:site && npm run site:serve   # verify page on http://127.0.0.1:8787/verify/
+    npm run eval -- --cases <yaml> --models <id,...> --arms plain,web,tools --reps N --max-usd X --out <dir>   # see "Evaluation harness"
     npm test
     npm run typecheck
 
@@ -213,6 +214,59 @@ Limits:
 - Entry into force (twentieth day after publication) is not modelled; the table says when a provision applies.
 - Deadlines for Member States or the Commission inside articles (e.g. Art. 57(1) sandboxes) are not application dates and are
   not in the table.
+
+## Evaluation harness
+
+`src/eval/` measures how often models err on AI Act questions, per model and arm, with a hard cost cap. Nothing in it
+runs by itself; a paid run needs an explicit call.
+
+    npm run eval -- --cases <yaml> --models <id,...> --arms plain,web,tools --reps N --max-usd X --out <dir> \
+                    [--dry-run] [--resume] [--reasoning-effort low|medium|high|none]
+
+- `--cases`: YAML list of cases (`src/eval/cases.ts`, validated; errors name the case id and the field). Fields: `id`
+  (unique), `kind` (`generation|evaluation`), `subset` (`version_deadline|evaluation`), `question`, `as_of` (YYYY-MM-DD),
+  `knowable_before_omnibus` (bool), `origin` (`real_user_question|constructed`), `origin_ref?`, `expected`
+  (`date?`, `version?`, `articles?`, `verdict?`), `ground_truth` (`celex`, `pinpoint`, `quote`), `legal_review`
+  (`none|llm_second_rater|lawyer`), `notes?`. `generation` needs at least one of `expected.date|version|articles`;
+  `evaluation` needs `expected.verdict` (`correct|incorrect`). Smoke fixture: `tests/fixtures/eval-smoke.yaml`.
+- `--models`: OpenRouter model ids. `--arms`: `plain`; `web` (OpenRouter plugin `web`); `tools` (the three MCP tools run
+  locally, at most 6 rounds, each tool result cut at 6 000 characters). `--reps`: repetitions per case (default 1).
+- Requests: `max_tokens` 3000; `temperature` 0 where the model lists the parameter; `reasoning: {effort}` (default `low`) where the
+  model lists `reasoning` (`--reasoning-effort none` omits it); `usage: {include: true}`. Cost is only the sum of `usage.cost`.
+  The model list (`GET /models`, free) is fetched once per run for these capabilities. The prompt is `src/eval/prompts.ts`
+  (`PROMPT_VERSION`), with the case's `as_of` as today's date; the model must reply with one JSON object with the keys
+  `date, version, article, quote, answer, verdict`.
+- Key: `OPENROUTER_API_KEY` or the macOS keychain item `openrouter`; never logged or written. Shared client: `src/eval/openrouter.ts`
+  (also used by `npm run cost:probe`).
+- **Cost cap:** before every request, `spent + estimate > --max-usd` stops the run with status `budget_stop`
+  (a run cut off in the middle is kept in `runs.jsonl` with `incomplete: true` and repeated on `--resume`). The estimate per
+  model x arm is the mean cost of `scripts/cost-probe/results/2026-10-05.json` times 1.5 (unknown model: the most expensive cell
+  of the arm; never below 1.2 x the most expensive run seen so far) and is printed before the first call. The probe ran with
+  `max_tokens` 800, so estimates for models that fill 3000 tokens can be too low; the cap itself counts real `usage.cost`.
+- `--dry-run`: mock model, no network, no key, no cost (`--max-usd 0` is fine). It answers from `expected` and is wrong on
+  every third case; the report says so.
+- `--resume`: skips runs already in `runs.jsonl` (not those with an API error or `incomplete`), counts their cost against the
+  cap, and re-scores the stored answers with the current scorer. Without `--resume` an existing `runs.jsonl` is an error.
+
+Scoring (`src/eval/answer.ts`, `src/eval/score.ts`; deterministic, no model involved): `parseAnswer` takes the first JSON object
+in the text (also in a fence); none or broken JSON gives `null` (empty answers included), which is not scored and reported as
+unparseable. `generation`: `date` (normalized to YYYY-MM-DD), `version` (`normalizeVersion`: `2026/1744`, `20260727`,
+`consolidated`, `konsolidiert`, `omnibus` mean the consolidated version; `32024R1689`, `2024/1689`, `official journal`, `amtsblatt`
+the Official Journal; else no version), `article` (cited provision parsed with `parseRef`; right if equal to an accepted id or a descendant;
+if `parseRef` does not understand the citation, e.g. ordinal wording like "third subparagraph", the article itself is used,
+so a deeper accepted id is not matched in that case). `evaluation`: `verdict`. A run is correct if all checks are true.
+
+Output in `--out`:
+
+- `runs.jsonl`: one run per line: `case_id, subset, knowable_before_omnibus, kind, model, arm, rep` (0-based), `raw`, `parsed`,
+  `score {correct, checks}`, `prompt_tokens, completion_tokens, cost`, `tool_calls [{name, arguments}]`, `requests, finish_reason,
+  status, latency_ms`, `error?`, `incomplete?`, `mock?`.
+- `results.json`: `status` (`complete|budget_stop`), `dry_run`, `prompt_version`, `reps`, `max_usd`, `total_cost_usd`, `runs`
+  (distinct runs), `planned_runs`, `models`, `arms`, `cases`, `max_tokens`, `request_params`, `estimates`, `cells` (the summary per model x arm).
+- `report.md` (English): per model x arm the number of cases, errors by majority (a case is wrong if more than half of its scored
+  runs are wrong: 1 run: that run, 3 runs: at least 2 of 3), the Clopper-Pearson 95 % interval over cases (`src/eval/stats.ts`),
+  cases with at least one wrong run, unparseable runs, API error runs, tool-call rate (tools arm), cost, and the mechanical result of
+  the pre-registered E1 rule (`decideE1`). Tables for all cases, per `subset` and per `knowable_before_omnibus`.
 
 ## Run the MCP server
 
