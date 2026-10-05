@@ -1,11 +1,10 @@
 /**
- * Read-only access to the parsed corpus (data/corpus/<celex>.<lang>.json), shared by the tools.
- * Files are read once per process; no network, no clock.
+ * Isomorphic corpus types and helpers shared by the tools and the browser verify bundle (no node: imports).
+ * The file loader for data/corpus lives in corpus-fs.ts.
  */
-import { readFileSync } from "node:fs";
-import { corpusPath, V2024, V2026 } from "../config.js";
-import type { Lang } from "../config.js";
-import type { CorpusFile, ProvisionNode } from "../parser/types.js";
+import { V2024, V2026 } from "../constants.js";
+import type { Lang } from "../constants.js";
+import type { ProvisionNode } from "../parser/types.js";
 
 export type { Lang };
 export type Version = typeof V2024 | typeof V2026;
@@ -28,8 +27,6 @@ export interface CorpusIndex {
   children: Map<string, ProvisionNode[]>;
 }
 
-const cache = new Map<string, CorpusIndex>();
-
 /** Index over a node list (also used by unit tests with a constructed mini corpus). */
 export function buildIndex(version: Version, lang: Lang, nodes: ProvisionNode[]): CorpusIndex {
   const byId = new Map(nodes.map((n) => [n.id, n]));
@@ -43,16 +40,8 @@ export function buildIndex(version: Version, lang: Lang, nodes: ProvisionNode[])
   return { version, lang, nodes, byId, children };
 }
 
-export function loadCorpus(version: Version, lang: Lang): CorpusIndex {
-  const key = `${version}.${lang}`;
-  let hit = cache.get(key);
-  if (!hit) {
-    const file = JSON.parse(readFileSync(corpusPath(version, lang), "utf8")) as CorpusFile;
-    hit = buildIndex(version, lang, file.nodes);
-    cache.set(key, hit);
-  }
-  return hit;
-}
+/** Corpus source for the tools; the default (corpus-fs.ts) reads data/corpus, a release context reads its own copy. */
+export type CorpusLoader = (version: Version, lang: Lang) => CorpusIndex;
 
 /** All descendants of `id` in document order (depth first, which is `order` by construction). */
 export function descendants(idx: CorpusIndex, id: string): ProvisionNode[] {

@@ -1,4 +1,5 @@
-import { createHash } from "node:crypto";
+import { sha256 } from "@noble/hashes/sha2.js";
+import { bytesToHex, utf8ToBytes } from "@noble/hashes/utils.js";
 
 const QUOTE_MAP: Record<string, string> = {
   "‘": "'", // left single quotation mark
@@ -42,7 +43,7 @@ export function normalizeText(input: string): string {
 }
 
 export function sha256Hex(input: string): string {
-  return createHash("sha256").update(input, "utf8").digest("hex");
+  return bytesToHex(sha256(utf8ToBytes(input)));
 }
 
 /**

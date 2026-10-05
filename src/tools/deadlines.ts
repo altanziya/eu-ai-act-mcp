@@ -1,13 +1,10 @@
 /**
- * V1 deadline resolution from data/deadlines.json (hand-transcribed from Article 113, see README "Deadline table").
+ * V1 deadline resolution from the deadline table data/deadlines.json (isomorphic; the file loader is deadlines-fs.ts; hand-transcribed from Article 113, see README "Deadline table").
  *
  * A node is matched against the rules through its chain (node, parent, grandparent, ...). A rule matches if one of its
  * `scope` entries is in the chain and no `except` entry is in the chain. The rule whose matching scope entry is nearest
  * to the node wins (ties: first in `rules`). No matching rule: the version's `default`. No default: `unknown`.
  */
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
-import { REPO_ROOT } from "../config.js";
 import type { ProvisionNode } from "../parser/types.js";
 
 export interface DeadlineRule {
@@ -38,12 +35,6 @@ export interface Validity {
   note?: string;
 }
 
-let table: DeadlineTable | undefined;
-export function loadDeadlines(): DeadlineTable {
-  table ??= JSON.parse(readFileSync(join(REPO_ROOT, "data/deadlines.json"), "utf8")) as DeadlineTable;
-  return table;
-}
-
 /** `chain`: the node and its ancestors, nearest first (ids). */
 export function matchRule(block: DeadlineBlock, chain: readonly string[]): DeadlineRule | undefined {
   let best: { rule: DeadlineRule; distance: number } | undefined;
@@ -71,7 +62,7 @@ export function applyRule(rule: DeadlineRule, asOf: string): Validity {
 }
 
 /** V1 from the table for `node` in `version` (ancestors looked up in `byId` of the same corpus). */
-export function resolveDeadline(version: string, node: ProvisionNode, byId: Map<string, ProvisionNode>, asOf: string, tbl: DeadlineTable = loadDeadlines()): Validity {
+export function resolveDeadline(version: string, node: ProvisionNode, byId: Map<string, ProvisionNode>, asOf: string, tbl: DeadlineTable): Validity {
   const block = tbl.versions[version];
   if (!block) return { state: "unknown" };
   const chain: string[] = [];

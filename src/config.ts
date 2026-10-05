@@ -3,13 +3,9 @@ import { fileURLToPath } from "node:url";
 
 export const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-export const LANGS = ["en", "de"] as const;
-export type Lang = (typeof LANGS)[number];
-
-/** Official Journal version and consolidated version after the Omnibus (CELEX ids, also used as corpus version names). */
-export const V2024 = "32024R1689";
-export const V2026 = "02024R1689-20260727";
-export const CELEX_IDS = [V2024, V2026] as const;
+export { CELEX_IDS, LANGS, V2024, V2026 } from "./constants.js";
+export type { Lang } from "./constants.js";
+import type { Lang } from "./constants.js";
 
 export const rawPath = (celex: string, lang: Lang): string => join(REPO_ROOT, "data/raw", `${celex}.${lang}.xhtml`);
 export const corpusPath = (celex: string, lang: Lang): string => join(REPO_ROOT, "data/corpus", `${celex}.${lang}.json`);
