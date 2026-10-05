@@ -206,7 +206,8 @@ Limits:
   not name them, so only Art. 6(1) is mapped and those obligations fall under the default.
 - Chapter III Sections 1 to 3 (2026) have two dates by class of AI system. `applies_from` is the earlier one; between the two
   dates the result is `unknown`. Annexes and recitals carry no rule and get the default; the Annex I and III dates of
-  Art. 113(3)(c) are not attached to the annex nodes.
+  Art. 113(3)(c) are not attached to the annex nodes. Art. 6(1) (Annex I, 2028-08-02) and Art. 6(2) (Annex III, 2027-12-02) have their own
+  rules, because Art. 113(3)(c)(i) and (ii) name them.
 - Entry into force (twentieth day after publication) is not modelled; the table says when a provision applies.
 - Deadlines for Member States or the Commission inside articles (e.g. Art. 57(1) sandboxes) are not application dates and are
   not in the table.
