@@ -33,6 +33,8 @@ export interface Validity {
   rule_id?: string;
   source_nodes?: string[];
   note?: string;
+  /** Later application dates of sub-classes of AI systems that are still ahead of `as_of` (from the rule's `later_dates`). */
+  conditional_dates?: Array<{ date: string; condition: string }>;
 }
 
 /** `chain`: the node and its ancestors, nearest first (ids). */
@@ -52,7 +54,9 @@ export function matchRule(block: DeadlineBlock, chain: readonly string[]): Deadl
 }
 
 export function applyRule(rule: DeadlineRule, asOf: string): Validity {
-  const base = { rule_id: rule.id, source_nodes: rule.source_nodes };
+  const upcoming = (rule.later_dates ?? []).filter((d) => d.applies_from > asOf).sort((a, b) => (a.applies_from < b.applies_from ? -1 : a.applies_from > b.applies_from ? 1 : 0));
+  const conditional = upcoming.length > 0 ? { conditional_dates: upcoming.map((d) => ({ date: d.applies_from, condition: d.condition })) } : {};
+  const base = { rule_id: rule.id, source_nodes: rule.source_nodes, ...conditional };
   if (asOf < rule.applies_from) return { state: "not_yet_applicable_until", until: rule.applies_from, ...base };
   const latest = (rule.later_dates ?? []).map((d) => d.applies_from).sort().pop();
   if (latest !== undefined && asOf < latest) {

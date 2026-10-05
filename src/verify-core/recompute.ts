@@ -112,6 +112,11 @@ export function recomputeRecord(record: EvidenceRecord, ctx: ReleaseContext, opt
   for (const field of Object.keys(fresh)) {
     if (stated[field] !== fresh[field]) differences.push({ field, record: stated[field], recomputed: fresh[field] });
   }
+  // `conditional_dates` was added later: records without the field (made before) are not a deviation; if a record states it, it must match.
+  const statedConditional = record.result?.validity?.conditional_dates;
+  if (statedConditional !== undefined && JSON.stringify(statedConditional) !== JSON.stringify(recomputed.validity.conditional_dates)) {
+    differences.push({ field: "validity.conditional_dates", record: statedConditional, recomputed: recomputed.validity.conditional_dates });
+  }
   return { record_hash_ok, manifest_sha256_ok, signature, cited_nodes, recomputed, matches_record: differences.length === 0, differences };
 }
 

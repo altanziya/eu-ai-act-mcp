@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>EU AI Act: verifiable legal graph</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; max-width: 62rem; margin: 1.5rem auto; padding: 0 1rem; color: #1b1b1b; }
+  h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; margin-top: 1.5rem; }
+  .box { border: 1px solid #c8c8c8; padding: .5rem 1rem; margin: 1rem 0; background: #fcfcfc; }
+  .box p { margin: .5rem 0; }
+  .links { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.25rem 0; padding: 0; list-style: none; }
+  .links a { display: inline-block; padding: .5rem .9rem; border: 2px solid #1b1b1b; color: #1b1b1b; text-decoration: none; font-weight: 600; background: #fff; }
+  .links a:hover, .links a:focus { background: #f2f2f2; }
+  .links a.primary { background: #1b1b1b; color: #fff; }
+  .links a.primary:hover, .links a.primary:focus { background: #333; }
+  footer { margin-top: 2rem; padding-top: .75rem; border-top: 1px solid #c8c8c8; color: #444; font-size: .9rem; }
+</style>
+</head>
+<body>
+<h1>EU AI Act: verifiable legal graph</h1>
+<p>A deterministic, open-source provision tree of the EU AI Act (Regulation (EU) 2024/1689) in English and German, with a diff between the original and the 2026 consolidated text. It checks whether a quotation really appears in the Act, where, in which version, and whether it applies on a given date.</p>
+<p>Every check can be written into a hash-sealed evidence record. The record refers to a signed, immutable corpus release, and anyone can recompute it in the browser without trusting this site's server logic.</p>
+
+<ul class="links">
+  <li><a class="primary" href="example/">Open example evidence record</a></li>
+  <li><a href="verify/">Verify a record</a></li>
+  <li><a href="https://github.com/akoemek-dev/eu-ai-act-mcp">Source on GitHub</a></li>
+  <li><a href="keys/index.json">Public signing keys</a></li>
+</ul>
+
+<footer>
+  <p>Not legal advice. The consolidated text is not legally authentic; only the Official Journal is binding.</p>
+</footer>
+</body>
+</html>
