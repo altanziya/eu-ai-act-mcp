@@ -5,6 +5,7 @@ import type { DiffResult } from "../diff/diff.js";
 import { AMENDING_ACT, isLang, loadCorpus } from "./corpus.js";
 import type { CorpusIndex, Lang } from "./corpus.js";
 import { notice } from "./notice.js";
+import { parseRef } from "./refParser.js";
 import type { Notice } from "./notice.js";
 
 export type DiffStatus = "unchanged" | "changed" | "added" | "removed" | "moved" | "unknown_id";
@@ -148,24 +149,25 @@ export function wordDiff(a: string, b: string): WordDiffOp[] {
 export function diffProvision(input: { id: string; lang?: Lang }): DiffProvisionResult {
   const lang = input.lang ?? "en";
   if (!isLang(lang)) throw new Error(`unknown lang ${String(lang)}`);
+  const id = parseRef(input.id) ?? input.id; // ids pass through; human citations are resolved
   const idx = index(lang);
-  const hit = idx.status.get(input.id);
-  const base = { id: input.id, lang, from_version: V2024, to_version: V2026, amending_act: AMENDING_ACT, notice: notice([V2024, V2026]) } as const;
+  const hit = idx.status.get(id);
+  const base = { id, lang, from_version: V2024, to_version: V2026, amending_act: AMENDING_ACT, notice: notice([V2024, V2026]) } as const;
   if (!hit) return { ...base, status: "unknown_id" };
   const out: DiffProvisionResult = { ...base, status: hit.status };
   if (hit.moved_to) out.moved_to = hit.moved_to;
   if (hit.moved_from) out.moved_from = hit.moved_from;
   if (hit.status === "changed") {
-    const a = loadCorpus(V2024, lang).byId.get(input.id);
-    const b = loadCorpus(V2026, lang).byId.get(input.id);
+    const a = loadCorpus(V2024, lang).byId.get(id);
+    const b = loadCorpus(V2026, lang).byId.get(id);
     if (a && b) {
       const flat = (n: { heading: string; text: string }): string => [n.heading, n.text].filter((s) => s !== "").join(" ");
       out.word_diff = wordDiff(flat(a), flat(b));
     }
   }
-  const d = idx.descendants.get(input.id);
+  const d = idx.descendants.get(id);
   if (d) out.descendants = d;
-  if (hit.status === "removed" && input.id.startsWith("rec_")) {
+  if (hit.status === "removed" && id.startsWith("rec_")) {
     out.note = "Recitals are not part of the consolidated version (F66); they remain citable through the Official Journal version.";
   }
   return out;

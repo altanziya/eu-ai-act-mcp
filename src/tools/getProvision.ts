@@ -4,6 +4,7 @@ import type { ProvisionNode } from "../parser/types.js";
 import { descendants, isLang, isVersion, loadCorpus, otherVersion } from "./corpus.js";
 import type { Lang, Version } from "./corpus.js";
 import { notice } from "./notice.js";
+import { parseRef } from "./refParser.js";
 import type { Notice } from "./notice.js";
 
 export interface GetProvisionInput {
@@ -35,8 +36,9 @@ export function getProvision(input: GetProvisionInput): GetProvisionResult {
   if (!isVersion(version)) throw new Error(`unknown version ${String(version)}`);
   if (!isLang(lang)) throw new Error(`unknown lang ${String(lang)}`);
   const includeChildren = input.include_children ?? true;
+  const id = parseRef(input.id) ?? input.id; // ids pass through; human citations ("Article 50(1)") are resolved
   const idx = loadCorpus(version, lang);
-  const node = idx.byId.get(input.id);
+  const node = idx.byId.get(id);
   if (node) {
     const kids = includeChildren ? descendants(idx, node.id) : [];
     return {
@@ -50,7 +52,7 @@ export function getProvision(input: GetProvisionInput): GetProvisionResult {
     };
   }
   const otherV = otherVersion(version);
-  const other = loadCorpus(otherV, lang).byId.get(input.id);
+  const other = loadCorpus(otherV, lang).byId.get(id);
   if (!other) return { found: false, version, lang, reason: "unknown_id", notice: notice([version]) };
   return {
     found: false,
