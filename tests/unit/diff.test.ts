@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { diffNodes } from "../../src/diff/diff.js";
-import { nodeHash } from "../../src/parser/normalize.js";
+import { nodeHash, sha256Hex } from "../../src/parser/normalize.js";
 import type { NodeType, ProvisionNode } from "../../src/parser/types.js";
 
 const node = (id: string, text: string, type: NodeType = "paragraph", heading = ""): ProvisionNode => ({
@@ -9,7 +9,8 @@ const node = (id: string, text: string, type: NodeType = "paragraph", heading = 
   parent: null,
   heading,
   text,
-  hash: nodeHash(heading, text),
+  hash: sha256Hex(text),
+  node_hash: nodeHash(heading, text),
   order: 0,
   source_anchor: "",
 });

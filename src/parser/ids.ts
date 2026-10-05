@@ -1,4 +1,7 @@
-/** Logical-ID helpers. IDs are logical paths: rec_12, art_50.par_1.a, art_4a, anx_3.pt_1.a, cpt_3.sct_2. */
+/**
+ * Logical-ID helpers (ID scheme v1). IDs are logical paths: rec_12, art_50.par_1.a, art_4a, anx_3.pt_1.a, cpt_3.sct_2,
+ * art_43.par_1.sub_2.a (subparagraph), anx_1.sec_a.pt_1 (annex section), anx_7.pt_3.pt_1 (nested number "3.1.").
+ */
 
 const ROMAN_VALUES: Record<string, number> = { I: 1, V: 5, X: 10, L: 50, C: 100 };
 
@@ -39,15 +42,18 @@ export const sectionId = (chapter: string, n: number | string): string => `${cha
  * Segment for a numbered/lettered child.
  *  - numeric label directly under an article: paragraph -> "par_<n>" (isParagraph) or "pt_<n>"
  *  - numeric label elsewhere (definitions, annex points): "pt_<n>"
+ *  - nested number ("3.1"): only the last component, "pt_1"; the parent node is the point "3"
  *  - letters and roman numerals: the bare label ("a", "ba", "ii")
  *  - label-less bullets: "pt_<n>" with n = running index chosen by the caller
  */
 export function childSegment(core: string, isParagraph: boolean, bulletIndex: number): string {
   if (core === "") return `pt_${bulletIndex}`;
-  // dotted numbers ("3.1") must not clash with the "." path separator
-  if (/^\d/.test(core)) return `${isParagraph ? "par" : "pt"}_${core.replace(/\./g, "-")}`;
+  if (/^\d/.test(core)) return `${isParagraph ? "par" : "pt"}_${core.split(".").pop() as string}`;
   return core;
 }
+
+export const subparagraphSegment = (n: number): string => `sub_${n}`;
+export const annexSectionSegment = (label: string): string => `sec_${label.toLowerCase()}`;
 
 export function joinId(parent: string, segment: string): string {
   return `${parent}.${segment}`;

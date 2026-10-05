@@ -1,5 +1,6 @@
 /**
- * Diff between two parsed corpora (2024 Official Journal -> 2026 consolidated), by logical ID and node hash.
+ * Diff between two parsed corpora (2024 Official Journal -> 2026 consolidated), by logical ID and `node_hash`
+ * (SHA-256 over heading + text, ADR-012; so a heading change counts as `changed`).
  *
  *  unchanged  same id, same hash
  *  changed    same id, different hash
@@ -14,19 +15,19 @@ import type { CorpusFile, NodeType, ProvisionNode } from "../parser/types.js";
 export interface DiffRef {
   id: string;
   type: NodeType;
-  hash: string;
+  node_hash: string;
 }
 export interface DiffChange {
   id: string;
   type: NodeType;
-  from_hash: string;
-  to_hash: string;
+  from_node_hash: string;
+  to_node_hash: string;
 }
 export interface DiffMove {
   from_id: string;
   to_id: string;
   type: NodeType;
-  hash: string;
+  node_hash: string;
 }
 export interface DiffResult {
   lang: string;
@@ -42,7 +43,7 @@ export interface DiffResult {
   unchanged: string[];
 }
 
-const ref = (n: ProvisionNode): DiffRef => ({ id: n.id, type: n.type, hash: n.hash });
+const ref = (n: ProvisionNode): DiffRef => ({ id: n.id, type: n.type, node_hash: n.node_hash });
 
 export function diffNodes(from: ProvisionNode[], to: ProvisionNode[]): Omit<DiffResult, "lang" | "from" | "to"> {
   const fromById = new Map(from.map((n) => [n.id, n]));
@@ -54,14 +55,14 @@ export function diffNodes(from: ProvisionNode[], to: ProvisionNode[]): Omit<Diff
   for (const n of from) {
     const t = toById.get(n.id);
     if (!t) goneFrom.push(n);
-    else if (t.hash === n.hash) unchanged.push(n.id);
-    else changed.push({ id: n.id, type: n.type, from_hash: n.hash, to_hash: t.hash });
+    else if (t.node_hash === n.node_hash) unchanged.push(n.id);
+    else changed.push({ id: n.id, type: n.type, from_node_hash: n.node_hash, to_node_hash: t.node_hash });
   }
   const newInTo = to.filter((n) => !fromById.has(n.id));
 
   const byHash = (nodes: ProvisionNode[]): Map<string, ProvisionNode[]> => {
     const m = new Map<string, ProvisionNode[]>();
-    for (const n of nodes) m.set(n.hash, [...(m.get(n.hash) ?? []), n]);
+    for (const n of nodes) m.set(n.node_hash, [...(m.get(n.node_hash) ?? []), n]);
     return m;
   };
   const goneByHash = byHash(goneFrom);
@@ -72,12 +73,12 @@ export function diffNodes(from: ProvisionNode[], to: ProvisionNode[]): Omit<Diff
   const moved: DiffMove[] = [];
   let ambiguous = 0;
   for (const n of newInTo) {
-    const g = goneByHash.get(n.hash);
-    const a = newByHash.get(n.hash);
+    const g = goneByHash.get(n.node_hash);
+    const a = newByHash.get(n.node_hash);
     if (!g) continue;
     if (g.length === 1 && a?.length === 1) {
       const src = g[0] as ProvisionNode;
-      moved.push({ from_id: src.id, to_id: n.id, type: n.type, hash: n.hash });
+      moved.push({ from_id: src.id, to_id: n.id, type: n.type, node_hash: n.node_hash });
       movedFromIds.add(src.id);
       movedToIds.add(n.id);
     } else {

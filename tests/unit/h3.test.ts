@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { diffNodes } from "../../src/diff/diff.js";
 import { enDeStats, mappedStats, ratio } from "../../src/h3/h3.js";
-import { nodeHash } from "../../src/parser/normalize.js";
+import { nodeHash, sha256Hex } from "../../src/parser/normalize.js";
 import type { NodeType, ProvisionNode } from "../../src/parser/types.js";
 
-const node = (id: string, text: string, type: NodeType = "paragraph"): ProvisionNode => ({ id, type, parent: null, heading: "", text, hash: nodeHash("", text), order: 0, source_anchor: "" });
+const node = (id: string, text: string, type: NodeType = "paragraph"): ProvisionNode => ({ id, type, parent: null, heading: "", text, hash: sha256Hex(text), node_hash: nodeHash("", text), order: 0, source_anchor: "" });
 
 describe("H3 helpers", () => {
   it("mappedStats counts unchanged, changed and moved, and excludes recitals from the headline ratio", () => {

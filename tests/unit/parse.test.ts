@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseXhtmlToNodes } from "../../src/parser/parse.js";
-import { nodeHash } from "../../src/parser/normalize.js";
+import { nodeHash, sha256Hex } from "../../src/parser/normalize.js";
 
 const byId = (xhtml: string) => new Map(parseXhtmlToNodes(xhtml).nodes.map((n) => [n.id, n]));
 const wrap = (inner: string) => `<?xml version="1.0"?><html xmlns="http://www.w3.org/1999/xhtml"><body>${inner}</body></html>`;
@@ -81,9 +81,15 @@ describe("parser, Official Journal rendition", () => {
     expect(nodes.get("art_5.par_2")?.text).toBe("Member States may apply stricter rules.");
   });
 
-  it("hashes heading and text, and records order and anchor", () => {
+  it("hashes the text (hash) and heading plus text (node_hash), and records order and anchor", () => {
     const n = nodes.get("art_5.par_1");
-    expect(n?.hash).toBe(nodeHash("", "The following AI practices shall be prohibited:"));
+    expect(n?.hash).toBe(sha256Hex("The following AI practices shall be prohibited:"));
+    expect(n?.node_hash).toBe(nodeHash("", "The following AI practices shall be prohibited:"));
+    const art = nodes.get("art_5");
+    expect(art?.hash).toBe(sha256Hex(art?.text ?? ""));
+    expect(art?.node_hash).toBe(sha256Hex(`Prohibited AI practices\n${art?.text ?? ""}`));
+    expect(art?.node_hash).not.toBe(art?.hash);
+    expect(Object.keys(n ?? {})).toEqual(["id", "type", "parent", "heading", "text", "hash", "node_hash", "order", "source_anchor"]);
     const all = parseXhtmlToNodes(OJ).nodes;
     expect(all.map((x) => x.order)).toEqual(all.map((_, i) => i));
     expect(nodes.get("art_5.par_1")?.source_anchor).toBe("005.001");
@@ -115,20 +121,88 @@ describe("parser, consolidated rendition", () => {
   });
 });
 
-describe("parser, uniqueness", () => {
-  it("never emits duplicate ids (a second list under the same parent gets a ~N suffix)", () => {
-    const twoLists = wrap(`
-      <div class="eli-subdivision" id="art_9">
-        <p class="oj-ti-art">Article 9</p>
-        <div class="eli-title"><p class="oj-sti-art">T</p></div>
-        <p class="oj-normal">First list:</p>${listRow("(a)", "x;")}
-        <p class="oj-normal">Second list:</p>${listRow("(a)", "y;")}
-      </div>`);
-    const { nodes, warnings } = parseXhtmlToNodes(twoLists);
+const art = (inner: string) => wrap(`<div class="eli-subdivision" id="art_9"><p class="oj-ti-art">Article 9</p><div class="eli-title"><p class="oj-sti-art">T</p></div>${inner}</div>`);
+const idsOf = (xhtml: string) => parseXhtmlToNodes(xhtml).nodes.map((n) => n.id);
+
+describe("parser, subparagraphs (ID scheme v1)", () => {
+  it("turns a second list into sub_2.a instead of a ~N suffix", () => {
+    const xhtml = art(`<p class="oj-normal">First list:</p>${listRow("(a)", "x;")}<p class="oj-normal">Second list:</p>${listRow("(a)", "y;")}`);
+    const { nodes, warnings } = parseXhtmlToNodes(xhtml);
     const ids = nodes.map((n) => n.id);
-    expect(new Set(ids).size).toBe(ids.length);
-    expect(ids).toContain("art_9.a");
-    expect(ids).toContain("art_9.a~2");
-    expect(warnings.length).toBe(1);
+    expect(ids).toEqual(["art_9", "art_9.a", "art_9.sub_2", "art_9.sub_2.a"]);
+    expect(nodes[2]?.type).toBe("subparagraph");
+    expect(nodes[2]?.text).toBe("Second list:");
+    expect(warnings).toEqual([]);
+  });
+
+  it("puts a closing sentence after a list into a sub_N node that comes after the list points in order", () => {
+    const xhtml = art(`<div id="009.002"><p class="oj-normal">2.   Intro:</p>${listRow("(a)", "one;")}${listRow("(b)", "two.")}<p class="oj-normal">Closing sentence.</p></div>`);
+    const nodes = parseXhtmlToNodes(xhtml).nodes;
+    expect(nodes.map((n) => n.id)).toEqual(["art_9", "art_9.par_2", "art_9.par_2.a", "art_9.par_2.b", "art_9.par_2.sub_2"]);
+    const sub = nodes.find((n) => n.id === "art_9.par_2.sub_2");
+    expect(sub?.text).toBe("Closing sentence.");
+    expect(sub?.parent).toBe("art_9.par_2");
+    expect(sub?.order).toBeGreaterThan(nodes.find((n) => n.id === "art_9.par_2.b")?.order ?? 99);
+  });
+
+  it("numbers further text blocks of an unnumbered article sub_2, sub_3", () => {
+    expect(idsOf(art(`<p class="oj-normal">A.</p><p class="oj-normal">B.</p><p class="oj-normal">C.</p>`))).toEqual(["art_9", "art_9.sub_2", "art_9.sub_3"]);
+  });
+
+  it("throws on a duplicate id instead of inventing a suffix", () => {
+    const dup = wrap(`<div class="eli-subdivision" id="art_9"><p class="oj-ti-art">Article 9</p></div><div class="eli-subdivision" id="art_9"><p class="oj-ti-art">Article 9</p></div>`);
+    expect(() => parseXhtmlToNodes(dup)).toThrow(/duplicate node id art_9/);
+  });
+});
+
+describe("parser, annex structure (ID scheme v1)", () => {
+  const annex = (inner: string) => wrap(`<div class="eli-container" id="anx_I"><p class="oj-doc-ti">ANNEX I</p><p class="oj-doc-ti">Title</p>${inner}</div>`);
+  const head = (t: string) => `<p class="oj-ti-grseq-1">${t}</p>`;
+  const nodes = (xhtml: string) => new Map(parseXhtmlToNodes(xhtml).nodes.map((n) => [n.id, n]));
+
+  it("builds annex_section nodes and never lets a section heading land in the previous point", () => {
+    const m = nodes(annex(`${head("Section A. First list")}${listRow("1.", "alpha;")}${head("Section B. Second list")}${listRow("1.", "beta;")}`));
+    expect(m.get("anx_1.sec_a")?.type).toBe("annex_section");
+    expect(m.get("anx_1.sec_b")?.heading).toBe("Section B. Second list");
+    expect(m.get("anx_1.sec_a.pt_1")?.text).toBe("alpha;");
+    expect(m.get("anx_1.sec_b.pt_1")?.parent).toBe("anx_1.sec_b");
+    expect([...m.values()].some((n) => n.id.startsWith("anx_1.sec_a") && n.text.includes("Section B"))).toBe(false);
+  });
+
+  it("merges a bare 'Section 1' line with the title line that follows", () => {
+    const m = nodes(annex(`${head("Section 1")}${head("Information for all")}<p class="oj-normal">Intro text.</p>${listRow("(a)", "x;")}`));
+    expect(m.get("anx_1.sec_1")?.heading).toBe("Section 1 Information for all");
+    expect(m.get("anx_1.sec_1")?.text).toBe("Intro text.");
+    expect(m.get("anx_1.sec_1.a")?.type).toBe("annex_point");
+  });
+
+  it("turns numbered group headings into points with a heading, lists below them, and nested numbers into nested points", () => {
+    const m = nodes(annex(`${head("1. Schengen System")}${listRow("(a)", "act one;")}${head("3. Quality system")}${listRow("3.1.", "first rule")}${listRow("3.2.", "second rule")}${head("4. Control")}${listRow("4.1.", "other rule")}`));
+    expect(m.get("anx_1.pt_1")?.heading).toBe("Schengen System");
+    expect(m.get("anx_1.pt_1.a")?.parent).toBe("anx_1.pt_1");
+    expect(m.get("anx_1.pt_3.pt_1")?.text).toBe("first rule");
+    expect(m.get("anx_1.pt_3.pt_2")?.text).toBe("second rule");
+    expect(m.get("anx_1.pt_4.pt_1")?.text).toBe("other rule");
+    expect([...m.keys()].some((id) => id.includes("-") || id.includes("~"))).toBe(false);
+    expect(m.get("anx_1.pt_3.pt_2")?.text).not.toContain("Control");
+  });
+
+  it("rejects an annex heading it cannot classify", () => {
+    expect(() => parseXhtmlToNodes(annex(head("Some unlabelled heading")))).toThrow(/unrecognised annex heading/);
+  });
+
+  it("reads consolidated markup the same way (title-gr-seq headings, continuation after a numbered item)", () => {
+    const cons = wrap(`<div class="eli-container" id="anx_VII"><p class="title-annex-1">ANNEX VII</p><p class="title-annex-2">T</p>
+      <p class="title-gr-seq-level-1">3. Quality</p>
+      <div style="text-indent: -10pt"><p class="norm">3.2. The system shall be assessed.</p></div>
+      <p class="list">The decision shall be notified.</p>
+      <p class="title-gr-seq-level-1">4. Control.</p>
+      <div style="text-indent: -10pt"><p class="norm">4.1. Application.</p></div></div>`);
+    const m = nodes(cons);
+    expect(m.get("anx_7.pt_3")?.heading).toBe("Quality");
+    expect(m.get("anx_7.pt_3.pt_2")?.text).toBe("The system shall be assessed.");
+    expect(m.get("anx_7.pt_3.pt_2.sub_2")?.text).toBe("The decision shall be notified.");
+    expect(m.get("anx_7.pt_4")?.heading).toBe("Control.");
+    expect(m.get("anx_7.pt_4.pt_1")?.text).toBe("Application.");
   });
 });

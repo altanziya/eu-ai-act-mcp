@@ -44,7 +44,7 @@ describe("logical IDs", () => {
     expect(childSegment("1", false, 0)).toBe("pt_1");
     expect(childSegment("a", false, 0)).toBe("a");
     expect(childSegment("ii", false, 0)).toBe("ii");
-    expect(childSegment("3.1", false, 0)).toBe("pt_3-1");
+    expect(childSegment("3.1", false, 0)).toBe("pt_1");
     expect(childSegment("", false, 4)).toBe("pt_4");
     expect(joinId(joinId("art_50", "par_1"), "a")).toBe("art_50.par_1.a");
   });
