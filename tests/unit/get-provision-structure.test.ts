@@ -4,10 +4,11 @@ import { createServer } from "../../src/mcp/server.js";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { loadCorpus } from "../../src/tools/corpus-fs.js";
+import type { Version } from "../../src/tools/corpus.js";
 import { getProvision, MAX_SIBLINGS } from "../../src/tools/getProvision.js";
 import { V2024, V2026 } from "../../src/config.js";
 
-const get = (id: string, version = V2026, lang: "en" | "de" = "en") => {
+const get = (id: string, version: Version = V2026, lang: "en" | "de" = "en") => {
   const r = getProvision({ id, version, lang, as_of: "2026-10-05" });
   if (!r.structure) throw new Error(`no structure for ${id}`);
   return r.structure;
