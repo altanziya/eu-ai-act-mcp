@@ -408,12 +408,13 @@ describe("open questions", () => {
     { classification: cls },
   );
   const q = (profile: Record<string, unknown>, role = ["provider"]) => aiactObligationsWith({ profile: { role, ...profile }, as_of: AS_OF }, mini, TABLE, d).open_questions;
-  it("asks about an open field when another value would change the obligations, with the text of the classification rule", () => {
+  it("asks about an open field when another value would change the obligations, with the description of the field (not the text of a classification rule that names it)", () => {
     const qs = q({ area: "1" });
-    expect(qs.filter((x) => x.kind === "classification")).toEqual([{ id: "flag", kind: "classification", question: "Does the exception apply?" }]);
+    expect(qs.filter((x) => x.kind === "classification")).toEqual([{ id: "flag", kind: "classification", question: "Not set: flag \u2013 a flag" }]);
+    expect(qs.some((x) => x.question === "Does the exception apply?")).toBe(false);
   });
-  it("asks about the field description when no classification rule names the field", () => {
-    expect(q({}).find((x) => x.id === "area")).toEqual({ id: "area", kind: "classification", question: "An area" });
+  it("the question format is 'Not set: <field> \u2013 <description without type prefix>'", () => {
+    expect(q({}).find((x) => x.id === "area")).toEqual({ id: "area", kind: "classification", question: "Not set: area \u2013 an area" });
   });
   it("does not ask when the field is answered, or when no value would change anything", () => {
     expect(q({ area: "1", flag: true }).filter((x) => x.kind === "classification").map((x) => x.id)).not.toContain("flag");
@@ -532,6 +533,11 @@ describe("real data", () => {
     expect(provider.map((x) => x.id)).toContain("annex_iii_art6_3_exception_concluded");
     expect(provider.map((x) => x.id)).not.toContain("annex_i_third_party_conformity_assessment");
     expect(provider.some((x) => /both routes/.test(x.question))).toBe(false);
+    // the field description is the question: gpai_model gets its own text, not the FLOP presumption of the systemic-risk rule
+    const gpai = real({ annex_iii_area: "4" }).open_questions.find((x) => x.id === "gpai_model");
+    expect(gpai?.question).toBe("Not set: gpai_model \u2013 actor provides a general-purpose AI model (Art. 3(63))");
+    for (const x of provider.filter((x) => x.kind === "classification")) expect(x.question.startsWith(`Not set: ${x.id} \u2013 `)).toBe(true);
+    expect(provider.some((x) => x.kind === "classification" && /FLOP/.test(x.question) && x.id !== "gpai_systemic_risk_threshold_met")).toBe(false);
     for (const list of [importer, provider, real({}).open_questions]) {
       const fields = list.filter((x) => x.kind === "classification").map((x) => x.id);
       expect(new Set(fields).size).toBe(fields.length);

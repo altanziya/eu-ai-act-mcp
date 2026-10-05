@@ -308,15 +308,6 @@ function sameValue(a: Value, b: unknown): boolean {
   return a === b;
 }
 
-/** Profile fields named directly in a condition (not through derived fields). */
-function directFields(c: Condition, out = new Set<string>()): Set<string> {
-  if ("all" in c) (c["all"] as Condition[]).forEach((x) => directFields(x, out));
-  else if ("any" in c) (c["any"] as Condition[]).forEach((x) => directFields(x, out));
-  else if ("not" in c) directFields(c["not"] as Condition, out);
-  else if (typeof c["field"] === "string") out.add(c["field"]);
-  return out;
-}
-
 // ---------------------------------------------------------------------------------------------------------------------
 // dates
 
@@ -393,14 +384,12 @@ function probeValues(description: string): Value[] {
   return [];
 }
 
-/** The question for an open field: the open legal question of the classification rule that names it, else the description of the field. */
+/** The question for an open field: "Not set: <field> – <description of the field without its type prefix>". The classification rules are not consulted: one that only mentions the field in passing would give it a foreign text. */
 function fieldQuestion(data: ObligationsData, field: string): string {
-  const rule = data.classification.find((c) => c.legal_assessment_needed !== undefined && c.rule !== undefined && directFields(c.rule).has(field));
-  if (rule?.legal_assessment_needed !== undefined) return rule.legal_assessment_needed;
   const description = data.profile_fields[field] as string;
   const i = description.indexOf(";");
   const text = (i === -1 ? description : description.slice(i + 1)).trim();
-  return text.charAt(0).toUpperCase() + text.slice(1);
+  return `Not set: ${field} \u2013 ${text}`;
 }
 
 export function aiactObligationsWith(input: ObligationsInput, load: CorpusLoader, deadlines: DeadlineTable, data: ObligationsData): ObligationsResult {

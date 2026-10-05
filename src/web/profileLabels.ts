@@ -18,7 +18,7 @@ export const FIELD_LABELS: Record<string, FieldLabel> = {
       de: "Stellt Ihre Organisation ein KI-System oder KI-Modell in der EU bereit, nutzt, importiert oder vertreibt sie eines? (Artikel 2)",
     },
   },
-  enterprise_size: { q: { en: "How large is your organisation? (Article 3, point 14b)", de: "Wie groß ist Ihre Organisation? (Artikel 3 Nummer 14b)" } },
+  enterprise_size: { q: { en: "How large is your organisation? (Article 3, points 14a and 14b)", de: "Wie groß ist Ihre Organisation? (Artikel 3 Nummern 14a und 14b)" } },
   financial_institution: {
     q: {
       en: "Is your organisation a bank, insurer or other financial institution that is subject to EU financial-services governance rules? (Article 17(4), Article 26(5))",

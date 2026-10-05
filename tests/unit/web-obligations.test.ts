@@ -158,3 +158,10 @@ describe("data", () => {
     expect(loadObligations().schema).toBe("obligations-v1");
   });
 });
+
+describe("company size question", () => {
+  it("cites Article 3, points 14a and 14b (EN) / Artikel 3 Nummern 14a und 14b (DE)", () => {
+    expect(FIELD_LABELS["enterprise_size"]?.q.en).toContain("Article 3, points 14a and 14b");
+    expect(FIELD_LABELS["enterprise_size"]?.q.de).toContain("Artikel 3 Nummern 14a und 14b");
+  });
+});
