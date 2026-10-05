@@ -17,7 +17,9 @@
     "mcp": "tsx src/mcp/server.ts",
     "release": "tsx scripts/release.ts",
     "sign": "tsx scripts/sign.ts",
-    "record": "tsx scripts/record.ts"
+    "record": "tsx scripts/record.ts",
+    "build:site": "tsx scripts/build-site.ts",
+    "site:serve": "tsx scripts/site-serve.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",

@@ -5,6 +5,9 @@ import type { Notice } from "../tools/notice.js";
 
 export const MANIFEST_SCHEMA = "aiact-corpus-manifest/1";
 
+/** Release ids are folder names; no path separators, no leading dot. */
+export const RELEASE_ID_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
 export interface ManifestFile {
   /** Path relative to the release folder. */
   path: string;

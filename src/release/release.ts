@@ -8,6 +8,7 @@ import { join } from "node:path";
 import { REPO_ROOT } from "../config.js";
 import { LANGS } from "../constants.js";
 import { buildManifest, manifestBytes } from "./manifest.js";
+import { RELEASE_ID_RE } from "./manifestCore.js";
 import type { Manifest } from "./manifest.js";
 
 export interface BuildReleaseOptions {
@@ -17,8 +18,6 @@ export interface BuildReleaseOptions {
   /** Default: <repo>/data. */
   dataDir?: string;
 }
-
-export const RELEASE_ID_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 
 export function buildRelease(opts: BuildReleaseOptions): { dir: string; manifest: Manifest } {
   const { releaseId } = opts;
