@@ -4,34 +4,123 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>EU AI Act: verifiable legal graph</title>
+<meta name="color-scheme" content="light dark">
+<title>EU AI Act workbench</title>
+<link rel="stylesheet" href="app.css">
 <style>
-  body { font: 16px/1.5 system-ui, sans-serif; max-width: 62rem; margin: 1.5rem auto; padding: 0 1rem; color: #1b1b1b; }
-  h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; margin-top: 1.5rem; }
-  .box { border: 1px solid #c8c8c8; padding: .5rem 1rem; margin: 1rem 0; background: #fcfcfc; }
-  .box p { margin: .5rem 0; }
-  .links { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.25rem 0; padding: 0; list-style: none; }
-  .links a { display: inline-block; padding: .5rem .9rem; border: 2px solid #1b1b1b; color: #1b1b1b; text-decoration: none; font-weight: 600; background: #fff; }
-  .links a:hover, .links a:focus { background: #f2f2f2; }
-  .links a.primary { background: #1b1b1b; color: #fff; }
-  .links a.primary:hover, .links a.primary:focus { background: #333; }
-  footer { margin-top: 2rem; padding-top: .75rem; border-top: 1px solid #c8c8c8; color: #444; font-size: .9rem; }
+  html[lang="en"] [lang="de"], html[lang="de"] [lang="en"] { display: none; }
+  .hero { padding: .5rem 0 1.5rem; }
+  .hero .lead { max-width: 50rem; }
+  .tools { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin: 1rem 0 2rem; padding: 0; list-style: none; }
+  .tool { display: flex; flex-direction: column; padding: 1.25rem 1.25rem 1.1rem; }
+  .tool h2 { font-size: 1.2rem; }
+  .tool p { color: var(--muted); flex: 1; }
+  .tool .btn { align-self: flex-start; }
+  .tool { border-top: 4px solid var(--border); }
+  .tool.primary { border-top-color: var(--accent); }
+  .tool .step { font-size: .8rem; font-weight: 650; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: .35rem; }
+  section.block { margin: 0 0 2rem; max-width: 50rem; }
+  pre.snippet { margin: .5rem 0; padding: .8rem 1rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; font: .85rem/1.5 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .snippet-row { display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; }
+  .privacy { max-width: 50rem; }
+  .links { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 0 0 1.5rem; padding: 0; list-style: none; font-size: .95rem; }
 </style>
 </head>
 <body>
-<h1>EU AI Act: verifiable legal graph</h1>
-<p>A deterministic, open-source provision tree of the EU AI Act (Regulation (EU) 2024/1689) in English and German, with a diff between the original and the 2026 consolidated text. It checks whether a quotation really appears in the Act, where, in which version, and whether it applies on a given date.</p>
-<p>Every check can be written into a hash-sealed evidence record. The record refers to a signed, immutable corpus release, and anyone can recompute it in the browser without trusting this site's server logic.</p>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="de">Zum Inhalt springen</span></a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="./"><span lang="en">EU AI Act workbench</span><span lang="de">EU-AI-Act-Werkbank</span></a>
+  <nav class="site-nav" aria-label="Tools">
+    <a href="obligations/"><span lang="en">Obligations navigator</span><span lang="de">Pflichten-Navigator</span></a>
+    <a href="audit/"><span lang="en">Document checker</span><span lang="de">Dokument-Prüfer</span></a>
+    <a href="verify/"><span lang="en">Verify a record</span><span lang="de">Nachweis prüfen</span></a>
+  </nav>
+  <button type="button" class="lang-toggle" data-lang-toggle aria-label="Deutsch / English"><span data-lang-option="de" style="display:inline">Deutsch</span> / <span data-lang-option="en" class="cur" style="display:inline">English</span></button>
+</div></header>
 
-<ul class="links">
-  <li><a class="primary" href="example/">Open example evidence record</a></li>
-  <li><a href="verify/">Verify a record</a></li>
-  <li><a href="https://github.com/altanziya/eu-ai-act-mcp">Source on GitHub</a></li>
-  <li><a href="keys/index.json">Public signing keys</a></li>
-</ul>
+<main id="main" class="wrap">
+  <div class="hero">
+    <h1><span lang="en">EU AI Act workbench</span><span lang="de">EU-AI-Act-Werkbank</span></h1>
+    <p class="lead" lang="en">Answers about the EU AI Act that you can check. Every result cites the provision, quotes it word for word from the text in force on your date, and says when it applies. Built on the Official Journal text and the consolidated text after the Digital Omnibus (Regulation (EU) 2026/1744).</p>
+    <p class="lead" lang="de">Antworten zum EU AI Act, die sich prüfen lassen. Jedes Ergebnis nennt die Vorschrift, zitiert sie wörtlich aus der Fassung, die an Ihrem Stichtag gilt, und sagt, ab wann sie gilt. Grundlage sind der Amtsblatt-Text und die konsolidierte Fassung nach dem Digital-Omnibus (Verordnung (EU) 2026/1744).</p>
+  </div>
 
-<footer>
-  <p>Not legal advice. The consolidated text is not legally authentic; only the Official Journal is binding.</p>
-</footer>
+  <ul class="tools">
+    <li class="card tool primary">
+      <h2><span lang="en">Obligations navigator</span><span lang="de">Pflichten-Navigator</span></h2>
+      <p lang="en">Describe your organisation and your AI system in a few questions. Get the obligations that apply now and the ones coming, with dates, provisions and verbatim quotes, and a checklist to export.</p>
+      <p lang="de">Beschreiben Sie Ihre Organisation und Ihr KI-System in wenigen Fragen. Sie erhalten die Pflichten, die jetzt gelten und die noch kommen, mit Datum, Fundstelle und wörtlichem Zitat, und eine Checkliste zum Export.</p>
+      <a class="btn" href="obligations/"><span lang="en">Find my obligations</span><span lang="de">Meine Pflichten finden</span></a>
+    </li>
+    <li class="card tool">
+      <h2><span lang="en">Document checker</span><span lang="de">Dokument-Prüfer</span></h2>
+      <p lang="en">Paste a policy, a vendor answer, a slide or a chatbot answer. It flags outdated deadlines, provisions that moved or never existed, and quotations that do not match the text.</p>
+      <p lang="de">Fügen Sie eine Richtlinie, eine Anbieterantwort, eine Folie oder eine Chatbot-Antwort ein. Der Prüfer markiert veraltete Fristen, verschobene oder nicht existierende Vorschriften und Zitate, die nicht zum Text passen.</p>
+      <a class="btn" href="audit/"><span lang="en">Check a text</span><span lang="de">Text prüfen</span></a>
+    </li>
+    <li class="card tool">
+      <h2><span lang="en">Verify a record</span><span lang="de">Nachweis prüfen</span></h2>
+      <p lang="en">Open a hash-sealed evidence record and recompute it in your browser against the signed corpus release.</p>
+      <p lang="de">Öffnen Sie einen versiegelten Nachweis und berechnen Sie ihn im Browser gegen das signierte Korpus-Release nach.</p>
+      <a class="btn" href="verify/"><span lang="en">Verify a record</span><span lang="de">Nachweis prüfen</span></a>
+    </li>
+  </ul>
+
+  <div class="notice privacy" role="note"><p lang="en">Your text and your answers stay in your browser. Nothing is uploaded.</p><p lang="de">Ihr Text und Ihre Antworten bleiben in Ihrem Browser. Es wird nichts hochgeladen.</p></div>
+
+  <section class="block" aria-labelledby="mcp-title">
+    <h2 id="mcp-title"><span lang="en">Use it from your AI assistant</span><span lang="de">Im KI-Assistenten nutzen</span></h2>
+    <p lang="en">The same checks run as an MCP server, locally over stdio, with no network calls. In Claude Code, inside the repository:</p>
+    <p lang="de">Dieselben Prüfungen laufen als MCP-Server, lokal über stdio, ohne Netzwerkzugriffe. In Claude Code, im Repository:</p>
+    <div class="snippet-row">
+      <pre class="snippet" id="snippet">claude mcp add eu-ai-act -- "$(pwd)/node_modules/.bin/tsx" "$(pwd)/src/mcp/server.ts" --extended</pre>
+      <button type="button" class="btn secondary small" id="copy-snippet"><span lang="en">Copy</span><span lang="de">Kopieren</span></button>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="why-title">
+    <h2 id="why-title"><span lang="en">Why this exists</span><span lang="de">Warum es das gibt</span></h2>
+    <p lang="en">In a pre-registered evaluation, three frontier models answered questions on rules the 2026 amendment changed. Without tools they gave the old answer in most cases; with this project's tools the error rate fell to a few cases. Results and data: <a href="https://github.com/altanziya/eu-ai-act-mcp/tree/main/eval/results">Evaluation</a>.</p>
+    <p lang="de">In einer vorregistrierten Evaluation beantworteten drei führende Sprachmodelle Fragen zu Regeln, die die Änderung von 2026 verschoben hat. Ohne Werkzeuge nannten sie meist die alte Antwort; mit den Werkzeugen dieses Projekts sank die Fehlerquote auf wenige Fälle. Ergebnisse und Daten: <a href="https://github.com/altanziya/eu-ai-act-mcp/tree/main/eval/results">Evaluation</a>.</p>
+  </section>
+
+  <ul class="links">
+    <li><a href="example/"><span lang="en">Open example evidence record</span><span lang="de">Beispiel-Nachweis öffnen</span></a></li>
+    <li><a href="keys/index.json"><span lang="en">Public signing keys</span><span lang="de">Öffentliche Signaturschlüssel</span></a></li>
+    <li><a href="https://github.com/altanziya/eu-ai-act-mcp"><span lang="en">Source on GitHub</span><span lang="de">Quellcode auf GitHub</span></a></li>
+  </ul>
+</main>
+<footer class="site-footer"><div class="wrap">
+  <p lang="en">Not legal advice. The consolidated text is not legally authentic; only the Official Journal is binding. Where the law requires an assessment, the tools say so instead of making it.</p>
+  <p lang="de">Keine Rechtsberatung. Die konsolidierte Fassung ist nicht rechtsverbindlich; verbindlich ist nur das Amtsblatt. Wo das Gesetz eine Wertung verlangt, sagen die Werkzeuge das, statt sie vorzunehmen.</p>
+</div></footer>
+<script>
+(function () {
+  var KEY = "aiact-lang", lang = "en";
+  try { var q = new URLSearchParams(location.search).get("lang"); var s = localStorage.getItem(KEY); lang = q === "de" || q === "en" ? q : s === "de" ? "de" : "en"; } catch (e) {}
+  var titles = { en: "EU AI Act workbench", de: "EU-AI-Act-Werkbank" };
+  function paint() {
+    document.documentElement.lang = lang;
+    document.title = titles[lang];
+    document.querySelectorAll("[data-lang-option]").forEach(function (e) {
+      var on = e.getAttribute("data-lang-option") === lang;
+      e.className = on ? "cur" : "";
+      if (on) e.setAttribute("aria-current", "true"); else e.removeAttribute("aria-current");
+    });
+  }
+  document.querySelector("[data-lang-toggle]").addEventListener("click", function () {
+    lang = lang === "en" ? "de" : "en";
+    try { localStorage.setItem(KEY, lang); } catch (e) {}
+    paint();
+  });
+  document.getElementById("copy-snippet").addEventListener("click", function (ev) {
+    var b = ev.currentTarget, text = document.getElementById("snippet").textContent;
+    if (navigator.clipboard) navigator.clipboard.writeText(text).catch(function () {});
+    var old = b.innerHTML; b.textContent = lang === "de" ? "Kopiert" : "Copied";
+    setTimeout(function () { b.innerHTML = old; }, 1500);
+  });
+  paint();
+})();
+</script>
 </body>
 </html>

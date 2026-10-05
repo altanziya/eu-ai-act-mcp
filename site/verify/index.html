@@ -4,34 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
 <title>Verify evidence record (EU AI Act)</title>
+<link rel="stylesheet" href="../app.css">
 <style>
-  body { font: 16px/1.5 system-ui, sans-serif; max-width: 62rem; margin: 1.5rem auto; padding: 0 1rem; color: #1b1b1b; }
-  h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; margin-top: 1.5rem; }
-  table { border-collapse: collapse; width: 100%; margin: .5rem 0; }
-  th, td { border: 1px solid #c8c8c8; padding: .3rem .5rem; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
-  th { background: #f2f2f2; }
-  blockquote { margin: .5rem 0; padding: .5rem 1rem; border-left: 4px solid #999; background: #fafafa; }
-  .mono { font-family: ui-monospace, monospace; font-size: .85rem; overflow-wrap: anywhere; }
-  .ok { color: #0b6b2b; } .bad { color: #a40000; font-weight: 600; } .na { color: #666; }
-  #summary { padding: .6rem .8rem; border: 2px solid currentColor; margin: 1rem 0; }
-  #summary:empty { display: none; }
-  .box { border: 1px solid #c8c8c8; padding: .5rem 1rem; margin: 1rem 0; background: #fcfcfc; }
-  .box p { margin: .5rem 0; }
+  body { max-width: 62rem; margin: 0 auto; padding: 1.5rem 1rem 2rem; }
+  h1 { font-size: 1.6rem; } h2 { font-size: 1.1rem; margin-top: 1.5rem; }
   .top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
   .top h1 { margin: 0; }
-  #lang-toggle { font: inherit; padding: .25rem .7rem; border: 2px solid #1b1b1b; background: #fff; color: #1b1b1b; cursor: pointer; }
-  #lang-toggle:hover, #lang-toggle:focus { background: #f2f2f2; }
-  #lang-toggle .cur { font-weight: 700; text-decoration: underline; }
   .home { font-size: .9rem; margin: .25rem 0 0; }
 </style>
 </head>
 <body>
 <div class="top">
   <h1 data-i18n="title">Verify evidence record</h1>
-  <button type="button" id="lang-toggle" data-lang-toggle aria-label="Deutsch / English"><span data-lang-option="de">Deutsch</span> / <span data-lang-option="en" class="cur">English</span></button>
+  <button type="button" id="lang-toggle" class="lang-toggle" data-lang-toggle aria-label="Deutsch / English"><span data-lang-option="de">Deutsch</span> / <span data-lang-option="en" class="cur">English</span></button>
 </div>
-<p class="home"><a href="../">EU AI Act: verifiable legal graph</a></p>
+<p class="home"><a href="../">EU AI Act workbench</a> · <a href="../obligations/">Obligations navigator</a> · <a href="../audit/">Document checker</a></p>
 <p id="status">This page needs JavaScript to recompute the record from the link. The texts below are readable without JavaScript. / Diese Seite benötigt JavaScript, um den Record aus dem Link neu zu berechnen. Die Texte unten sind auch ohne JavaScript lesbar.</p>
 
 <div id="summary"></div>
