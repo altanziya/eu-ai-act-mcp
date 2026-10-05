@@ -6,6 +6,7 @@ import type { E1Decision } from "./stats.js";
 import { versionNamed } from "./score.js";
 import { clopperPearson, decideE1 } from "./stats.js";
 import type { ToolCallRecord } from "./openrouter.js";
+import { backendOf } from "./claudeCode.js";
 
 export interface RunRecord {
   case_id: string;
@@ -29,6 +30,12 @@ export interface RunRecord {
   status: number;
   latency_ms: number;
   error?: string;
+  /** Backend of the model id (`claude-code/` prefix: claude-code, else openrouter); set on every run written since day 4c. */
+  backend?: string;
+  /** claude-code only: API-equivalent cost (`total_cost_usd`) of a run on the subscription. Not part of `cost` and not counted against --max-usd. */
+  cost_equiv_usd?: number;
+  /** claude-code only: model(s) named in `modelUsage` of the stream. */
+  model_reported?: string;
   /** PROMPT_VERSION the run was made with. */
   prompt_version?: string;
   /** Cost of at least one request is the estimate (usage.cost missing, or the request failed after it was sent). */
@@ -49,6 +56,8 @@ export function latestRuns(lines: RunRecord[]): RunRecord[] {
 
 export interface CellSummary {
   model: string;
+  /** `openrouter` or `claude-code` (from the runs, else from the model id). */
+  backend: string;
   arm: string;
   /** Cases with at least one scored (parseable) run. */
   cases: number;
@@ -70,6 +79,8 @@ export interface CellSummary {
   version_named: VersionNamedCounts;
   tools_usage: { with_tool: RunGroupRate; no_tool: RunGroupRate } | null;
   cost_usd: number;
+  /** claude-code: API-equivalent cost of the subscription runs (not money, not part of cost_usd); 0 for other backends. */
+  cost_equiv_usd: number;
   /** Runs that booked an estimate instead of usage.cost. */
   cost_estimated_runs: number;
 }
@@ -141,7 +152,7 @@ export function summarize(lines: RunRecord[], filter: Filter = () => true): Cell
     }
     const sensitivityN = cases + excluded;
     out.push({
-      model, arm, cases, excluded_cases: excluded, errors_majority: majority, errors_any: any,
+      model, backend: all[0]?.backend ?? backendOf(model), arm, cases, excluded_cases: excluded, errors_majority: majority, errors_any: any,
       ci: cases > 0 ? clopperPearson(majority, cases) : null,
       sensitivity: sensitivityN > 0 ? { errors: sensitivityErrors, n: sensitivityN, ...clopperPearson(sensitivityErrors, sensitivityN) } : null,
       runs: runs.length,
@@ -151,6 +162,7 @@ export function summarize(lines: RunRecord[], filter: Filter = () => true): Cell
       version_named: versionCounts(runs),
       tools_usage: arm === "tools" ? { with_tool: rate(runs.filter((r) => r.tool_calls.length > 0)), no_tool: rate(runs.filter((r) => r.tool_calls.length === 0)) } : null,
       cost_usd: all.reduce((s, r) => s + r.cost, 0),
+      cost_equiv_usd: all.reduce((s, r) => s + (r.cost_equiv_usd ?? 0), 0),
       cost_estimated_runs: all.filter((r) => r.cost_estimated === true).length,
     });
   }
@@ -195,10 +207,22 @@ export interface ReportMeta {
   reps: number;
   max_usd: number;
   total_cost_usd: number;
+  /** Sum of cost_equiv_usd (claude-code runs on the subscription); not part of total_cost_usd. */
+  total_cost_equiv_usd?: number;
+  backends?: Record<string, string>;
   primary_model?: string | null;
   e1?: E1Result | null;
   note?: string;
 }
+
+/** Methodology paragraph for the backend `claude-code` (shown only if a model uses it). */
+export const CLAUDE_CODE_METHOD =
+  "Backend claude-code (model ids with the prefix `claude-code/`): each run is one call of the Claude Code CLI (`claude -p`) on a subscription, not on the API. " +
+  "The call uses its own system prompt (`--setting-sources \"\"`: no CLAUDE.md, no memory, no project settings). What stays visible to the model is an identity sentence of the Agent SDK, " +
+  "the account e-mail address and an environment block with the execution date; the case date is given only by the system prompt. " +
+  "Web search (arm web) is Anthropic's own (WebSearch and WebFetch); the tools arm offers only the three project tools through a local MCP server. " +
+  "`cost_equiv_usd` is the API-equivalent cost reported by the CLI (`total_cost_usd`); it is not billed, is summed separately and does not count against --max-usd. " +
+  "The other models run through OpenRouter and are billed by `usage.cost`.";
 
 const f4 = (x: number): string => x.toFixed(4);
 const pct = (x: number | null): string => (x === null ? "-" : `${(x * 100).toFixed(0)} %`);
@@ -208,19 +232,19 @@ const versionCell = (v: VersionNamedCounts): string =>
 
 function table(cells: CellSummary[]): string[] {
   const L = [
-    "| Model | Arm | Cases | Excluded cases | Errors (majority) | Clopper-Pearson 95 % | Errors (>= 1 wrong run) | Unparseable runs | API error runs | Tool-call rate | Version named: 2024 / 2026 / both / none | Cost USD |",
-    "|---|---|---|---|---|---|---|---|---|---|---|---|",
+    "| Model | Arm | Cases | Excluded cases | Errors (majority) | Clopper-Pearson 95 % | Errors (>= 1 wrong run) | Unparseable runs | API error runs | Tool-call rate | Version named: 2024 / 2026 / both / none | Cost USD | Cost-equivalent USD (subscription) | Backend |",
+    "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|",
   ];
   for (const c of cells) {
     L.push(
-      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${versionCell(c.version_named)} | ${f4(c.cost_usd)}${c.cost_estimated_runs > 0 ? ` (${c.cost_estimated_runs} runs estimated)` : ""} |`,
+      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${versionCell(c.version_named)} | ${f4(c.cost_usd)}${c.cost_estimated_runs > 0 ? ` (${c.cost_estimated_runs} runs estimated)` : ""} | ${c.backend === "claude-code" ? f4(c.cost_equiv_usd) : "-"} | ${c.backend} |`,
     );
     if (c.sensitivity) {
       const s = c.sensitivity;
-      L.push(`| ${c.model} | ${c.arm}: unparseable counted as wrong | ${s.n} | - | ${s.errors} | [${f4(s.lower)}, ${f4(s.upper)}] | - | - | - | - | - | - |`);
+      L.push(`| ${c.model} | ${c.arm}: unparseable counted as wrong | ${s.n} | - | ${s.errors} | [${f4(s.lower)}, ${f4(s.upper)}] | - | - | - | - | - | - | - | ${c.backend} |`);
     }
   }
-  if (cells.length === 0) L.push("| (no runs) | | | | | | | | | | | |");
+  if (cells.length === 0) L.push("| (no runs) | | | | | | | | | | | | | |");
   return L;
 }
 
@@ -243,11 +267,16 @@ export function renderReport(meta: ReportMeta, lines: RunRecord[]): string {
     `- Dry run (all runs mock): ${meta.dry_run}`,
     `- Status: ${meta.status}`,
     `- Repetitions per case: ${meta.reps}`,
-    `- Total cost (sum of usage.cost): ${f4(meta.total_cost_usd)} USD (cap ${meta.max_usd} USD)`,
+    `- Total cost (sum of usage.cost, OpenRouter only): ${f4(meta.total_cost_usd)} USD (cap ${meta.max_usd} USD)`,
   );
+  const claude = summarize(lines).filter((c) => c.backend === "claude-code");
+  if (claude.length > 0 || Object.values(meta.backends ?? {}).includes("claude-code")) {
+    L.push(`- Cost equivalent of the claude-code runs (API prices, not billed, not counted against the cap): ${f4(meta.total_cost_equiv_usd ?? claude.reduce((s, c) => s + c.cost_equiv_usd, 0))} USD`);
+  }
   if (meta.note) L.push(`- Note: ${meta.note}`);
   L.push(
     "",
+    ...(claude.length > 0 || Object.values(meta.backends ?? {}).includes("claude-code") ? [CLAUDE_CODE_METHOD, ""] : []),
     "Method: a case counts as an error if more than half of its runs are wrong (one repetition: that run; three: at least 2 of 3). " +
       "Clopper-Pearson intervals (exact, 95 %) are computed over cases, not runs. Unparseable answers (no JSON object, including empty answers) are not scored and do not count as wrong; " +
       "with R runs per case a case is an error if more than R/2 of its runs are wrong, and it is excluded only if no run of it could be scored. " +
