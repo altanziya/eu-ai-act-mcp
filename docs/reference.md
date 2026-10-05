@@ -267,12 +267,13 @@ timeout 300 s. Arguments: `-p <question> --model <id without prefix> --setting-s
 `--tools ""`; `web` `--tools WebSearch,WebFetch --allowedTools WebSearch,WebFetch`; `tools` `--mcp-config <temp json: server aiact =
 node_modules/.bin/tsx src/mcp/server.ts, absolute paths> --tools "" --allowedTools mcp__aiact__aiact_get_provision,
 mcp__aiact__aiact_diff,mcp__aiact__aiact_verify_citation`. The child environment lacks `ANTHROPIC_API_KEY`,
-`ANTHROPIC_AUTH_TOKEN`, `CLAUDE_CODE_USE_BEDROCK` and `CLAUDE_CODE_USE_VERTEX`, so nothing is billed to an API account; no
+`ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_BASE_URL` and every variable starting with `CLAUDE` (e.g. `CLAUDECODE`, `CLAUDE_CODE_USE_*`,
+session and effort variables of a calling Claude Code session) except `CLAUDE_CONFIG_DIR`, so nothing is billed to an API account; no
 OpenRouter key is read for a run with only `claude-code/` models. Stream evaluation: answer = `result` of the final `result` event
 (then `parseAnswer`); `tool_calls` = every `tool_use` block (name as the CLI reports it, e.g. `mcp__aiact__aiact_diff`, or
 `WebSearch`; input cut to 300 characters); `total_cost_usd` -> `cost_equiv_usd`; `model_reported` = keys of `modelUsage`.
-`is_error` or exit code != 0 (also timeout, spawn failure, no result event) gives an error run (`error` <= 300 characters); an
-error text containing "limit" or "usage" is a used-up quota: the run is stored with `incomplete: true`, the harness stops cleanly
+`is_error`, a result `subtype` other than `success` (e.g. `error_max_turns`) or exit code != 0 (also timeout, spawn failure, no result event) gives an error run (`error` <= 300 characters); an
+error text containing "limit" or "usage" (also a limit text in the assistant output when `is_error` is false and the result is empty or missing) is a used-up quota: the run is stored with `incomplete: true`, the harness stops cleanly
 with status `quota_stop`, and `--resume` continues. Subscription runs have `cost: 0`; `cost_equiv_usd` (API-equivalent, not billed)
 is not counted against `--max-usd` and is summed separately. `--dry-run` mocks `claude-code/` ids like all others (no `claude` call).
 
