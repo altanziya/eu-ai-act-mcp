@@ -7,7 +7,7 @@ import type { EvidenceRecord, RecordInput } from "../../src/record/record.js";
 import { manifestBytes } from "../../src/release/manifest.js";
 import { generateKeyPair, signManifest } from "../../src/release/sign.js";
 import { checkFiles, filesOk } from "../../src/verify-core/files.js";
-import { recomputeRecord } from "../../src/verify-core/recompute.js";
+import { compareRows, overallVerdict, recomputeRecord } from "../../src/verify-core/recompute.js";
 import { V2024 } from "../../src/constants.js";
 import { makeRelease, nodeText } from "./helpers/release.js";
 
@@ -123,5 +123,44 @@ describe("verify core stays isomorphic", () => {
     expect(inputs.some((i) => i.includes("verifyCore"))).toBe(true);
     expect(inputs.filter((i) => /(-fs\.ts|release\/(sign|release|manifest|context)\.ts|config\.ts)$/.test(i))).toEqual([]);
     for (const f of res.outputFiles) expect(f.text).not.toMatch(/from\s*["']node:|require\(["'](node:|fs["'])/);
+  });
+});
+
+describe("overallVerdict", () => {
+  const kp = generateKeyPair();
+  const bytes = manifestBytes(rel.manifest);
+  const sig = signManifest(bytes, kp.privateKeyPem);
+  const opts = { manifestBytes: bytes, signature: sig, publicKeys: { [sig.key_id]: kp.publicKeyPem } };
+  const verdict = (r: EvidenceRecord, filesAreOk = true) => overallVerdict(r, recomputeRecord(r, rel.ctx, opts), filesAreOk);
+  type Result = EvidenceRecord["result"];
+  const otherVersion = "02024R1689-20240712" as Result["version_checked"];
+
+  it("is all_ok for an untouched, signed record", () => {
+    expect(verdict(rec())).toEqual({ all_ok: true, failed: [] });
+  });
+  it("is not ok without a valid signature, with a broken record hash or with failing release files", () => {
+    const r = rec();
+    expect(overallVerdict(r, recomputeRecord(r, rel.ctx, { manifestBytes: bytes }), true).failed).toEqual(["signature"]);
+    expect(verdict({ ...r, question: "edited afterwards" }).failed).toEqual(["record_hash"]);
+    expect(verdict(r, false).failed).toEqual(["release_files"]);
+  });
+  it("catches forged fields outside matches_record even with a recomputed record hash", () => {
+    const m = (r: EvidenceRecord) => r.result.match as NonNullable<Result["match"]>;
+    const forgeries: Array<[string, (r: EvidenceRecord) => EvidenceRecord, string]> = [
+      ["match.version_id", (r) => ({ ...r, result: { ...r.result, match: { ...m(r), version_id: otherVersion } } }), "compare:location"],
+      ["match.lang", (r) => ({ ...r, result: { ...r.result, match: { ...m(r), lang: "de" } } }), "compare:location"],
+      ["version_checked", (r) => ({ ...r, result: { ...r.result, version_checked: otherVersion } }), "compare:version"],
+      ["language_check", (r) => ({ ...r, result: { ...r.result, language_check: { result: "differs", detected_lang: "de" } } }), "compare:language"],
+    ];
+    for (const [name, edit, expected] of forgeries) {
+      const forged = rehash(rec(), edit);
+      const rep = recomputeRecord(forged, rel.ctx, opts);
+      expect(rep.record_hash_ok, name).toBe(true);
+      expect(rep.matches_record, name).toBe(true);
+      expect(compareRows(forged, rep).some((row) => !row.ok), name).toBe(true);
+      const v = overallVerdict(forged, rep, true);
+      expect(v.all_ok, name).toBe(false);
+      expect(v.failed, name).toContain(expected);
+    }
   });
 });

@@ -11,8 +11,8 @@ import type { Manifest } from "../release/manifestCore.js";
 import type { ManifestSignature } from "../release/signatureCore.js";
 import { checkFiles, filesOk } from "./files.js";
 import type { FileCheck } from "./files.js";
-import { recomputeRecord } from "./recompute.js";
-import type { RecomputeReport } from "./recompute.js";
+import { compareRows, overallVerdict, recomputeRecord } from "./recompute.js";
+import type { CompareKey, RecomputeReport } from "./recompute.js";
 
 interface KeyIndex {
   keys: Array<{ key_id: string; public_key_pem: string; status: "active" | "revoked" }>;
@@ -70,24 +70,16 @@ const SIGNATURE_TEXT: Record<string, string> = {
 
 const show = (r: unknown): string => (r === undefined || r === null ? "–" : String(r));
 
-function compareRows(record: EvidenceRecord, report: RecomputeReport): Array<Array<string | { text: string; cls: string }>> {
-  const side = (v: Partial<EvidenceRecord["result"]> | undefined) => ({
-    status: show(v?.status),
-    where: v?.match ? `${v.match.provision_id} (${v.match.version_id}, ${v.match.lang})` : "–",
-    version: [show(v?.version_checked), v?.found_in_version ? `gefunden in / found in ${v.found_in_version}` : ""].filter(Boolean).join("; "),
-    validity: v?.validity ? [v.validity.state, v.validity.until, v.validity.version, v.validity.act].filter((x) => x !== undefined).join(" ") : "–",
-    lang: v?.language_check ? `${v.language_check.result}${v.language_check.detected_lang ? ` (${v.language_check.detected_lang})` : ""}` : "–",
-  });
-  const a = side(record.result);
-  const b = side(report.recomputed);
-  const row = (label: string, x: string, y: string): Array<string | { text: string; cls: string }> => [label, x, y, mark(x === y)];
-  return [
-    row("Status / status", a.status, b.status),
-    row("Fundstelle / location", a.where, b.where),
-    row("geprüfte Fassung / version checked", a.version, b.version),
-    row("Geltung / validity", a.validity, b.validity),
-    row("Sprachprüfung / language check", a.lang, b.lang),
-  ];
+const ROW_LABELS: Record<CompareKey, string> = {
+  status: "Status / status",
+  location: "Fundstelle / location",
+  version: "geprüfte Fassung / version checked",
+  validity: "Geltung / validity",
+  language: "Sprachprüfung / language check",
+};
+
+function compareTableRows(record: EvidenceRecord, report: RecomputeReport): Array<Array<string | { text: string; cls: string }>> {
+  return compareRows(record, report).map((r) => [ROW_LABELS[r.key], r.record, r.recomputed, mark(r.ok)]);
 }
 
 function render(record: EvidenceRecord, report: RecomputeReport, files: FileCheck[], manifestSha: string): void {
@@ -103,13 +95,7 @@ function render(record: EvidenceRecord, report: RecomputeReport, files: FileChec
   const integrityBox = $("integrity");
   integrityBox.replaceChildren(el("h2", "Prüfungen / checks"), el("p", `Release: ${record.release_id}; manifest sha256 ${manifestSha}`, "mono"), table(["", ""], integrity));
 
-  const all =
-    report.record_hash_ok &&
-    report.manifest_sha256_ok === true &&
-    filesOk(files) &&
-    report.signature.status === "valid" &&
-    report.matches_record &&
-    report.cited_nodes.every((c) => c.present && c.hash_ok && c.node_hash_ok);
+  const all = overallVerdict(record, report, filesOk(files)).all_ok;
   const summary = $("summary");
   summary.className = all ? "ok" : "bad";
   summary.textContent = all
@@ -123,7 +109,7 @@ function render(record: EvidenceRecord, report: RecomputeReport, files: FileChec
     el("p", `claimed_ref: ${show(input.claimed_ref)}; as_of: ${input.as_of}; lang: ${input.lang}`, "mono"),
   );
 
-  $("compare").replaceChildren(el("h2", "V0 / V1 / V2: im Record angegeben und hier neu berechnet / stated in the record and recomputed here"), table(["", "im Record angegeben / stated in record", "hier neu berechnet / recomputed here", ""], compareRows(record, report)));
+  $("compare").replaceChildren(el("h2", "V0 / V1 / V2: im Record angegeben und hier neu berechnet / stated in the record and recomputed here"), table(["", "im Record angegeben / stated in record", "hier neu berechnet / recomputed here", ""], compareTableRows(record, report)));
   if (report.differences.length > 0) {
     $("compare").append(el("p", `Abweichungen / differences: ${report.differences.map((d) => `${d.field} (${show(d.record)} ≠ ${show(d.recomputed)})`).join("; ")}`, "bad"));
   }

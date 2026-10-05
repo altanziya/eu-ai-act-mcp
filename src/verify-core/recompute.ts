@@ -105,3 +105,60 @@ export function recomputeRecord(record: EvidenceRecord, ctx: ReleaseContext, opt
   }
   return { record_hash_ok, manifest_sha256_ok, signature, cited_nodes, recomputed, matches_record: differences.length === 0, differences };
 }
+
+// ---------------------------------------------------------------------------------------------------------------
+// Overall verdict (shared by the verify page and the tests)
+// ---------------------------------------------------------------------------------------------------------------
+
+export type CompareKey = "status" | "location" | "version" | "validity" | "language";
+
+export interface CompareRow {
+  key: CompareKey;
+  /** As stated in the record (display form). */
+  record: string;
+  /** As recomputed here (display form). */
+  recomputed: string;
+  ok: boolean;
+}
+
+const shown = (v: unknown): string => (v === undefined || v === null ? "\u2013" : String(v));
+
+function displayFields(v: Partial<VerifyResult> | undefined): Record<CompareKey, string> {
+  return {
+    status: shown(v?.status),
+    location: v?.match ? `${v.match.provision_id} (${v.match.version_id}, ${v.match.lang})` : "\u2013",
+    version: [shown(v?.version_checked), v?.found_in_version ? `gefunden in / found in ${v.found_in_version}` : ""].filter(Boolean).join("; "),
+    validity: v?.validity ? [v.validity.state, v.validity.until, v.validity.version, v.validity.act].filter((x) => x !== undefined).join(" ") : "\u2013",
+    language: v?.language_check ? `${v.language_check.result}${v.language_check.detected_lang ? ` (${v.language_check.detected_lang})` : ""}` : "\u2013",
+  };
+}
+
+/** The rows of the comparison table: stated in the record against recomputed. Every shown row is part of the verdict. */
+export function compareRows(record: EvidenceRecord, report: RecomputeReport): CompareRow[] {
+  const a = displayFields(record.result);
+  const b = displayFields(report.recomputed);
+  return (["status", "location", "version", "validity", "language"] as const).map((key) => ({ key, record: a[key], recomputed: b[key], ok: a[key] === b[key] }));
+}
+
+export interface OverallVerdict {
+  all_ok: boolean;
+  /** Names of the checks that failed (empty when all_ok). */
+  failed: string[];
+}
+
+/**
+ * Overall verdict: true only if the record hash, the manifest hash, the release files, the signature, `matches_record`,
+ * every row of the comparison table and every cited node check out.
+ * @param filesOk result of the release-file check against the manifest (see files.ts `filesOk`)
+ */
+export function overallVerdict(record: EvidenceRecord, report: RecomputeReport, filesOk: boolean): OverallVerdict {
+  const failed: string[] = [];
+  if (!report.record_hash_ok) failed.push("record_hash");
+  if (report.manifest_sha256_ok !== true) failed.push("manifest_sha256");
+  if (!filesOk) failed.push("release_files");
+  if (report.signature.status !== "valid") failed.push("signature");
+  if (!report.matches_record) failed.push("matches_record");
+  for (const row of compareRows(record, report)) if (!row.ok) failed.push(`compare:${row.key}`);
+  if (!report.cited_nodes.every((c) => c.present && c.hash_ok && c.node_hash_ok)) failed.push("cited_nodes");
+  return { all_ok: failed.length === 0, failed };
+}
