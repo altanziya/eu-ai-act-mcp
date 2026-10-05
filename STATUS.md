@@ -1,20 +1,20 @@
-# STATUS (Stand 2026-10-05, Session 2)
+# STATUS (Stand 2026-10-05 02:05, Session 3)
 
 ## Phase
-**Phase 0 → Approach A (48-Stunden-Beweis), Build noch nicht gestartet.** Design-Doc APPROVED (D13). Altan fragt nach Vorgehen und autonomem A-bis-Z-Build; Fable hat dafür Berichte 10 (Community-Praxis 30 Tage) und 11 (offizielle Doku) einholen lassen, geprüft und freigegeben. **Go erteilt (05.10. 01:10): Commits erlaubt, Max 5x.** `/usage`: Woche alle Modelle 65 %, Fable 87 %, Reset Mo 18:59. ADR-011 umgesetzt: Setup committed (Hook-Tests 97/97, Git-Identität lokal GMX), Tagesvertrag `plan/day-1.md` steht. **Build Tag 1 startet in der nächsten Sitzung.**
+**Phase 0 → Approach A (48-Stunden-Beweis), Build Tag 1 noch nicht gestartet.** Design-Doc APPROVED (D13), Go erteilt (05.10. 01:10: Commits erlaubt, Max 5x), ADR-011 umgesetzt (Setup committed, Hook-Tests 97/97), Tagesvertrag `plan/day-1.md` steht. Fable-Wochenanteil 87 % (Reset Mo 18:59); Züge knapp halten.
 
-## Ergebnis Session 2 (bis jetzt)
-- Berichte 10 und 11 freigegeben, F57–F65 eingetragen (Fable-50-%-Regel, Subagent-Modellzwang, Explore auf Opus, Hook-Caps, Env-Variablen, Community-Fehlerbilder).
-- Claude Code lokal 2.1.289: alle Mindestversionen für `omitClaudeMd`, `maxTurns`, `SUBAGENT_MODEL_FORCE`, Explore-Override erfüllt.
-- Prozesslehre: last30days-Agent lief 63 min (3 Läufe + 50 min Primärquellen). Fable setzte eine Frist, Altan widersprach: keine harten Zeitlimits für Recherche, Sichtbarkeit (Fortschrittsdatei) statt Deadline. Frist zurückgenommen, Bericht vollständig.
+## Ergebnis Session 3 (02:05)
+- **Fehlstart:** Sitzung wurde im Elternverzeichnis `Sidehustle` gestartet, nicht in `eu-ai-act-mcp`. Folge: Projekt-CLAUDE.md, Hooks, Env (`CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` usw.) und die Agenten `builder`/`reviewer`/`scout`/`researcher` sind nicht geladen. Ohne Hooks keine Wände (ADR-011), darum kein Build.
+- Geprüft: verschachteltes `claude -p` im Projektverzeichnis sieht die Agenten und lädt die Hooks; CELLAR liefert `32024R1689` EN per Content Negotiation (1,26 MB, 0,3 s). Ein Haiku-Relais, das `builder` startet, hat der Auto-Mode-Klassifizierer blockiert ("Create Unsafe Agents"). Kein Umweg versucht.
+- Doku: STATUS, Log ergänzt; Lint grün. Kein Code, kein Commit.
 
 ## Blocker
-- **Git-Commit-Freigabe** (Frage 4) fehlt; ohne Commits kein Rückspulpunkt und keine Worktrees.
+- **Sitzung im richtigen Verzeichnis neu starten:** `cd ~/Developer/Sidehustle/eu-ai-act-mcp && claude`. Erst dann greifen Hooks, Env und Agenten.
 - Juristischer Partner fehlt (nicht blockierend für A).
 
 ## Nächste Schritte
-0. **Einstieg neue Sitzung (Env und Hooks greifen erst nach Neustart):** `builder` starten mit Auftrag "Lies `plan/day-1.md` und arbeite den Vertrag ab, Branch `feat/day-1-parser`, Gate `plan/gate-day-1.sh`". Fable schreibt dazu nur den Auftrag, baut nichts selbst. Fable-Wochenanteil war 87 % (Reset Mo 18:59); bis dahin Züge knapp halten, bei Limit `/model opus`.
-1. Tag 1 Parser EN/DE + Diff + H3 (`builder` baut, Golden-Checks liegen in `tests/golden/`, `reviewer` prüft Diff + Gate); CP1 Di 06.10. nach dem Reset: Gate selbst laufen lassen, zwei Hook-Verstöße provozieren, `/usage` notieren.
+0. **Einstieg (nach Neustart in `eu-ai-act-mcp`):** `builder` per Agent-Tool starten mit Auftrag "Lies `plan/current-day`, `plan/day-1.md`, `plan/gate-day-1.sh`, `tests/golden/`; arbeite den Vertrag ab; Branch `feat/day-1-parser`; Rohdaten per `curl -sSL -H 'Accept: application/xhtml+xml' -H 'Accept-Language: <en|de>' http://publications.europa.eu/resource/celex/<CELEX>`; Fortschritt in `plan/progress-day-1.log`". Fable baut nichts selbst. Bei Fable-Limit `/model opus`.
+1. Nach dem Builder-Bericht: `reviewer` auf `main..feat/day-1-parser` + Gate-Ausgabe. CP1 Di 06.10. nach dem Reset: Gate selbst laufen lassen, zwei Hook-Verstöße provozieren, `/usage` notieren.
 2. Tag 2 Tools V0–V2; Tag 3 Manifest, Record, Verify-Seite, Repo öffentlich, Fallset-Freeze.
 3. Tag 4 Eval als Skript mit hartem Kostenlimit; Tag 5 Puffer; Tag 6 Abschluss.
 4. **E1 Mo 19.10.** nach vorregistrierter Regel (ADR-010).
@@ -23,4 +23,4 @@
 1. ~~Go~~ erteilt. 2. ~~Commit~~ erlaubt. 3. ~~Tier~~ 5x. 4. API-Keys für drei Flaggschiff-Modelle bis Tag 4 (≤ 30 €). 5. Juristischer Reviewer (nicht blockierend). LinkedIn-Post optional (ADR-009).
 
 ## Laufende Agenten
-keine (Berichte 10 und 11 abgeschlossen)
+keine
