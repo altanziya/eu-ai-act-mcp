@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>Evidence Record prüfen / Verify evidence record (EU AI Act)</title>
+<title>Verify evidence record (EU AI Act)</title>
 <style>
   body { font: 16px/1.5 system-ui, sans-serif; max-width: 62rem; margin: 1.5rem auto; padding: 0 1rem; color: #1b1b1b; }
   h1 { font-size: 1.5rem; } h2 { font-size: 1.1rem; margin-top: 1.5rem; }
@@ -18,18 +18,28 @@
   #summary:empty { display: none; }
   .box { border: 1px solid #c8c8c8; padding: .5rem 1rem; margin: 1rem 0; background: #fcfcfc; }
   .box p { margin: .5rem 0; }
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .top h1 { margin: 0; }
+  #lang-toggle { font: inherit; padding: .25rem .7rem; border: 2px solid #1b1b1b; background: #fff; color: #1b1b1b; cursor: pointer; }
+  #lang-toggle:hover, #lang-toggle:focus { background: #f2f2f2; }
+  #lang-toggle .cur { font-weight: 700; text-decoration: underline; }
+  .home { font-size: .9rem; margin: .25rem 0 0; }
 </style>
 </head>
 <body>
-<h1>Evidence Record prüfen / Verify evidence record</h1>
-<p id="status">Diese Seite benötigt JavaScript, um den Record aus dem Link neu zu berechnen. Die Texte unten sind auch ohne JavaScript lesbar. / This page needs JavaScript to recompute the record from the link. The texts below are readable without JavaScript.</p>
+<div class="top">
+  <h1 data-i18n="title">Verify evidence record</h1>
+  <button type="button" id="lang-toggle" data-lang-toggle aria-label="Deutsch / English"><span data-lang-option="de">Deutsch</span> / <span data-lang-option="en" class="cur">English</span></button>
+</div>
+<p class="home"><a href="../">EU AI Act: verifiable legal graph</a></p>
+<p id="status">This page needs JavaScript to recompute the record from the link. The texts below are readable without JavaScript. / Diese Seite benötigt JavaScript, um den Record aus dem Link neu zu berechnen. Die Texte unten sind auch ohne JavaScript lesbar.</p>
 
 <div id="summary"></div>
 
 <section class="box" id="statement">
   <h2>Aussage dieser Seite / What this page states</h2>
-  <p lang="de">Dieser Record verweist auf Textstellen, die mit dem signierten Korpus-Release <span data-release-id>X</span> übereinstimmen; die Zitatprüfung wurde hier neu berechnet. Er beweist nicht, wer ihn erstellt hat, und bestätigt keine Konformität eines Systems. Die Aussage gilt nur, wenn der Signaturstatus unten &bdquo;gültig&ldquo; lautet und alle Prüfungen bestanden sind.</p>
   <p lang="en">This record refers to passages that match the signed corpus release <span data-release-id>X</span>; the quotation check was recomputed here. It does not prove who created it and does not confirm compliance of any system. The statement holds only if the signature status below reads &ldquo;valid&rdquo; and all checks passed.</p>
+  <p lang="de">Dieser Record verweist auf Textstellen, die mit dem signierten Korpus-Release <span data-release-id>X</span> übereinstimmen; die Zitatprüfung wurde hier neu berechnet. Er beweist nicht, wer ihn erstellt hat, und bestätigt keine Konformität eines Systems. Die Aussage gilt nur, wenn der Signaturstatus unten &bdquo;gültig&ldquo; lautet und alle Prüfungen bestanden sind.</p>
 </section>
 
 <section id="integrity"></section>
@@ -37,15 +47,15 @@
 <section id="compare"></section>
 <section id="nodes"></section>
 <section id="creator">
-  <h2>ungeprüfte Angaben des Erstellers / unverified statements by the creator</h2>
-  <p>Frage, Ersteller und Erstellungszeit stammen vom Ersteller des Records und werden hier nicht geprüft. / Question, creator and creation time come from the creator of the record and are not checked here.</p>
+  <h2 data-i18n="creatorH">Unverified statements by the creator</h2>
+  <p data-i18n="creatorIntro">Question, creator and creation time come from the creator of the record and are not checked here.</p>
   <div id="creator-body"></div>
 </section>
 
 <section class="box" id="notice">
   <h2>Pflichttexte / Required notices</h2>
-  <p lang="de">Prüfung gegen die konsolidierte Fassung 02024R1689-20260727 von EUR-Lex. Diese Fassung ist nicht rechtlich authentisch; verbindlich ist allein das Amtsblatt (ABl. L 2024/1689, L 2026/1744). Keine Rechtsberatung. Dieses Dokument bestätigt keine Konformität eines Systems; es belegt, dass die zitierten Textstellen zum angegebenen Stichtag im genannten Korpus-Release so lauten.</p>
   <p lang="en">Checked against the consolidated version 02024R1689-20260727 from EUR-Lex. This version is not legally authentic; only the Official Journal (OJ L 2024/1689, L 2026/1744) is binding. Not legal advice. This document does not certify compliance of any system; it attests that the quoted passages read as stated in the named corpus release on the given date.</p>
+  <p lang="de">Prüfung gegen die konsolidierte Fassung 02024R1689-20260727 von EUR-Lex. Diese Fassung ist nicht rechtlich authentisch; verbindlich ist allein das Amtsblatt (ABl. L 2024/1689, L 2026/1744). Keine Rechtsberatung. Dieses Dokument bestätigt keine Konformität eines Systems; es belegt, dass die zitierten Textstellen zum angegebenen Stichtag im genannten Korpus-Release so lauten.</p>
 </section>
 <section id="record-notice"></section>
 
