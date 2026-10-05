@@ -57,8 +57,8 @@ describe("day5b golden: Annex III provider (employment)", () => {
   it("is sorted applicable before upcoming, then by date, and has a timeline", () => {
     const order = { applicable: 0, upcoming: 1, depends: 2 } as Record<string, number>;
     for (let i = 1; i < r.obligations.length; i++) {
-      const a = r.obligations[i - 1], b = r.obligations[i];
-      expect(order[a.status] <= order[b.status]).toBe(true);
+      const a = r.obligations[i - 1]!, b = r.obligations[i]!;
+      expect(order[a.status]! <= order[b.status]!).toBe(true);
       if (a.status === b.status && a.applies_from && b.applies_from) expect(a.applies_from <= b.applies_from).toBe(true);
     }
     expect(r.timeline.map((t) => t.date)).toEqual([...r.timeline.map((t) => t.date)].sort());
