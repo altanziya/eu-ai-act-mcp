@@ -335,6 +335,13 @@ Statement shown on the page: "Dieser Record verweist auf Textstellen, die mit de
 Konformität eines Systems." / "This record refers to passages that match the signed corpus release X; the quotation check
 was recomputed here. It does not prove who created it and does not confirm compliance of any system."
 
+## Data source and licence
+
+The corpus is built from EUR-Lex/CELLAR: Regulation (EU) 2024/1689, consolidated version 02024R1689-20260727. Reuse of the
+legal texts follows Commission Decision 2011/833/EU with attribution to the source (c) European Union, eur-lex.europa.eu.
+Only the Official Journal is authentic; the consolidated version is not. The code is licensed under Apache-2.0. This project
+is not legal advice.
+
 ## Licences (separate)
 
 - Code: Apache-2.0 (`LICENSE`).

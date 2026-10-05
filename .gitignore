@@ -14,3 +14,6 @@ __pycache__/
 site/release/
 site/verify/verify.js
 release/.tmp-*
+*.p12
+plan/handoff-latest.md
+plan/handoff-latest.md.tmp
