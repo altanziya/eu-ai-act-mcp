@@ -5,7 +5,8 @@
 import { describe, expect, it } from "vitest";
 import { V2024, V2026 } from "../../src/config.js";
 import type { ProvisionNode } from "../../src/parser/types.js";
-import { buildIndex, loadCorpus } from "../../src/tools/corpus.js";
+import { buildIndex } from "../../src/tools/corpus.js";
+import { loadCorpus } from "../../src/tools/corpus-fs.js";
 import type { CorpusIndex, Lang, Version } from "../../src/tools/corpus.js";
 import { verifyCitation } from "../../src/tools/verifyCitation.js";
 

@@ -2,7 +2,8 @@
 import { readFileSync } from "node:fs";
 import { diffPath, V2024, V2026 } from "../config.js";
 import type { DiffResult } from "../diff/diff.js";
-import { AMENDING_ACT, isLang, loadCorpus } from "./corpus.js";
+import { AMENDING_ACT, isLang } from "./corpus.js";
+import { loadCorpus } from "./corpus-fs.js";
 import type { CorpusIndex, Lang } from "./corpus.js";
 import { notice } from "./notice.js";
 import { parseRef } from "./refParser.js";

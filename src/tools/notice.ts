@@ -1,5 +1,5 @@
 /** Mandatory notice texts (docs/designs/ai-act-verifier-benchmark.md, "Pflichttexte"), with the version actually checked. */
-import { V2024, V2026 } from "../config.js";
+import { V2024, V2026 } from "../constants.js";
 
 export interface Notice {
   de: string;

@@ -1,7 +1,8 @@
 /** aiact_get_provision: one node (with all descendants) of a corpus version and language. */
 import { V2024, V2026 } from "../config.js";
 import type { ProvisionNode } from "../parser/types.js";
-import { descendants, isLang, isVersion, loadCorpus, otherVersion } from "./corpus.js";
+import { descendants, isLang, isVersion, otherVersion } from "./corpus.js";
+import { loadCorpus } from "./corpus-fs.js";
 import type { Lang, Version } from "./corpus.js";
 import { notice } from "./notice.js";
 import { parseRef } from "./refParser.js";

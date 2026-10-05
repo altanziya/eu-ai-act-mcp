@@ -9,3 +9,8 @@ dist/
 !plan/*.log
 plan/.gate-failures-*
 __pycache__/
+*.pem
+*.key
+site/release/
+site/verify/verify.js
+release/.tmp-*
