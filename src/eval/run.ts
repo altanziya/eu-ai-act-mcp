@@ -1,10 +1,11 @@
 /**
  * npm run eval -- --cases <yaml> --models <id,...> --arms plain,web,tools --reps N --max-usd X --out <dir>
- *                 --primary-model <id> [--dry-run] [--resume] [--reasoning-effort low|medium|high|none]
+ *                 --primary-model <id> [--dry-run] [--resume] [--reasoning-effort low|medium|high|none] [--max-claude-calls N]
  * Runs every case x model x arm x repetition, scores the answers deterministically and writes runs.jsonl, results.json and
  * report.md to <dir>. The cost cap is hard: before every call, spent + estimate > max-usd stops the run (status budget_stop).
  * Model ids with the prefix `claude-code/` run through the Claude Code CLI (subscription, src/eval/claudeCode.ts), all others through OpenRouter;
- * a run may mix both. Subscription runs cost no money (their API-equivalent cost is booked as cost_equiv_usd, outside --max-usd) and a
+ * a run may mix both. Subscription runs cost no money (their API-equivalent cost is booked as cost_equiv_usd, outside --max-usd); they are
+ * capped by --max-claude-calls (default 400 per invocation; before the call that would exceed it the run stops with budget_stop) and a
  * used-up quota ends the run cleanly (status quota_stop; --resume continues).
  * --dry-run uses a mock model without network, cost or `claude` call. See docs/reference.md "Evaluation harness".
  */
@@ -41,7 +42,11 @@ export interface Options {
   dryRun: boolean;
   resume: boolean;
   reasoningEffort: Effort | null;
+  /** Cap on `claude` calls of one invocation (claude-code/ models); a --resume starts counting from zero. */
+  maxClaudeCalls: number;
 }
+
+export const DEFAULT_MAX_CLAUDE_CALLS = 400;
 
 export function parseArgs(argv: string[]): Options {
   const get = (name: string): string | undefined => {
@@ -62,6 +67,8 @@ export function parseArgs(argv: string[]): Options {
   if (!Number.isFinite(maxUsd) || maxUsd < 0) throw new Error("--max-usd must be a number >= 0");
   const eff = get("reasoning-effort") ?? "low";
   if (!["low", "medium", "high", "none"].includes(eff)) throw new Error("--reasoning-effort must be low|medium|high|none");
+  const maxClaudeCalls = Number(get("max-claude-calls") ?? DEFAULT_MAX_CLAUDE_CALLS);
+  if (!Number.isInteger(maxClaudeCalls) || maxClaudeCalls < 0) throw new Error("--max-claude-calls must be an integer >= 0");
   const models = split(need("models"));
   if (models.length === 0) throw new Error("--models is empty");
   const dryRun = argv.includes("--dry-run");
@@ -70,7 +77,7 @@ export function parseArgs(argv: string[]): Options {
   if (primaryModel !== null && (primaryModel.startsWith("--") || !models.includes(primaryModel))) throw new Error(`--primary-model ${primaryModel} must be one of --models`);
   return {
     cases: need("cases"), models, arms: arms as Arm[], reps, maxUsd, out: need("out"), primaryModel,
-    dryRun, resume: argv.includes("--resume"), reasoningEffort: eff === "none" ? null : (eff as Effort),
+    dryRun, resume: argv.includes("--resume"), reasoningEffort: eff === "none" ? null : (eff as Effort), maxClaudeCalls,
   };
 }
 
@@ -204,11 +211,16 @@ export async function main(argv: string[]): Promise<number> {
     console.log(`STOP (${kind}): ${why}`);
   };
 
+  let claudeCalls = 0;
   for (const t of tasks) {
     const subscription = isClaudeCode(t.model); // no money: neither estimate nor --max-usd applies
     const est = o.dryRun || subscription ? { run: 0, requests: 1 } : estimator.estimate(t.model, t.arm);
     if (!o.dryRun && !subscription && !budget.allows(est.run)) {
       stop(`spent ${usd(budget.spent)} + estimate ${usd(est.run)} > cap ${o.maxUsd} before ${t.c.id} | ${t.model} | ${t.arm} | rep ${t.rep + 1}`);
+      break;
+    }
+    if (!o.dryRun && subscription && claudeCalls >= o.maxClaudeCalls) {
+      stop(`--max-claude-calls ${o.maxClaudeCalls} reached before ${t.c.id} | ${t.model} | ${t.arm} | rep ${t.rep + 1}`);
       break;
     }
     let rec: RunRecord;
@@ -218,6 +230,7 @@ export async function main(argv: string[]): Promise<number> {
       const parsed = parseAnswer(raw);
       rec = { ...base, raw, parsed, score: scoreCase(t.c, parsed), prompt_tokens: 0, completion_tokens: 0, cost: 0, tool_calls: [], requests: 0, finish_reason: "mock", status: 200, latency_ms: 0, mock: true };
     } else if (subscription) {
+      claudeCalls++;
       const r = await runClaude({ model: t.model, arm: t.arm, system: buildSystemPrompt(t.c.as_of, t.arm), user: buildUserPrompt(t.c.question) });
       const parsed = r.outcome === "ok" ? parseAnswer(r.text) : null;
       rec = {
@@ -276,7 +289,7 @@ export async function main(argv: string[]): Promise<number> {
   const total = lines.reduce((s, r) => s + r.cost, 0);
   const totalEquiv = lines.reduce((s, r) => s + (r.cost_equiv_usd ?? 0), 0);
   const e1 = o.primaryModel !== null ? computeE1(lines, o.primaryModel) : null;
-  const meta = { cases_file: o.cases, prompt_version: PROMPT_VERSION, scorer_version: SCORER_VERSION, rescored_runs: rescored, status, dry_run: lines.length > 0 && lines.every((r) => r.mock === true), reps: o.reps, max_usd: o.maxUsd, total_cost_usd: total, total_cost_equiv_usd: totalEquiv, backends: Object.fromEntries(o.models.map((m) => [m, backendOf(m)])), primary_model: o.primaryModel, e1, ...(note ? { note } : {}) };
+  const meta = { cases_file: o.cases, prompt_version: PROMPT_VERSION, scorer_version: SCORER_VERSION, rescored_runs: rescored, status, dry_run: lines.length > 0 && lines.every((r) => r.mock === true), reps: o.reps, max_usd: o.maxUsd, max_claude_calls: o.maxClaudeCalls, claude_calls: claudeCalls, total_cost_usd: total, total_cost_equiv_usd: totalEquiv, backends: Object.fromEntries(o.models.map((m) => [m, backendOf(m)])), primary_model: o.primaryModel, e1, ...(note ? { note } : {}) };
   writeFileSync(
     join(out, "results.json"),
     `${JSON.stringify({ ...meta, runs: latest.length, planned_runs: cases.length * o.models.length * o.arms.length * o.reps, models: o.models, arms: o.arms, cases: cases.length, max_tokens: MAX_TOKENS, request_params: modelParams, estimates, cells: summarize(lines) }, null, 2)}\n`,

@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { RunRecord } from "../../src/eval/report.js";
-import { main } from "../../src/eval/run.js";
+import { main, parseArgs } from "../../src/eval/run.js";
 
 const FAKE = resolve("tests/fixtures/fake-claude.mjs");
 const SMOKE = "tests/fixtures/eval-smoke.yaml"; // 2 cases
@@ -146,5 +146,28 @@ describe("claude-code backend in the harness", () => {
     await main(args(out, ["--arms", "plain", "--reps", "2"]));
     expect(readResults(out)).toMatchObject({ status: "complete", runs: 4, total_cost_usd: 0 });
     expect(Number(readResults(out)["total_cost_equiv_usd"])).toBeGreaterThan(0);
+  });
+
+  it("--max-claude-calls stops with budget_stop before the call that would exceed it; the default is 400", async () => {
+    const out = join(tmp, "max-calls");
+    await main(args(out, ["--max-claude-calls", "4"]));
+    expect(callCount(log)).toBe(4);
+    const res = readResults(out);
+    expect(res).toMatchObject({ status: "budget_stop", runs: 4, planned_runs: 6, max_claude_calls: 4, claude_calls: 4 });
+    expect(String(res["note"])).toMatch(/--max-claude-calls 4 reached/);
+    // resume: the cap counts per invocation, the two missing runs fit
+    await main(args(out, ["--resume", "--max-claude-calls", "2"]));
+    expect(callCount(log)).toBe(6);
+    expect(readResults(out)).toMatchObject({ status: "complete", runs: 6 });
+    expect(parseArgs(args(out, ["--dry-run"])).maxClaudeCalls).toBe(400);
+    expect(() => parseArgs(args(out, ["--max-claude-calls", "-1"]))).toThrow(/max-claude-calls/);
+    expect(() => parseArgs(args(out, ["--max-claude-calls", "x"]))).toThrow(/max-claude-calls/);
+  });
+
+  it("--max-claude-calls 0 makes no call at all", async () => {
+    const out = join(tmp, "zero-calls");
+    await main(args(out, ["--max-claude-calls", "0"]));
+    expect(callCount(log)).toBe(0);
+    expect(readResults(out)).toMatchObject({ status: "budget_stop", runs: 0 });
   });
 });
