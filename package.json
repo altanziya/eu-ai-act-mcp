@@ -20,7 +20,8 @@
     "record": "tsx scripts/record.ts",
     "build:site": "tsx scripts/build-site.ts",
     "site:serve": "tsx scripts/site-serve.ts",
-    "cost:probe": "tsx scripts/cost-probe.ts"
+    "cost:probe": "tsx scripts/cost-probe.ts",
+    "eval": "tsx src/eval/run.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
@@ -34,6 +35,7 @@
     "@noble/ed25519": "^3.2.0",
     "@noble/hashes": "^2.4.0",
     "htmlparser2": "^12.0.0",
+    "yaml": "^2.9.1",
     "zod": "^4.6.5"
   }
 }

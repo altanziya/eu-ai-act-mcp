@@ -5,6 +5,7 @@
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { pathToFileURL } from "node:url";
 import { z } from "zod";
 import { V2024, V2026 } from "../config.js";
 import { diffProvision } from "../tools/diffProvision.js";
@@ -105,7 +106,10 @@ async function main(): Promise<void> {
   await createServer().connect(new StdioServerTransport());
 }
 
-main().catch((e: unknown) => {
-  console.error(e);
-  process.exit(1);
-});
+// Only when started as a program (npm run mcp); importing createServer (tests, the eval harness check) must not open stdio.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((e: unknown) => {
+    console.error(e);
+    process.exit(1);
+  });
+}

@@ -7,21 +7,15 @@
  * The API key comes from OPENROUTER_API_KEY or the macOS keychain item "openrouter" and is never logged or written.
  * `--list` only fetches the model list, prints the selection and writes nothing.
  */
-import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { REPO_ROOT } from "../src/config.js";
-import { diffProvision } from "../src/tools/diffProvision.js";
-import { getProvision } from "../src/tools/getProvision.js";
-import { verifyCitation } from "../src/tools/verifyCitation.js";
+import { API, REFERER, apiKey, converse } from "../src/eval/openrouter.js";
 import { ARMS, PROVIDERS, cellStats, price, projectCost, selectModels, toCandidates } from "./cost-probe/select.js";
 import type { Arm, Candidate, CallRecord as BaseCall, RawModel, Provider } from "./cost-probe/select.js";
 
-const API = "https://openrouter.ai/api/v1";
 const TODAY = "2026-10-05";
 const CAP_USD = 3.0;
-const MAX_TOOL_ROUNDS = 6;
-const TOOL_RESULT_CHARS = 6000;
 const CASES = 40;
 const OUT_DIR = join(REPO_ROOT, "scripts/cost-probe/results");
 const OUT_JSON = join(OUT_DIR, `${TODAY}.json`);
@@ -39,85 +33,6 @@ const SYSTEM_PROMPT =
   `"article" (the provision you cite), "quote" (an exact quotation from it) and "answer" (your answer in at most 120 words). No markdown.`;
 const TOOLS_HINT = " You may call the provided tools to look up the provision text, the differences between versions and to verify a quotation.";
 
-const TOOL_DEFS = [
-  {
-    type: "function",
-    function: {
-      name: "aiact_get_provision",
-      description:
-        `Returns one provision of Regulation (EU) 2024/1689 by id or citation (e.g. "art_50.par_1" or "Article 50(1)"), with all descendants. ` +
-        `version: 32024R1689 (Official Journal, default for recitals) or 02024R1689-20260727 (consolidated after the Omnibus; default). Recitals exist only in 32024R1689; asking for one in 02024R1689-20260727 returns found=false with a fallback.`,
-      parameters: {
-        type: "object",
-        properties: {
-          id: { type: "string", minLength: 1, description: "Node id (art_50.par_1.a, anx_3.pt_1, rec_12, cpt_3.sct_2) or citation (Article 50(1)(a), Anhang III Nummer 1)" },
-          version: { type: "string", enum: ["32024R1689", "02024R1689-20260727"], description: "Corpus version; default 02024R1689-20260727" },
-          lang: { type: "string", enum: ["en", "de"], description: "en (default) or de" },
-          include_children: { type: "boolean", description: "Include all descendants (default true)" },
-        },
-        required: ["id"],
-      },
-    },
-  },
-  {
-    type: "function",
-    function: {
-      name: "aiact_diff",
-      description: "What happened to a provision between 32024R1689 and 02024R1689-20260727 (Omnibus, amending act 32026R1744): unchanged, changed (with word diff), added, removed, moved.",
-      parameters: {
-        type: "object",
-        properties: {
-          id: { type: "string", minLength: 1, description: "Node id or citation" },
-          lang: { type: "string", enum: ["en", "de"], description: "en (default) or de" },
-        },
-        required: ["id"],
-      },
-    },
-  },
-  {
-    type: "function",
-    function: {
-      name: "aiact_verify_citation",
-      description:
-        "Checks that a quotation exists in the AI Act text (V0, with pinpoint), whether it applies on as_of (V1, from a deadline table), and its language (V2). " +
-        "It never checks that the text supports a claim (support_checked is always false) and never certifies compliance.",
-      parameters: {
-        type: "object",
-        properties: {
-          quote: { type: "string", minLength: 1, description: "The quoted wording (at least 6 words; [...] marks omissions)" },
-          claimed_ref: { type: "string", description: "Where the quote is claimed to be, e.g. Article 50(1) or art_50.par_1" },
-          as_of: { type: "string", pattern: "^\\d{4}-\\d{2}-\\d{2}$", description: "Reference date YYYY-MM-DD; default today. Before 2026-07-27 the Official Journal version is checked, after it the consolidated version." },
-          lang: { type: "string", enum: ["en", "de"], description: "Language of the quote; en (default) or de" },
-        },
-        required: ["quote"],
-      },
-    },
-  },
-] as const;
-
-function runTool(name: string, rawArgs: string): string {
-  let out: unknown;
-  try {
-    const args = JSON.parse(rawArgs === "" ? "{}" : rawArgs) as Record<string, unknown>;
-    if (name === "aiact_get_provision") out = getProvision(args as unknown as Parameters<typeof getProvision>[0]);
-    else if (name === "aiact_diff") out = diffProvision(args as unknown as Parameters<typeof diffProvision>[0]);
-    else if (name === "aiact_verify_citation") out = verifyCitation({ ...(args as unknown as Parameters<typeof verifyCitation>[0]), as_of: (args["as_of"] as string | undefined) ?? TODAY });
-    else out = { error: `unknown tool ${name}` };
-  } catch (e) {
-    out = { error: e instanceof Error ? e.message : String(e) };
-  }
-  const text = JSON.stringify(out);
-  return text.length > TOOL_RESULT_CHARS ? `${text.slice(0, TOOL_RESULT_CHARS)}...[truncated]` : text;
-}
-
-function apiKey(): string {
-  const env = process.env["OPENROUTER_API_KEY"]?.trim();
-  if (env) return env;
-  const key = execFileSync("security", ["find-generic-password", "-s", "openrouter", "-w"], { encoding: "utf8" }).trim();
-  if (!key) throw new Error("no OpenRouter API key (OPENROUTER_API_KEY or keychain item openrouter)");
-  return key;
-}
-
 interface CallRecord extends BaseCall {
   question_text: string;
   model_reported: string | null;
@@ -130,20 +45,6 @@ interface CallRecord extends BaseCall {
   answer: string;
 }
 
-interface ChatMessage {
-  role: string;
-  content?: string | null;
-  tool_calls?: Array<{ id: string; type: string; function: { name: string; arguments: string } }>;
-  tool_call_id?: string;
-  annotations?: unknown[];
-}
-interface ChatResponse {
-  model?: string;
-  choices?: Array<{ finish_reason?: string; message?: ChatMessage }>;
-  usage?: { prompt_tokens?: number; completion_tokens?: number; cost?: number };
-  error?: { message?: string };
-}
-
 let cumulative = 0;
 class CapReached extends Error {}
 
@@ -152,80 +53,28 @@ function guard(estimate: number): void {
   if (cumulative >= CAP_USD || cumulative + estimate > CAP_USD) throw new CapReached(`cap ${CAP_USD} USD: cumulative ${cumulative.toFixed(4)} + estimate ${estimate.toFixed(4)}`);
 }
 
-async function chat(key: string, body: Record<string, unknown>, estimate: number): Promise<{ status: number; json: ChatResponse }> {
-  guard(estimate);
-  const res = await fetch(`${API}/chat/completions`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${key}`,
-      "Content-Type": "application/json",
-      "HTTP-Referer": "https://github.com/altanziya/eu-ai-act-mcp",
-      "X-Title": "eu-ai-act-mcp cost probe",
-    },
-    body: JSON.stringify({ ...body, usage: { include: true }, max_tokens: 800, temperature: 0 }),
-    signal: AbortSignal.timeout(240_000),
-  });
-  const text = await res.text();
-  let json: ChatResponse;
-  try {
-    json = JSON.parse(text) as ChatResponse;
-  } catch {
-    json = { error: { message: text.slice(0, 300) } };
-  }
-  cumulative += json.usage?.cost ?? 0;
-  return { status: res.status, json };
-}
-
 async function measure(key: string, q: number, model: Candidate, arm: Arm, estimate: number): Promise<CallRecord> {
-  const messages: ChatMessage[] = [
-    { role: "system", content: SYSTEM_PROMPT + (arm === "tools" ? TOOLS_HINT : "") },
-    { role: "user", content: QUESTIONS[q] ?? "" },
-  ];
-  const base: Record<string, unknown> = { model: model.id };
-  if (arm === "web") base["plugins"] = [{ id: "web" }];
-  if (arm === "tools") base["tools"] = TOOL_DEFS;
-  const rec: CallRecord = {
-    question: q, question_text: QUESTIONS[q] ?? "", model: model.id, arm, model_reported: null, status: 0, prompt_tokens: 0, completion_tokens: 0, cost: 0,
-    latency_ms: 0, tool_rounds: 0, requests: 0, finish_reason: null, web_citations: 0, answer: "",
+  const r = await converse({
+    key, model: model.id, arm, system: SYSTEM_PROMPT + (arm === "tools" ? TOOLS_HINT : ""), user: QUESTIONS[q] ?? "", asOf: TODAY,
+    maxTokens: 800, temperature: 0, title: "eu-ai-act-mcp cost probe",
+    beforeRequest: () => {
+      try {
+        guard(estimate);
+        return true;
+      } catch {
+        return false;
+      }
+    },
+    onCost: (c) => {
+      cumulative += c;
+    },
+  });
+  if (r.stopped) throw new CapReached(`cap ${CAP_USD} USD: cumulative ${cumulative.toFixed(4)} + estimate ${estimate.toFixed(4)}`);
+  return {
+    question: q, question_text: QUESTIONS[q] ?? "", model: model.id, arm, model_reported: r.model_reported, status: r.status, prompt_tokens: r.prompt_tokens,
+    completion_tokens: r.completion_tokens, cost: r.cost, latency_ms: r.latency_ms, tool_rounds: r.tool_rounds, requests: r.requests, finish_reason: r.finish_reason,
+    web_citations: r.web_citations, answer: r.text.slice(0, 500), ...(r.error !== undefined ? { error: r.error } : {}),
   };
-  const t0 = Date.now();
-  try {
-    for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
-      const withTools = arm === "tools" && round < MAX_TOOL_ROUNDS; // after 6 rounds the model must answer without tools
-      const body = { ...base, messages, ...(arm === "tools" && !withTools ? { tool_choice: "none" } : {}) };
-      const { status, json } = await chat(key, body, estimate);
-      rec.requests++;
-      rec.status = status;
-      rec.prompt_tokens += json.usage?.prompt_tokens ?? 0;
-      rec.completion_tokens += json.usage?.completion_tokens ?? 0;
-      rec.cost += json.usage?.cost ?? 0;
-      rec.model_reported = json.model ?? rec.model_reported;
-      if (status >= 400) {
-        rec.error = (json.error?.message ?? "error").slice(0, 300);
-        break;
-      }
-      const choice = json.choices?.[0];
-      const msg = choice?.message;
-      rec.finish_reason = choice?.finish_reason ?? null;
-      rec.web_citations = msg?.annotations?.length ?? rec.web_citations;
-      const calls = msg?.tool_calls ?? [];
-      if (arm === "tools" && calls.length > 0 && round < MAX_TOOL_ROUNDS) {
-        rec.tool_rounds++;
-        messages.push({ role: "assistant", content: msg?.content ?? null, tool_calls: calls });
-        for (const c of calls) messages.push({ role: "tool", tool_call_id: c.id, content: runTool(c.function.name, c.function.arguments) });
-        continue;
-      }
-      rec.answer = (msg?.content ?? "").slice(0, 500);
-      break;
-    }
-  } catch (e) {
-    if (e instanceof CapReached) throw e;
-    rec.error = (e instanceof Error ? e.message : String(e)).slice(0, 300);
-    rec.status = rec.status || -1;
-  } finally {
-    rec.latency_ms = Date.now() - t0;
-  }
-  return rec;
 }
 
 /** Conservative estimate of one measurement before any has run in that cell (tokens x list price, plus a web search fee). */
@@ -290,7 +139,7 @@ function report(candidates: Candidate[], flagship: Candidate[], cheaper: Candida
 
 async function main(): Promise<void> {
   const key = apiKey();
-  const res = await fetch(`${API}/models`, { headers: { Authorization: `Bearer ${key}`, "HTTP-Referer": "https://github.com/altanziya/eu-ai-act-mcp", "X-Title": "eu-ai-act-mcp cost probe" } });
+  const res = await fetch(`${API}/models`, { headers: { Authorization: `Bearer ${key}`, "HTTP-Referer": REFERER, "X-Title": "eu-ai-act-mcp cost probe" } });
   if (!res.ok) throw new Error(`models: HTTP ${res.status}`);
   const candidates = toCandidates(((await res.json()) as { data: RawModel[] }).data);
   const sel = selectModels(candidates);

@@ -1,0 +1,29 @@
+# Smoke-test cases for the eval harness (constructed; not part of the pre-registered case set eval/cases.yaml).
+- id: SMOKE-G01
+  kind: generation
+  subset: version_deadline
+  question: "As of today, from when do the obligations for high-risk AI systems listed in Annex III apply under the AI Act? Give the date, the version of the Regulation you relied on and the provision that sets the date."
+  as_of: "2026-10-05"
+  knowable_before_omnibus: false
+  origin: constructed
+  expected: { date: "2027-12-02", version: "02024R1689-20260727", articles: ["art_113"] }
+  ground_truth:
+    celex: "02024R1689-20260727"
+    pinpoint: "Art. 113, third paragraph, point (c)(i)"
+    quote: "2 December 2027 as regards AI systems classified as high-risk pursuant to Article 6(2) and Annex III"
+  legal_review: none
+  notes: "Smoke test only. Expected values follow data/deadlines.json (rule art6-par2-annex3)."
+- id: SMOKE-E01
+  kind: evaluation
+  subset: evaluation
+  question: "Is the following quotation an exact quotation of Article 5(1)(a) of Regulation (EU) 2024/1689? Quotation: \"the placing on the market, the putting into service or the use of an AI system that deploys subliminal techniques beyond a person's consciousness or purposefully manipulative or deceptive techniques, with the objective, or the effect of slightly distorting the behaviour of a person or a group of persons\". Answer with verdict correct or incorrect."
+  as_of: "2026-10-05"
+  knowable_before_omnibus: true
+  origin: constructed
+  expected: { verdict: incorrect }
+  ground_truth:
+    celex: "02024R1689-20260727"
+    pinpoint: "Art. 5(1)(a)"
+    quote: "the placing on the market, the putting into service or the use of an AI system that deploys subliminal techniques beyond a person's consciousness or purposefully manipulative or deceptive techniques, with the objective, or the effect of materially distorting the behaviour of a person or a group of persons"
+  legal_review: none
+  notes: "Smoke test only. The quotation was altered on purpose (slightly instead of materially)."
