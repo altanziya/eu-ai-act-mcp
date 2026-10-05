@@ -1,0 +1,58 @@
+{
+  "schema": "aiact-corpus-manifest/1",
+  "release_id": "aiact-corpus-2026-10-05",
+  "tool_version": "0.1.0",
+  "files": [
+    {
+      "path": "corpus/02024R1689-20260727.de.json",
+      "sha256": "5b29764879dbaf3d2b4c19e40e0251de8cef9f611e31cc558c4f37b7d44f1f50",
+      "bytes": 987178,
+      "celex": "02024R1689-20260727",
+      "lang": "de",
+      "node_count": 1587
+    },
+    {
+      "path": "corpus/02024R1689-20260727.en.json",
+      "sha256": "b04425dcb37b22ad9df3395ad10ea34b64f8ccd48fbb2ca6fb8a19095695488c",
+      "bytes": 942262,
+      "celex": "02024R1689-20260727",
+      "lang": "en",
+      "node_count": 1587
+    },
+    {
+      "path": "corpus/32024R1689.de.json",
+      "sha256": "c5a630097aa43ba55f2797dfd28b201c7e2bf1bd2872cf6e61dfd1ef8f509ac4",
+      "bytes": 1207741,
+      "celex": "32024R1689",
+      "lang": "de",
+      "node_count": 1617
+    },
+    {
+      "path": "corpus/32024R1689.en.json",
+      "sha256": "a7deb55ba0094be9f1705532b40fedb0f6984589203afc3b8557d0c9aa112754",
+      "bytes": 1132115,
+      "celex": "32024R1689",
+      "lang": "en",
+      "node_count": 1617
+    },
+    {
+      "path": "deadlines.json",
+      "sha256": "57f69cef6dbe69020fd69788594483c6673b502320d4f3fbd1ab5a61668c0568",
+      "bytes": 6624
+    },
+    {
+      "path": "diff/de.json",
+      "sha256": "606290ff1b7cba0701a9fc701c2a84aab1c9c4ca7760c0373f4939f5309d1880",
+      "bytes": 96955
+    },
+    {
+      "path": "diff/en.json",
+      "sha256": "5f010cc94dff3c3615c2c1ad125e61c8b76cde00f789d8c37e7dce1931a24dea",
+      "bytes": 97761
+    }
+  ],
+  "notice": {
+    "de": "Prüfung gegen die Amtsblattfassung 32024R1689 und die konsolidierte Fassung 02024R1689-20260727 von EUR-Lex. Diese Wiedergabe ist nicht rechtlich authentisch; verbindlich ist allein das Amtsblatt (ABl. L 2024/1689, L 2026/1744). Keine Rechtsberatung. Dieses Dokument bestätigt keine Konformität eines Systems; es belegt, dass die zitierten Textstellen zum angegebenen Stichtag im genannten Korpus-Release so lauten.",
+    "en": "Checked against the Official Journal version 32024R1689 and the consolidated version 02024R1689-20260727 from EUR-Lex. This rendition is not legally authentic; only the Official Journal (OJ L 2024/1689, L 2026/1744) is binding. Not legal advice. This document does not certify compliance of any system; it attests that the quoted passages read as stated in the named corpus release on the given date."
+  }
+}
