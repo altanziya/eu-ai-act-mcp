@@ -15,6 +15,7 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "mcp": "tsx src/mcp/server.ts",
+    "mcp:extended": "tsx src/mcp/server.ts --extended",
     "release": "tsx scripts/release.ts",
     "sign": "tsx scripts/sign.ts",
     "record": "tsx scripts/record.ts",

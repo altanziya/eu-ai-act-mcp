@@ -1,6 +1,7 @@
 /**
- * MCP server (stdio) for the EU AI Act provision tree: aiact_get_provision, aiact_diff, aiact_verify_citation, aiact_search, aiact_audit_text.
- * All tools are read-only. Results are JSON text in content[0]. Start: `npm run mcp`.
+ * MCP server (stdio) for the EU AI Act provision tree: aiact_get_provision, aiact_diff, aiact_verify_citation and, in
+ * extended mode (`npm run mcp:extended`, `--extended`, `AIACT_MCP_EXTENDED=1`), aiact_search and aiact_audit_text.
+ * The default stays the three tools of the frozen day-2 golden test (exactly three tools listed). All tools are read-only. Results are JSON text in content[0]. Start: `npm run mcp`.
  * stdout carries the protocol only; nothing else may be written to it.
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -27,7 +28,12 @@ const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; te
   content: [{ type: "text", text: JSON.stringify({ error: e instanceof Error ? e.message : String(e) }) }],
 });
 
-export function createServer(): McpServer {
+export interface ServerOptions {
+  /** Also register aiact_search and aiact_audit_text (day 5a). Default false: tests/golden/day2 expects exactly three tools. */
+  extended?: boolean;
+}
+
+export function createServer(options: ServerOptions = {}): McpServer {
   const server = new McpServer({ name: "eu-ai-act-mcp", version: "0.1.0" });
 
   server.registerTool(
@@ -101,58 +107,61 @@ export function createServer(): McpServer {
     },
   );
 
-  server.registerTool(
-    "aiact_search",
-    {
-      title: "Search provisions",
-      description:
-        "Full-text search (BM25) over the AI Act in the version in force on as_of: returns the best matching provisions with citation, heading, snippet, score and applicability on as_of (from the deadline table). " +
-        `Before 2026-07-27 the Official Journal version ${V2024} is searched (with recitals), after it the consolidated version ${V2026}. Finds provisions by wording; it does not interpret them or say which one applies to a system.`,
-      inputSchema: {
-        query: z.string().min(1).describe("Search words or a phrase, in the language of lang"),
-        as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD; default today. Selects the version searched."),
-        lang: lang.optional().describe("en (default) or de"),
-        limit: z.number().int().min(1).max(20).optional().describe("Maximum number of results (default 8, at most 20)"),
+  if (options.extended ?? false) {
+    server.registerTool(
+      "aiact_search",
+      {
+        title: "Search provisions",
+        description:
+          "Full-text search (BM25) over the AI Act in the version in force on as_of: returns the best matching provisions with citation, heading, snippet, score and applicability on as_of (from the deadline table). " +
+          `Before 2026-07-27 the Official Journal version ${V2024} is searched (with recitals), after it the consolidated version ${V2026}. Finds provisions by wording; it does not interpret them or say which one applies to a system.`,
+        inputSchema: {
+          query: z.string().min(1).describe("Search words or a phrase, in the language of lang"),
+          as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD; default today. Selects the version searched."),
+          lang: lang.optional().describe("en (default) or de"),
+          limit: z.number().int().min(1).max(20).optional().describe("Maximum number of results (default 8, at most 20)"),
+        },
+        annotations: READ_ONLY,
       },
-      annotations: READ_ONLY,
-    },
-    (args) => {
-      try {
-        return json(aiactSearch({ ...args, as_of: args.as_of ?? localDateIso() }));
-      } catch (e) {
-        return failure(e);
-      }
-    },
-  );
+      (args) => {
+        try {
+          return json(aiactSearch({ ...args, as_of: args.as_of ?? localDateIso() }));
+        } catch (e) {
+          return failure(e);
+        }
+      },
+    );
 
-  server.registerTool(
-    "aiact_audit_text",
-    {
-      title: "Audit text",
-      description:
-        "Checks a text (policy, provider answer, slides, AI-generated answer) against the AI Act in the version in force on as_of: outdated application dates, citations of provisions that were removed or do not exist (with the place a removed provision moved to), and quotations that differ from the wording in force. " +
-        "Returns findings with severity, span in the text, expected and found values and sources. Deterministic, no language model. Orientation only, not legal advice; it never certifies compliance.",
-      inputSchema: {
-        text: z.string().min(1).describe("The text to check (any length; citations like Article 6(2), Annex III, Artikel 9 Absatz 2, dates, and quotations of six or more words next to a citation are checked)"),
-        as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD; default today. Selects the version checked."),
-        lang: lang.optional().describe("Language of the text and of the messages; en (default) or de"),
+    server.registerTool(
+      "aiact_audit_text",
+      {
+        title: "Audit text",
+        description:
+          "Checks a text (policy, provider answer, slides, AI-generated answer) against the AI Act in the version in force on as_of: outdated application dates, citations of provisions that were removed or do not exist (with the place a removed provision moved to), and quotations that differ from the wording in force. " +
+          "Returns findings with severity, span in the text, expected and found values and sources. Deterministic, no language model. Orientation only, not legal advice; it never certifies compliance.",
+        inputSchema: {
+          text: z.string().min(1).describe("The text to check (any length; citations like Article 6(2), Annex III, Artikel 9 Absatz 2, dates, and quotations of six or more words next to a citation are checked)"),
+          as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD; default today. Selects the version checked."),
+          lang: lang.optional().describe("Language of the text and of the messages; en (default) or de"),
+        },
+        annotations: READ_ONLY,
       },
-      annotations: READ_ONLY,
-    },
-    (args) => {
-      try {
-        return json(auditText({ ...args, as_of: args.as_of ?? localDateIso() }));
-      } catch (e) {
-        return failure(e);
-      }
-    },
-  );
+      (args) => {
+        try {
+          return json(auditText({ ...args, as_of: args.as_of ?? localDateIso() }));
+        } catch (e) {
+          return failure(e);
+        }
+      },
+    );
+  }
 
   return server;
 }
 
 async function main(): Promise<void> {
-  await createServer().connect(new StdioServerTransport());
+  const extended = process.argv.includes("--extended") || process.env["AIACT_MCP_EXTENDED"] === "1";
+  await createServer({ extended }).connect(new StdioServerTransport());
 }
 
 // Only when started as a program (npm run mcp); importing createServer (tests, the eval harness check) must not open stdio.

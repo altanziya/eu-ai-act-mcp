@@ -36,13 +36,15 @@ const KW = {
   par: /^(?:paragraphs?|para\.?|absatz|abs\.?)\s*\(?(\d+[a-z]?)\)?(?![a-z0-9])/i,
   sub: /^(?:subparagraph|subpara\.?|unterabsatz|unterabs\.?)\s*\(?(\d+)\)?(?![a-z0-9])/i,
   ptNum: /^(?:points?|items?|nummer|nr\.?|no\.?)\s*\(?(\d+(?:\.\d+)*[a-z]?)\)?(?![a-z0-9])/i,
-  ptLetter: /^(?:points?|buchstabe|buchst\.?|lit\.?|letter|ziffer)\s*\(?([a-z]{1,3})\)?(?![a-z0-9])/i,
+  /** German nested letter level ("Buchstabe c Ziffer i"), only in extended mode. */
+  ziffer: /^ziffer\s*\(?([a-z]{1,3})\)?(?![a-z0-9])/i,
+  ptLetter: /^(?:points?|buchstabe|buchst\.?|lit\.?|letter)\s*\(?([a-z]{1,3})\)?(?![a-z0-9])/i,
   section: /^(?:section|abschnitt)\s+([a-z]|\d+)(?![a-z0-9])/i,
   paren: /^\(\s*([0-9a-z]+)\s*\)/i,
   skip: /^(?:[\s,;:.]+|(?:of|the|in|im|der|des|von)\b)/i,
 };
 
-function tail(kind: Kind, input: string, segs: string[]): string[] | null {
+function tail(kind: Kind, input: string, segs: string[], extended: boolean): string[] | null {
   let rest = input;
   let guard = 0;
   while (rest.trim() !== "") {
@@ -53,7 +55,7 @@ function tail(kind: Kind, input: string, segs: string[]): string[] | null {
       continue;
     }
     let m: RegExpExecArray | null;
-    if ((m = KW.ordinal.exec(rest))) {
+    if (extended && (m = KW.ordinal.exec(rest))) {
       segs.push(`sub_${ORDINAL[(m[1] as string).toLowerCase()] as number}`);
     } else if ((m = KW.par.exec(rest))) {
       segs.push(`par_${(m[1] as string).toLowerCase()}`);
@@ -63,6 +65,8 @@ function tail(kind: Kind, input: string, segs: string[]): string[] | null {
       segs.push(`sec_${(m[1] as string).toLowerCase()}`);
     } else if ((m = KW.ptNum.exec(rest))) {
       for (const part of (m[1] as string).toLowerCase().split(".")) segs.push(`pt_${part}`);
+    } else if (extended && (m = KW.ziffer.exec(rest))) {
+      segs.push((m[1] as string).toLowerCase());
     } else if ((m = KW.ptLetter.exec(rest))) {
       segs.push((m[1] as string).toLowerCase());
     } else if ((m = KW.paren.exec(rest))) {
@@ -80,7 +84,13 @@ function tail(kind: Kind, input: string, segs: string[]): string[] | null {
   return segs;
 }
 
-export function parseRef(ref: string): string | null {
+export interface ParseRefOptions {
+  /** Also read "third paragraph" / "second subparagraph" (as `sub_n`) and German "Ziffer i" (default true). The eval scorer turns it off to keep the pre-registered scoring of run A. */
+  extended?: boolean;
+}
+
+export function parseRef(ref: string, options: ParseRefOptions = {}): string | null {
+  const extended = options.extended ?? true;
   const raw = ref.normalize("NFC").trim();
   if (ID_RE.test(raw)) return raw;
   const text = raw.replace(TRAILING_ACT, "").replace(/\s+/g, " ").trim();
@@ -95,14 +105,14 @@ export function parseRef(ref: string): string | null {
   }
 
   if ((m = /^(?:article|art\.?|artikel)\s*(\d+[a-z]?)(?![a-z0-9])/i.exec(text))) {
-    const segs = tail("article", text.slice(m[0].length), []);
+    const segs = tail("article", text.slice(m[0].length), [], extended);
     return segs ? [`art_${(m[1] as string).toLowerCase()}`, ...segs].join(".") : null;
   }
 
   if ((m = /^(?:annex|anhang)\s+([ivxlc]+|\d+)(?![a-z0-9])/i.exec(text))) {
     const n = roman(m[1] as string);
     if (n === null) return null;
-    const segs = tail("annex", text.slice(m[0].length), []);
+    const segs = tail("annex", text.slice(m[0].length), [], extended);
     return segs ? [`anx_${n}`, ...segs].join(".") : null;
   }
   return null;

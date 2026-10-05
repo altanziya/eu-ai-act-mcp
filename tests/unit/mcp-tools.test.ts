@@ -3,8 +3,8 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { describe, expect, it } from "vitest";
 import { createServer } from "../../src/mcp/server.js";
 
-async function connect(): Promise<Client> {
-  const server = createServer();
+async function connect(extended = true): Promise<Client> {
+  const server = createServer({ extended });
   const client = new Client({ name: "test", version: "0" });
   const [a, b] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(a), client.connect(b)]);
@@ -23,7 +23,12 @@ const call = async (client: Client, name: string, args: Record<string, unknown>)
 };
 
 describe("MCP server tools (day 5a)", () => {
-  it("lists five read-only tools, with as_of documented where the version depends on it", async () => {
+  it("the default server lists exactly the three tools of the day-2 golden test", async () => {
+    const client = await connect(false);
+    expect((await client.listTools()).tools.map((t) => t.name).sort()).toEqual(["aiact_diff", "aiact_get_provision", "aiact_verify_citation"]);
+    await client.close();
+  });
+  it("lists five read-only tools in extended mode, with as_of documented where the version depends on it", async () => {
     const client = await connect();
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual(["aiact_audit_text", "aiact_diff", "aiact_get_provision", "aiact_search", "aiact_verify_citation"]);
