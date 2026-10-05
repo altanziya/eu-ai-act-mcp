@@ -265,7 +265,8 @@ An evidence record (`aiact-evidence-record/1`) is one quote check made against o
 `claimed_ref`, `as_of`, `lang`), the full `result` of `aiact_verify_citation`, `cited_nodes` (`id`, `version`, `lang`, `hash`,
 `node_hash` of every node the result points to), `manifest_sha256`, `notice` (DE and EN) and `record_hash`. `question`,
 `creator` and `created_at` are statements by the creator and are not checked. The library has no clock; the CLI sets
-`created_at` (override with `--created-at`).
+`created_at` (override with `--created-at`). Input limits (UTF-16 code units): `question` 2000, `creator` 200, `quote` 5000;
+longer input is rejected with an error.
 
     npm run record -- --quote "..." --ref art_5.par_1.a --as-of 2026-09-01 --lang en \
       --release aiact-corpus-2026-10-05 [--question "..."] [--creator "..."]

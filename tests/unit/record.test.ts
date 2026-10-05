@@ -70,6 +70,13 @@ describe("evidence record", () => {
     expect(recordHash({ ...body, created_at: "2026-10-05T12:00:01+02:00" })).not.toBe(record_hash);
     expect(recordHash({ ...body, question: "other" })).not.toBe(record_hash);
   });
+  it("enforces the input limits: question 2000, creator 200, quote 5000 characters", () => {
+    expect(() => createRecord(input({ question: "q".repeat(2001) }), rel.ctx)).toThrow("question is too long: 2001 characters, at most 2000 are allowed");
+    expect(() => createRecord(input({ creator: "c".repeat(201) }), rel.ctx)).toThrow("creator is too long: 201 characters, at most 200 are allowed");
+    expect(() => createRecord(input({ quote: "w ".repeat(2501) }), rel.ctx)).toThrow("quote is too long: 5002 characters, at most 5000 are allowed");
+    expect(createRecord(input({ question: "q".repeat(2000), creator: "c".repeat(200) }), rel.ctx).question).toHaveLength(2000);
+    expect(createRecord(input({ quote: "w ".repeat(2500) }), rel.ctx).input.quote).toHaveLength(5000);
+  });
   it("rejects a record for another release id", () => {
     expect(() => createRecord(input({ release_id: "other" }), rel.ctx)).toThrow(/release_id/);
   });

@@ -90,7 +90,20 @@ export function citedNodesOf(result: VerifyResult, ctx: ReleaseContext): CitedNo
   return out;
 }
 
+/** Input limits, in UTF-16 code units (`String.length`). */
+export const RECORD_LIMITS = { question: 2000, creator: 200, quote: 5000 } as const;
+
+function assertWithinLimits(input: RecordInput): void {
+  for (const field of ["question", "creator", "quote"] as const) {
+    const value = input[field];
+    if (value !== undefined && value.length > RECORD_LIMITS[field]) {
+      throw new Error(`${field} is too long: ${value.length} characters, at most ${RECORD_LIMITS[field]} are allowed`);
+    }
+  }
+}
+
 export function createRecord(input: RecordInput, ctx: ReleaseContext): EvidenceRecord {
+  assertWithinLimits(input);
   if (input.release_id !== ctx.releaseId) throw new Error(`release_id ${input.release_id} does not match the loaded release ${ctx.releaseId}`);
   const claimed = input.claimed_ref !== undefined && input.claimed_ref.trim() !== "" ? input.claimed_ref : undefined;
   const result = verifyCitationWith({ quote: input.quote, as_of: input.as_of, lang: input.lang, ...(claimed !== undefined ? { claimed_ref: claimed } : {}) }, ctx.loadCorpus, ctx.deadlines);
