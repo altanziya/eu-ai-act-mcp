@@ -18,7 +18,7 @@ import { ancestorChain, descendants, isIsoDate, isLang, otherVersion, versionFor
 import type { CorpusIndex, CorpusLoader, Lang, Version } from "./corpus.js";
 import { matchRule } from "./deadlines.js";
 import type { DeadlineRule, DeadlineTable } from "./deadlines.js";
-import { findDates, findQuotes, findRefsDetailed, splitSentences } from "./auditScan.js";
+import { findDates, findQuotes, findRefsDetailed, splitSentences, startsListItem } from "./auditScan.js";
 import type { RefMention, Span } from "./auditScan.js";
 import { formatRef } from "./formatRef.js";
 import { notice } from "./notice.js";
@@ -86,9 +86,20 @@ interface AnchorTerm {
   re: RegExp;
   /** Node whose deadline rule applies. */
   id: string;
-  needs?: RegExp;
+  needs?: (sentence: string) => boolean;
 }
-const HIGH_RISK = /high[- ]risk|hochrisiko/i;
+/** "high-risk", "high risk", "Hochrisiko" (also as part of a word: Hochrisiko-KI-Systeme, Hochrisikosysteme). */
+const HIGH_RISK_TERM = /(?<![\p{L}])high[- ]risk(?![\p{L}])|hochrisiko/giu;
+/** Words that negate a following "high-risk": "non-high-risk", "not (classified as) high-risk", "other than high-risk", "kein Hochrisiko", "ohne Hochrisiko-Einstufung", "Nicht-Hochrisiko". */
+const NEGATION_BEFORE = /(?:(?<![\p{L}])non[- ]?|(?<![\p{L}])not\s+(?:(?:classified|considered|regarded|deemed|treated|rated)\s+as\s+)?|(?<![\p{L}])no\s+|(?<![\p{L}])without\s+|(?<![\p{L}])other\s+than\s+|(?<![\p{L}])nicht[- ]?(?:als\s+)?|(?<![\p{L}])kein(?:e[nmrs]?)?\s+|(?<![\p{L}])ohne\s+)$/iu;
+/** Offset and length of the first "high-risk" in the sentence that is not negated (null if none). */
+function firstHighRisk(sentence: string): { index: number; length: number } | null {
+  for (const m of sentence.matchAll(HIGH_RISK_TERM)) {
+    if (!NEGATION_BEFORE.test(sentence.slice(Math.max(0, m.index - 40), m.index))) return { index: m.index, length: m[0].length };
+  }
+  return null;
+}
+const HIGH_RISK = (sentence: string): boolean => firstHighRisk(sentence) !== null;
 export const ANCHOR_TERMS: readonly AnchorTerm[] = [
   { re: /(?<![\p{L}])(?:annex|anhang)\s+III(?![\p{L}\p{N}])/gu, id: "art_6.par_2" },
   { re: /(?<![\p{L}])(?:annex|anhang)\s+I(?![\p{L}\p{N}])/gu, id: "art_6.par_1", needs: HIGH_RISK },
@@ -98,16 +109,26 @@ export const ANCHOR_TERMS: readonly AnchorTerm[] = [
   { re: /(?<![\p{L}])(?:transparency\s+obligations|Transparenzpflichten)(?![\p{L}])/giu, id: "art_50" },
 ];
 /** Annex citations whose deadline is the one of the classification rule in Article 6. */
-const ANNEX_RULE: Array<{ prefix: string; id: string; needs?: RegExp }> = [
+const ANNEX_RULE: Array<{ prefix: string; id: string; needs?: (sentence: string) => boolean }> = [
   { prefix: "anx_3", id: "art_6.par_2" },
   { prefix: "anx_1", id: "art_6.par_1", needs: HIGH_RISK },
 ];
 /** Words that say "from/until when" ("takes effect", "become applicable", "enters into application", "gelten ab", "bis zum", "Frist" are covered by their key word). */
-const TRIGGER = /(?<![\p{L}])(?:appl(?:y|ies|ied|icable|ication)|tak(?:e|es|ing|en)\s+effect|effective|compl(?:y|ies|ying|iance)|since|from|by|as of|until|later than|deadline|ab|gilt|gelten|seit|anwendbar|anzuwenden|wirksam|frist|spätestens|bis)(?![\p{L}])/iu;
-/** Words between a trigger word and its date (same clause). */
+const TRIGGER = /(?<![\p{L}])(?:appl(?:y|ies|ied|icable|ication)|tak(?:e|es|ing|en)\s+effect|effective|compl(?:y|ies|ying|iance)|since|from|as of|until|later than|deadline|ab|gilt|gelten|seit|anwendbar|anzuwenden|wirksam|frist|spätestens|bis)(?![\p{L}])/iu;
+/** Words between a trigger word and its date (same clause); a hyphenated compound ("high-risk", "Hochrisiko-KI-Systeme") is one word. */
 const TRIGGER_DISTANCE = 6;
-/** "high-risk", "high risk", "Hochrisiko" (also as part of a word: Hochrisiko-KI-Systeme, Hochrisikosysteme). */
-const HIGH_RISK_TERM = /(?<![\p{L}])high[- ]risk(?![\p{L}])|hochrisiko/iu;
+/** Words of a clause (hyphenated compounds and "2." as one word). */
+const WORD = /[\p{L}\p{N}.]+(?:-[\p{L}\p{N}.]+)*/gu;
+/** "by" is a trigger only directly before the date and not after a passive participle ("reviewed by", "approved by", "signed by", "made by" ...). */
+const PASSIVE_BEFORE_BY = /^(?:\p{L}{3,}ed|made|done|given|taken|written|chosen|set|held|known|seen|shown|found|built|sent|paid|overseen|undertaken|drawn|begun|run|kept|led|worn)$/iu;
+/** A date that opens the sentence behind a preposition ("From 2 August 2026 ...", "Ab dem 2. August 2026 ...") counts as triggered. */
+const LEADING_PREP = /^(?:from|on|as of|with effect from|since|ab(?: dem)?|seit(?: dem)?|am|vom|mit wirkung vom|bis(?: zum)?|until|per)$/iu;
+/** "on"/"am" are no trigger words by themselves: the clause must say that something applies, takes effect or is required. */
+const EFFECT_VERB = /(?<![\p{L}])(?:appl(?:y|ies|icable)|tak(?:e|es|ing)\s+effect|enters?\s+into\s+(?:force|application)|(?:comes?|becomes?)\s+(?:into\s+)?(?:force|effective|applicable)|in\s+force|must|shall|comply|gelten|gilt|treten|tritt|in\s+kraft|anwendbar|anzuwenden|wirksam|müssen|muss|sollen|erfüllen|einhalten)(?![\p{L}])/iu;
+/** The regulation as a whole ("the AI Act", "the Regulation", "die Verordnung", "die KI-Verordnung"). */
+const WHOLE_ACT = /(?<![\p{L}])(?:AI[- ]Act|Artificial\s+Intelligence\s+Act|Regulation|KI-Verordnung|KI-Gesetz|Verordnung)(?![\p{L}])/giu;
+/** What stands before a mention of the regulation when it is not the subject ("under the AI Act", "nach der Verordnung", "des AI Act"). */
+const ACT_OBJECT_BEFORE = /(?:(?<![\p{L}])(?:under|pursuant\s+to|according\s+to|in\s+accordance\s+with|of|in|to|for|by|with|within|per|nach|gemäß|laut|unter|von|vom|im|in|aus|zur|zum|mit|für|gegen|durch|bei|sinne)\s+(?:(?:the|this|these|die|der|dem|den|diese[mnrs]?)\s+)?|(?<![\p{L}])des\s+)$/iu;
 /** An annex of the two routes written in the sentence; with it the annex rule decides, not the both-routes subject. */
 const ROUTE_ANNEX = /(?<![\p{L}])(?:annex|anhang)\s+(?:III|I)(?![\p{L}\p{N}])/iu;
 /** The two classification routes of Article 6, Annex III route first (its date is the one `expected` names). */
@@ -447,28 +468,42 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     for (const r of refs) {
       if (r.sentence !== si || !r.curId || insideChecked(r.mention.span)) continue;
       const annex = ANNEX_RULE.find((a) => r.curId === a.prefix || (r.curId as string).startsWith(`${a.prefix}.`));
-      const ruleId = annex && (!annex.needs || annex.needs.test(sText)) ? annex.id : r.curId;
+      const ruleId = annex && (!annex.needs || annex.needs(sText)) ? annex.id : r.curId;
       hit.push({ ruleId, cited: r.curId, span: r.mention.span });
     }
     if (!foreignSentences.has(si)) {
       // anchor terms stand for a subject only where no citation of another act is in the sentence ("Transparency obligations under Article 13 GDPR")
       for (const a of ANCHOR_TERMS) {
-        if (a.needs && !a.needs.test(sText)) continue;
+        if (a.needs && !a.needs(sText)) continue;
         for (const m of sText.matchAll(a.re)) {
           const start = sentence.start + m.index;
           hit.push({ ruleId: a.id, span: { start, end: start + m[0].length } });
         }
       }
       // "high-risk" without an annex or Article 6(1)/(2): both routes
-      const hr = HIGH_RISK_TERM.exec(sText);
+      const hr = firstHighRisk(sText);
       const routeCited = refs.some((r) => r.sentence === si && ROUTES.some((x) => r.mention.id === x.id || r.mention.id.startsWith(`${x.id}.`) || r.mention.id === x.annex || r.mention.id.startsWith(`${x.annex}.`)));
       if (hr && !ROUTE_ANNEX.test(sText) && !routeCited) {
         const start = sentence.start + hr.index;
-        hit.push({ ruleId: ROUTES[0]!.id, routes: true, span: { start, end: start + hr[0].length } });
+        hit.push({ ruleId: ROUTES[0]!.id, routes: true, span: { start, end: start + hr.length } });
       }
     }
     subjectCache.set(si, hit);
     return hit;
+  };
+  /** The sentence names a subject of its own that the sentence before must not supply: the regulation as a whole, or a citation of another act. */
+  const ownSubject = (si: number): boolean => {
+    const sentence = sentences[si] as Span;
+    return foreignSentences.has(si) || new RegExp(WHOLE_ACT.source, "iu").test(slice(sentence));
+  };
+  /** The regulation as a whole stands in the clause as its subject (not behind "under", "of", "nach", "gemäß" ...). */
+  const actIsSubject = (from: number, to: number): boolean => {
+    const clause = text.slice(from, to);
+    for (const m of clause.matchAll(WHOLE_ACT)) {
+      if (/^['’]s(?![\p{L}])/u.test(clause.slice(m.index + m[0].length, m.index + m[0].length + 3))) continue; // "the AI Act's rules on ...": possessive, not the subject
+      if (!ACT_OBJECT_BEFORE.test(clause.slice(Math.max(0, m.index - 40), m.index))) return true;
+    }
+    return false;
   };
   const datesBySentence = new Map<number, typeof dates>();
   for (const d of dates) {
@@ -543,19 +578,34 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     const starts = clauseStarts(si);
     const from = [...starts].reverse().find((x) => x <= d.span.start) ?? sentence.start;
     const to = starts.find((x) => x > d.span.start) ?? sentence.end;
-    // a trigger word at most TRIGGER_DISTANCE words before the date, in the clause of the date
-    const wordsBefore = text.slice(from, d.span.start).match(/[\p{L}\p{N}.]+/gu) ?? [];
-    const triggered = TRIGGER.test(wordsBefore.slice(-TRIGGER_DISTANCE).join(" "));
-    // a date opening the sentence ("From 2 August 2026, high-risk systems ...") may name its subject after it
-    const leading = wordsBefore.length <= 2 && /^\s*,/.test(text.slice(d.span.end, d.span.end + 3));
+    // a trigger word at most TRIGGER_DISTANCE words before the date, in the clause of the date ("by" only directly before the date, not after a passive participle)
+    const wordsBefore = text.slice(from, d.span.start).match(WORD) ?? [];
+    const tail = wordsBefore.slice(-TRIGGER_DISTANCE);
+    const byBefore = tail.length > 0 && /^by$/i.test(tail[tail.length - 1] as string) && !(tail.length > 1 && PASSIVE_BEFORE_BY.test(tail[tail.length - 2] as string));
+    // a date opening the sentence behind a preposition ("From 2 August 2026 high-risk systems ...", "Ab dem 2. August 2026 gelten ...") counts like a trigger word and may name its subject after it
+    const openWords = text.slice(sentence.start, d.span.start).match(WORD) ?? [];
+    const leadPrep = openWords.length > 0 && openWords.length <= 3 && LEADING_PREP.test(openWords.join(" "));
+    const leadingTrigger = leadPrep && (!/^(?:on|am|vom|per)$/i.test(openWords.join(" ")) || EFFECT_VERB.test(text.slice(d.span.end, to)));
+    const triggered = TRIGGER.test(tail.join(" ")) || byBefore || leadingTrigger;
+    const leading = leadPrep || (wordsBefore.length <= 2 && /^\s*,/.test(text.slice(d.span.end, d.span.end + 3)));
     if (all.length === 0) {
-      // no subject in the sentence: those of the sentence before, in the same paragraph, if that one carries no date of its own
-      const prev = si > 0 && !/\n[ \t]*\n/.test(text.slice((sentences[si - 1] as Span).end, sentence.start)) && !dates.some((x) => sentenceAt(x.span.start) === si - 1) ? subjectsOf(si - 1) : [];
+      // no subject in the sentence: those of the sentence before, in the same paragraph, if that one carries no date of its own;
+      // not if the sentence names a subject of its own (the regulation as a whole, a provision of another act) or is a list item / table row
+      const prev =
+        si > 0 &&
+        !ownSubject(si) &&
+        !startsListItem(text, sentence.start) &&
+        !/\n[ \t\r]*\n/.test(text.slice((sentences[si - 1] as Span).end, sentence.start)) &&
+        !dates.some((x) => sentenceAt(x.span.start) === si - 1)
+          ? subjectsOf(si - 1)
+          : [];
       if (prev.length === 0 || !triggered) continue;
       all = prev.map((x) => ({ ...x, carried: true }));
     }
     let subjects = all.filter((x) => x.carried || (x.span.start >= from && x.span.end <= to));
     if (subjects.length === 0) subjects = all.filter((x) => x.span.end <= d.span.start);
+    // the regulation as a whole is the subject of the date ("the AI Act (generally) applies from ..."): the general date, not the high-risk routes
+    if (!subjects.some((x) => x.carried) && actIsSubject(from, to)) subjects = subjects.filter((x) => !x.routes);
     // both-routes and carried subjects need a trigger word; both-routes ones stand in the clause, before the date
     subjects = subjects.filter((x) => (!x.routes && !x.carried) || (triggered && (!x.routes || x.carried || (x.span.start >= from && (x.span.end <= d.span.start || leading)))));
     if (subjects.length === 0) continue;
