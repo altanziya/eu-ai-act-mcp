@@ -170,18 +170,28 @@ const TAIL_KW = new RegExp(
 );
 const TAIL_SECTION = new RegExp(`[,;]?\\s*(?:Section|Abschnitt)\\s+(?:[A-Z]|\\d+)${END}`, "uy");
 
-const STOP_BEFORE = /(?:GDPR|DSGVO|DS-GVO|TFEU|AEUV|TEU|EUV|DORA|NIS ?2|DSA|DMA)[\s,:–-]*$/;
-const AFTER_OTHER_ACT =
-  /^(?:\s*,)?\s*(?:(?:of|in|under|pursuant to|according to|as per|des|der|von|nach|gemäß|aus|im)\s+)?(?:(?:the|this|dieser|der|die|das)\s+)?(?<act>(?:Regulation|Directive|Decision|Verordnung|Richtlinie|Beschluss)\b(?:\s*\((?:EU|EC|EEC|EG|EWG|Euratom)\))?(?:\s*(?:No\.?|Nr\.?))?(?:\s*\d{1,4}\/\d{1,4})?|GDPR|DSGVO|DS-GVO|TFEU|TEU|AEUV|EUV|Treaty\b|Vertrag\b|Charter\b|Charta\b|Data Act|Digital Services Act|Cyber Resilience Act|NIS ?2|DORA)/iu;
+const STOP_BEFORE = /(?:GDPR|DSGVO|DS-GVO|TFEU|AEUV|TEU|EUV|DORA|NIS-? ?2|DSA|DMA)[\s,:–-]*$/;
+const OTHER_PREP = /^(?:\s*,)?\s*(?:(?:of|in|under|pursuant to|according to|as per|des|der|von|nach|gemäß|aus|im|laut)\s+)?(?:(?:the|this|dieser|der|die|das|dem)\s+)?/iu;
+/** The AI Act itself. */
+const OWN_ACT = /^(?:(?:EU\s+)?AI\s+Act|Artificial\s+Intelligence\s+Act|KI-VO|KI-Verordnung|KI-Gesetz|(?:Regulation|Verordnung)\s*\((?:EU)\)\s*(?:No\.?\s*)?2024\/1689|(?:Regulation|Verordnung)\b(?!\s*\(|\s+(?:No\.?|Nr\.?)?\s*\d))/u;
+const OTHER_ACT = new RegExp(
+  "^(?:" +
+    "(?:Regulation|Directive|Decision|Verordnung|Richtlinie|Beschluss)\\b(?:\\s*\\((?:EU|EC|EEC|EG|EWG|Euratom)\\))?\\s*(?:No\\.?|Nr\\.?)?\\s*\\d{1,4}\\/\\d{1,4}" +
+    "|(?:Directive|Richtlinie)\\b" +
+    `|(?:\\p{Lu}[\\p{L}0-9-]*\\s+){1,6}(?:Act|Regulation|Directive|Code|Law|Treaty|Charter|Convention)\\b` +
+    `|\\p{Lu}[\\p{L}-]*(?:verordnung|richtlinie|gesetz|vertrag|charta|kodex|rechtsakt)\\b` +
+    `|(?:Gesetz|Verordnung|Rechtsakt)\\s+(?:über|zur|zum)\\s+\\p{Lu}` +
+    "|(?:GDPR|DSGVO|DS-GVO|UK GDPR|TFEU|TEU|AEUV|EUV|NIS-? ?2|DORA|DSA|DMA|CRA|MDR|IVDR|Treaty|Vertrag|Charter|Charta|Data Act|Datengesetz)(?![\\p{L}\\p{N}])" +
+    ")",
+  "u",
+);
 
-/** True if the text right after a citation says that it belongs to another act (GDPR, other Regulations, Directives, treaties). */
+/** True if the text right after a citation says that it belongs to another act (GDPR, Data Act, other Regulations, Directives, treaties, named acts). */
 export function citesOtherAct(after: string): boolean {
-  const m = AFTER_OTHER_ACT.exec(after);
-  if (!m) return false;
-  const act = (m.groups?.["act"] ?? "") as string;
-  if (/\b2024\/1689\b/.test(act)) return false;
-  if (/^(?:Regulation|Verordnung)\b/i.test(act)) return /\d{1,4}\/\d{1,4}/.test(act);
-  return true;
+  const prep = OTHER_PREP.exec(after);
+  const rest = after.slice(prep ? prep[0].length : 0);
+  if (OWN_ACT.test(rest)) return false;
+  return OTHER_ACT.test(rest);
 }
 
 const ANNEX_ROMAN = /^[IVXLC]+$/;
@@ -221,57 +231,132 @@ function readTail(text: string, at: number, annex: boolean): number[] {
   return ends;
 }
 
-const RANGE_SEP = /^(?:\s+(?:to|through|bis)\s+|\s*[–—-]\s*)/iu;
 const LIST_SEP = /^(?:\s*,\s*(?:and\s+|or\s+|und\s+|oder\s+)?|\s+(?:and|or|und|oder)\s+|(?:\s+(?:to|through|bis)\s+|\s*[–—-]\s*))/iu;
 const ANNEX_SEP = /^(?:\s+(?:and|or|und|oder|to|bis)\s+|\s*[–—-]\s*)/iu;
+const ANNEX_LIST_SEP = /^(?:\s*,\s*(?:and\s+|or\s+|und\s+|oder\s+)?|\s+(?:and|or|und|oder|to|bis)\s+|\s*[–—-]\s*)/iu;
+const NOT_A_NUMBER_OF_PROVISIONS = /^\s*(?:days?|weeks?|months?|years?|hours?|Tage[n]?|Wochen?|Monate[n]?|Jahre[n]?|Stunden?|%|percent|Prozent|EUR|euros?|million|Millionen)(?![\p{L}])/iu;
+const LAST_VALUE = /(\d+[a-z]?|[a-z]{1,3})(?=[\s)]*$)/;
+
+interface Item {
+  /** Where the item starts in the text (the anchor word for the first one). */
+  start: number;
+  /** Number and all tail tokens but the last, as written. */
+  head: string;
+  /** The last tail token as written (empty if there is none). */
+  last: string;
+  /** Text offsets of the end of the number and of each tail token. */
+  numEnd: number;
+  tailEnds: number[];
+  /** The item was derived from the previous one ("(2)" in "6(1) and (2)", "2" in "Absatz 1 und 2"). */
+  derived: boolean;
+  end: number;
+}
+
+export interface RefScan {
+  refs: RefMention[];
+  /** Citations of other acts that were skipped. */
+  foreign: Span[];
+}
 
 /**
  * Citations of the form Article N(...)(...), Art. / Artikel N Absatz ..., Annex III point ..., Anhang III Nummer ...
- * Lists ("Articles 102 to 110", "Artikel 6 und 8") yield the first and the last item only. Citations of other acts
- * ("Article 6 GDPR", "Article 9(1) of Regulation (EU) 2016/679") are skipped.
+ * Lists ("Article 6 and 7", "Articles 6(1) and (2)", "Artikel 6 Absatz 1 und 2") yield every item; a range
+ * ("Articles 102 to 110") yields its two ends. Citations of other acts ("Article 6 GDPR", "Article 9(1) of
+ * Regulation (EU) 2016/679", "of the Data Act") are skipped and reported in `foreign`.
  */
-export function findRefs(text: string): RefMention[] {
+export function findRefsDetailed(text: string): RefScan {
   const out: RefMention[] = [];
+  const foreign: Span[] = [];
   let resume = 0;
   for (const a of text.matchAll(ANCHOR)) {
     if (a.index < resume) continue;
     const word = a[1] as string;
     const annex = /^(?:annex|anhang|anh)/i.test(word);
-    const plural = /^(?:articles|artikeln?|art\.?)$/i.test(word); // "Article 6, 7" is not a list, "Articles 6, 7" and "Artikel 6, 7" are
-    const items: Array<{ prefixStart: number; num: { value: string; start: number; end: number }; tailEnds: number[] }> = [];
+    const plural = /^(?:annexes|anh[äa]nge[n]?)$/i.test(word);
+    const items: Item[] = [];
     let at = a.index + word.length;
-    for (let guard = 0; guard < 12; guard++) {
+    for (let guard = 0; guard < 40; guard++) {
       const num = readNumber(text, at, annex);
       if (!num) break;
-      if (items.length > 0 && MONTH_START.test(text.slice(num.end).trimStart())) break; // "Article 5, 2 August 2026": a date, not an item
+      if (items.length > 0 && (MONTH_START.test(text.slice(num.end).trimStart()) || NOT_A_NUMBER_OF_PROVISIONS.test(text.slice(num.end)))) break;
       const tailEnds = readTail(text, num.end, annex);
-      items.push({ prefixStart: items.length === 0 ? a.index : num.start, num, tailEnds });
-      const last = tailEnds[tailEnds.length - 1] ?? num.end;
-      const sep = annex ? ANNEX_SEP.exec(text.slice(last)) : (plural ? LIST_SEP : RANGE_SEP).exec(text.slice(last));
-      if (!sep) break;
-      at = last + sep[0].length;
+      const toks = tailEnds.map((e, i) => text.slice(i === 0 ? num.end : (tailEnds[i - 1] as number), e));
+      const end = tailEnds[tailEnds.length - 1] ?? num.end;
+      items.push({ start: items.length === 0 ? a.index : num.start, head: num.value + toks.slice(0, -1).join(""), last: toks[toks.length - 1] ?? "", numEnd: num.end, tailEnds, derived: false, end });
+      // next item
+      for (;;) {
+        const prev = items[items.length - 1] as Item;
+        const sepRe = annex ? (plural ? ANNEX_LIST_SEP : ANNEX_SEP) : LIST_SEP;
+        const sep = sepRe.exec(text.slice(prev.end));
+        if (!sep) {
+          at = -1;
+          break;
+        }
+        const from = prev.end + sep[0].length;
+        const rest = text.slice(from);
+        // sibling pinpoint: "6(1) and (2)", "Absatz 1 und 2", "paragraphs 1 and 2"
+        let derived: { value: string; len: number; whole?: string } | null = null;
+        if (prev.last !== "" && LAST_VALUE.test(prev.last) && !/^(?:first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\b/i.test(prev.last.replace(/^[,;\s]+/, ""))) {
+          const paren = /^\(\s*(\d+[a-z]?|[a-z]{1,3})\s*\)/.exec(rest);
+          const bare = /^(\d+[a-z]?)(?![\p{L}\p{N}])/u.exec(rest);
+          const lastIsParen = /\)\s*$/.test(prev.last);
+          if (paren && lastIsParen) derived = { value: paren[1] as string, len: paren[0].length };
+          else if (bare && !lastIsParen && /\d$/.test(prev.last.trim())) derived = { value: bare[1] as string, len: bare[0].length };
+          else if (!lastIsParen) {
+            // the same keyword again: "Absatz 1 oder Absatz 2", "point 1 and point 2"
+            TAIL_KW.lastIndex = from;
+            const kw = TAIL_KW.exec(text);
+            const word = (t: string): string => (/^[,;\s]*([\p{L}.]+)/u.exec(t)?.[1] ?? "").toLowerCase().replace(/s$/, "");
+            if (kw && word(kw[0]) === word(prev.last)) derived = { value: "", len: kw[0].length, whole: ` ${kw[0].trim()}` };
+          }
+        }
+        if (derived) {
+          const last = derived.whole ?? prev.last.replace(LAST_VALUE, derived.value);
+          items.push({ start: from, head: prev.head, last, numEnd: from, tailEnds: [], derived: true, end: from + derived.len });
+          continue;
+        }
+        at = from;
+        break;
+      }
+      if (at === -1) break;
     }
     if (items.length === 0) continue;
-    const firstItem = items[0] as (typeof items)[number];
-    const lastItem = items[items.length - 1] as (typeof items)[number];
-    const lastEnd = lastItem.tailEnds[lastItem.tailEnds.length - 1] ?? lastItem.num.end;
-    resume = lastEnd;
-    if (STOP_BEFORE.test(text.slice(Math.max(0, a.index - 20), a.index))) continue;
-    if (citesOtherAct(text.slice(lastEnd, lastEnd + 120))) continue;
-    const picked = items.length === 1 ? [firstItem] : [firstItem, lastItem];
-    for (const it of picked) {
+    const lastItem = items[items.length - 1] as Item;
+    resume = lastItem.end;
+    const span: Span = { start: a.index, end: lastItem.end };
+    if (STOP_BEFORE.test(text.slice(Math.max(0, a.index - 24), a.index)) || citesOtherAct(text.slice(lastItem.end, lastItem.end + 120))) {
+      foreign.push(span);
+      continue;
+    }
+    for (const it of items) {
+      const prefix = annex ? "Annex" : "Article";
       let parsed: { id: string; end: number } | null = null;
-      for (let k = it.tailEnds.length; k >= 0 && !parsed; k--) {
-        const end = k === 0 ? it.num.end : (it.tailEnds[k - 1] as number);
-        const raw = `${annex ? "Annex" : "Article"} ${text.slice(it.num.start, end)}`;
-        const id = parseRef(raw);
-        if (id !== null) parsed = { id, end };
+      if (it.derived) {
+        const id = parseRef(`${prefix} ${it.head}${it.last}`);
+        if (id !== null) parsed = { id, end: it.end };
+      } else {
+        for (let k = it.tailEnds.length; k >= 0 && !parsed; k--) {
+          const end = k === 0 ? it.numEnd : (it.tailEnds[k - 1] as number);
+          // the number starts at `start` for later items and after the anchor word for the first one
+          const numStart = it === items[0] ? findNumberStart(text, a.index + word.length) : it.start;
+          const id = parseRef(`${prefix} ${text.slice(numStart, end)}`);
+          if (id !== null) parsed = { id, end };
+        }
       }
       if (!parsed) continue;
-      const start = it.prefixStart;
-      out.push({ span: { start, end: parsed.end }, id: parsed.id, raw: text.slice(start, parsed.end) });
+      out.push({ span: { start: it.start, end: parsed.end }, id: parsed.id, raw: text.slice(it.start, parsed.end) });
     }
   }
-  out.sort((a, b) => a.span.start - b.span.start);
-  return out;
+  out.sort((x, y) => x.span.start - y.span.start);
+  return { refs: out, foreign };
+}
+
+function findNumberStart(text: string, from: number): number {
+  let i = from;
+  while (i < text.length && /\s/.test(text[i] as string)) i++;
+  return i;
+}
+
+export function findRefs(text: string): RefMention[] {
+  return findRefsDetailed(text).refs;
 }

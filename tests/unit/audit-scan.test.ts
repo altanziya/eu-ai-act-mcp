@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { citesOtherAct, findDates, findQuotes, findRefs, splitSentences } from "../../src/tools/auditScan.js";
+import { citesOtherAct, findDates, findQuotes, findRefs, findRefsDetailed, splitSentences } from "../../src/tools/auditScan.js";
 
 const refs = (t: string): Array<[string, string]> => findRefs(t).map((r) => [r.id, t.slice(r.span.start, r.span.end)]);
 
@@ -19,11 +19,26 @@ describe("findRefs: English", () => {
   ] as Array<[string, Array<[string, string]>]>)("%s", (t, want) => {
     expect(refs(t)).toEqual(want);
   });
-  it("lists yield the first and the last item only, with their own spans", () => {
+  it("ranges yield their two ends, and/comma lists every item, each with its own span", () => {
     const t = "Articles 102 to 110 apply, as do Articles 6, 7 and 8.";
-    expect(refs(t)).toEqual([["art_102", "Articles 102"], ["art_110", "110"], ["art_6", "Articles 6"], ["art_8", "8"]]);
+    expect(refs(t)).toEqual([["art_102", "Articles 102"], ["art_110", "110"], ["art_6", "Articles 6"], ["art_7", "7"], ["art_8", "8"]]);
     const r = findRefs(t);
     expect(t.slice((r[1] as { span: { start: number } }).span.start)).toMatch(/^110 apply/);
+  });
+  it("singular lists: Article 6 and 7, Article 6, 7 and 8", () => {
+    expect(refs("Article 6 and 7 apply.")).toEqual([["art_6", "Article 6"], ["art_7", "7"]]);
+    expect(refs("Article 6, 7 and 8 apply.")).toEqual([["art_6", "Article 6"], ["art_7", "7"], ["art_8", "8"]]);
+    expect(refs("Article 5 or 6 applies")).toEqual([["art_5", "Article 5"], ["art_6", "6"]]);
+  });
+  it("sibling pinpoints: Articles 6(1) and (2), Article 3(1) and (2), paragraphs 1 and 2", () => {
+    expect(refs("Articles 6(1) and (2) apply.")).toEqual([["art_6.par_1", "Articles 6(1)"], ["art_6.par_2", "(2)"]]);
+    expect(refs("Article 3(1) and (2) define")).toEqual([["art_3.par_1", "Article 3(1)"], ["art_3.par_2", "(2)"]]);
+    expect(refs("Article 6(1), (2) and (3)")).toEqual([["art_6.par_1", "Article 6(1)"], ["art_6.par_2", "(2)"], ["art_6.par_3", "(3)"]]);
+    expect(refs("Article 6, paragraphs 1 and 2")).toEqual([["art_6.par_1", "Article 6, paragraphs 1"], ["art_6.par_2", "2"]]);
+    expect(refs("Article 6(1) and 7")).toEqual([["art_6.par_1", "Article 6(1)"], ["art_7", "7"]]);
+  });
+  it("a number followed by a unit is not an item", () => {
+    expect(refs("Article 5, 6 months later and Article 9 and 10 days")).toEqual([["art_5", "Article 5"], ["art_9", "Article 9"]]);
   });
   it("does not take a date for a list item", () => {
     expect(refs("Under Article 113, 2 August 2026 is the day.")).toEqual([["art_113", "Article 113"]]);
@@ -37,6 +52,45 @@ describe("findRefs: English", () => {
       ["art_10", "Article 10"],
       ["art_11", "Article 11"],
     ]);
+  });
+  it.each([
+    "Article 6 of the General Data Protection Regulation applies.",
+    "Article 33 of the Data Governance Act applies.",
+    "Article 5 of the Data Act applies.",
+    "Article 25 of the Digital Services Act applies.",
+    "Article 4 of the Machinery Regulation applies.",
+    "Article 10 of the Medical Devices Regulation applies.",
+    "Article 21 of NIS2 applies.",
+    "Article 13 of the Cyber Resilience Act applies.",
+    "Article 6 of Regulation (EU) 2016/679 applies.",
+    "Article 6 of Regulation (EU) No 168/2013 applies.",
+    "Article 17 of Directive (EU) 2019/790 applies.",
+    "Article 17 of Directive 2019/790 applies.",
+    "Article 17 of the Copyright Directive applies.",
+    "Article 288 TFEU applies.",
+    "Article 8 of the Charter of Fundamental Rights applies.",
+    "Artikel 6 der Datenschutz-Grundverordnung gilt.",
+    "Artikel 6 der Verordnung (EU) 2016/679 gilt.",
+    "Artikel 4 der Maschinenverordnung gilt.",
+    "Artikel 6 der Richtlinie 2019/790 gilt.",
+    "Artikel 6 DSGVO gilt.",
+  ])("skips a spelled-out other act: %s", (t) => {
+    const r = findRefsDetailed(t);
+    expect(r.refs).toEqual([]);
+    expect(r.foreign).toHaveLength(1);
+  });
+  it.each([
+    "Article 6 of the AI Act applies.",
+    "Article 6 of the EU AI Act applies.",
+    "Article 6 of this Regulation applies.",
+    "Article 6 of the Regulation applies.",
+    "Article 6 of Regulation (EU) 2024/1689 applies.",
+    "Artikel 6 der KI-Verordnung gilt.",
+    "Artikel 6 der Verordnung (EU) 2024/1689 gilt.",
+    "Artikel 6 dieser Verordnung gilt.",
+    "Article 6. The Data Act is separate.",
+  ])("keeps a citation of the AI Act: %s", (t) => {
+    expect(findRefsDetailed(t).refs).toHaveLength(1);
   });
   it("does not read words that merely start like a citation", () => {
     expect(refs("The articles of association; Articles of faith; Annex Iran")).toEqual([]);
@@ -56,6 +110,10 @@ describe("findRefs: German", () => {
     ["Anhang I Abschnitt A Nummer 2", [["anx_1.sec_a.pt_2", "Anhang I Abschnitt A Nummer 2"]]],
     ["Artikel 43 Absatz 1 Unterabsatz 2", [["art_43.par_1.sub_2", "Artikel 43 Absatz 1 Unterabsatz 2"]]],
     ["Artikel 6 und 8", [["art_6", "Artikel 6"], ["art_8", "8"]]],
+    ["Artikel 6 und 7 sowie Artikel 9", [["art_6", "Artikel 6"], ["art_7", "7"], ["art_9", "Artikel 9"]]],
+    ["Artikel 6 Absatz 1 und 2", [["art_6.par_1", "Artikel 6 Absatz 1"], ["art_6.par_2", "2"]]],
+    ["Artikel 6 Absatz 1 oder Absatz 2", [["art_6.par_1", "Artikel 6 Absatz 1"], ["art_6.par_2", "Absatz 2"]]],
+    ["Anhänge I, II und III", [["anx_1", "Anhänge I"], ["anx_2", "II"], ["anx_3", "III"]]],
     ["Artikel 6 DSGVO und Artikel 9 Absatz 1 der Verordnung (EU) 2016/679", []],
   ] as Array<[string, Array<[string, string]>]>)("%s", (t, want) => {
     expect(refs(t)).toEqual(want);
