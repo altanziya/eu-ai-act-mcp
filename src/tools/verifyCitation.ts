@@ -103,12 +103,11 @@ interface Group {
   owner: number[];
   set: Set<string>;
 }
-const groupCache = new Map<string, Group[]>();
+const groupCache = new WeakMap<CorpusIndex, Group[]>();
 
 const ROOT_TYPES = new Set(["article", "annex", "recital"]);
 function groupsOf(idx: CorpusIndex): Group[] {
-  const key = `${idx.version}.${idx.lang}`;
-  let hit = groupCache.get(key);
+  let hit = groupCache.get(idx);
   if (!hit) {
     const byRoot = new Map<string, ProvisionNode[]>();
     const rootOf = new Map<string, string>();
@@ -137,7 +136,7 @@ function groupsOf(idx: CorpusIndex): Group[] {
       });
       return { nodes, toks, owner, set: new Set(toks.map((t) => t.norm)) };
     });
-    groupCache.set(key, hit);
+    groupCache.set(idx, hit);
   }
   return hit;
 }
@@ -270,7 +269,10 @@ function validityOf(found: { corpus: CorpusIndex; node: ProvisionNode } | null, 
 
 // ---------------------------------------------------------------------------------------------------------------
 
-export function verifyCitation(input: VerifyInput): VerifyResult {
+/** Corpus source; the default reads data/corpus. Unit tests pass a constructed mini corpus. */
+export type CorpusLoader = (version: Version, lang: Lang) => CorpusIndex;
+
+export function verifyCitation(input: VerifyInput, load: CorpusLoader = loadCorpus): VerifyResult {
   const lang = input.lang ?? "en";
   if (!isLang(lang)) throw new Error(`unknown lang ${String(lang)}`);
   const asOf = input.as_of ?? todayIso();
@@ -317,10 +319,10 @@ export function verifyCitation(input: VerifyInput): VerifyResult {
   const ov = otherVersion(vc);
   const ol = otherLang(lang);
   const corpora: Array<{ idx: CorpusIndex; kind: "primary" | "version" | "lang" | "both" }> = [
-    { idx: loadCorpus(vc, lang), kind: "primary" },
-    { idx: loadCorpus(ov, lang), kind: "version" },
-    { idx: loadCorpus(vc, ol), kind: "lang" },
-    { idx: loadCorpus(ov, ol), kind: "both" },
+    { idx: load(vc, lang), kind: "primary" },
+    { idx: load(ov, lang), kind: "version" },
+    { idx: load(vc, ol), kind: "lang" },
+    { idx: load(ov, ol), kind: "both" },
   ];
   const results = corpora.map((c) => ({ ...c, hits: searchNodes(c.idx, pq) }));
 

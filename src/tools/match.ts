@@ -7,7 +7,7 @@
  *    ("[...]", "[…]", "(...)", "…", "...").
  *  - Token: whitespace-separated word, lower-cased, leading/trailing characters that are not letters or digits removed.
  *    Tokens that become empty (a lone ";" or "-") do not exist.
- *  - Hard tokens: tokens containing a digit, month names (EN/DE; "may" only next to a number), negations
+ *  - Hard tokens: tokens containing a digit, spelled-out numbers (two..ninety, hundred; zwei..neunzig), month names (EN/DE; "may" only next to a number), negations
  *    (not, no, nicht, kein, keine, keinen, keinem, keiner, keines). They must be equal.
  *  - Window search: Sellers' approximate substring matching on tokens (unit edit costs), free start and end in the
  *    corpus text. Similarity = 1 - soft_edits / quote_tokens, where an edit that involves a hard token on either side
@@ -31,6 +31,11 @@ const MONTHS = new Set([
   "january", "february", "march", "april", "june", "july", "august", "september", "october", "november", "december",
   "januar", "februar", "märz", "mai", "juni", "juli", "oktober", "dezember",
 ]);
+/** Spelled-out numbers ("six months"); "one"/"ein" are left out because they are mostly articles. */
+const NUMBER_WORDS = new Set(
+  ("two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty thirty forty fifty sixty seventy eighty ninety hundred thousand " +
+    "zwei drei vier fünf sechs sieben acht neun zehn elf zwölf dreizehn vierzehn fünfzehn sechzehn siebzehn achtzehn neunzehn zwanzig dreißig vierzig fünfzig sechzig siebzig achtzig neunzig hundert tausend").split(" "),
+);
 const NEGATIONS = new Set(["not", "no", "nicht", "kein", "keine", "keinen", "keinem", "keiner", "keines"]);
 const BOUNDARY = /^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu;
 
@@ -43,7 +48,7 @@ export function tokenize(text: string): Tok[] {
   }
   toks.forEach((t, i) => {
     const near = (j: number): boolean => /^\d{1,4}$/.test(toks[j]?.norm ?? "");
-    t.hard = /\d/.test(t.norm) || MONTHS.has(t.norm) || NEGATIONS.has(t.norm) || (t.norm === "may" && (near(i - 1) || near(i + 1)));
+    t.hard = /\d/.test(t.norm) || NUMBER_WORDS.has(t.norm) || MONTHS.has(t.norm) || NEGATIONS.has(t.norm) || (t.norm === "may" && (near(i - 1) || near(i + 1)));
   });
   return toks;
 }

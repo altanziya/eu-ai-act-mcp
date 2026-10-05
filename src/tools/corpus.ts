@@ -30,20 +30,25 @@ export interface CorpusIndex {
 
 const cache = new Map<string, CorpusIndex>();
 
+/** Index over a node list (also used by unit tests with a constructed mini corpus). */
+export function buildIndex(version: Version, lang: Lang, nodes: ProvisionNode[]): CorpusIndex {
+  const byId = new Map(nodes.map((n) => [n.id, n]));
+  const children = new Map<string, ProvisionNode[]>();
+  for (const n of nodes) {
+    if (n.parent === null) continue;
+    const list = children.get(n.parent);
+    if (list) list.push(n);
+    else children.set(n.parent, [n]);
+  }
+  return { version, lang, nodes, byId, children };
+}
+
 export function loadCorpus(version: Version, lang: Lang): CorpusIndex {
   const key = `${version}.${lang}`;
   let hit = cache.get(key);
   if (!hit) {
     const file = JSON.parse(readFileSync(corpusPath(version, lang), "utf8")) as CorpusFile;
-    const byId = new Map(file.nodes.map((n) => [n.id, n]));
-    const children = new Map<string, ProvisionNode[]>();
-    for (const n of file.nodes) {
-      if (n.parent === null) continue;
-      const list = children.get(n.parent);
-      if (list) list.push(n);
-      else children.set(n.parent, [n]);
-    }
-    hit = { version, lang, nodes: file.nodes, byId, children };
+    hit = buildIndex(version, lang, file.nodes);
     cache.set(key, hit);
   }
   return hit;
