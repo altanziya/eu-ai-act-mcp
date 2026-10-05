@@ -83,7 +83,7 @@ describe("arguments, prompt and mock", () => {
   it("parses arguments with defaults and validates", () => {
     const o = parseArgs(["--cases", "c.yaml", "--models", "a/b, c/d", "--arms", "plain,tools", "--reps", "3", "--max-usd", "0.3", "--out", "o", "--dry-run"]);
     expect(o).toMatchObject({ models: ["a/b", "c/d"], arms: ["plain", "tools"], reps: 3, maxUsd: 0.3, dryRun: true, resume: false, reasoningEffort: "low" });
-    expect(() => parseArgs(["--cases", "c", "--models", "a", "--arms", "bing", "--max-usd", "1", "--out", "o"])).toThrow(/unknown arm/);
+    expect(() => parseArgs(["--cases", "c", "--models", "a", "--arms", "bing", "--max-usd", "1", "--out", "o", "--primary-model", "a"])).toThrow(/unknown arm/);
     expect(() => parseArgs(["--cases", "c", "--models", "a", "--out", "o"])).toThrow(/max-usd/);
   });
   it("system prompt carries the case date and the tools hint only in the tools arm", () => {
@@ -183,7 +183,7 @@ describe("client with stubbed network", () => {
     );
     vi.spyOn(console, "log").mockImplementation(() => undefined);
     const out = join(tmp, "capped");
-    await main(["--cases", SMOKE, "--models", "x/y", "--arms", "plain", "--reps", "3", "--max-usd", "0.12", "--out", out]);
+    await main(["--cases", SMOKE, "--models", "x/y", "--arms", "plain", "--reps", "3", "--max-usd", "0.12", "--out", out, "--primary-model", "x/y"]);
     const res = JSON.parse(readFileSync(join(out, "results.json"), "utf8"));
     expect(res.status).toBe("budget_stop");
     expect(res.runs).toBe(2);

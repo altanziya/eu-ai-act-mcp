@@ -2,6 +2,7 @@
 import type { ModelAnswer } from "./answer.js";
 import type { EvalCase } from "./cases.js";
 import type { Score } from "./score.js";
+import type { E1Decision } from "./stats.js";
 import { clopperPearson, decideE1 } from "./stats.js";
 import type { ToolCallRecord } from "./openrouter.js";
 
@@ -57,7 +58,6 @@ export interface CellSummary {
   ci: { lower: number; upper: number } | null;
   /** Sensitivity: the same rule with every unparseable run (and API error run) counted as wrong; n includes the excluded cases. */
   sensitivity: { errors: number; n: number; lower: number; upper: number } | null;
-  e1: string | null;
   runs: number;
   unparseable_runs: number;
   api_error_runs: number;
@@ -101,7 +101,6 @@ export function summarize(lines: RunRecord[], filter: Filter = () => true): Cell
       model, arm, cases, excluded_cases: excluded, errors_majority: majority, errors_any: any,
       ci: cases > 0 ? clopperPearson(majority, cases) : null,
       sensitivity: sensitivityN > 0 ? { errors: sensitivityErrors, n: sensitivityN, ...clopperPearson(sensitivityErrors, sensitivityN) } : null,
-      e1: cases > 0 ? decideE1({ errors: majority, n: cases }) : null,
       runs: runs.length,
       unparseable_runs: runs.filter((r) => r.parsed === null && !r.error).length,
       api_error_runs: runs.filter((r) => r.error !== undefined).length,
@@ -112,6 +111,25 @@ export function summarize(lines: RunRecord[], filter: Filter = () => true): Cell
   return out;
 }
 
+/** The one pre-registered E1 evaluation: primary model, arm web, subset version_deadline. */
+export interface E1Result {
+  model: string;
+  arm: "web";
+  subset: "version_deadline";
+  errors: number;
+  n: number;
+  lower: number;
+  upper: number;
+  decision: E1Decision;
+}
+
+/** Null if there is no scored case for the primary model in arm web on subset version_deadline. */
+export function computeE1(lines: RunRecord[], model: string): E1Result | null {
+  const [c] = summarize(lines, (r) => r.model === model && r.arm === "web" && r.subset === "version_deadline");
+  if (!c || !c.ci || c.cases === 0) return null;
+  return { model, arm: "web", subset: "version_deadline", errors: c.errors_majority, n: c.cases, lower: c.ci.lower, upper: c.ci.upper, decision: decideE1({ errors: c.errors_majority, n: c.cases }) };
+}
+
 export interface ReportMeta {
   cases_file: string;
   prompt_version: string;
@@ -120,6 +138,8 @@ export interface ReportMeta {
   reps: number;
   max_usd: number;
   total_cost_usd: number;
+  primary_model?: string | null;
+  e1?: E1Result | null;
   note?: string;
 }
 
@@ -128,20 +148,27 @@ const pct = (x: number | null): string => (x === null ? "-" : `${(x * 100).toFix
 
 function table(cells: CellSummary[]): string[] {
   const L = [
-    "| Model | Arm | Cases | Excluded cases | Errors (majority) | Clopper-Pearson 95 % | Errors (>= 1 wrong run) | Unparseable runs | API error runs | Tool-call rate | Cost USD | E1 rule |",
-    "|---|---|---|---|---|---|---|---|---|---|---|---|",
+    "| Model | Arm | Cases | Excluded cases | Errors (majority) | Clopper-Pearson 95 % | Errors (>= 1 wrong run) | Unparseable runs | API error runs | Tool-call rate | Cost USD |",
+    "|---|---|---|---|---|---|---|---|---|---|---|",
   ];
   for (const c of cells) {
     L.push(
-      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${f4(c.cost_usd)} | ${c.e1 ?? "-"} |`,
+      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${f4(c.cost_usd)} |`,
     );
     if (c.sensitivity) {
       const s = c.sensitivity;
-      L.push(`| ${c.model} | ${c.arm}: unparseable counted as wrong | ${s.n} | - | ${s.errors} | [${f4(s.lower)}, ${f4(s.upper)}] | - | - | - | - | - | - |`);
+      L.push(`| ${c.model} | ${c.arm}: unparseable counted as wrong | ${s.n} | - | ${s.errors} | [${f4(s.lower)}, ${f4(s.upper)}] | - | - | - | - | - |`);
     }
   }
-  if (cells.length === 0) L.push("| (no runs) | | | | | | | | | | | |");
+  if (cells.length === 0) L.push("| (no runs) | | | | | | | | | | |");
   return L;
+}
+
+function e1Line(meta: ReportMeta): string {
+  const e = meta.e1;
+  if (e) return `E1 decision: ${e.decision} (${e.model}, arm ${e.arm}, subset ${e.subset}: ${e.errors}/${e.n} cases wrong, Clopper-Pearson 95 % [${f4(e.lower)}, ${f4(e.upper)}])`;
+  if (!meta.primary_model) return "E1 decision: none (no --primary-model given)";
+  return `E1 decision: none (no scored case for ${meta.primary_model} in arm web on subset version_deadline)`;
 }
 
 /** Markdown report: overall, by subset and by knowable_before_omnibus. */
@@ -162,7 +189,9 @@ export function renderReport(meta: ReportMeta, lines: RunRecord[]): string {
       "Clopper-Pearson intervals (exact, 95 %) are computed over cases, not runs. Unparseable answers (no JSON object, including empty answers) are not scored and do not count as wrong; " +
       "with R runs per case a case is an error if more than R/2 of its runs are wrong, and it is excluded only if no run of it could be scored. " +
       "The second row of each cell (sensitivity) repeats the computation with every unparseable run and API error run counted as wrong (all cases, none excluded). API error runs are listed separately. The tool-call rate is the share of runs with at least one tool call. " +
-      "The E1 rule column applies the pre-registered rule mechanically to the row (go if the lower bound >= 0.05; else undecided if cases < 45 and errors >= 1; else not supported) and is only meaningful on the full case set.",
+      "The pre-registered E1 rule (go if the lower bound >= 0.05; else undecided if cases < 45 and errors >= 1; else not supported) is applied once, to the primary model in arm web on subset version_deadline (the E1 line below); no other row carries a decision.",
+    "",
+    e1Line(meta),
     "",
     "## All cases",
     "",

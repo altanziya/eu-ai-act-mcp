@@ -1,6 +1,6 @@
 /**
  * npm run eval -- --cases <yaml> --models <id,...> --arms plain,web,tools --reps N --max-usd X --out <dir>
- *                 [--dry-run] [--resume] [--reasoning-effort low|medium|high|none]
+ *                 --primary-model <id> [--dry-run] [--resume] [--reasoning-effort low|medium|high|none]
  * Runs every case x model x arm x repetition, scores the answers deterministically and writes runs.jsonl, results.json and
  * report.md to <dir>. The cost cap is hard: before every call, spent + estimate > max-usd stops the run (status budget_stop).
  * --dry-run uses a mock model without network and cost. See docs/reference.md "Evaluation harness".
@@ -16,7 +16,7 @@ import type { EvalCase } from "./cases.js";
 import { apiKey, converse, listModels } from "./openrouter.js";
 import type { Arm, ModelInfo } from "./openrouter.js";
 import { PROMPT_VERSION, buildSystemPrompt, buildUserPrompt } from "./prompts.js";
-import { latestRuns, renderReport, runKey, summarize } from "./report.js";
+import { computeE1, latestRuns, renderReport, runKey, summarize } from "./report.js";
 import type { RunRecord } from "./report.js";
 import { scoreCase } from "./score.js";
 
@@ -32,6 +32,8 @@ export interface Options {
   reps: number;
   maxUsd: number;
   out: string;
+  /** Model of the one pre-registered E1 evaluation (arm web, subset version_deadline); null only in a dry run. */
+  primaryModel: string | null;
   dryRun: boolean;
   resume: boolean;
   reasoningEffort: Effort | null;
@@ -58,9 +60,13 @@ export function parseArgs(argv: string[]): Options {
   if (!["low", "medium", "high", "none"].includes(eff)) throw new Error("--reasoning-effort must be low|medium|high|none");
   const models = split(need("models"));
   if (models.length === 0) throw new Error("--models is empty");
+  const dryRun = argv.includes("--dry-run");
+  const primaryModel = get("primary-model") ?? null;
+  if (primaryModel === null && !dryRun) throw new Error("missing --primary-model (the model of the E1 evaluation; required unless --dry-run)");
+  if (primaryModel !== null && (primaryModel.startsWith("--") || !models.includes(primaryModel))) throw new Error(`--primary-model ${primaryModel} must be one of --models`);
   return {
-    cases: need("cases"), models, arms: arms as Arm[], reps, maxUsd, out: need("out"),
-    dryRun: argv.includes("--dry-run"), resume: argv.includes("--resume"), reasoningEffort: eff === "none" ? null : (eff as Effort),
+    cases: need("cases"), models, arms: arms as Arm[], reps, maxUsd, out: need("out"), primaryModel,
+    dryRun, resume: argv.includes("--resume"), reasoningEffort: eff === "none" ? null : (eff as Effort),
   };
 }
 
@@ -226,7 +232,8 @@ export async function main(argv: string[]): Promise<number> {
   const lines = readLines(runsPath);
   const latest = latestRuns(lines);
   const total = lines.reduce((s, r) => s + r.cost, 0);
-  const meta = { cases_file: o.cases, prompt_version: PROMPT_VERSION, status, dry_run: o.dryRun, reps: o.reps, max_usd: o.maxUsd, total_cost_usd: total, ...(note ? { note } : {}) };
+  const e1 = o.primaryModel !== null ? computeE1(lines, o.primaryModel) : null;
+  const meta = { cases_file: o.cases, prompt_version: PROMPT_VERSION, status, dry_run: o.dryRun, reps: o.reps, max_usd: o.maxUsd, total_cost_usd: total, primary_model: o.primaryModel, e1, ...(note ? { note } : {}) };
   writeFileSync(
     join(out, "results.json"),
     `${JSON.stringify({ ...meta, runs: latest.length, planned_runs: cases.length * o.models.length * o.arms.length * o.reps, models: o.models, arms: o.arms, cases: cases.length, max_tokens: MAX_TOKENS, request_params: modelParams, estimates, cells: summarize(lines) }, null, 2)}\n`,
