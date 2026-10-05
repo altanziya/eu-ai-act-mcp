@@ -103,7 +103,7 @@ A verification gives three separate answers, never one combined "verified":
 | EN/DE structural parity | 100 % |
 | Application-date rules (2026 version) | 7, each linked to its source sentence in Art. 113 |
 | Obligations map | 95 entries, 106 verbatim quotations, all checked against the corpus |
-| Tests | 843, including golden tests written and frozen before implementation |
+| Tests | 977, including golden tests written and frozen before implementation |
 | Verify page | 52 KB, no framework, no external requests |
 
 ## Does it matter? A pre-registered evaluation
