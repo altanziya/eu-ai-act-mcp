@@ -19,7 +19,7 @@
 4. CP1/CP2; Tag 5 Puffer (Minor-Liste im Log); E1 Mo 19.10.
 
 ## Offene Fragen an Altan
-1. **Interna im öffentlichen Repo** (STATUS, FACTS mit H11 "erster Kunde ist Arbeitgeber", Logs mit Chatverlauf, SPEC mit Launchplan, CLAUDE.md, .claude/): (a) in `process/` bündeln und entschärfen, (b) aus dem öffentlichen Repo nehmen (privates Arbeitsrepo + öffentliche Produktfassung, History-Rewrite durch Altan), (c) lassen.
+1. **Interna im öffentlichen Repo** (STATUS, FACTS mit internen Hypothesen, Logs, SPEC, CLAUDE.md, .claude/): (a) in `process/` bündeln und entschärfen, (b) aus dem öffentlichen Repo nehmen (privates Arbeitsrepo + öffentliche Produktfassung, History-Rewrite durch Altan), (c) lassen.
 2. Budget für den Lauf (9,05 $ übrig; Vollprotokoll eher 15–25 $). 3. Einspruch ADR-012? 4. Juristischer Reviewer.
 
 ## Laufende Agenten
