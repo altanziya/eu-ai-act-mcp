@@ -1,0 +1,84 @@
+{
+  "mapped_2024_to_2026": {
+    "en": 0.993971,
+    "de": 0.993218
+  },
+  "en_de_2024": 1,
+  "en_de_2026": 1,
+  "details": {
+    "note": "mapped_2024_to_2026 is measured over operative nodes (all types except recital): the consolidated version contains no recitals. See mapped_2024_to_2026_all_nodes for the ratio including them.",
+    "mapped_2024_to_2026_all_nodes": {
+      "en": {
+        "total": 1507,
+        "mapped": 1319,
+        "ratio": 0.875249
+      },
+      "de": {
+        "total": 1507,
+        "mapped": 1318,
+        "ratio": 0.874585
+      }
+    },
+    "mapped_2024_to_2026_operative": {
+      "en": {
+        "total": 1327,
+        "mapped": 1319,
+        "ratio": 0.993971,
+        "unchanged": 1247,
+        "changed": 70,
+        "moved": 2,
+        "removed": [
+          "art_10.par_5",
+          "art_10.par_5.b",
+          "art_10.par_5.c",
+          "art_10.par_5.d",
+          "art_10.par_5.e",
+          "anx_1.pt_1",
+          "anx_8.pt_7~2",
+          "anx_8.pt_9~2"
+        ],
+        "all_nodes": {
+          "total": 1507,
+          "mapped": 1319,
+          "ratio": 0.875249
+        }
+      },
+      "de": {
+        "total": 1327,
+        "mapped": 1318,
+        "ratio": 0.993218,
+        "unchanged": 1251,
+        "changed": 66,
+        "moved": 1,
+        "removed": [
+          "art_10.par_5",
+          "art_10.par_5.a",
+          "art_10.par_5.b",
+          "art_10.par_5.c",
+          "art_10.par_5.d",
+          "art_10.par_5.e",
+          "anx_1.pt_1",
+          "anx_8.pt_7~2",
+          "anx_8.pt_9~2"
+        ],
+        "all_nodes": {
+          "total": 1507,
+          "mapped": 1318,
+          "ratio": 0.874585
+        }
+      }
+    },
+    "en_de_2024": {
+      "en_nodes": 1507,
+      "with_de_counterpart": 1507,
+      "ratio": 1,
+      "missing_in_de": []
+    },
+    "en_de_2026": {
+      "en_nodes": 1448,
+      "with_de_counterpart": 1448,
+      "ratio": 1,
+      "missing_in_de": []
+    }
+  }
+}
