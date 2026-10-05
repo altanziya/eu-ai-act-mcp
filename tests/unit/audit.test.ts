@@ -51,8 +51,16 @@ describe("citations", () => {
     expect(run("See Article 9(99).").findings[0]).toMatchObject({ kind: "unknown_provision", severity: "error" });
     expect(kinds("Siehe Anhang XXX.")).toEqual(["unknown_provision"]);
   });
+  it("a provision inserted later is not_yet_in_force (warning) for a date before the amendment, in DE with the German act name", () => {
+    const de = run("Artikel 4a Absatz 1 erlaubt dies.", BEFORE, "de").findings[0];
+    expect(de).toMatchObject({ kind: "not_yet_in_force", severity: "warning" });
+    expect(de?.message).toMatch(/Verordnung \(EU\) 2026\/1744/);
+    expect(de?.message).not.toMatch(/Regulation/);
+    const sug = find(run("Artikel 10 Absatz 5 erlaubt dies.", NOW, "de"), "removed_provision");
+    expect(`${sug?.message} ${sug?.suggestion}`).toMatch(/Verordnung \(EU\) 2026\/1744/);
+  });
   it("a provision inserted later is only a warning for a date before the amendment", () => {
-    expect(run("Article 4a(1) allows it.", BEFORE).findings[0]).toMatchObject({ kind: "unknown_provision", severity: "warning" });
+    expect(run("Article 4a(1) allows it.", BEFORE).findings[0]).toMatchObject({ kind: "not_yet_in_force", severity: "warning", node: "art_4a.par_1" });
     expect(run("Article 4a(1) allows it.", NOW).findings[0]).toMatchObject({ kind: "reference_ok" });
     expect(run("Article 10(5) allows it.", BEFORE).findings[0]).toMatchObject({ kind: "reference_ok" });
   });

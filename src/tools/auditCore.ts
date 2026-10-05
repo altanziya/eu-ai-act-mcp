@@ -31,6 +31,7 @@ export type FindingKind =
   | "reference_ok"
   | "removed_provision"
   | "unknown_provision"
+  | "not_yet_in_force"
   | "deadline_ok"
   | "outdated_deadline"
   | "unverified_date"
@@ -73,7 +74,6 @@ export interface AuditResult {
 
 const EXCERPT_MAX = 160;
 const MIN_QUOTE_WORDS = 6;
-const ACT = "Regulation (EU) 2026/1744";
 
 // ---------------------------------------------------------------------------------------------------------------
 // Anchors: subjects without a citation, and annex citations that stand for a rule
@@ -178,6 +178,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   const lang = input.lang ?? "en";
   if (!isLang(lang)) throw new Error(`unknown lang ${String(lang)}`);
   const de = lang === "de";
+  const ACT = de ? "Verordnung (EU) 2026/1744" : "Regulation (EU) 2026/1744";
   const tr = (en: string, deText: string): string => (de ? deText : en);
 
   const version = versionForDate(asOf);
@@ -262,7 +263,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
       });
     } else if (othId) {
       add({
-        kind: "unknown_provision", severity: "warning", span, excerpt: slice(span), ref: asWritten, node: othId, sources: [src(other, othId)],
+        kind: "not_yet_in_force", severity: "warning", span, excerpt: slice(span), ref: asWritten, node: othId, sources: [src(other, othId)],
         message: tr(`${asWritten} is not in the text in force on ${asOf}; it was inserted by ${ACT} (consolidated version from 2026-07-27).`, `${asWritten} steht nicht im am ${asOf} geltenden Text; eingefügt durch ${ACT} (konsolidierte Fassung ab 2026-07-27).`),
       });
     } else {
