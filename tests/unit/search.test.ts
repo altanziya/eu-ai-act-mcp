@@ -6,7 +6,7 @@ import { buildIndex } from "../../src/tools/corpus.js";
 import type { CorpusIndex, Lang, Version } from "../../src/tools/corpus.js";
 import type { DeadlineTable } from "../../src/tools/deadlines.js";
 import { aiactSearch } from "../../src/tools/search.js";
-import { aiactSearchWith, snippetOf } from "../../src/tools/searchCore.js";
+import { aiactSearchWith, snippetOf, stem } from "../../src/tools/searchCore.js";
 
 let order = 0;
 const n = (id: string, parent: string | null, type: ProvisionNode["type"], text: string, heading = ""): ProvisionNode => ({
@@ -94,6 +94,60 @@ describe("aiactSearch on a mini corpus", () => {
   it("rejects a malformed as_of and an unknown language", () => {
     expect(() => run("x", { as_of: "5.10.2026" })).toThrow(/ISO/);
     expect(() => run("x", { lang: "fr" as Lang })).toThrow(/lang/);
+  });
+});
+
+describe("stemmer and synonyms", () => {
+  it("reduces EN and DE inflections consistently", () => {
+    expect(stem("penalties", "en")).toBe(stem("penalty", "en"));
+    expect(stem("sandboxes", "en")).toBe(stem("sandbox", "en"));
+    expect(stem("systems", "en")).toBe(stem("system", "en"));
+    expect(stem("processing", "en")).toBe("process");
+    expect(stem("assessed", "en")).toBe("assess");
+    expect(stem("bias", "en")).toBe("bias");
+    expect(stem("Kennzeichnungen".toLowerCase(), "de")).toBe("kennzeichnung");
+    expect(stem("kennzeichnung", "de")).toBe("kennzeichnung");
+    expect(stem("sanktionen", "de")).toBe(stem("sanktion", "de"));
+    expect(stem("geldbußen", "de")).toBe(stem("geldbuße", "de"));
+    expect(stem("kmu", "de")).toBe("kmu");
+  });
+  it("finds inflected forms and counts synonyms (mini corpus)", () => {
+    expect(run("penalty").results.map((x) => x.id)).toContain("art_2.par_1"); // "Penalties"
+    expect(run("sandboxes").results[0]?.id).toBe("art_1.par_1"); // "sandbox"
+    expect(run("fine").results.map((x) => x.id)).toContain("art_2"); // synonym of penalty: heading "Penalties"
+  });
+  it("a heading hit outranks the same term in the text", () => {
+    const r = run("penalties");
+    expect(r.results.findIndex((x) => x.id === "art_2")).toBeLessThan(r.results.findIndex((x) => x.id === "art_1.par_2") === -1 ? 99 : r.results.findIndex((x) => x.id === "art_1.par_2"));
+  });
+});
+
+describe("relevance on the real corpus", () => {
+  const top = (query: string, n: number, lang: Lang = "en", as_of = "2026-10-05"): string[] => aiactSearch({ query, lang, as_of, limit: n }).results.map((x) => x.id);
+  it("registration EU database: Article 49 in the top 3", () => {
+    expect(top("registration EU database", 3).some((id) => id.startsWith("art_49"))).toBe(true);
+  });
+  it("DE Kennzeichnung Deepfake: Article 50(4) in the top 3", () => {
+    expect(top("Kennzeichnung Deepfake", 3, "de")).toContain("art_50.par_4");
+  });
+  it("DE Strafen KMU: Article 99 in the top 3", () => {
+    expect(top("Strafen KMU", 3, "de").some((id) => id.startsWith("art_99"))).toBe(true);
+  });
+  it("penalties SMEs: Article 99(6) in the top 5", () => {
+    expect(top("penalties SMEs", 5)).toContain("art_99.par_6");
+  });
+  it("human oversight: Article 14 in the top 3", () => {
+    expect(top("human oversight", 3).some((id) => id.startsWith("art_14"))).toBe(true);
+  });
+  it("DE human oversight (menschliche Aufsicht): Article 14 in the top 3", () => {
+    expect(top("menschliche Aufsicht", 3, "de").some((id) => id.startsWith("art_14"))).toBe(true);
+  });
+  it("DE Registrierung Datenbank: Article 49 or 71 in the top 3", () => {
+    expect(top("Registrierung EU-Datenbank", 3, "de").some((id) => id.startsWith("art_49") || id.startsWith("art_71"))).toBe(true);
+  });
+  it("the earlier cases still hold", () => {
+    expect(top("bias detection and correction special categories of personal data", 3).some((id) => id.startsWith("art_4a"))).toBe(true);
+    expect(top("bias detection and correction special categories of personal data", 3, "en", "2026-03-15").some((id) => id.startsWith("art_10.par_5"))).toBe(true);
   });
 });
 
