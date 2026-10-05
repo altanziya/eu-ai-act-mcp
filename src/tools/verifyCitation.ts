@@ -10,7 +10,7 @@
  */
 import { V2024, V2026 } from "../config.js";
 import type { ProvisionNode } from "../parser/types.js";
-import { AMENDING_ACT, isIsoDate, isLang, loadCorpus, otherLang, otherVersion, todayIso, versionForDate } from "./corpus.js";
+import { AMENDING_ACT, isIsoDate, isLang, loadCorpus, otherLang, otherVersion, versionForDate } from "./corpus.js";
 import type { CorpusIndex, Lang, Version } from "./corpus.js";
 import { resolveDeadline } from "./deadlines.js";
 import type { Validity } from "./deadlines.js";
@@ -35,7 +35,8 @@ export type VerifyStatus =
 export interface VerifyInput {
   quote: string;
   claimed_ref?: string;
-  as_of?: string;
+  /** ISO date (YYYY-MM-DD), required: the library has no default (the MCP server supplies today). */
+  as_of: string;
   lang?: Lang;
 }
 export interface MatchInfo {
@@ -272,12 +273,33 @@ function validityOf(found: { corpus: CorpusIndex; node: ProvisionNode } | null, 
 /** Corpus source; the default reads data/corpus. Unit tests pass a constructed mini corpus. */
 export type CorpusLoader = (version: Version, lang: Lang) => CorpusIndex;
 
+const RECITAL_NOTE = "recital: no application date; the preamble is not part of the consolidated text";
+
+/**
+ * Recitals are not superseded, they are absent from the consolidated version (F66, ADR-012): a citation of a recital
+ * (claimed ref `rec_*`, or the best hit is a recital) is checked against the Official Journal version, the normal V0
+ * status is returned, and V1 is `unknown` (a recital has no application date).
+ */
 export function verifyCitation(input: VerifyInput, load: CorpusLoader = loadCorpus): VerifyResult {
+  const asOf = (input as { as_of?: string }).as_of;
+  if (asOf === undefined || !isIsoDate(asOf)) {
+    throw new Error(`as_of is required and must be an ISO date (YYYY-MM-DD), got ${JSON.stringify(asOf)}`);
+  }
+  const claimed = input.claimed_ref !== undefined && input.claimed_ref.trim() !== "" ? parseRef(input.claimed_ref) : null;
+  const recitalClaim = claimed?.startsWith("rec_") === true;
+  const isRecitalHit = (r: VerifyResult): boolean => r.match?.provision_id.startsWith("rec_") === true;
+  let r = verifyCore(input, asOf, load, recitalClaim ? V2024 : undefined);
+  if (!recitalClaim && r.version_checked !== V2024 && isRecitalHit(r)) r = verifyCore(input, asOf, load, V2024);
+  if (recitalClaim || isRecitalHit(r)) {
+    r = { ...r, warnings: [...(r.warnings ?? []), "recital_not_in_consolidated_version"], validity: { state: "unknown", note: RECITAL_NOTE } };
+  }
+  return r;
+}
+
+function verifyCore(input: VerifyInput, asOf: string, load: CorpusLoader, forcedVersion?: Version): VerifyResult {
   const lang = input.lang ?? "en";
   if (!isLang(lang)) throw new Error(`unknown lang ${String(lang)}`);
-  const asOf = input.as_of ?? todayIso();
-  if (!isIsoDate(asOf)) throw new Error(`as_of must be an ISO date (YYYY-MM-DD), got ${JSON.stringify(asOf)}`);
-  const vc = versionForDate(asOf);
+  const vc = forcedVersion ?? versionForDate(asOf);
   const pq = prepareQuote(input.quote);
 
   const detected = detectLang(pq.flat);

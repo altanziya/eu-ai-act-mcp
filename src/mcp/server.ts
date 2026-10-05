@@ -7,7 +7,6 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { V2024, V2026 } from "../config.js";
-import { todayIso } from "../tools/corpus.js";
 import { diffProvision } from "../tools/diffProvision.js";
 import { getProvision } from "../tools/getProvision.js";
 import { verifyCitation } from "../tools/verifyCitation.js";
@@ -15,6 +14,12 @@ import { verifyCitation } from "../tools/verifyCitation.js";
 const version = z.enum([V2024, V2026]);
 const lang = z.enum(["en", "de"]);
 const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false } as const;
+
+/** Today from the local date components (toISOString would shift the date in UTC between 0 and 2 o'clock). */
+function localDateIso(d: Date = new Date()): string {
+  const p = (n: number): string => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
 
 const json = (value: unknown): { content: Array<{ type: "text"; text: string }> } => ({ content: [{ type: "text", text: JSON.stringify(value, null, 2) }] });
 const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; text: string }> } => ({
@@ -86,7 +91,7 @@ export function createServer(): McpServer {
     },
     (args) => {
       try {
-        return json(verifyCitation({ ...args, as_of: args.as_of ?? todayIso() }));
+        return json(verifyCitation({ ...args, as_of: args.as_of ?? localDateIso() }));
       } catch (e) {
         return failure(e);
       }

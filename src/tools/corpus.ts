@@ -81,8 +81,5 @@ export function ancestorChain(idx: CorpusIndex, id: string): ProvisionNode[] {
 
 export const isIsoDate = (s: string): boolean => /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(`${s}T00:00:00Z`));
 
-/** Today as ISO date (UTC); only used where `as_of` is omitted. */
-export const todayIso = (): string => new Date().toISOString().slice(0, 10);
-
 /** Version checked for an `as_of` date: before the consolidated version existed, the Official Journal version. */
 export const versionForDate = (asOf: string): Version => (asOf < CONSOLIDATED_FROM ? V2024 : V2026);

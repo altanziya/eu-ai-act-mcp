@@ -136,6 +136,9 @@ describe("verifyCitation: precedence on a mini corpus", () => {
     expect(r.status).toBe("exact");
     expect(Object.keys(run({ quote: TEXT_A, as_of: "2026-09-01" }))).not.toContain("claimed_ref_id");
   });
+  it("requires as_of (no default in the library)", () => {
+    expect(() => verifyCitation({ quote: TEXT_A } as unknown as Parameters<typeof verifyCitation>[0], mini)).toThrow(/as_of is required/);
+  });
   it("rejects a malformed as_of", () => {
     expect(() => run({ quote: TEXT_A, as_of: "01.09.2026" })).toThrow(/as_of/);
   });
@@ -184,5 +187,39 @@ describe("verifyCitation: determinism and output", () => {
     const old = run({ quote: TEXT_A, as_of: "2026-06-01" });
     expect(old.notice.en).toContain(V2024);
     expect(old.notice.de).toMatch(/EUR-Lex/);
+  });
+});
+
+describe("verifyCitation: recitals (F66)", () => {
+  const rec = (loadCorpus(V2024, "en").byId.get("rec_12") as ProvisionNode).text;
+  const NOTE = "recital: no application date; the preamble is not part of the consolidated text";
+  for (const asOf of ["2026-09-01", "2025-01-01"]) {
+    it(`rec_12 with as_of ${asOf}: checked against the Official Journal version, V1 unknown, no superseded_by`, () => {
+      const r = verifyCitation({ quote: rec, claimed_ref: "Recital 12", as_of: asOf, lang: "en" });
+      expect(r.status).toBe("exact");
+      expect(r.version_checked).toBe(V2024);
+      expect(r.match).toMatchObject({ provision_id: "rec_12", version_id: V2024 });
+      expect(r.found_in_version).toBeUndefined();
+      expect(r.warnings).toContain("recital_not_in_consolidated_version");
+      expect(r.validity).toEqual({ state: "unknown", note: NOTE });
+    });
+  }
+  it("a recital quote without claimed ref after the Omnibus gets the same treatment", () => {
+    const r = verifyCitation({ quote: rec, as_of: "2026-09-01", lang: "en" });
+    expect(r.status).not.toBe("found_other_version");
+    expect(r.match?.version_id).toBe(V2024);
+    expect(r.validity.state).toBe("unknown");
+    expect(r.warnings).toContain("recital_not_in_consolidated_version");
+  });
+  it("a recital with a changed number is a hard-token mismatch, not found_other_version", () => {
+    const r = verifyCitation({ quote: rec.replace(/\d+/, "99"), claimed_ref: "rec_12", as_of: "2026-09-01", lang: "en" });
+    if (/\d/.test(rec)) expect(r.status).toBe("mismatch_hard_token");
+    expect(r.validity.state).toBe("unknown");
+  });
+  it("an operative quote is unaffected", () => {
+    const art = (loadCorpus(V2026, "en").byId.get("art_5.par_1.a") as ProvisionNode).text;
+    const r = verifyCitation({ quote: art, as_of: "2026-09-01", lang: "en" });
+    expect(r.warnings).toBeUndefined();
+    expect(r.version_checked).toBe(V2026);
   });
 });
