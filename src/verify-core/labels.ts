@@ -136,7 +136,7 @@ export const UI = {
   colVersion: { en: "version", de: "Fassung" },
   colLang: { en: "language", de: "Sprache" },
   colPresent: { en: "present", de: "vorhanden" },
-  creatorH: { en: "Unverified statements by the creator", de: "Ungeprüfte Angaben des Erstellers" },
+  creatorH: { en: "Statements by the creator (unverified)", de: "Angaben des Erstellers (ungeprüft)" },
   creatorIntro: {
     en: "Question, creator and creation time come from the creator of the record and are not checked here.",
     de: "Frage, Ersteller und Erstellungszeit stammen vom Ersteller des Records und werden hier nicht geprüft.",
