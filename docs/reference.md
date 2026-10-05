@@ -83,7 +83,7 @@ Rules:
 
 ## Tools
 
-Three read-only tools (pure functions in `src/tools/`, exposed by `src/mcp/server.ts`). Every result carries `notice`
+Five read-only tools (pure functions in `src/tools/`, exposed by `src/mcp/server.ts`). Every result carries `notice`
 (`{de, en}`, the mandatory texts with the version actually checked). No result contains a timestamp; `as_of` is only
 echoed. Versions: `32024R1689` (Official Journal) and `02024R1689-20260727` (consolidated after the Omnibus,
 amending act `32026R1744`). Where an `id` is expected, a human citation is accepted too (`Article 50(1)(a)`,
@@ -91,8 +91,13 @@ amending act `32026R1744`). Where an `id` is expected, a human citation is accep
 
 ### `aiact_get_provision` (`getProvision`)
 
-Input `{ id, version?, lang?, include_children? }`: `version` default `02024R1689-20260727`, `lang` default `en`,
-`include_children` default `true`. Output `{ found, version, lang, node?, children?, text_full?, reason?, fallback?, notice }`.
+Input `{ id, as_of?, version?, lang?, include_children? }`: `as_of` (ISO date) default today; without `version` the version in
+force on `as_of` is returned (before 2026-07-27 the Official Journal version `32024R1689`, after it the consolidated version
+`02024R1689-20260727`); an explicit `version` wins. `lang` default `en`, `include_children` default `true`.
+Output `{ found, version, lang, as_of, applicability?, node?, children?, text_full?, reason?, fallback?, notice }`.
+`applicability` is the deadline-table result for the node in the returned version on `as_of`, in the form of `validity` of
+verify (`state`, `until?`, `rule_id`, `source_nodes`, `conditional_dates?`); it is computed for `as_of` (or today) also with an
+explicit `version`. `as_of` is the date used (input or today). The eval harness passes the case date as default `as_of`.
 `children` are all descendants in document order; `text_full` is heading and text of the node and (with children) all
 descendants in `order`, joined by "\n". If the id is not in the requested version but in the other one: `found: false`,
 `reason` `not_in_consolidated_version` (requested 2026) or `not_in_version` (requested 2024), and `fallback: { version, node }`.
@@ -116,6 +121,71 @@ support_checked: false, notice }`.
 `match` is `{ provision_id, version_id, lang, similarity, matched_text }`. `claimed_ref_id` is the parsed id or `null`
 (then `warnings` contains `unparsed_ref` and the search still runs). The tool checks wording and location only. It never
 checks that a text supports a claim (`support_checked` is always `false`) and gives no overall verdict.
+
+### `aiact_search` (`aiactSearch`, core `searchCore.ts`)
+
+Input `{ query, as_of?, lang?, limit? }`: `as_of` default today, `lang` default `en`, `limit` default 8, at most 20 (values below 1 are
+raised to 1). Output `{ as_of, version, lang, results: [{ id, citation, heading?, snippet, score, applicability }], notice }`.
+Searches the version in force on `as_of` (no recitals in the consolidated version). Ranking: BM25 (k1 1.2, b 0.75), one
+document per node (own heading and text; descendants are separate documents), tokens are lower-case Unicode words minus a short
+EN/DE stopword list, no stemming. An exact phrase (the content words of the query, contiguous in the node, stopwords ignored)
+adds half the summed idf of the query terms. Document-length normalisation prefers short leaves and paragraphs; articles and
+annexes count 0.85, chapters and sections 0.6. Ties by document order. `citation` is `formatRef(id, lang)`; `heading` is the
+node's own or the nearest ancestor's; `snippet` has at most 240 characters around the first query term, cut at word boundaries
+(`…` marks a cut). `applicability` as in `aiact_get_provision`. The core takes the corpus loader and the deadline table as
+parameters and has no `node:` import (it is meant to run in the browser).
+
+### Citation format (`formatRef`)
+
+`formatRef(id, lang)` is the inverse of `parseRef` for articles, annexes, recitals and chapters: `art_9.par_2` -> `Article 9(2)` /
+`Artikel 9 Absatz 2`; `art_5.par_1.a` -> `Article 5(1), point (a)`; `art_113.sub_3.c.i` -> `Article 113, third paragraph, point (c)(i)`;
+`anx_3.pt_1.a` -> `Annex III, point 1(a)` / `Anhang III Nummer 1 Buchstabe a`; `anx_1.sec_a.pt_2` -> `Annex I, Section A, point 2`;
+`rec_12` -> `Recital 12`; `cpt_3.sct_2` -> `Chapter III, Section 2`. Ids of an unknown shape come back unchanged. `parseRef` was
+extended for this (ordinal paragraphs such as "third paragraph", German "Ziffer"); `tests/unit/format-ref.test.ts` checks
+`parseRef(formatRef(id)) === id` for every node of both corpora in both languages.
+
+### `aiact_audit_text` (`auditText`, core `auditCore.ts`, scanner `auditScan.ts`)
+
+Input `{ text, as_of, lang? }` (`as_of` required by the library function; the MCP server fills in today; `lang` default `en` selects
+the corpus and the language of the messages; citation and date notations of both languages are recognised in any case).
+Output `{ as_of, version_checked, findings, summary: { error, warning, info, ok }, notice }`, `version_checked` = `versionForDate(as_of)`.
+A finding is `{ kind, severity, span: { start, end }, excerpt, message, ref?, node?, expected?, found?, sources, suggestion? }`; `span`
+offsets are UTF-16 positions in the input text, findings are ordered by `span.start`, `sources` are `<version>:<node id>`.
+No findings at all gives a single `info` finding `no_references` ("no references found"). Deterministic, no model, no network;
+orientation only, not legal advice, and no certification of compliance (`notice` as in verify, naming both versions when the
+other one was used). 5 000 words take about 50 ms (the gate allows 2 s); each checked quotation costs one `verifyCitation`
+call (about 30 ms).
+
+| kind | severity | meaning |
+| --- | --- | --- |
+| `reference_ok` | ok | the citation exists in the version checked |
+| `removed_provision` | error | exists only in the Official Journal version (version checked: consolidated); `suggestion` from the `moved` entries of the diff of the node or its children (e.g. Article 10(5) -> Article 4a(1)) |
+| `unknown_provision` | error | exists in neither version (also a pinpoint that does not exist inside an existing article); warning if it exists only in the consolidated version and `as_of` is before 2026-07-27 |
+| `deadline_ok` | ok | the date in the sentence is the current date |
+| `outdated_deadline` | error | the date is the one of the other (older) version; `expected` is the current date, `found` the date in the text, `sources` the nodes of both versions; message "changed by Regulation (EU) 2026/1744" |
+| `unverified_date` | warning | a date in a sentence with apply/applies/applicable/from/by/gilt/ab that matches nothing known (`expected` is the application date); also a date that exists only in the consolidated version when `as_of` is before 2026-07-27 |
+| `quote_ok` | ok | `verifyCitation` says `exact` (also `multi_node`, `multiple_matches`) |
+| `outdated_quote` | error | `found_other_version`: the quotation is the wording of the other version; `expected` is the current wording |
+| `wrong_pinpoint` | warning | `found_at_other_provision`; `expected` is the right citation, `found` the claimed one |
+| `quote_deviates` | warning | `fuzzy`, `mismatch_hard_token` (number, date or name differs) or `found_other_language` |
+| `quote_not_found` | error | `not_found` |
+| `no_references` | info | nothing to check |
+
+Detection. *Citations*: `Article/Art./Artikel N`, `Annex/Anhang <roman or number>` followed by readable pinpoints (`(2)`, `(1)(a)`,
+`, point (a)`, `third paragraph`, `Absatz 2`, `Buchst. a`, `Nummer 4`, `Section A`); read with `parseRef`, with the numbered-point
+reading of `Article 3(1)` and a missing subparagraph level tolerated. Lists ("Articles 102 to 110", "Artikel 6 und 8") check the first and
+the last item. Citations followed by another act ("of Regulation (EU) 2016/679", GDPR/DSGVO, Directive, Treaty) or preceded by
+"GDPR" are skipped. *Dates*: ISO, `2 August 2026`, `2nd August 2026`, `August 2, 2026`, `2.8.2026`, `2. August 2026` (EN and DE month
+names). A date is judged only in a sentence that has a cited provision or an anchor term (`Annex III` -> Article 6(2); `Annex I` with
+high-risk -> Article 6(1); general-purpose AI -> Chapter V; prohibited practices -> Article 5; AI literacy -> Article 4;
+transparency obligations -> Article 50). The nearest subject that can decide wins; per subject, a date written in the text of the cited
+node or its descendants (in either version) goes first, then the application date (`applies_from` and later class dates) of the
+matching rule of the deadline table in both versions. A date inside a checked quotation is left to the quotation check.
+*Quotations*: text in `" "`, `“ ”`, `„ “` or `« »` of at least 6 words, with a citation in the same or the previous sentence
+(a citation inside the quotation does not count), is passed to `verifyCitation` with that citation as `claimed_ref`.
+Sentences are split at `. ! ?` (not after abbreviations such as Art., Abs., Nr.; not in "2. August"), at blank lines, and never inside a checked quotation.
+Known gaps: no recitals, no `Article 6 and 7` for singular `Article`, no relative dates ("two years after entry into force"), no check of
+which provision applies to a system; a date without trigger word is not reported when it matches nothing.
 
 ## Verification levels V0-V2
 
@@ -323,7 +393,7 @@ Output in `--out`:
 
 Claude Code: `claude mcp add eu-ai-act -- npx tsx /path/to/eu-ai-act-mcp/src/mcp/server.ts`. Other clients: command `npx`,
 args `["tsx", "src/mcp/server.ts"]`, working directory the repository root. Tools: `aiact_get_provision`, `aiact_diff`,
-`aiact_verify_citation`, all with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
+`aiact_verify_citation`, `aiact_search`, `aiact_audit_text`, all with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
 reads only `data/corpus`, `data/diff` and `data/deadlines.json`; it makes no network calls.
 
 ## Releases and manifest
