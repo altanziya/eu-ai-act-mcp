@@ -20,3 +20,6 @@ plan/handoff-latest.md.tmp
 
 # local working drafts (eval cases, smoke runs)
 work/
+site/audit/audit.js
+site/obligations/obligations.js
+site/obligations/data/

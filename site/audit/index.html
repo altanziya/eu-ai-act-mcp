@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>Document checker – EU AI Act workbench</title>
+<link rel="stylesheet" href="../app.css">
+<style>
+  .doc-card { padding: 1rem 1.1rem; }
+  .doc { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.75; font-size: .98rem; margin: 0; }
+  mark.m { color: inherit; background: transparent; border-radius: 3px; padding: .05em .12em; cursor: pointer; border-bottom: 2px solid; }
+  mark.m::before { margin-right: .2em; font-size: .72em; vertical-align: .12em; font-weight: 700; }
+  mark.m-error { background: var(--err-bg); border-bottom-color: var(--err-fg); }
+  mark.m-error::before { content: "✖"; color: var(--err-fg); }
+  mark.m-warning { background: var(--warn-bg); border-bottom: 2px dashed var(--warn-fg); }
+  mark.m-warning::before { content: "▲"; color: var(--warn-fg); }
+  mark.m-info { background: var(--info-bg); border-bottom: 2px dotted var(--info-fg); }
+  mark.m-info::before { content: "ℹ"; color: var(--info-fg); }
+  mark.m-ok { background: var(--ok-bg); border-bottom: 1px solid var(--ok-border); }
+  mark.m-ok::before { content: "✔"; color: var(--ok-fg); }
+  .counters { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; margin: .75rem 0 1rem; }
+  .counter { border: 1px solid; border-radius: var(--radius); padding: .55rem .7rem; display: flex; flex-direction: column; gap: .1rem; }
+  .counter .n { font-size: 1.8rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .counter .w { font-size: .88rem; font-weight: 600; }
+  .c-error { background: var(--err-bg); color: var(--err-fg); border-color: var(--err-border); }
+  .c-warning { background: var(--warn-bg); color: var(--warn-fg); border-color: var(--warn-border); }
+  .c-info { background: var(--info-bg); color: var(--info-fg); border-color: var(--info-border); }
+  .c-ok { background: var(--ok-bg); color: var(--ok-fg); border-color: var(--ok-border); }
+  .toolbar { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+  .toolbar.exports { margin-left: auto; }
+  .filters { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin: .5rem 0 1rem; }
+  .filters .label { margin: 0 .25rem 0 0; font-weight: 500; color: var(--muted); }
+  .results-grid { display: grid; gap: 1rem; grid-template-columns: minmax(0, 1fr); }
+  .finding { padding: .9rem 1.1rem; margin-bottom: .75rem; border-left: 5px solid var(--border-strong); scroll-margin-top: 1rem; }
+  .sev-bar-error { border-left-color: var(--err-fg); }
+  .sev-bar-warning { border-left-color: var(--warn-fg); }
+  .sev-bar-info { border-left-color: var(--info-fg); }
+  .sev-bar-ok { border-left-color: var(--ok-fg); }
+  .finding-head { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .7rem; margin-bottom: .35rem; }
+  .finding-head h3 { margin: 0; }
+  .finding-msg { margin: 0 0 .5rem; }
+  .excerpt { font-size: .92rem; margin: .25rem 0 .6rem; }
+  dl.compare { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .15rem .9rem; margin: .4rem 0 .6rem; font-size: .95rem; }
+  dl.compare dt { color: var(--muted); }
+  dl.compare dd { margin: 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+  dl.compare dd.strong { font-weight: 650; }
+  .suggestion { margin: .4rem 0; }
+  .sources .label { margin: .4rem 0 0; color: var(--muted); font-weight: 600; font-size: .85rem; text-transform: uppercase; letter-spacing: .03em; }
+  .finding.flash, .finding:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
+  #lang-note { margin: 0 0 .5rem; font-size: .88rem; color: var(--muted); }
+  #notice-text { font-size: .9rem; color: var(--muted); }
+  progress[hidden] { display: none; }
+  @media (min-width: 64rem) {
+    .results-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: start; }
+    .doc-panel { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow: auto; }
+  }
+  @media (max-width: 36rem) { .counters { grid-template-columns: repeat(2, 1fr); } dl.compare { grid-template-columns: minmax(0, 1fr); } dl.compare dd { margin-bottom: .3rem; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="../" data-i18n="brand">EU AI Act workbench</a>
+  <nav class="site-nav" aria-label="Tools">
+    <a href="../obligations/" data-i18n="navObligations">Obligations navigator</a>
+    <a href="../audit/" aria-current="page" data-i18n="navAudit">Document checker</a>
+    <a href="../verify/" data-i18n="navVerify">Verify a record</a>
+  </nav>
+  <button type="button" class="lang-toggle" data-lang-toggle aria-label="Deutsch / English"><span data-lang-option="de">Deutsch</span> / <span data-lang-option="en" class="cur">English</span></button>
+</div></header>
+
+<main id="main" class="wrap">
+  <div class="page-head">
+    <h1 data-i18n="title">Document checker</h1>
+    <p class="lead" data-i18n="lead">Paste a text that mentions the EU AI Act. The checker looks for references to provisions, dates and quotations and compares them with the law in force on the date you choose.</p>
+  </div>
+  <div class="notice" role="note"><strong data-i18n="privacyLead">Privacy:</strong><p data-i18n="privacy">Your text stays in your browser. Nothing is uploaded.</p></div>
+  <noscript><p class="status bad" data-i18n="noscript">This tool needs JavaScript. Your text is processed in the browser only.</p></noscript>
+
+  <section class="panel" aria-labelledby="text-label">
+    <label id="text-label" for="text" data-i18n="textLabel">Text to check</label>
+    <textarea id="text" spellcheck="false" data-i18n-placeholder="textPlaceholder" placeholder="Paste a policy, a vendor answer, a slide or a chatbot answer here"></textarea>
+    <div class="examples"><span class="label" data-i18n="exampleLabel">Try an example:</span><span id="example-buttons" class="examples"></span><button type="button" class="chip" id="clear" data-i18n="clear">Clear</button></div>
+    <div class="row" style="margin-top:1rem">
+      <div class="fixed"><label for="asof" data-i18n="dateLabel">Check as of</label><input type="date" id="asof"><p class="hint" data-i18n="dateHint">The wording and dates in force on this day are used.</p></div>
+      <div class="fixed"><label for="textlang" data-i18n="langLabel">Language of the text</label>
+        <select id="textlang"><option value="auto" data-i18n="langAuto">Detect automatically</option><option value="en" data-i18n="langEn">English</option><option value="de" data-i18n="langDe">German</option></select></div>
+      <div class="fixed"><button type="button" class="btn" id="check" data-i18n="check">Check text</button></div>
+    </div>
+    <p id="status" class="status" role="status" aria-live="polite" hidden></p>
+    <progress id="progress" value="0" max="1" hidden aria-label="Loading"></progress>
+  </section>
+
+  <section id="results" hidden>
+    <div class="panel">
+      <div class="row" style="align-items:flex-start">
+        <div class="grow" id="result-head"></div>
+        <div class="toolbar exports no-print">
+          <button type="button" class="btn secondary small" id="copy-report" data-i18n="copyReport">Copy report (Markdown)</button>
+          <button type="button" class="btn secondary small" id="download-json" data-i18n="downloadJson">Download JSON</button>
+        </div>
+      </div>
+      <p id="lang-note"></p>
+      <div id="counters" class="counters" role="group" aria-label="Summary"></div>
+      <div id="filters" class="filters" role="group" aria-label="Filter"></div>
+    </div>
+    <div class="results-grid">
+      <section class="card doc-card doc-panel" aria-labelledby="doc-title">
+        <h2 id="doc-title" data-i18n="textH">Your text with markers</h2>
+        <p class="hint" data-i18n="textHint">Select a marked passage to jump to its finding.</p>
+        <div id="doc" class="doc"></div>
+      </section>
+      <section aria-labelledby="cards-title">
+        <h2 id="cards-title" data-i18n="findingsH">Findings</h2>
+        <div id="cards"></div>
+      </section>
+    </div>
+    <p id="notice-text"></p>
+  </section>
+</main>
+<footer class="site-footer"><div class="wrap"><p data-i18n="footer">Not legal advice. The consolidated text is not legally authentic; only the Official Journal is binding.</p></div></footer>
+<script type="module" src="audit.js"></script>
+</body>
+</html>
