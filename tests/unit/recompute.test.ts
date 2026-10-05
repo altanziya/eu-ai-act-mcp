@@ -2,9 +2,11 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { build } from "esbuild";
 import { afterAll, describe, expect, it } from "vitest";
-import { createRecord, recordHash } from "../../src/record/record.js";
+import { createRecord, decodeRecordFromUrl, encodeRecordForUrl, recordHash } from "../../src/record/record.js";
 import type { EvidenceRecord, RecordInput } from "../../src/record/record.js";
+import { contextFromFiles, VERIFY_FILES } from "../../src/release/contextCore.js";
 import { manifestBytes } from "../../src/release/manifest.js";
+import type { Manifest } from "../../src/release/manifestCore.js";
 import { generateKeyPair, signManifest } from "../../src/release/sign.js";
 import { checkFiles, filesOk } from "../../src/verify-core/files.js";
 import { compareRows, overallVerdict, recomputeRecord } from "../../src/verify-core/recompute.js";
@@ -148,6 +150,38 @@ describe("release file checks", () => {
     expect(checkFiles(rel.manifest, { "deadlines.json": read("deadlines.json").slice(0, 100) })[0]).toMatchObject({ listed: true, sha256_ok: false, bytes_ok: false });
     expect(checkFiles(rel.manifest, { "extra.json": new Uint8Array([1]) })[0]?.listed).toBe(false);
     expect(filesOk([])).toBe(false);
+  });
+});
+
+describe("browser-style path equals the Node path", () => {
+  it("builds the context from in-memory JSON strings via contextCore (no node:fs in the loader) and recomputes identically", () => {
+    // Strings stand in for what fetch() delivers on the page; the loader only ever sees bytes made by TextEncoder.
+    const texts: Record<string, string> = {};
+    for (const p of [...VERIFY_FILES, "manifest.json"]) texts[p] = readFileSync(join(rel.dir, p), "utf8");
+    const enc = new TextEncoder();
+    const files = Object.fromEntries(VERIFY_FILES.map((p) => [p, enc.encode(texts[p] as string)]));
+    const manifestBytesFetched = enc.encode(texts["manifest.json"] as string);
+    const manifest = JSON.parse(texts["manifest.json"] as string) as Manifest;
+    const memCtx = contextFromFiles(manifest, files);
+    expect(filesOk(checkFiles(manifest, files))).toBe(true);
+
+    const kp = generateKeyPair();
+    const sig = signManifest(manifestBytesFetched, kp.privateKeyPem);
+    const opts = { manifestBytes: manifestBytesFetched, signature: sig, publicKeys: { [sig.key_id]: kp.publicKeyPem } };
+    const cases = [rec(), rec({ quote: nodeText(rel.dir, "art_5.par_1.a", "de"), lang: "en" }), rec({ quote: "this sentence does not occur anywhere in the regulation text at all", claimed_ref: undefined })];
+    for (const original of cases) {
+      const fromUrl = decodeRecordFromUrl(encodeRecordForUrl(original));
+      const viaMemory = recomputeRecord(fromUrl, memCtx, opts);
+      const viaNode = recomputeRecord(original, rel.ctx, { ...opts, manifestBytes: manifestBytes(rel.manifest) });
+      expect(viaMemory).toEqual(viaNode);
+      expect(viaMemory.record_hash_ok).toBe(true);
+      expect(viaMemory.manifest_sha256_ok).toBe(true);
+      expect(viaMemory.signature.status).toBe("valid");
+      expect(overallVerdict(fromUrl, viaMemory, true).all_ok).toBe(true);
+    }
+  });
+  it("contextCore refuses an incomplete file set", () => {
+    expect(() => contextFromFiles(rel.manifest, {})).toThrow(/release file missing/);
   });
 });
 
