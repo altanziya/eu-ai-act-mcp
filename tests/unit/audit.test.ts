@@ -2,6 +2,7 @@ import { build } from "esbuild";
 import { describe, expect, it } from "vitest";
 import { V2024, V2026 } from "../../src/config.js";
 import { auditText } from "../../src/tools/audit.js";
+import { readableDate } from "../../src/tools/auditCore.js";
 import type { Finding } from "../../src/tools/audit.js";
 import { loadCorpus } from "../../src/tools/corpus-fs.js";
 
@@ -168,9 +169,23 @@ describe("deadlines", () => {
     const f = run("Article 5 applies from 2 December 2026.").findings.find((x) => x.kind === "deadline_ok");
     expect(f).toMatchObject({ severity: "ok", found: "2026-12-02" });
     expect(f?.message).toMatch(/part of Article 5/);
-    expect(f?.message).toMatch(/as a whole applies from 2025-02-02/);
+    expect(f?.message).toMatch(/as a whole applies from 2 February 2025/);
     expect(run("Artikel 5 gilt ab dem 2. Dezember 2026.", NOW, "de").findings.find((x) => x.kind === "deadline_ok")?.message).toMatch(/eines Teils von Artikel 5/);
     expect(run("Article 5 applies from 2 February 2025.").findings.find((x) => x.kind === "deadline_ok")?.message).not.toMatch(/part of/);
+  });
+  it("messages name dates in reading form, found/expected stay ISO", () => {
+    const en = find(run("The obligations under Annex III apply from 2 August 2026."), "outdated_deadline");
+    expect(en).toMatchObject({ found: "2026-08-02", expected: "2027-12-02" });
+    expect(en?.message).toMatch(/2 August 2026/);
+    expect(en?.message).toMatch(/2 December 2027/);
+    expect(en?.message).not.toMatch(/\d{4}-\d{2}-\d{2}/);
+    const de = find(run("Die Pflichten nach Anhang III gelten ab dem 2. August 2026.", NOW, "de"), "outdated_deadline");
+    expect(de).toMatchObject({ found: "2026-08-02", expected: "2027-12-02" });
+    expect(de?.message).toMatch(/2\. August 2026/);
+    expect(de?.message).toMatch(/2\. Dezember 2027/);
+    expect(de?.message).not.toMatch(/\d{4}-\d{2}-\d{2}/);
+    expect(readableDate("2026-08-02", "en")).toBe("2 August 2026");
+    expect(readableDate("2027-03-01", "de")).toBe("1. März 2027");
   });
   it("a partial date does not hide a stale one: Article 6 with the old Annex III date is still an error", () => {
     expect(run("Article 6 applies from 2 August 2026.").summary.error).toBe(1);

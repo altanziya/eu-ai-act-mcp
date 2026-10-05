@@ -193,6 +193,16 @@ const oneLine = (s: string, max = EXCERPT_MAX): string => {
   const t = s.replace(/\s+/g, " ").trim();
   return t.length > max ? `${t.slice(0, max - 1)}…` : t;
 };
+const MONTH_NAMES: Record<Lang, readonly string[]> = {
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  de: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+};
+/** ISO date in reading form for messages: "2 August 2026" (en), "2. August 2026" (de). Anything that is not an ISO date is returned as is. */
+export function readableDate(iso: string, lang: Lang): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  const name = m ? MONTH_NAMES[lang][Number(m[2]) - 1] : undefined;
+  return m && name ? `${Number(m[3])}${lang === "de" ? "." : ""} ${name} ${m[1] as string}` : iso;
+}
 const uniq = <T>(xs: T[]): T[] => [...new Set(xs)];
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -207,6 +217,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   const de = lang === "de";
   const ACT = de ? "Verordnung (EU) 2026/1744" : "Regulation (EU) 2026/1744";
   const tr = (en: string, deText: string): string => (de ? deText : en);
+  const D = (iso: string): string => readableDate(iso, lang);
 
   const version = versionForDate(asOf);
   const other = otherVersion(version);
@@ -300,7 +311,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     const span = mention.span;
     const asWritten = cite(mention.id);
     if (curId) {
-      add({ kind: "reference_ok", severity: "ok", span, excerpt: slice(span), ref: cite(curId), node: curId, sources: [src(version, curId)], message: tr(`${cite(curId)} exists in the version in force on ${asOf}.`, `${cite(curId)} besteht in der am ${asOf} geltenden Fassung.`) });
+      add({ kind: "reference_ok", severity: "ok", span, excerpt: slice(span), ref: cite(curId), node: curId, sources: [src(version, curId)], message: tr(`${cite(curId)} exists in the version in force on ${D(asOf)}.`, `${cite(curId)} besteht in der am ${D(asOf)} geltenden Fassung.`) });
       continue;
     }
     const othId = resolveIn(oth, mention.id);
@@ -308,12 +319,12 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
       const { targets, suggestion } = moveInfo(othId);
       add({
         kind: "removed_provision", severity: "error", span, excerpt: slice(span), ref: asWritten, node: othId, sources: [src(other, othId), ...targets.map((t) => src(version, t))], suggestion,
-        message: tr(`${asWritten} no longer exists in the version in force on ${asOf}.`, `${asWritten} besteht in der am ${asOf} geltenden Fassung nicht mehr.`),
+        message: tr(`${asWritten} no longer exists in the version in force on ${D(asOf)}.`, `${asWritten} besteht in der am ${D(asOf)} geltenden Fassung nicht mehr.`),
       });
     } else if (othId) {
       add({
         kind: "not_yet_in_force", severity: "warning", span, excerpt: slice(span), ref: asWritten, node: othId, sources: [src(other, othId)],
-        message: tr(`${asWritten} is not in the text in force on ${asOf}; it was inserted by ${ACT} (consolidated version from 2026-07-27).`, `${asWritten} steht nicht im am ${asOf} geltenden Text; eingefügt durch ${ACT} (konsolidierte Fassung ab 2026-07-27).`),
+        message: tr(`${asWritten} is not in the text in force on ${D(asOf)}; it was inserted by ${ACT} (consolidated version from ${D("2026-07-27")}).`, `${asWritten} steht nicht im am ${D(asOf)} geltenden Text; eingefügt durch ${ACT} (konsolidierte Fassung ab ${D("2026-07-27")}).`),
       });
     } else {
       add({
@@ -351,7 +362,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
       case "exact":
       case "multi_node":
       case "multiple_matches":
-        add({ ...base, ...found, kind: "quote_ok", severity: "ok", sources, message: tr(`The quotation matches the wording in force on ${asOf}${at ? ` (${cite(at)})` : ""}.`, `Das Zitat entspricht dem am ${asOf} geltenden Wortlaut${at ? ` (${cite(at)})` : ""}.`) });
+        add({ ...base, ...found, kind: "quote_ok", severity: "ok", sources, message: tr(`The quotation matches the wording in force on ${D(asOf)}${at ? ` (${cite(at)})` : ""}.`, `Das Zitat entspricht dem am ${D(asOf)} geltenden Wortlaut${at ? ` (${cite(at)})` : ""}.`) });
         break;
       case "found_other_version": {
         const now = at ? cur.byId.get(at)?.text : undefined;
@@ -365,7 +376,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
           ...(gone ? { suggestion: gone.suggestion } : {}),
           message: version === V2026
             ? tr(`The quotation is the wording of the Official Journal version; it was amended by ${ACT}.`, `Das Zitat gibt den Wortlaut der Amtsblattfassung wieder; er wurde durch ${ACT} geändert.`)
-            : tr(`The quotation is the wording of the consolidated version (${ACT}), which is not yet in force on ${asOf}.`, `Das Zitat gibt den Wortlaut der konsolidierten Fassung (${ACT}) wieder, die am ${asOf} noch nicht gilt.`),
+            : tr(`The quotation is the wording of the consolidated version (${ACT}), which is not yet in force on ${D(asOf)}.`, `Das Zitat gibt den Wortlaut der konsolidierten Fassung (${ACT}) wieder, die am ${D(asOf)} noch nicht gilt.`),
         });
         break;
       }
@@ -529,11 +540,11 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
       const ref = cite(refId);
       if (v.partial) {
         const whole = ruleDates(version, cur, s.ruleId, deadlines);
-        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: s.ruleId, sources: v.partial.rule.source_nodes.map((n) => src(version, n)), message: tr(`${found} is the application date of part of ${ref} (${cite(v.partial.node)}); ${whole ? `${ref} as a whole applies from ${whole.dates[0] as string}` : "the rest follows other rules"}.`, `${found} ist der Geltungsbeginn eines Teils von ${ref} (${cite(v.partial.node)}); ${whole ? `${ref} insgesamt gilt ab ${whole.dates[0] as string}` : "der Rest folgt anderen Regeln"}.`) });
+        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: s.ruleId, sources: v.partial.rule.source_nodes.map((n) => src(version, n)), message: tr(`${D(found)} is the application date of part of ${ref} (${cite(v.partial.node)}); ${whole ? `${ref} as a whole applies from ${D(whole.dates[0] as string)}` : "the rest follows other rules"}.`, `${D(found)} ist der Geltungsbeginn eines Teils von ${ref} (${cite(v.partial.node)}); ${whole ? `${ref} insgesamt gilt ab ${D(whole.dates[0] as string)}` : "der Rest folgt anderen Regeln"}.`) });
       } else if (v.viaText) {
-        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: refId, sources: [src(version, refId)], message: tr(`${found} is the date in the text of ${ref} in force on ${asOf}.`, `${found} ist das Datum im am ${asOf} geltenden Text von ${ref}.`) });
+        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: refId, sources: [src(version, refId)], message: tr(`${D(found)} is the date in the text of ${ref} in force on ${D(asOf)}.`, `${D(found)} ist das Datum im am ${D(asOf)} geltenden Text von ${ref}.`) });
       } else {
-        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: refId, sources: (v.c as { rule: DeadlineRule }).rule.source_nodes.map((n) => src(version, n)), message: tr(`${found} is the application date of ${ref} on ${asOf}.`, `${found} ist der Geltungsbeginn von ${ref} am ${asOf}.`) });
+        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: refId, sources: (v.c as { rule: DeadlineRule }).rule.source_nodes.map((n) => src(version, n)), message: tr(`${D(found)} is the application date of ${ref} on ${D(asOf)}.`, `${D(found)} ist der Geltungsbeginn von ${ref} am ${D(asOf)}.`) });
       }
       continue;
     }
@@ -547,9 +558,9 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
         : [...(v.c?.rule.source_nodes ?? []).map((n) => src(version, n)), ...(v.o?.rule.source_nodes ?? []).map((n) => src(other, n))];
       const common = { ...base, ref, node: refId, ...(expected ? { expected } : {}), sources };
       if (laterAct) {
-        add({ ...common, kind: "unverified_date", severity: "warning", message: tr(`${found} is the ${v.viaText ? "date in the text" : "application date"} of the consolidated version (${ACT}, from 2026-07-27); on ${asOf} ${ref} ${expected ? `has ${expected}` : "reads differently"}.`, `${found} ist das ${v.viaText ? "Datum im Text" : "Geltungsdatum"} der konsolidierten Fassung (${ACT}, ab 2026-07-27); am ${asOf} ${expected ? `gilt für ${ref} der ${expected}` : `lautet ${ref} anders`}.`) });
+        add({ ...common, kind: "unverified_date", severity: "warning", message: tr(`${D(found)} is the ${v.viaText ? "date in the text" : "application date"} of the consolidated version (${ACT}, from ${D("2026-07-27")}); on ${D(asOf)} ${ref} ${expected ? `has ${D(expected)}` : "reads differently"}.`, `${D(found)} ist das ${v.viaText ? "Datum im Text" : "Geltungsdatum"} der konsolidierten Fassung (${ACT}, ab ${D("2026-07-27")}); am ${D(asOf)} ${expected ? `gilt für ${ref} der ${D(expected)}` : `lautet ${ref} anders`}.`) });
       } else {
-        add({ ...common, kind: "outdated_deadline", severity: "error", message: tr(`${ref} gave ${found}; on ${asOf} it is ${expected ?? "another date"} (changed by ${ACT}).`, `${ref} nannte ${found}; am ${asOf} gilt ${expected ?? "ein anderes Datum"} (geändert durch ${ACT}).`) });
+        add({ ...common, kind: "outdated_deadline", severity: "error", message: tr(`${ref} gave ${D(found)}; on ${D(asOf)} it is ${expected ? D(expected) : "another date"} (changed by ${ACT}).`, `${ref} nannte ${D(found)}; am ${D(asOf)} gilt ${expected ? D(expected) : "ein anderes Datum"} (geändert durch ${ACT}).`) });
       }
       continue;
     }
@@ -561,7 +572,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
       if (!c) continue;
       const ref = cite(s.ruleId);
       const expected = c.dates[0] as string;
-      add({ ...base, kind: "unverified_date", severity: "warning", ref, node: s.ruleId, expected, sources: c.rule.source_nodes.map((n) => src(version, n)), message: tr(`${found} does not match the application date of ${ref} on ${asOf} (${expected}).`, `${found} stimmt nicht mit dem Geltungsbeginn von ${ref} am ${asOf} überein (${expected}).`) });
+      add({ ...base, kind: "unverified_date", severity: "warning", ref, node: s.ruleId, expected, sources: c.rule.source_nodes.map((n) => src(version, n)), message: tr(`${D(found)} does not match the application date of ${ref} on ${D(asOf)} (${D(expected)}).`, `${D(found)} stimmt nicht mit dem Geltungsbeginn von ${ref} am ${D(asOf)} überein (${D(expected)}).`) });
       break;
     }
   }
