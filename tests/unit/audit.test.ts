@@ -138,6 +138,62 @@ describe("deadlines", () => {
     expect(r.findings.filter((f) => f.kind === "deadline_ok")).toHaveLength(1);
     expect(find(r, "outdated_deadline")).toMatchObject({ found: "2026-08-02", expected: "2027-12-02" });
   });
+  it("several subjects in one sentence: a date is fine if it fits any subject of its clause", () => {
+    const r = run("Article 50 transparency obligations apply from 2 August 2026, while Annex III obligations were postponed to 2 December 2027.");
+    expect(r.summary.error).toBe(0);
+    expect(r.findings.filter((f) => f.kind === "deadline_ok").map((f) => [f.found, f.ref])).toEqual([["2026-08-02", "Article 50"], ["2027-12-02", "Article 6(2)"]]);
+    const semi = run("Article 50 applies from 2 August 2026; Annex III applies from 2 December 2027.");
+    expect(semi.summary.error).toBe(0);
+    const and = run("Article 50 applies from 2 August 2026 and Annex III obligations from 2 December 2027.");
+    expect(and.summary.error).toBe(0);
+    expect(and.findings.filter((f) => f.kind === "deadline_ok")).toHaveLength(2);
+  });
+  it("several subjects, DE: während, Semikolon, und", () => {
+    const de = (t: string) => run(t, NOW, "de");
+    expect(de("Artikel 50 gilt ab dem 2. August 2026, während Anhang III erst ab dem 2. Dezember 2027 gilt.").summary.error).toBe(0);
+    expect(de("Artikel 50 gilt ab dem 2. August 2026; Anhang III gilt ab dem 2. Dezember 2027.").summary.error).toBe(0);
+    expect(de("Artikel 50 gilt ab dem 2. August 2026 und Anhang III ab dem 2. Dezember 2027.").summary.error).toBe(0);
+  });
+  it("a wrong date is still flagged when a second subject does not fit either", () => {
+    const r = run("Article 50 applies from 2 August 2026, while Annex III obligations apply from 2 August 2026.");
+    expect(r.findings.filter((f) => f.kind === "outdated_deadline").map((f) => f.ref)).toEqual(["Article 6(2)"]);
+    expect(run("Under Article 50 and Annex III the obligations apply from 2 August 2026.").summary.error).toBe(0); // fits Article 50
+  });
+  it("a subject before the date wins over one after it", () => {
+    const r = run("Annex III obligations apply from 2 August 2026, as do the transparency obligations of Article 50.");
+    expect(r.summary.error).toBe(0);
+    expect(run("Annex III obligations apply from 2 August 2026.").summary.error).toBe(1);
+  });
+  it("descendant rules: Article 5 applies from 2 December 2026 for its points (ba), (bb) and paragraphs (1a), (1b)", () => {
+    const f = run("Article 5 applies from 2 December 2026.").findings.find((x) => x.kind === "deadline_ok");
+    expect(f).toMatchObject({ severity: "ok", found: "2026-12-02" });
+    expect(f?.message).toMatch(/part of Article 5/);
+    expect(f?.message).toMatch(/as a whole applies from 2025-02-02/);
+    expect(run("Artikel 5 gilt ab dem 2. Dezember 2026.", NOW, "de").findings.find((x) => x.kind === "deadline_ok")?.message).toMatch(/eines Teils von Artikel 5/);
+    expect(run("Article 5 applies from 2 February 2025.").findings.find((x) => x.kind === "deadline_ok")?.message).not.toMatch(/part of/);
+  });
+  it("a partial date does not hide a stale one: Article 6 with the old Annex III date is still an error", () => {
+    expect(run("Article 6 applies from 2 August 2026.").summary.error).toBe(1);
+  });
+  it("an anchor term next to a citation of another act is not a subject", () => {
+    expect(kinds("Transparency obligations under Article 13 GDPR apply since 25 May 2018.")).toEqual(["no_references"]);
+    expect(kinds("Die Transparenzpflichten nach Artikel 13 DSGVO gelten seit dem 25. Mai 2018.", NOW, "de")).toEqual(["no_references"]);
+    expect(kinds("Transparency obligations under Article 13 of the Data Act apply from 12 September 2025.")).toEqual(["no_references"]);
+    expect(kinds("The transparency obligations apply from 2 August 2026.")).toEqual(["deadline_ok"]);
+  });
+  it("the trigger word must stand at most three words before the date", () => {
+    expect(kinds("Article 6(2) was published on 10 July 2025 and applies from 2 December 2027.")).toEqual(["reference_ok", "deadline_ok"]);
+    expect(kinds("Article 6(2) was published on 10 July 2025 and applies from 2 August 2025.")).toEqual(["reference_ok", "unverified_date"]);
+    expect(run("Article 6(2) was published on 10 July 2025 and applies from 2 August 2025.").findings[1]?.found).toBe("2025-08-02");
+    expect(kinds("Artikel 6 Absatz 2 wurde am 10. Juli 2025 veröffentlicht und gilt ab dem 2. August 2025.", NOW, "de")).toEqual(["reference_ok", "unverified_date"]);
+    expect(kinds("Under Article 6(2), see the paper that was released and finalised on 1 January 2030.")).toEqual(["reference_ok"]);
+  });
+  it("an outdated text deadline without a unique expected date falls back to the rule, never to nothing", () => {
+    const r = run("Under Article 113, the Regulation applies from 2 August 2025 or later, and Chapter III Section 4 from 2 February 2025.");
+    for (const f of r.findings.filter((x) => x.kind === "outdated_deadline")) expect(f.expected).toBeTruthy();
+    const f = find(run("Under Article 57, a sandbox must be operational by 2 August 2026."), "outdated_deadline");
+    expect(f?.expected).toBe("2027-08-02");
+  });
   it("a date in a citation list is not read as an article", () => {
     expect(kinds("Under Article 113, 2 August 2026 is the day it applies.")).toEqual(["reference_ok", "deadline_ok"]);
   });

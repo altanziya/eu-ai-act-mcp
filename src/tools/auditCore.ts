@@ -18,7 +18,7 @@ import { ancestorChain, descendants, isIsoDate, isLang, otherVersion, versionFor
 import type { CorpusIndex, CorpusLoader, Lang, Version } from "./corpus.js";
 import { matchRule } from "./deadlines.js";
 import type { DeadlineRule, DeadlineTable } from "./deadlines.js";
-import { findDates, findQuotes, findRefs, splitSentences } from "./auditScan.js";
+import { findDates, findQuotes, findRefsDetailed, splitSentences } from "./auditScan.js";
 import type { RefMention, Span } from "./auditScan.js";
 import { formatRef } from "./formatRef.js";
 import { notice } from "./notice.js";
@@ -99,7 +99,10 @@ const ANNEX_RULE: Array<{ prefix: string; id: string; needs?: RegExp }> = [
   { prefix: "anx_3", id: "art_6.par_2" },
   { prefix: "anx_1", id: "art_6.par_1", needs: HIGH_RISK },
 ];
-const TRIGGER = /(?<![\p{L}])(?:appl(?:y|ies|ied|icable|ication)|from|by|as of|effective|until|ab|gilt|gelten|anwendbar|anzuwenden|spätestens|bis)(?![\p{L}])/iu;
+const TRIGGER = /(?<![\p{L}])(?:appl(?:y|ies|ied|icable|ication)|from|by|as of|effective|until|later than|ab|gilt|gelten|anwendbar|anzuwenden|spätestens|bis)(?![\p{L}])/iu;
+/** Clause breaks inside a sentence: "; ", ", while", ", whereas", ", but", ", während", ", wohingegen", ", aber", "while", "während". */
+const CLAUSE_BREAK = /;|,\s*(?:while|whereas|but|however|während|wohingegen|aber|jedoch|dagegen)(?![\p{L}])|(?<![\p{L}])(?:while|whereas|während|wohingegen)(?![\p{L}])/giu;
+const AND = /(?<![\p{L}])(?:and|und)(?![\p{L}])/giu;
 
 // ---------------------------------------------------------------------------------------------------------------
 // Helpers
@@ -160,6 +163,27 @@ function ruleDates(version: Version, idx: CorpusIndex, id: string, deadlines: De
   if (!block || !idx.byId.has(id)) return null;
   const rule = matchRule(block, ancestorChain(idx, id).map((n) => n.id));
   return rule ? { rule, dates: [rule.applies_from, ...(rule.later_dates ?? []).map((d) => d.applies_from)] } : null;
+}
+
+const descCache = new WeakMap<CorpusIndex, Map<string, Map<string, { node: string; rule: DeadlineRule }>>>();
+/** Application dates of the rules that apply to descendants of a node (partial application), by date. */
+function descendantRuleDates(version: Version, idx: CorpusIndex, id: string, deadlines: DeadlineTable): Map<string, { node: string; rule: DeadlineRule }> {
+  let m = descCache.get(idx);
+  if (!m) descCache.set(idx, (m = new Map()));
+  let hit = m.get(id);
+  if (!hit) {
+    hit = new Map();
+    const block = deadlines.versions[version];
+    if (block) {
+      for (const n of descendants(idx, id)) {
+        const rule = matchRule(block, ancestorChain(idx, n.id).map((x) => x.id));
+        if (!rule) continue;
+        for (const d of [rule.applies_from, ...(rule.later_dates ?? []).map((x) => x.applies_from)]) if (!hit.has(d)) hit.set(d, { node: n.id, rule });
+      }
+    }
+    m.set(id, hit);
+  }
+  return hit;
 }
 
 const oneLine = (s: string, max = EXCERPT_MAX): string => {
@@ -231,7 +255,9 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     curId: string | null;
     sentence: number;
   }
-  const refs: Checked[] = findRefs(text).map((mention) => ({ mention, curId: resolveIn(cur, mention.id), sentence: sentenceAt(mention.span.start) }));
+  const scan = findRefsDetailed(text);
+  const refs: Checked[] = scan.refs.map((mention) => ({ mention, curId: resolveIn(cur, mention.id), sentence: sentenceAt(mention.span.start) }));
+  const foreignSentences = new Set(scan.foreign.map((f) => sentenceAt(f.start)));
 
   // quotations with a citation in the same or the previous sentence are checked as quotations (their inner citations and dates are not)
   interface QuoteJob {
@@ -354,81 +380,161 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   }
   const dates = findDates(text).filter((d) => !insideChecked(d.span));
   const dist = (s: Span, d: Span): number => (s.end <= d.start ? d.start - s.end : s.start >= d.end ? s.start - d.end + 0.5 : 0);
-  for (const d of dates) {
-    const si = sentenceAt(d.span.start);
+
+  const subjectCache = new Map<number, Subject[]>();
+  const subjectsOf = (si: number): Subject[] => {
+    let hit = subjectCache.get(si);
+    if (hit) return hit;
+    hit = [];
     const sentence = sentences[si] as Span;
     const sText = slice(sentence);
-    const subjects: Subject[] = [];
     for (const r of refs) {
       if (r.sentence !== si || !r.curId || insideChecked(r.mention.span)) continue;
       const annex = ANNEX_RULE.find((a) => r.curId === a.prefix || (r.curId as string).startsWith(`${a.prefix}.`));
       const ruleId = annex && (!annex.needs || annex.needs.test(sText)) ? annex.id : r.curId;
-      subjects.push({ ruleId, cited: r.curId, span: r.mention.span });
+      hit.push({ ruleId, cited: r.curId, span: r.mention.span });
     }
-    for (const a of ANCHOR_TERMS) {
-      if (a.needs && !a.needs.test(sText)) continue;
-      for (const m of sText.matchAll(a.re)) {
-        const start = sentence.start + m.index;
-        subjects.push({ ruleId: a.id, span: { start, end: start + m[0].length } });
+    if (!foreignSentences.has(si)) {
+      // anchor terms stand for a subject only where no citation of another act is in the sentence ("Transparency obligations under Article 13 GDPR")
+      for (const a of ANCHOR_TERMS) {
+        if (a.needs && !a.needs.test(sText)) continue;
+        for (const m of sText.matchAll(a.re)) {
+          const start = sentence.start + m.index;
+          hit.push({ ruleId: a.id, span: { start, end: start + m[0].length } });
+        }
       }
     }
+    subjectCache.set(si, hit);
+    return hit;
+  };
+  const datesBySentence = new Map<number, typeof dates>();
+  for (const d of dates) {
+    const si = sentenceAt(d.span.start);
+    datesBySentence.set(si, [...(datesBySentence.get(si) ?? []), d]);
+  }
+  const breakCache = new Map<number, number[]>();
+  /** Offsets where a new clause starts: hard breaks, and "and"/"und" after a date when another subject follows ("A applies from D1 and B from D2"). */
+  const clauseStarts = (si: number): number[] => {
+    let hit = breakCache.get(si);
+    if (hit) return hit;
+    const sentence = sentences[si] as Span;
+    const sText = slice(sentence);
+    const hard = [...sText.matchAll(CLAUSE_BREAK)].map((m) => ({ at: sentence.start + m.index, next: sentence.start + m.index + m[0].length }));
+    const starts = [sentence.start, ...hard.map((h) => h.next)];
+    const ends = [...hard.map((h) => h.at), sentence.end];
+    const subs = subjectsOf(si);
+    const ds = datesBySentence.get(si) ?? [];
+    const soft: number[] = [];
+    for (const m of sText.matchAll(AND)) {
+      const at = sentence.start + m.index;
+      const next = at + m[0].length;
+      const k = ends.findIndex((e) => e >= at);
+      const clauseStart = starts[k] as number;
+      const clauseEnd = ends[k] as number;
+      const dateBefore = ds.some((d) => d.span.start >= clauseStart && d.span.end <= at && !soft.some((x) => x > d.span.start && x <= at));
+      const subjectAfter = subs.some((x) => x.span.start >= next && x.span.end <= clauseEnd);
+      if (dateBefore && subjectAfter) soft.push(next);
+    }
+    hit = [...new Set([...starts, ...soft])].sort((x, y) => x - y);
+    breakCache.set(si, hit);
+    return hit;
+  };
+
+  type Verdict =
+    | { kind: "ok"; s: Subject; partial?: { node: string; rule: DeadlineRule }; viaText: boolean; c?: { rule: DeadlineRule; dates: string[] } }
+    | { kind: "outdated"; s: Subject; viaText: boolean; expected?: string; c?: { rule: DeadlineRule; dates: string[] }; o?: { rule: DeadlineRule; dates: string[] } };
+  const judge = (s: Subject, found: string): Verdict | null => {
+    const rc = ruleDates(version, cur, s.ruleId, deadlines);
+    const ro = ruleDates(other, oth, s.ruleId, deadlines);
+    if (s.cited) {
+      // deadlines written in the cited text (the node and below, in either version) go first
+      const c = textDates(cur, s.cited);
+      const o = textDates(oth, s.cited);
+      if (c.includes(found)) return { kind: "ok", s, viaText: true };
+      if (o.includes(found)) {
+        const aligned = c.length === o.length ? c[o.indexOf(found)] : new Set(c).size === 1 ? c[0] : undefined;
+        const viaRule = ruleDates(version, cur, s.cited, deadlines)?.dates[0];
+        const expected = aligned ?? (viaRule !== found ? viaRule : undefined);
+        return { kind: "outdated", s, viaText: true, ...(expected ? { expected } : {}), ...(rc ? { c: rc } : {}) };
+      }
+    }
+    if (rc?.dates.includes(found)) return { kind: "ok", s, viaText: false, c: rc };
+    if (ro?.dates.includes(found) && rc) return { kind: "outdated", s, viaText: false, expected: rc.dates[0] as string, c: rc, ...(ro ? { o: ro } : {}) };
+    return null;
+  };
+
+  for (const d of dates) {
+    const si = sentenceAt(d.span.start);
+    const sentence = sentences[si] as Span;
+    const all = subjectsOf(si);
+    if (all.length === 0) continue;
+    // the clause of the date; without a subject in it, the subjects of the sentence before the date
+    const starts = clauseStarts(si);
+    const from = [...starts].reverse().find((x) => x <= d.span.start) ?? sentence.start;
+    const to = starts.find((x) => x > d.span.start) ?? sentence.end;
+    let subjects = all.filter((x) => x.span.start >= from && x.span.end <= to);
+    if (subjects.length === 0) subjects = all.filter((x) => x.span.end <= d.span.start);
     if (subjects.length === 0) continue;
-    subjects.sort((x, y) => dist(x.span, d.span) - dist(y.span, d.span) || x.span.start - y.span.start);
+    // subjects before the date first (nearest first), then those after it
+    subjects = [...subjects].sort((x, y) => Number(x.span.start >= d.span.end) - Number(y.span.start >= d.span.end) || dist(x.span, d.span) - dist(y.span, d.span) || x.span.start - y.span.start);
     const found = d.iso;
     const base = { span: d.span, excerpt: slice(d.span), found };
     const laterAct = version === V2024;
-    let done = false;
 
-    // The nearest subject that can say something decides. Per subject, deadlines written in the cited text go first
-    // (the date appears in the text of the cited node or below it, in one of the versions), then the application date
-    // of the matching rule of the deadline table, in both versions.
-    let unverified: { s: Subject; c: { rule: DeadlineRule; dates: string[] } } | undefined;
-    for (const s of subjects) {
-      if (s.cited) {
-        const c = textDates(cur, s.cited);
-        const o = textDates(oth, s.cited);
-        if (c.includes(found)) {
-          add({ ...base, kind: "deadline_ok", severity: "ok", ref: cite(s.cited), node: s.cited, sources: [src(version, s.cited)], message: tr(`${found} is the date in the text of ${cite(s.cited)} in force on ${asOf}.`, `${found} ist das Datum im am ${asOf} geltenden Text von ${cite(s.cited)}.`) });
-          done = true;
-          break;
-        }
-        if (o.includes(found)) {
-          const at = o.indexOf(found);
-          const expected = c.length === o.length ? c[at] : new Set(c).size === 1 ? c[0] : undefined;
-          if (laterAct) {
-            add({ ...base, kind: "unverified_date", severity: "warning", ref: cite(s.cited), node: s.cited, ...(expected ? { expected } : {}), sources: [src(other, s.cited), src(version, s.cited)], message: tr(`${found} is the date in the consolidated text (${ACT}), which is not yet in force on ${asOf}.`, `${found} ist das Datum im konsolidierten Text (${ACT}), der am ${asOf} noch nicht gilt.`) });
-          } else {
-            add({ ...base, kind: "outdated_deadline", severity: "error", ref: cite(s.cited), node: s.cited, ...(expected ? { expected } : {}), sources: [src(other, s.cited), src(version, s.cited)], message: tr(`${cite(s.cited)} gave ${found}; on ${asOf} the text says ${expected ?? "another date"} (changed by ${ACT}).`, `${cite(s.cited)} nannte ${found}; am ${asOf} lautet der Text ${expected ?? "auf ein anderes Datum"} (geändert durch ${ACT}).`) });
-          }
-          done = true;
+    const verdicts = subjects.map((s) => judge(s, found));
+    const own = verdicts.find((v) => v?.kind === "ok");
+    const stale = verdicts.find((v) => v?.kind === "outdated");
+    let partial: Verdict | undefined;
+    if (!own && !stale) {
+      for (const s of subjects) {
+        const hit = descendantRuleDates(version, cur, s.ruleId, deadlines).get(found);
+        if (hit) {
+          partial = { kind: "ok", s, viaText: false, partial: hit };
           break;
         }
       }
+    }
+    const v = own ?? stale ?? partial;
+    if (v?.kind === "ok") {
+      const s = v.s;
+      const refId = v.viaText && s.cited ? s.cited : s.ruleId;
+      const ref = cite(refId);
+      if (v.partial) {
+        const whole = ruleDates(version, cur, s.ruleId, deadlines);
+        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: s.ruleId, sources: v.partial.rule.source_nodes.map((n) => src(version, n)), message: tr(`${found} is the application date of part of ${ref} (${cite(v.partial.node)}); ${whole ? `${ref} as a whole applies from ${whole.dates[0] as string}` : "the rest follows other rules"}.`, `${found} ist der Geltungsbeginn eines Teils von ${ref} (${cite(v.partial.node)}); ${whole ? `${ref} insgesamt gilt ab ${whole.dates[0] as string}` : "der Rest folgt anderen Regeln"}.`) });
+      } else if (v.viaText) {
+        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: refId, sources: [src(version, refId)], message: tr(`${found} is the date in the text of ${ref} in force on ${asOf}.`, `${found} ist das Datum im am ${asOf} geltenden Text von ${ref}.`) });
+      } else {
+        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: refId, sources: (v.c as { rule: DeadlineRule }).rule.source_nodes.map((n) => src(version, n)), message: tr(`${found} is the application date of ${ref} on ${asOf}.`, `${found} ist der Geltungsbeginn von ${ref} am ${asOf}.`) });
+      }
+      continue;
+    }
+    if (v?.kind === "outdated") {
+      const s = v.s;
+      const refId = v.viaText && s.cited ? s.cited : s.ruleId;
+      const ref = cite(refId);
+      const expected = v.expected;
+      const sources = v.viaText
+        ? [src(other, refId), src(version, refId)]
+        : [...(v.c?.rule.source_nodes ?? []).map((n) => src(version, n)), ...(v.o?.rule.source_nodes ?? []).map((n) => src(other, n))];
+      const common = { ...base, ref, node: refId, ...(expected ? { expected } : {}), sources };
+      if (laterAct) {
+        add({ ...common, kind: "unverified_date", severity: "warning", message: tr(`${found} is the ${v.viaText ? "date in the text" : "application date"} of the consolidated version (${ACT}, from 2026-07-27); on ${asOf} ${ref} ${expected ? `has ${expected}` : "reads differently"}.`, `${found} ist das ${v.viaText ? "Datum im Text" : "Geltungsdatum"} der konsolidierten Fassung (${ACT}, ab 2026-07-27); am ${asOf} ${expected ? `gilt für ${ref} der ${expected}` : `lautet ${ref} anders`}.`) });
+      } else {
+        add({ ...common, kind: "outdated_deadline", severity: "error", message: tr(`${ref} gave ${found}; on ${asOf} it is ${expected ?? "another date"} (changed by ${ACT}).`, `${ref} nannte ${found}; am ${asOf} gilt ${expected ?? "ein anderes Datum"} (geändert durch ${ACT}).`) });
+      }
+      continue;
+    }
+    // nothing matches: report only if a trigger word stands at most three words before the date
+    const before = text.slice(sentence.start, d.span.start).match(/[\p{L}\p{N}.]+/gu) ?? [];
+    if (!TRIGGER.test(before.slice(-3).join(" "))) continue;
+    for (const s of subjects) {
       const c = ruleDates(version, cur, s.ruleId, deadlines);
       if (!c) continue;
-      const o = ruleDates(other, oth, s.ruleId, deadlines);
-      unverified ??= { s, c };
       const ref = cite(s.ruleId);
       const expected = c.dates[0] as string;
-      const sources = [...c.rule.source_nodes.map((n) => src(version, n)), ...(o ? o.rule.source_nodes.map((n) => src(other, n)) : [])];
-      if (c.dates.includes(found)) {
-        add({ ...base, kind: "deadline_ok", severity: "ok", ref, node: s.ruleId, sources: c.rule.source_nodes.map((n) => src(version, n)), message: tr(`${found} is the application date of ${ref} on ${asOf}.`, `${found} ist der Geltungsbeginn von ${ref} am ${asOf}.`) });
-        done = true;
-      } else if (o?.dates.includes(found)) {
-        done = true;
-        if (laterAct) {
-          add({ ...base, kind: "unverified_date", severity: "warning", ref, node: s.ruleId, expected, sources, message: tr(`${found} is the application date only in the consolidated version (${ACT}, from 2026-07-27); on ${asOf} ${ref} applies from ${expected}.`, `${found} gilt nur nach der konsolidierten Fassung (${ACT}, ab 2026-07-27); am ${asOf} gilt ${ref} ab ${expected}.`) });
-        } else {
-          add({ ...base, kind: "outdated_deadline", severity: "error", ref, node: s.ruleId, expected, sources, message: tr(`${found} was the application date of ${ref}; on ${asOf} it is ${expected} (changed by ${ACT}).`, `${found} war der Geltungsbeginn von ${ref}; am ${asOf} ist es der ${expected} (geändert durch ${ACT}).`) });
-        }
-      }
-      if (done) break;
-    }
-    if (done) continue;
-    if (!done && unverified && TRIGGER.test(sText)) {
-      const { s, c } = unverified;
-      const ref = cite(s.ruleId);
-      add({ ...base, kind: "unverified_date", severity: "warning", ref, node: s.ruleId, expected: c.dates[0] as string, sources: c.rule.source_nodes.map((n) => src(version, n)), message: tr(`${found} does not match the application date of ${ref} on ${asOf} (${c.dates[0] as string}).`, `${found} stimmt nicht mit dem Geltungsbeginn von ${ref} am ${asOf} überein (${c.dates[0] as string}).`) });
+      add({ ...base, kind: "unverified_date", severity: "warning", ref, node: s.ruleId, expected, sources: c.rule.source_nodes.map((n) => src(version, n)), message: tr(`${found} does not match the application date of ${ref} on ${asOf} (${expected}).`, `${found} stimmt nicht mit dem Geltungsbeginn von ${ref} am ${asOf} überein (${expected}).`) });
+      break;
     }
   }
 
