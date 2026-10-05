@@ -153,6 +153,21 @@ describe("quotations", () => {
     expect(f?.expected).toMatch(/2 August 2027/);
     expect(find(run(t), "deadline_ok") ?? find(run(t), "outdated_deadline")).toBeUndefined(); // the date inside the quotation is left to the quotation check
   });
+  it("an outdated quotation of a removed provision says where the text went (EN, DE)", () => {
+    const quote = words("art_10.par_5", V2024, 24);
+    const f = find(run(`Article 10(5) says: "${quote}"`), "outdated_quote");
+    expect(f?.severity).toBe("error");
+    expect(f?.suggestion).toMatch(/Article 4a\(1\)/);
+    const de = loadCorpus(V2024, "de").byId.get("art_10.par_5")?.text.split(/\s+/).slice(0, 24).join(" ") ?? "";
+    const g = find(run(`Artikel 10 Absatz 5 lautet: „${de}“`, NOW, "de"), "outdated_quote");
+    expect(g?.suggestion).toMatch(/Artikel 4a Absatz 1/);
+    expect(g?.suggestion).toMatch(/Verordnung \(EU\) 2026\/1744/);
+  });
+  it("an outdated quotation of text without a counterpart says so", () => {
+    const quote = words("art_56.par_6.sub_2", V2024, 16);
+    const f = find(run(`Article 56(6) says: "${quote}"`), "outdated_quote");
+    expect(f?.suggestion).toMatch(/without a counterpart/);
+  });
   it("works with German quotation marks and the citation in the previous sentence", () => {
     const de = loadCorpus(V2026, "de").byId.get("art_9.par_1")?.text ?? "";
     const quote = de.split(/\s+/).slice(0, 12).join(" ");

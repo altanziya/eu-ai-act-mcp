@@ -206,6 +206,24 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     return lo;
   };
 
+  /** Where the text of a node of the older version went in the newer one (moved nodes of the node or its children, lifted to the node's level). */
+  const moveInfo = (othId: string): { targets: string[]; suggestion: string } => {
+    const targets = uniq(
+      movesFrom(oth, cur)
+        .filter((m) => m.from_id === othId || m.from_id.startsWith(`${othId}.`))
+        .map((m) => {
+          const depth = m.from_id.slice(othId.length).split(".").length - 1;
+          const up = m.to_id.split(".").slice(0, m.to_id.split(".").length - depth).join(".");
+          return cur.byId.has(up) ? up : m.to_id;
+        }),
+    );
+    const suggestion =
+      targets.length > 0
+        ? tr(`Removed by ${ACT}; the text moved to ${targets.map(cite).join(", ")}.`, `Durch ${ACT} gestrichen; der Text steht jetzt in ${targets.map(cite).join(", ")}.`)
+        : tr(`Removed by ${ACT} without a counterpart in the consolidated version.`, `Durch ${ACT} gestrichen, ohne Entsprechung in der konsolidierten Fassung.`);
+    return { targets, suggestion };
+  };
+
   // ---- 1. citations ------------------------------------------------------------------------------------------
   interface Checked {
     mention: RefMention;
@@ -243,20 +261,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     }
     const othId = resolveIn(oth, mention.id);
     if (othId && version === V2026) {
-      const moved = movesFrom(oth, cur);
-      const targets = uniq(
-        moved
-          .filter((m) => m.from_id === othId || m.from_id.startsWith(`${othId}.`))
-          .map((m) => {
-            const depth = m.from_id.slice(othId.length).split(".").length - 1;
-            const up = m.to_id.split(".").slice(0, m.to_id.split(".").length - depth).join(".");
-            return cur.byId.has(up) ? up : m.to_id;
-          }),
-      );
-      const suggestion =
-        targets.length > 0
-          ? tr(`Removed by ${ACT}; the text moved to ${targets.map(cite).join(", ")}.`, `Durch ${ACT} gestrichen; der Text steht jetzt in ${targets.map(cite).join(", ")}.`)
-          : tr(`Removed by ${ACT} without a counterpart in the consolidated version.`, `Durch ${ACT} gestrichen, ohne Entsprechung in der konsolidierten Fassung.`);
+      const { targets, suggestion } = moveInfo(othId);
       add({
         kind: "removed_provision", severity: "error", span, excerpt: slice(span), ref: asWritten, node: othId, sources: [src(other, othId), ...targets.map((t) => src(version, t))], suggestion,
         message: tr(`${asWritten} no longer exists in the version in force on ${asOf}.`, `${asWritten} besteht in der am ${asOf} geltenden Fassung nicht mehr.`),
@@ -296,9 +301,14 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
         break;
       case "found_other_version": {
         const now = at ? cur.byId.get(at)?.text : undefined;
+        // a quotation of removed text: where the text of the cited provision (or, failing that, of the matched one) went
+        const claimedGone = claimed.curId === null ? resolveIn(oth, claimed.mention.id) : null;
+        const goneId = claimedGone ?? (at !== undefined && !cur.byId.has(at) ? at : null);
+        const gone = version === V2026 && goneId !== null ? moveInfo(goneId) : undefined;
         add({
-          ...base, ...found, kind: "outdated_quote", severity: "error", sources: at ? [src(other, at), src(version, at)] : [],
+          ...base, ...found, kind: "outdated_quote", severity: "error", sources: at ? [src(other, at), src(version, at), ...(gone?.targets ?? []).map((t) => src(version, t))] : [],
           ...(now ? { expected: oneLine(now, 200) } : {}),
+          ...(gone ? { suggestion: gone.suggestion } : {}),
           message: version === V2026
             ? tr(`The quotation is the wording of the Official Journal version; it was amended by ${ACT}.`, `Das Zitat gibt den Wortlaut der Amtsblattfassung wieder; er wurde durch ${ACT} geändert.`)
             : tr(`The quotation is the wording of the consolidated version (${ACT}), which is not yet in force on ${asOf}.`, `Das Zitat gibt den Wortlaut der konsolidierten Fassung (${ACT}) wieder, die am ${asOf} noch nicht gilt.`),
