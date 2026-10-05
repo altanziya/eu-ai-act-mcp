@@ -65,12 +65,28 @@ export interface CellSummary {
   api_error_runs: number;
   /** Share of runs with at least one tool call (tools arm only). */
   tool_call_rate: number | null;
+  /** Tools arm only: wrong scored runs, split by whether the model called at least one tool. A descriptive split, not a causal one. */
+  tools_usage: { with_tool: RunGroupRate; no_tool: RunGroupRate } | null;
   cost_usd: number;
   /** Runs that booked an estimate instead of usage.cost. */
   cost_estimated_runs: number;
 }
 
+/** Error rate over scored runs (not cases) of one group of runs. */
+export interface RunGroupRate {
+  runs: number;
+  scored: number;
+  wrong: number;
+  rate: number | null;
+}
+
 export type Filter = (r: RunRecord) => boolean;
+
+function rate(rs: RunRecord[]): RunGroupRate {
+  const scored = rs.filter((r) => r.score.correct !== null);
+  const wrong = scored.filter((r) => r.score.correct === false).length;
+  return { runs: rs.length, scored: scored.length, wrong, rate: scored.length > 0 ? wrong / scored.length : null };
+}
 
 /** One summary per model x arm (in order of first appearance). `lines` may contain superseded lines; cost counts all of them. */
 export function summarize(lines: RunRecord[], filter: Filter = () => true): CellSummary[] {
@@ -109,11 +125,20 @@ export function summarize(lines: RunRecord[], filter: Filter = () => true): Cell
       unparseable_runs: runs.filter((r) => r.parsed === null && !r.error).length,
       api_error_runs: runs.filter((r) => r.error !== undefined).length,
       tool_call_rate: arm === "tools" && runs.length > 0 ? runs.filter((r) => r.tool_calls.length > 0).length / runs.length : null,
+      tools_usage: arm === "tools" ? { with_tool: rate(runs.filter((r) => r.tool_calls.length > 0)), no_tool: rate(runs.filter((r) => r.tool_calls.length === 0)) } : null,
       cost_usd: all.reduce((s, r) => s + r.cost, 0),
       cost_estimated_runs: all.filter((r) => r.cost_estimated === true).length,
     });
   }
   return out;
+}
+
+function toolsTable(cells: CellSummary[]): string[] {
+  const g = (x: RunGroupRate): string => `${x.wrong}/${x.scored} (${pct(x.rate)})`;
+  const L = ["| Model | Arm | Runs with >= 1 tool call: wrong/scored | Runs without a tool call: wrong/scored |", "|---|---|---|---|"];
+  for (const c of cells) if (c.tools_usage) L.push(`| ${c.model} | ${c.arm} | ${g(c.tools_usage.with_tool)} | ${g(c.tools_usage.no_tool)} |`);
+  if (L.length === 2) L.push("| (arm tools not run) | | | |");
+  return L;
 }
 
 /** The one pre-registered E1 evaluation: primary model, arm web, subset version_deadline. */
@@ -207,6 +232,15 @@ export function renderReport(meta: ReportMeta, lines: RunRecord[]): string {
     "## All cases",
     "",
     ...table(summarize(lines)),
+  );
+  L.push(
+    "",
+    "## Arm tools: error rate by tool use",
+    "",
+    "Runs, not cases: the share of scored runs that are wrong, split by whether the model called at least one tool in that run. " +
+      "Descriptive only: models that call tools may differ in other ways from models that do not.",
+    "",
+    ...toolsTable(summarize(lines).filter((c) => c.arm === "tools")),
   );
   for (const subset of ["version_deadline", "evaluation"] as const) L.push("", `## Subset ${subset}`, "", ...table(summarize(lines, (r) => r.subset === subset)));
   for (const k of [true, false]) L.push("", `## knowable_before_omnibus = ${k}`, "", ...table(summarize(lines, (r) => r.knowable_before_omnibus === k)));
