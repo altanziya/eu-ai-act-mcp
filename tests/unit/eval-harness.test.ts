@@ -1,4 +1,4 @@
-import { existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -114,6 +114,23 @@ describe("main (dry run, resume)", () => {
     expect(readFileSync(join(out, "runs.jsonl"), "utf8")).toBe(first);
     expect(JSON.parse(readFileSync(join(out, "results.json"), "utf8")).runs).toBe(8);
     expect(existsSync(join(out, "report.md"))).toBe(true);
+    vi.restoreAllMocks();
+  });
+});
+
+describe("resume re-scores stored runs", () => {
+  it("rewrites a stale score from the stored parsed answer", async () => {
+    const out = join(tmp, "rescore");
+    vi.spyOn(console, "log").mockImplementation(() => undefined);
+    const a = ["--dry-run", "--cases", SMOKE, "--models", "mock/a", "--arms", "plain", "--reps", "1", "--max-usd", "0", "--out", out];
+    await main(a);
+    const path = join(out, "runs.jsonl");
+    const lines = readFileSync(path, "utf8").trim().split("\n").map((l) => JSON.parse(l) as RunRecord);
+    lines[0] = { ...(lines[0] as RunRecord), score: { correct: false, checks: { date: false } } };
+    writeFileSync(path, lines.map((l) => `${JSON.stringify(l)}\n`).join(""));
+    await main([...a, "--resume"]);
+    const fixed = JSON.parse(readFileSync(path, "utf8").trim().split("\n")[0] as string) as RunRecord;
+    expect(fixed.score.correct).toBe(true);
     vi.restoreAllMocks();
   });
 });

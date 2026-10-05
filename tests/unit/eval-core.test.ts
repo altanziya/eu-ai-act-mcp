@@ -109,3 +109,19 @@ describe("loadCases validation", () => {
     expect(() => load(ev)).toThrow(/expected\.verdict/);
   });
 });
+
+describe("ordinal citations", () => {
+  const c: EvalCase = {
+    id: "T", kind: "generation", subset: "version_deadline", question: "q", as_of: "2026-10-05", knowable_before_omnibus: false, origin: "constructed",
+    expected: { articles: ["art_113"] }, ground_truth: { celex: "x", pinpoint: "y", quote: "z" }, legal_review: "none",
+  };
+  it("falls back to the article when the citation has ordinal wording", () => {
+    expect(scoreCase(c, { article: "Article 113, third subparagraph, point (c)(i)" }).correct).toBe(true);
+    expect(scoreCase(c, { article: "Article 6, second paragraph" }).correct).toBe(false);
+    expect(scoreCase(c, { article: "the Omnibus" }).correct).toBe(false);
+  });
+  it("does not match a deeper accepted id through the fallback", () => {
+    const deep = { ...c, expected: { articles: ["art_113.sub_3.c.i"] } };
+    expect(scoreCase(deep, { article: "Article 113, third subparagraph, point (c)(i)" }).correct).toBe(false);
+  });
+});

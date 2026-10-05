@@ -42,6 +42,18 @@ export function normalizeDate(s: string): string | null {
   return null;
 }
 
+/**
+ * Node id of a cited provision. parseRef is strict (nothing is guessed), so ordinal citations such as "Article 113, third
+ * subparagraph, point (c)(i)" are not understood by it; then the article or annex itself ("Article 113") is used, which is
+ * enough when the accepted id is the article. A deeper accepted id is then not matched (conservative).
+ */
+export function citedId(s: string): string | null {
+  const full = parseRef(s);
+  if (full !== null) return full;
+  const head = /^\s*(?:art(?:icle|ikel)?\.?|annex|anhang)\s+([0-9]+[a-z]?|[ivxlc]+)(?![a-z0-9])/i.exec(s);
+  return head ? parseRef(head[0]) : null;
+}
+
 export interface Score {
   correct: boolean | null;
   checks: Record<string, boolean>;
@@ -63,7 +75,7 @@ export function scoreCase(c: EvalCase, a: ModelAnswer | null): Score {
       checks["version"] = got !== null && got === (normalizeVersion(c.expected.version) ?? c.expected.version);
     }
     if (c.expected.articles !== undefined) {
-      const id = typeof a.article === "string" ? parseRef(a.article) : null;
+      const id = typeof a.article === "string" ? citedId(a.article) : null;
       checks["article"] = id !== null && c.expected.articles.some((x) => {
         const acc = parseRef(x) ?? x;
         return id === acc || id.startsWith(`${acc}.`);

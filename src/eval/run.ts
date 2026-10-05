@@ -86,6 +86,22 @@ function readLines(path: string): RunRecord[] {
   return readFileSync(path, "utf8").split("\n").filter((l) => l.trim() !== "").map((l) => JSON.parse(l) as RunRecord);
 }
 
+/** Recomputes `score` of stored runs from `parsed` with the current scorer (scoring is deterministic; no new calls needed). Returns the number of changed lines. */
+function rescore(lines: RunRecord[], cases: EvalCase[]): number {
+  const byId = new Map(cases.map((c) => [c.id, c]));
+  let changed = 0;
+  for (const r of lines) {
+    const c = byId.get(r.case_id);
+    if (!c) continue;
+    const s = scoreCase(c, r.parsed);
+    if (JSON.stringify(s) !== JSON.stringify(r.score)) {
+      r.score = s;
+      changed++;
+    }
+  }
+  return changed;
+}
+
 const usd = (x: number): string => x.toFixed(4);
 
 export async function main(argv: string[]): Promise<number> {
@@ -100,6 +116,13 @@ export async function main(argv: string[]): Promise<number> {
 
   const estimator = o.dryRun ? new Estimator() : Estimator.fromFile(PROBE_JSON);
   const existing = o.resume ? readLines(runsPath) : [];
+  if (o.resume) {
+    const n = rescore(existing, cases);
+    if (n > 0) {
+      writeFileSync(runsPath, existing.map((r) => `${JSON.stringify(r)}\n`).join(""), "utf8");
+      console.log(`resume: re-scored ${n} stored runs with the current scorer`);
+    }
+  }
   const budget = new Budget(o.maxUsd, existing.reduce((s, r) => s + r.cost, 0));
   const done = new Set(latestRuns(existing).filter((r) => !r.error && !r.incomplete).map(runKey));
 
