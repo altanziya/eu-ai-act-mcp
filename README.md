@@ -264,8 +264,7 @@ signed yet; the verify page then shows the signature as "missing".
 An evidence record (`aiact-evidence-record/1`) is one quote check made against one release: `release_id`, `input` (`quote`,
 `claimed_ref`, `as_of`, `lang`), the full `result` of `aiact_verify_citation`, `cited_nodes` (`id`, `version`, `lang`, `hash`,
 `node_hash` of every node the result points to), `manifest_sha256`, `notice` (DE and EN) and `record_hash`. `question`,
-`creator` and `created_at` are statements by the creator and are not checked. `record_hash` is the SHA-256 over the canonical
-JSON (keys sorted recursively, no whitespace) of the record without `record_hash`. The library has no clock; the CLI sets
+`creator` and `created_at` are statements by the creator and are not checked. The library has no clock; the CLI sets
 `created_at` (override with `--created-at`).
 
     npm run record -- --quote "..." --ref art_5.par_1.a --as-of 2026-09-01 --lang en \
@@ -273,6 +272,30 @@ JSON (keys sorted recursively, no whitespace) of the record without `record_hash
 
 The command prints the record and a verify link. The link carries the record as base64url of its UTF-8 JSON after `#`
 (`.../verify/#<record>`); the fragment is never sent to a server.
+
+`record_hash` is the lower-case hex SHA-256 over the canonical JSON of the record without its `record_hash` member. The
+canonical JSON is defined so that third parties can recompute it:
+
+- UTF-8 encoding of the text, no byte order mark, no whitespace between tokens (separators `,` and `:` only).
+- Strings as `JSON.stringify` writes them: `"` and `\` and the control characters below U+0020 are escaped (`\n`, `\u001f`, ...),
+  every other character, including umlauts and other non-ASCII text, is written unescaped as UTF-8 (lone surrogates are
+  written as `\udXXX` escapes, which Python cannot encode; none occur in the corpus).
+- Object keys sorted recursively by UTF-16 code units (JavaScript string comparison). For keys outside the Basic
+  Multilingual Plane this differs from a sort by Unicode code point; all keys of a record are ASCII.
+- Arrays keep their order. Members whose value is `undefined` do not exist in the record; `null` is written as `null`.
+- No Unicode normalisation: text is hashed as stored, so NFC and NFD forms of the same word give different hashes.
+- Numbers in the JavaScript `Number` representation (shortest round-trip form, `1` rather than `1.0`).
+
+Recomputing the hash in Python (record in `record.json`):
+
+    import json, hashlib
+    o = json.load(open("record.json", encoding="utf-8")); h = o.pop("record_hash")
+    print(h == hashlib.sha256(json.dumps(o, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")).hexdigest())
+
+Checked on 2026-10-05 against two records made with `createRecord` on release `aiact-corpus-2026-10-05`, with umlauts, quotation
+marks, `€` and `—` in `question` and `creator` and German statute text in `quote`: the hashes were identical (one record with
+`similarity` 1, one fuzzy record with `similarity` 0.9894). Not covered by that check: numbers whose JavaScript and Python
+representations differ (exponent forms such as `1e-7`; the record contains no such numbers today) and keys outside ASCII.
 
 ## Verify page
 

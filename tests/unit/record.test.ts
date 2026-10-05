@@ -30,6 +30,27 @@ describe("canonicalJson", () => {
   });
 });
 
+describe("canonicalJson as documented in the README", () => {
+  it("does not normalise Unicode: NFC and NFD forms give different text and different hashes", () => {
+    const nfc = "Gr\u00f6\u00dfe \u00dcbung";
+    const nfd = nfc.normalize("NFD");
+    expect(nfd).not.toBe(nfc);
+    expect(canonicalJson({ question: nfc })).not.toBe(canonicalJson({ question: nfd }));
+    expect(canonicalJson({ question: nfd })).toBe(`{"question":"${nfd}"}`);
+  });
+  it("sorts keys by UTF-16 code units, not by code point", () => {
+    // U+1F600 is the surrogate pair D83D DE00 and sorts before U+FF21 by code units, after it by code point.
+    expect(canonicalJson({ "\uff21": 1, "\u{1f600}": 2 })).toBe('{"\u{1f600}":2,"\uff21":1}');
+  });
+  it("hashes a record with umlauts over the UTF-8 bytes of its canonical JSON", () => {
+    const r = createRecord(input({ question: "F\u00e4llt das unter Art. 5? Gr\u00f6\u00dfe 3,50 \u20ac", creator: "J\u00fcrgen \u00c4rmel" }), rel.ctx);
+    const { record_hash, ...body } = r;
+    expect(canonicalJson(body)).toContain("F\u00e4llt das unter Art. 5? Gr\u00f6\u00dfe 3,50 \u20ac");
+    expect(record_hash).toBe(recordHash(body));
+    expect(record_hash).toMatch(/^[0-9a-f]{64}$/);
+  });
+});
+
 describe("evidence record", () => {
   it("has null for missing optional fields and the full notices", () => {
     const r = createRecord(input(), rel.ctx);
