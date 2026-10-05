@@ -124,8 +124,39 @@ const WORD = /[\p{L}\p{N}.]+(?:-[\p{L}\p{N}.]+)*/gu;
 const PASSIVE_BEFORE_BY = /^(?:\p{L}{3,}ed|made|done|given|taken|written|chosen|set|held|known|seen|shown|found|built|sent|paid|overseen|undertaken|drawn|begun|run|kept|led|worn)$/iu;
 /** A date that opens the sentence behind a preposition ("From 2 August 2026 ...", "Ab dem 2. August 2026 ...") counts as triggered. */
 const LEADING_PREP = /^(?:from|on|as of|with effect from|since|ab(?: dem)?|seit(?: dem)?|am|vom|mit wirkung vom|bis(?: zum)?|until|per)$/iu;
-/** "on"/"am" are no trigger words by themselves: the clause must say that something applies, takes effect or is required. */
-const EFFECT_VERB = /(?<![\p{L}])(?:appl(?:y|ies|icable)|tak(?:e|es|ing)\s+effect|enters?\s+into\s+(?:force|application)|(?:comes?|becomes?)\s+(?:into\s+)?(?:force|effective|applicable)|in\s+force|must|shall|comply|gelten|gilt|treten|tritt|in\s+kraft|anwendbar|anzuwenden|wirksam|müssen|muss|sollen|erfüllen|einhalten)(?![\p{L}])/iu;
+/** Verbs that say something applies / takes effect ("apply", "take effect", "enters into application", "in force", "gelten", "in Kraft", "anwendbar", "wirksam"); a verb of an event ("held", "listed", "trained", "schulen") is none. */
+const APPLICATION_VERB = /(?<![\p{L}])(?:appl(?:y|ies|icable)|tak(?:e|es|ing)\s+effect|enters?\s+into\s+(?:force|application)|(?:comes?|becomes?)\s+(?:into\s+)?(?:force|effective|applicable)|in\s+force|gelten|gilt|in\s+kraft|anwendbar|anzuwenden|wirksam)(?![\p{L}])/giu;
+/** Modal verbs of an obligation: "must", "shall", "have to", "need to", "müssen", "haben ... zu". */
+const OBLIGATION_MODAL = /(?<![\p{L}])(?:must|shall|(?:have|has)\s+to|needs?\s+to|müssen|muss|(?:haben|hat)(?=\s+(?:[\p{L}-]+\s+){0,6}?zu(?![\p{L}])))(?![\p{L}])/giu;
+/** Subject of the first person: "we", "I", "our team", "wir", "ich", "unser Team". */
+const FIRST_PERSON = /(?<![\p{L}])(?:we|i|wir|ich|(?:our|unser(?:e[nmrs]?)?)\s+(?:team|staff|company|organi[sz]ation|department|board|teams|mitarbeitende[nr]?|mitarbeiter(?:n|innen)?|unternehmen|firma|organisation|abteilung|belegschaft|vorstand|geschäftsführung))(?![\p{L}])/iu;
+/** Words before a mention that make it the object of a preposition, not the subject ("report on", "über", "für"): in a German clause where the modal comes first. */
+const OBJECT_PREPOSITION = /^(?:über|zu|zum|zur|für|auf|an|mit|bei|gegen|about|on|regarding|concerning|to|for|with)$/iu;
+/** Separator of a date range: "from 2 August 2026 to 5 August 2026", "vom ... bis zum ...", "2 August 2026 - 5 August 2026". */
+const RANGE_SEPARATOR = /^\s*(?:to|until|till|through|thru|bis(?:\s+(?:zum|zur|einschließlich))?|[-–—])\s*(?:the\s+)?$/iu;
+/**
+ * A clause behind a date that opens the sentence is a statement of application: it has a verb of application, or an
+ * obligation modal whose subject is "high-risk" (before the modal; in German also right behind a modal in second
+ * position). A first-person subject ("we must ...", "we apply ...") is never one.
+ */
+function statesApplication(rest: string): boolean {
+  for (const m of rest.matchAll(APPLICATION_VERB)) {
+    if (!FIRST_PERSON.test(rest.slice(0, m.index))) return true;
+  }
+  for (const m of rest.matchAll(OBLIGATION_MODAL)) {
+    const before = rest.slice(0, m.index);
+    if (/^[\s,]*$/.test(before)) {
+      // German inversion ("Ab dem ... müssen Hochrisiko-KI-Systeme ..."): the subject follows the modal
+      if (!/^(?:müssen|muss|haben|hat)$/iu.test(m[0])) continue;
+      const after = rest.slice(m.index + m[0].length);
+      const hr = firstHighRisk(after);
+      if (!hr) continue;
+      const between = after.slice(0, hr.index).match(WORD) ?? [];
+      if (between.length <= 3 && !FIRST_PERSON.test(between.join(" ")) && !(between.length > 0 && OBJECT_PREPOSITION.test(between[between.length - 1] as string))) return true;
+    } else if (firstHighRisk(before) && !FIRST_PERSON.test(before)) return true;
+  }
+  return false;
+}
 /** The regulation as a whole ("the AI Act", "the Regulation", "die Verordnung", "die KI-Verordnung"). */
 const WHOLE_ACT = /(?<![\p{L}])(?:AI[- ]Act|Artificial\s+Intelligence\s+Act|Regulation|KI-Verordnung|KI-Gesetz|Verordnung)(?![\p{L}])/giu;
 /** What stands before a mention of the regulation when it is not the subject ("under the AI Act", "nach der Verordnung", "des AI Act"). */
@@ -585,12 +616,15 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
     const wordsBefore = text.slice(from, d.span.start).match(WORD) ?? [];
     const tail = wordsBefore.slice(-TRIGGER_DISTANCE);
     const byBefore = tail.length > 0 && /^by$/i.test(tail[tail.length - 1] as string) && !(tail.length > 1 && PASSIVE_BEFORE_BY.test(tail[tail.length - 2] as string));
-    // a date opening the sentence behind a preposition ("From 2 August 2026 high-risk systems ...", "Ab dem 2. August 2026 gelten ...") counts like a trigger word and may name its subject after it
+    // a date opening the sentence behind a preposition ("From 2 August 2026 high-risk systems ...", "Ab dem 2. August 2026 gelten ...") is a trigger only if the clause states that the obligations apply
+    // (verb of application, or an obligation modal with "high-risk" as its subject, no first-person subject), never in a date range; it may then name its subject after it
     const openWords = text.slice(sentence.start, d.span.start).match(WORD) ?? [];
     const leadPrep = openWords.length > 0 && openWords.length <= 3 && LEADING_PREP.test(openWords.join(" "));
-    const leadingTrigger = leadPrep && (!/^(?:on|am|vom|per)$/i.test(openWords.join(" ")) || EFFECT_VERB.test(text.slice(d.span.end, to)));
-    const triggered = TRIGGER.test(tail.join(" ")) || byBefore || leadingTrigger;
-    const leading = leadPrep || (wordsBefore.length <= 2 && /^\s*,/.test(text.slice(d.span.end, d.span.end + 3)));
+    const inRange = dates.some((x) => x.span.start >= d.span.end && x.span.start - d.span.end <= 16 && RANGE_SEPARATOR.test(text.slice(d.span.end, x.span.start)));
+    const leadingTrigger = leadPrep && !inRange && statesApplication(text.slice(d.span.end, to));
+    // behind such a preposition the preposition itself is no trigger word (the clause decides)
+    const triggered = leadPrep ? leadingTrigger : TRIGGER.test(tail.join(" ")) || byBefore;
+    const leading = leadPrep ? leadingTrigger : wordsBefore.length <= 2 && /^\s*,/.test(text.slice(d.span.end, d.span.end + 3));
     if (all.length === 0) {
       // no subject in the sentence: those of the sentence before, in the same paragraph, if that one carries no date of its own;
       // not if the sentence names a subject of its own (the regulation as a whole, a provision of another act) or is a list item / table row
