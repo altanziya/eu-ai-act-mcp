@@ -183,6 +183,7 @@ export async function runClaude(o: ClaudeRunOptions): Promise<ClaudeRunResult> {
     else if (timedOut) message = `timeout after ${(o.timeoutMs ?? CLAUDE_TIMEOUT_MS) / 1000} s`;
     else if (s.isError) message = s.text || `claude reported an error (${s.subtype ?? "no subtype"})`;
     else if (code !== 0) message = `exit ${code}: ${(s.text || stderr).trim() || "no output"}`;
+    else if (s.hasResult && s.subtype !== null && s.subtype !== "success") message = `result subtype ${s.subtype}${s.text ? `: ${s.text}` : ""}`; // e.g. error_max_turns
     else if (!s.hasResult) message = "no result event in the stream";
     if (message === null) return { ...base, outcome: "ok" };
     const quota = !spawnError && !timedOut && isQuotaMessage(`${s.isError ? s.text : ""} ${code !== 0 ? stderr : ""} ${message}`);

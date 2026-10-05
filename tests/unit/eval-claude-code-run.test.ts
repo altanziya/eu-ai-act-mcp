@@ -88,6 +88,16 @@ describe("claude-code backend in the harness", () => {
     expect(readResults(out).cells[0]).toMatchObject({ api_error_runs: 0, runs: 2 });
   });
 
+  it("an error_max_turns run is an error run (not unparseable) and --resume repeats it", async () => {
+    vi.stubEnv("FAKE_CLAUDE_MODE", "maxturns");
+    const out = join(tmp, "maxturns");
+    await main(args(out, ["--arms", "plain"]));
+    expect(readResults(out).cells[0]).toMatchObject({ api_error_runs: 2, unparseable_runs: 0 });
+    vi.stubEnv("FAKE_CLAUDE_MODE", "ok");
+    await main(args(out, ["--arms", "plain", "--resume"]));
+    expect(readResults(out).cells[0]).toMatchObject({ api_error_runs: 0, runs: 2 });
+  });
+
   it("a used-up quota ends the run with quota_stop; --resume continues with the missing runs", async () => {
     vi.stubEnv("FAKE_CLAUDE_MODE", "limit");
     vi.stubEnv("FAKE_CLAUDE_FAIL_AFTER", "2"); // two good calls, then the limit

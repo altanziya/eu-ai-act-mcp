@@ -167,6 +167,13 @@ describe("errors", () => {
     vi.stubEnv("FAKE_CLAUDE_MODE", "noresult");
     expect((await go("plain")).error).toMatch(/no result event/);
   });
+  it("a result subtype other than success (error_max_turns) is an error even without is_error", async () => {
+    vi.stubEnv("FAKE_CLAUDE_MODE", "maxturns");
+    const r = await go("plain");
+    expect(r.outcome).toBe("error");
+    expect(r.error).toMatch(/error_max_turns/);
+    expect(r.cost_equiv_usd).toBe(0.05);
+  });
   it("limit / usage text with an error is quota_stop", async () => {
     vi.stubEnv("FAKE_CLAUDE_MODE", "limit");
     const r = await go("plain");
