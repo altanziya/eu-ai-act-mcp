@@ -1,0 +1,85 @@
+/**
+ * V1 deadline resolution from data/deadlines.json (hand-transcribed from Article 113, see README "Deadline table").
+ *
+ * A node is matched against the rules through its chain (node, parent, grandparent, ...). A rule matches if one of its
+ * `scope` entries is in the chain and no `except` entry is in the chain. The rule whose matching scope entry is nearest
+ * to the node wins (ties: first in `rules`). No matching rule: the version's `default`. No default: `unknown`.
+ */
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { REPO_ROOT } from "../config.js";
+import type { ProvisionNode } from "../parser/types.js";
+
+export interface DeadlineRule {
+  id: string;
+  applies_from: string;
+  scope?: string[];
+  except?: string[];
+  source_nodes: string[];
+  note?: string;
+  /** Later dates for sub-classes of the scope (e.g. high-risk systems under Annex I); between `applies_from` and the latest the result is unknown. */
+  later_dates?: Array<{ applies_from: string; condition: string; source_node: string }>;
+}
+export interface DeadlineBlock {
+  default?: DeadlineRule;
+  rules: DeadlineRule[];
+}
+export interface DeadlineTable {
+  versions: Record<string, DeadlineBlock>;
+}
+
+export interface Validity {
+  state: "in_force_at_as_of" | "not_yet_applicable_until" | "superseded_by" | "inserted_by" | "unknown";
+  until?: string;
+  version?: string;
+  act?: string;
+  rule_id?: string;
+  source_nodes?: string[];
+  note?: string;
+}
+
+let table: DeadlineTable | undefined;
+export function loadDeadlines(): DeadlineTable {
+  table ??= JSON.parse(readFileSync(join(REPO_ROOT, "data/deadlines.json"), "utf8")) as DeadlineTable;
+  return table;
+}
+
+/** `chain`: the node and its ancestors, nearest first (ids). */
+export function matchRule(block: DeadlineBlock, chain: readonly string[]): DeadlineRule | undefined {
+  let best: { rule: DeadlineRule; distance: number } | undefined;
+  for (const rule of block.rules) {
+    if ((rule.except ?? []).some((e) => chain.includes(e))) continue;
+    let distance = Number.POSITIVE_INFINITY;
+    for (const s of rule.scope ?? []) {
+      const at = chain.indexOf(s);
+      if (at !== -1 && at < distance) distance = at;
+    }
+    if (distance === Number.POSITIVE_INFINITY) continue;
+    if (!best || distance < best.distance) best = { rule, distance };
+  }
+  return best?.rule ?? block.default;
+}
+
+export function applyRule(rule: DeadlineRule, asOf: string): Validity {
+  const base = { rule_id: rule.id, source_nodes: rule.source_nodes };
+  if (asOf < rule.applies_from) return { state: "not_yet_applicable_until", until: rule.applies_from, ...base };
+  const latest = (rule.later_dates ?? []).map((d) => d.applies_from).sort().pop();
+  if (latest !== undefined && asOf < latest) {
+    return { state: "unknown", ...base, note: `applies by class of AI system: from ${rule.applies_from} for some, from ${latest} for others (${rule.id})` };
+  }
+  return { state: "in_force_at_as_of", ...base };
+}
+
+/** V1 from the table for `node` in `version` (ancestors looked up in `byId` of the same corpus). */
+export function resolveDeadline(version: string, node: ProvisionNode, byId: Map<string, ProvisionNode>, asOf: string, tbl: DeadlineTable = loadDeadlines()): Validity {
+  const block = tbl.versions[version];
+  if (!block) return { state: "unknown" };
+  const chain: string[] = [];
+  let cur: ProvisionNode | undefined = node;
+  while (cur) {
+    chain.push(cur.id);
+    cur = cur.parent === null ? undefined : byId.get(cur.parent);
+  }
+  const rule = matchRule(block, chain);
+  return rule ? applyRule(rule, asOf) : { state: "unknown" };
+}

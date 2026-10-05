@@ -1,0 +1,169 @@
+{
+  "schema": "deadline-table-v1",
+  "description": "Application dates per corpus version, transcribed by hand from the text of Article 113 (and only from nodes that state the rule). Resolution: node and its ancestors (parent chain); the rule whose matching scope entry is nearest to the node wins (ties: first in `rules`); `except` removes a node (and its descendants) from a rule; no matching rule -> `default`.",
+  "versions": {
+    "32024R1689": {
+      "default": {
+        "id": "default",
+        "applies_from": "2026-08-02",
+        "source_nodes": [
+          "art_113.sub_2"
+        ],
+        "note": "General rule of Article 113: 'It shall apply from 2 August 2026.' Applies to every node without a more specific rule (including annexes and, in the Official Journal version, recitals; see README limits)."
+      },
+      "rules": [
+        {
+          "id": "ch1-2",
+          "applies_from": "2025-02-02",
+          "scope": [
+            "cpt_1",
+            "cpt_2"
+          ],
+          "except": [],
+          "source_nodes": [
+            "art_113.sub_3.a"
+          ],
+          "note": "Art. 113, third paragraph, point (a): Chapters I and II."
+        },
+        {
+          "id": "ch3s4-ch5-ch7-ch12-art78",
+          "applies_from": "2025-08-02",
+          "scope": [
+            "cpt_3.sct_4",
+            "cpt_5",
+            "cpt_7",
+            "cpt_12",
+            "art_78"
+          ],
+          "except": [
+            "art_101"
+          ],
+          "source_nodes": [
+            "art_113.sub_3.b"
+          ],
+          "note": "Art. 113, third paragraph, point (b): Chapter III Section 4, Chapters V, VII and XII and Article 78, with the exception of Article 101 (which falls under the default)."
+        },
+        {
+          "id": "art6-par1",
+          "applies_from": "2027-08-02",
+          "scope": [
+            "art_6.par_1"
+          ],
+          "except": [],
+          "source_nodes": [
+            "art_113.sub_3.c"
+          ],
+          "note": "Art. 113, third paragraph, point (c): Article 6(1). The text adds 'and the corresponding obligations in this Regulation' without naming them; those are not mapped and fall under the default."
+        }
+      ]
+    },
+    "02024R1689-20260727": {
+      "default": {
+        "id": "default",
+        "applies_from": "2026-08-02",
+        "source_nodes": [
+          "art_113.sub_2"
+        ],
+        "note": "General rule of Article 113: 'It shall apply from 2 August 2026.' Applies to every node without a more specific rule (including annexes and, in the Official Journal version, recitals; see README limits)."
+      },
+      "rules": [
+        {
+          "id": "ch1-2",
+          "applies_from": "2025-02-02",
+          "scope": [
+            "cpt_1",
+            "cpt_2"
+          ],
+          "except": [
+            "art_5.par_1.ba",
+            "art_5.par_1.bb",
+            "art_5.par_1a",
+            "art_5.par_1b"
+          ],
+          "source_nodes": [
+            "art_113.sub_3.a"
+          ],
+          "note": "Art. 113, third paragraph, point (a): Chapters I and II, with the exceptions listed there."
+        },
+        {
+          "id": "art5-ba-bb-1a-1b",
+          "applies_from": "2026-12-02",
+          "scope": [
+            "art_5.par_1.ba",
+            "art_5.par_1.bb",
+            "art_5.par_1a",
+            "art_5.par_1b"
+          ],
+          "except": [],
+          "source_nodes": [
+            "art_113.sub_3.a"
+          ],
+          "note": "Art. 113, third paragraph, point (a): Article 5(1), first subparagraph, points (ba) and (bb), and Article 5(1a) and (1b) apply from 2 December 2026."
+        },
+        {
+          "id": "ch3s4-ch5-ch7-ch12-art78",
+          "applies_from": "2025-08-02",
+          "scope": [
+            "cpt_3.sct_4",
+            "cpt_5",
+            "cpt_7",
+            "cpt_12",
+            "art_78"
+          ],
+          "except": [
+            "art_101"
+          ],
+          "source_nodes": [
+            "art_113.sub_3.b"
+          ],
+          "note": "Art. 113, third paragraph, point (b): Chapter III Section 4, Chapters V, VII and XII and Article 78, with the exception of Article 101 (which falls under the default)."
+        },
+        {
+          "id": "ch3s1-3",
+          "applies_from": "2027-12-02",
+          "scope": [
+            "cpt_3.sct_1",
+            "cpt_3.sct_2",
+            "cpt_3.sct_3"
+          ],
+          "except": [
+            "art_6.par_5"
+          ],
+          "source_nodes": [
+            "art_113.sub_3.c",
+            "art_113.sub_3.c.i",
+            "art_113.sub_3.c.ii"
+          ],
+          "note": "Art. 113, third paragraph, point (c): Chapter III, Sections 1, 2 and 3, with the exception of Article 6(5) (default). Two dates by class of AI system: 2 December 2027 for systems classified under Article 6(2) and Annex III, 2 August 2028 for systems classified under Article 6(1) and Annex I. `applies_from` is the earlier date; between the two dates the result is `unknown`.",
+          "later_dates": [
+            {
+              "applies_from": "2028-08-02",
+              "condition": "AI systems classified as high-risk pursuant to Article 6(1) and Annex I",
+              "source_node": "art_113.sub_3.c.ii"
+            }
+          ]
+        },
+        {
+          "id": "art102-110",
+          "applies_from": "2026-07-27",
+          "scope": [
+            "art_102",
+            "art_103",
+            "art_104",
+            "art_105",
+            "art_106",
+            "art_107",
+            "art_108",
+            "art_109",
+            "art_110"
+          ],
+          "except": [],
+          "source_nodes": [
+            "art_113.sub_3.d"
+          ],
+          "note": "Art. 113, third paragraph, point (d): Articles 102 to 110."
+        }
+      ]
+    }
+  }
+}
