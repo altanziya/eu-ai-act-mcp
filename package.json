@@ -20,7 +20,8 @@
     "record": "tsx scripts/record.ts",
     "build:site": "tsx scripts/build-site.ts",
     "site:serve": "tsx scripts/site-serve.ts",
-    "cost:probe": "tsx scripts/cost-probe.ts"
+    "cost:probe": "tsx scripts/cost-probe.ts",
+    "eval": "tsx src/eval/run.ts"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
