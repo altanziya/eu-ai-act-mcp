@@ -99,7 +99,7 @@ A verification gives three separate answers, never one combined "verified":
 | Operative provisions traceable from 2024 to 2026 | 98.7 % (EN), 98.6 % (DE) |
 | EN/DE structural parity | 100 % |
 | Application-date rules (2026 version) | 7, each linked to its source sentence in Art. 113 |
-| Tests | 358, including golden tests written and frozen before implementation |
+| Tests | 462, including golden tests written and frozen before implementation |
 | Verify page | 52 KB, no framework, no external requests |
 
 ## Quick start
