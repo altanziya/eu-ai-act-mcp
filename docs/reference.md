@@ -127,13 +127,21 @@ checks that a text supports a claim (`support_checked` is always `false`) and gi
 Input `{ query, as_of?, lang?, limit? }`: `as_of` default today, `lang` default `en`, `limit` default 8, at most 20 (values below 1 are
 raised to 1). Output `{ as_of, version, lang, results: [{ id, citation, heading?, snippet, score, applicability }], notice }`.
 Searches the version in force on `as_of` (no recitals in the consolidated version). Ranking: BM25 (k1 1.2, b 0.75), one
-document per node (own heading and text; descendants are separate documents), tokens are lower-case Unicode words minus a short
-EN/DE stopword list, no stemming. An exact phrase (the content words of the query, contiguous in the node, stopwords ignored)
-adds half the summed idf of the query terms. Document-length normalisation prefers short leaves and paragraphs; articles and
-annexes count 0.85, chapters and sections 0.6. Ties by document order. `citation` is `formatRef(id, lang)`; `heading` is the
-node's own or the nearest ancestor's; `snippet` has at most 240 characters around the first query term, cut at word boundaries
-(`…` marks a cut). `applicability` as in `aiact_get_provision`. The core takes the corpus loader and the deadline table as
-parameters and has no `node:` import (it is meant to run in the browser).
+document per node (own heading and text; descendants are separate documents). Tokens are lower-case Unicode words minus a short
+EN/DE stopword list, reduced by a light suffix stemmer (EN `-ies -> -y`, `-es`, `-s`, `-ing`, `-ed`; DE `-en -e -n -s`, nouns in
+`-ung/-ion/-heit/-keit/-schaft/-tät` lose only the plural `-en`). Terms of the node's own heading count three times, those of the
+heading of the nearest article or annex above it twice (neither enters the length normalisation), so a paragraph of "Penalties"
+matches "penalties". A small synonym table (EN penalty/fine/sanction, deepfake/label/disclose, registration/register/database,
+SME/small/medium, oversight/supervision; DE Strafe/Sanktion/Geldbuße/Bußgeld, Kennzeichnung/Offenlegung/Deepfake,
+Registrierung/Datenbank, KMU, Aufsicht/Überwachung; `SYNONYMS` in `searchCore.ts`) adds the other terms of a group at weight 0.4;
+some groups also name articles (penalties -> Article 99, labelling/deepfake -> Article 50, registration -> Articles 49 and 71) whose
+nodes get a factor 1.5 when a query term belongs to the group. An exact phrase (the content words of the query, contiguous in the
+node, stopwords ignored) adds half the summed idf of the query terms. Document-length normalisation prefers short leaves and
+paragraphs; articles and annexes count 0.85, chapters and sections 0.6. Ties by document order. `citation` is `formatRef(id, lang)`;
+`heading` is the node's own or the nearest ancestor's; `snippet` has at most 240 characters around the first query term, cut at
+word boundaries (`…` marks a cut). `applicability` as in `aiact_get_provision`. The core takes the corpus loader and the deadline
+table as parameters and has no `node:` import (it is meant to run in the browser). Relevance checks are in
+`tests/unit/search.test.ts` ("relevance on the real corpus").
 
 ### Citation format (`formatRef`)
 
@@ -160,31 +168,41 @@ call (about 30 ms).
 | --- | --- | --- |
 | `reference_ok` | ok | the citation exists in the version checked |
 | `removed_provision` | error | exists only in the Official Journal version (version checked: consolidated); `suggestion` from the `moved` entries of the diff of the node or its children (e.g. Article 10(5) -> Article 4a(1)) |
-| `unknown_provision` | error | exists in neither version (also a pinpoint that does not exist inside an existing article); warning if it exists only in the consolidated version and `as_of` is before 2026-07-27 |
-| `deadline_ok` | ok | the date in the sentence is the current date |
+| `unknown_provision` | error | exists in neither version (also a pinpoint that does not exist inside an existing article) |
+| `not_yet_in_force` | warning | exists only in the consolidated version and `as_of` is before 2026-07-27 (inserted by Regulation (EU) 2026/1744) |
+| `deadline_ok` | ok | the date in the sentence is the current date of a subject of its clause; also the date of a descendant's rule (partial application, said in the message) |
 | `outdated_deadline` | error | the date is the one of the other (older) version; `expected` is the current date, `found` the date in the text, `sources` the nodes of both versions; message "changed by Regulation (EU) 2026/1744" |
 | `unverified_date` | warning | a date in a sentence with apply/applies/applicable/from/by/gilt/ab that matches nothing known (`expected` is the application date); also a date that exists only in the consolidated version when `as_of` is before 2026-07-27 |
 | `quote_ok` | ok | `verifyCitation` says `exact` (also `multi_node`, `multiple_matches`) |
-| `outdated_quote` | error | `found_other_version`: the quotation is the wording of the other version; `expected` is the current wording |
+| `outdated_quote` | error | `found_other_version`: the quotation is the wording of the other version; `expected` is the current wording, `suggestion` (for removed text) where it moved |
 | `wrong_pinpoint` | warning | `found_at_other_provision`; `expected` is the right citation, `found` the claimed one |
 | `quote_deviates` | warning | `fuzzy`, `mismatch_hard_token` (number, date or name differs) or `found_other_language` |
 | `quote_not_found` | error | `not_found` |
+| `not_checked` | info | a quotation beyond the limit of 200 checked quotations per text |
 | `no_references` | info | nothing to check |
 
 Detection. *Citations*: `Article/Art./Artikel N`, `Annex/Anhang <roman or number>` followed by readable pinpoints (`(2)`, `(1)(a)`,
 `, point (a)`, `third paragraph`, `Absatz 2`, `Buchst. a`, `Nummer 4`, `Section A`); read with `parseRef`, with the numbered-point
-reading of `Article 3(1)` and a missing subparagraph level tolerated. Lists ("Articles 102 to 110", "Artikel 6 und 8") check the first and
-the last item. Citations followed by another act ("of Regulation (EU) 2016/679", GDPR/DSGVO, Directive, Treaty) or preceded by
-"GDPR" are skipped. *Dates*: ISO, `2 August 2026`, `2nd August 2026`, `August 2, 2026`, `2.8.2026`, `2. August 2026` (EN and DE month
-names). A date is judged only in a sentence that has a cited provision or an anchor term (`Annex III` -> Article 6(2); `Annex I` with
+reading of `Article 3(1)`, `(n)` read as the n-th paragraph for articles without numbered paragraphs (`Article 113(3)(c)` is
+`art_113.sub_3.c`) and a missing subparagraph level tolerated. Lists give every item ("Article 6 and 7", "Articles 6(1) and (2)",
+"Artikel 6 Absatz 1 und 2"; a range "Articles 102 to 110" its two ends). Citations followed by another act (GDPR/DSGVO, "Regulation (EU)
+N/N" other than 2024/1689, any Directive, spelled-out acts such as the General Data Protection Regulation, Data Act, Digital Services Act,
+Machinery Regulation, Datenschutz-Grundverordnung, treaties) or preceded by "GDPR" are skipped; anchor terms in such a sentence are
+no subjects. *Dates*: ISO, `2 August 2026`, `2nd August 2026`, `August 2, 2026`, `2.8.2026`, `2. August 2026` (EN and DE month
+names). A date is judged only where its clause has a cited provision or an anchor term (`Annex III` -> Article 6(2); `Annex I` with
 high-risk -> Article 6(1); general-purpose AI -> Chapter V; prohibited practices -> Article 5; AI literacy -> Article 4;
-transparency obligations -> Article 50). The nearest subject that can decide wins; per subject, a date written in the text of the cited
-node or its descendants (in either version) goes first, then the application date (`applies_from` and later class dates) of the
-matching rule of the deadline table in both versions. A date inside a checked quotation is left to the quotation check.
-*Quotations*: text in `" "`, `“ ”`, `„ “` or `« »` of at least 6 words, with a citation in the same or the previous sentence
-(a citation inside the quotation does not count), is passed to `verifyCitation` with that citation as `claimed_ref`.
-Sentences are split at `. ! ?` (not after abbreviations such as Art., Abs., Nr.; not in "2. August"), at blank lines, and never inside a checked quotation.
-Known gaps: no recitals, no `Article 6 and 7` for singular `Article`, no relative dates ("two years after entry into force"), no check of
+transparency obligations -> Article 50). Clauses end at `;`, `, while`, `, whereas`, `, but`, `, während`, `, aber` and at "and"/"und"
+when a date precedes it and another subject follows. The subjects of the clause (before the date first) are tried: per subject a date
+written in the text of the cited node or its descendants (in either version) goes first, then the application date (`applies_from`
+and later class dates) of the matching rule of the deadline table in both versions. The date is `deadline_ok` if it fits any subject
+(then rules of descendants count too, as partial application); `outdated_deadline` only if no subject fits and it is the date of
+the other version of one of them (`expected` falls back to the rule when the text gives no unique counterpart); otherwise
+`unverified_date`, only if a trigger word stands at most three words before the date. A date inside a checked quotation is left to
+the quotation check. *Quotations*: text in `" "`, `“ ”`, `„ “` or `« »` of at least 6 words, with a citation in the same or the previous
+sentence (a citation inside the quotation does not count), is passed to `verifyCitation` with that citation as `claimed_ref` (at
+most 200 per text, identical ones once). Sentences are split at `. ! ?` (not after abbreviations such as Art., Abs., Nr.; not in
+"2. August"), at blank lines, and never inside a checked quotation.
+Known gaps: no recitals, no relative dates ("two years after entry into force"), no check of
 which provision applies to a system; a date without trigger word is not reported when it matches nothing.
 
 ## Verification levels V0-V2
