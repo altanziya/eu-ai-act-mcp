@@ -83,6 +83,19 @@ describe("recomputeRecord", () => {
     const sig = signManifest(bytes, kp.privateKeyPem);
     expect(recomputeRecord(rec(), rel.ctx, { manifestBytes: bytes, signature: sig, publicKeys: keys, revoked: [sig.key_id] }).signature).toEqual({ status: "revoked", key_id: sig.key_id });
   });
+  it("a key_id that names an inherited property is an unknown key, not an invalid signature", () => {
+    const kp = generateKeyPair();
+    const bytes = manifestBytes(rel.manifest);
+    const sig = signManifest(bytes, kp.privateKeyPem);
+    const keys = { [sig.key_id]: kp.publicKeyPem };
+    for (const key_id of ["constructor", "__proto__", "toString", "hasOwnProperty"]) {
+      const rep = recomputeRecord(rec(), rel.ctx, { manifestBytes: bytes, signature: { ...sig, key_id }, publicKeys: keys });
+      expect(rep.signature, key_id).toEqual({ status: "unknown_key", key_id });
+    }
+    // a key table built the way the page builds it (Object.fromEntries) may hold such a name as an own key; then the lookup succeeds
+    const own = Object.fromEntries([["constructor", kp.publicKeyPem]]);
+    expect(recomputeRecord(rec(), rel.ctx, { manifestBytes: bytes, signature: { ...sig, key_id: "constructor" }, publicKeys: own }).signature.status).toBe("valid");
+  });
   it("a recital is checked against the Official Journal version and recomputes identically (V1 unknown)", () => {
     const recital = nodeText(rel.dir, "rec_12", "en", V2024);
     const r = rec({ quote: recital, claimed_ref: "rec_12" });

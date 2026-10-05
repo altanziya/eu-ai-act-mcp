@@ -59,8 +59,10 @@ function signatureStatus(bytes: Uint8Array, opts: RecomputeOptions): RecomputeRe
   if (!sig) return { status: "missing" };
   const key_id = sig.key_id;
   if (opts.revoked?.includes(key_id)) return { status: "revoked", key_id };
-  const pem = opts.publicKeys?.[key_id];
-  if (pem === undefined) return { status: "unknown_key", key_id };
+  // own properties only: "constructor" or "__proto__" must not resolve to something inherited from Object.prototype
+  const keys = opts.publicKeys;
+  const pem = keys !== undefined && Object.hasOwn(keys, key_id) ? keys[key_id] : undefined;
+  if (typeof pem !== "string") return { status: "unknown_key", key_id };
   return { status: verifyManifestSignature(bytes, sig, pem) ? "valid" : "invalid", key_id };
 }
 
