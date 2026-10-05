@@ -5,7 +5,7 @@ import { loadObligations } from "../../src/tools/obligations-fs.js";
 import type { ObligationsResult } from "../../src/tools/obligations.js";
 import { csvCell, decodeShare, encodeShare, groupObligations, headline, obligationsCsv, obligationsMarkdown, timelineStops } from "../../src/web/obligationsView.js";
 import { ANNEX_III_AREAS, ENUM_LABELS, FIELD_LABELS, ROLE_LABELS } from "../../src/web/profileLabels.js";
-import { buildProfile, EXAMPLE_PROFILES, isFieldShown, SECTIONS, unplacedFields } from "../../src/web/profileForm.js";
+import { buildProfile, EXAMPLE_PROFILES, isFieldShown, sanitizeState, SECTIONS, unplacedFields } from "../../src/web/profileForm.js";
 
 const AS_OF = "2026-10-05";
 const run = (id: string, asOf = AS_OF): { result: ObligationsResult; profile: Record<string, unknown> } => {
@@ -95,6 +95,19 @@ describe("example profiles", () => {
     expect(stops[0]!.obligations.every((o) => o.status === "applicable")).toBe(true);
     expect(stops[1]).toMatchObject({ date: "2027-12-02", days: 423 });
     expect(stops[1]!.obligations.length).toBe(result.timeline[0]!.ids.length);
+  });
+});
+
+describe("sanitizeState (shared links come from outside)", () => {
+  const fields = describeProfile();
+  it("keeps valid answers and drops unknown fields, wrong types and values outside the allowed set", () => {
+    const clean = sanitizeState(
+      { role: ["provider", "wizard", 7], annex_iii_area: "4", gpai_model: "yes", enterprise_size: "huge", placed_on_market_before: "2026-02-30", annex_i_section: "A", open_source_model: true, __proto__x: 1, evil: "<script>" },
+      fields,
+    );
+    expect(clean).toEqual({ role: ["provider"], annex_iii_area: "4", annex_i_section: "A", open_source_model: true });
+    expect(sanitizeState({ role: [] }, fields)).toEqual({});
+    for (const ex of EXAMPLE_PROFILES) expect(sanitizeState(ex.state, fields)).toEqual(ex.state);
   });
 });
 

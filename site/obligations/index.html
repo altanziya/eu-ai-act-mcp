@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>Obligations navigator – EU AI Act workbench</title>
+<link rel="stylesheet" href="../app.css">
+<style>
+  .nav-grid { display: grid; gap: 1.25rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .form-panel { padding: 1rem 1.1rem; }
+  .form-panel > h2 { font-size: 1.1rem; }
+  .form-section { margin: 0 0 1.25rem; padding-top: .9rem; border-top: 1px solid var(--border); }
+  .form-section:first-of-type { border-top: 0; padding-top: 0; }
+  .form-section h3 { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-bottom: .6rem; }
+  fieldset.q { border: 0; padding: 0; margin: 0 0 1rem; min-width: 0; }
+  fieldset.q legend { padding: 0; font-weight: 600; font-size: .95rem; margin-bottom: .35rem; line-height: 1.4; }
+  .checks { display: grid; gap: .4rem; }
+  .check { display: flex; gap: .55rem; align-items: flex-start; }
+  .check input { margin-top: .3rem; width: 1.05rem; height: 1.05rem; flex: none; accent-color: var(--accent); }
+  .check label { margin: 0; font-weight: 400; }
+  .check label strong { display: block; }
+  .check .hint { display: block; margin: 0; }
+  .seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 8px; overflow: hidden; background: var(--surface); }
+  .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .seg label { margin: 0; padding: .35rem .9rem; font-weight: 500; font-size: .92rem; cursor: pointer; border-left: 1px solid var(--border-strong); color: var(--text); }
+  .seg input:first-of-type + label { border-left: 0; }
+  .seg input:checked + label { background: var(--accent); color: var(--accent-contrast); font-weight: 650; }
+  .seg input:checked + label::before { content: "✓ "; }
+  .seg input:focus-visible + label { outline: 3px solid var(--focus); outline-offset: -3px; }
+  .form-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .5rem; }
+  .asof-row { margin-bottom: 1rem; }
+  .empty { text-align: center; padding: 2.5rem 1rem; color: var(--muted); }
+  .empty h2 { color: var(--text); }
+  #headline { padding: 1.1rem 1.25rem; border-left: 6px solid var(--accent); }
+  .headline-text { font-size: 1.3rem; line-height: 1.4; font-weight: 600; margin: .25rem 0 .5rem; letter-spacing: -.01em; }
+  .counts { margin: .5rem 0 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+  .counts .badge { font-size: .88rem; padding: .15rem .65rem; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1rem; }
+  .note { font-size: .88rem; color: var(--muted); margin: 0 0 1rem; }
+  .timeline { list-style: none; margin: .5rem 0 0; padding: 0 0 0 1.1rem; border-left: 3px solid var(--border-strong); display: grid; gap: 1rem; }
+  .timeline .stop { position: relative; min-width: 0; }
+  .timeline .dot { position: absolute; left: calc(-1.1rem - 8px); top: .35rem; width: 13px; height: 13px; border-radius: 50%; background: var(--surface); border: 3px solid var(--accent); }
+  .timeline .today .dot { background: var(--accent); box-shadow: 0 0 0 4px var(--info-bg); }
+  .timeline .when { display: flex; flex-wrap: wrap; gap: .1rem .75rem; align-items: baseline; margin-bottom: .2rem; font-variant-numeric: tabular-nums; }
+  .timeline ul { margin: 0; padding-left: 1.1rem; font-size: .9rem; }
+  .timeline details { margin: .15rem 0; }
+  .timeline summary { font-weight: 500; font-size: .9rem; }
+  .group { margin-top: 1.25rem; }
+  .group-title { font-size: 1.1rem; margin: 0 0 .1rem; padding-left: .6rem; border-left: 5px solid var(--border-strong); }
+  .g-applicable { border-left-color: var(--ok-fg); }
+  .g-upcoming { border-left-color: var(--info-fg); }
+  .g-depends { border-left-color: var(--warn-fg); }
+  .ob { padding: .9rem 1.1rem; margin: .7rem 0; scroll-margin-top: 1rem; border-left: 5px solid var(--border-strong); }
+  .ob-applicable { border-left-color: var(--ok-fg); }
+  .ob-upcoming { border-left-color: var(--info-fg); }
+  .ob-depends { border-left-color: var(--warn-fg); }
+  .ob:target, .ob:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .ob h4 { margin: 0 0 .35rem; font-size: 1.05rem; line-height: 1.3; }
+  .badges { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .5rem; }
+  .ob-summary { margin: 0 0 .5rem; }
+  .ob-date { margin: 0 0 .4rem; font-variant-numeric: tabular-nums; }
+  .ob-date.applicable strong::before { content: "✔ "; color: var(--ok-fg); }
+  .ob-date.upcoming strong::before { content: "◷ "; color: var(--info-fg); }
+  .ob-date.depends strong::before { content: "▲ "; color: var(--warn-fg); }
+  .caveat, .omnibus { font-size: .92rem; margin: .35rem 0; padding: .4rem .7rem; border-radius: 8px; background: var(--surface-2); }
+  dl.meta { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .15rem .9rem; margin: .5rem 0; font-size: .92rem; }
+  dl.meta dt { color: var(--muted); }
+  dl.meta dd { margin: 0; overflow-wrap: anywhere; }
+  .open-questions ul { margin: .5rem 0 0; padding-left: 1.1rem; }
+  .open-questions li { margin-bottom: .6rem; }
+  progress[hidden] { display: none; }
+  #notice-text { font-size: .9rem; color: var(--muted); }
+  @media (min-width: 64rem) {
+    .nav-grid { grid-template-columns: minmax(0, 25rem) minmax(0, 1fr); }
+    .form-panel { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow: auto; }
+  }
+  @media (min-width: 48rem) {
+    .timeline { border-left: 0; padding-left: 0; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); position: relative; padding-top: 1.1rem; gap: 1.25rem 1rem; }
+    .timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 3px; background: var(--border-strong); }
+    .timeline .dot { left: 0; top: calc(-1.1rem + 2px); }
+  }
+  @media (max-width: 36rem) { dl.meta { grid-template-columns: minmax(0, 1fr); } dl.meta dd { margin-bottom: .3rem; } .headline-text { font-size: 1.15rem; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="../" data-i18n="brand">EU AI Act workbench</a>
+  <nav class="site-nav" aria-label="Tools">
+    <a href="../obligations/" aria-current="page" data-i18n="navObligations">Obligations navigator</a>
+    <a href="../audit/" data-i18n="navAudit">Document checker</a>
+    <a href="../verify/" data-i18n="navVerify">Verify a record</a>
+  </nav>
+  <button type="button" class="lang-toggle" data-lang-toggle aria-label="Deutsch / English"><span data-lang-option="de">Deutsch</span> / <span data-lang-option="en" class="cur">English</span></button>
+</div></header>
+
+<main id="main" class="wrap">
+  <div class="page-head">
+    <h1 data-i18n="title">Obligations navigator</h1>
+    <p class="lead" data-i18n="lead">Answer a few questions about your organisation and your AI system. You get the obligations that apply now and the ones that are coming, each with the provision, the date and the exact wording.</p>
+  </div>
+  <div class="notice" role="note"><strong data-i18n="privacyLead">Privacy:</strong><p data-i18n="privacy">Your answers stay in your browser. Nothing is uploaded.</p></div>
+  <noscript><p class="status bad" data-i18n="noscript">This tool needs JavaScript. Your answers are processed in the browser only.</p></noscript>
+  <div class="examples" style="margin:0 0 1.25rem"><span class="label" data-i18n="exampleLabel">Start from an example:</span><span id="example-buttons" class="examples"></span></div>
+
+  <div class="nav-grid">
+    <section class="card form-panel" aria-labelledby="form-title">
+      <h2 id="form-title" data-i18n="formH">Your situation</h2>
+      <div class="asof-row">
+        <label for="asof" data-i18n="dateLabel">Date checked</label>
+        <input type="date" id="asof">
+        <p class="hint" data-i18n="dateHint">The consolidated text applies from 27 July 2026.</p>
+      </div>
+      <div id="form-sections"></div>
+      <div class="form-actions no-print">
+        <button type="button" class="btn" id="evaluate" data-i18n="evaluate">Show my obligations</button>
+        <button type="button" class="btn secondary" id="reset" data-i18n="reset">Start over</button>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite" hidden></p>
+      <progress id="progress" value="0" max="1" hidden aria-label="Loading"></progress>
+    </section>
+
+    <div id="output" aria-live="polite">
+      <section id="empty" class="card empty"><h2 data-i18n="emptyH">Your result appears here</h2><p data-i18n="emptyText">Answer the questions on the left, or start from an example, and choose “Show my obligations”.</p></section>
+      <div id="result" hidden>
+        <section id="headline" class="card"></section>
+        <div class="toolbar no-print" style="margin-top:1rem">
+          <button type="button" class="btn secondary small" id="copy-md" data-i18n="copyMd">Copy checklist (Markdown)</button>
+          <button type="button" class="btn secondary small" id="download-csv" data-i18n="downloadCsv">Download CSV</button>
+          <button type="button" class="btn secondary small" id="copy-link" data-i18n="copyLink">Copy link to share</button>
+        </div>
+        <p class="note no-print" data-i18n="linkNote">The link contains your answers in its address part. They are not sent anywhere; whoever opens the link sees them.</p>
+        <p id="content-note" class="note" hidden></p>
+        <section id="timeline-box" class="panel"></section>
+        <section id="checklist"></section>
+        <div id="open-box" style="margin-top:1.5rem"></div>
+        <p id="notice-text"></p>
+      </div>
+    </div>
+  </div>
+</main>
+<footer class="site-footer"><div class="wrap"><p data-i18n="footer">Not legal advice. The consolidated text is not legally authentic; only the Official Journal is binding.</p></div></footer>
+<script type="module" src="obligations.js"></script>
+</body>
+</html>

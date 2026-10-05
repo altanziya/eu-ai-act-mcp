@@ -4,6 +4,7 @@
  * A question that is not shown is never part of the profile; an unanswered question is left out as well (the core then
  * reports it as an open question when the answer would change the result).
  */
+import { isIsoDate } from "../tools/corpus.js";
 import type { FieldDescription } from "../tools/obligationsCore.js";
 import type { Pair } from "./i18n.js";
 
@@ -160,6 +161,15 @@ export const EXAMPLE_PROFILES: readonly ExampleProfile[] = [
       annex_iii_area: "5",
       annex_iii_point5_bc: true,
       annex_iii_art6_3_exception_concluded: false,
+      deployer_law_enforcement_realtime_rbi: false,
+      deployer_post_remote_biometric_law_enforcement: false,
+      rebrands_high_risk_system: false,
+      substantially_modifies_high_risk_system: false,
+      changes_intended_purpose_to_high_risk: false,
+      art50_emotion_or_biometric_categorisation: false,
+      art50_deep_fake: false,
+      art50_public_interest_text: false,
+      art5_ba_bb_generation_capability: false,
       deployer_controls_input_data: true,
       deployer_is_employer_workplace_use: false,
       deployer_public_authority_or_union_body: false,
@@ -205,3 +215,28 @@ export const EXAMPLE_PROFILES: readonly ExampleProfile[] = [
     },
   },
 ];
+
+/**
+ * Keeps only what the form can show: known questions with a value of the right type (shared links and stored states
+ * come from outside). Unknown fields, wrong types and values outside the allowed set are dropped.
+ */
+export function sanitizeState(raw: FormState, fields: Record<string, FieldDescription>): FormState {
+  const out: FormState = {};
+  for (const [name, spec] of Object.entries(fields)) {
+    const v = raw[name];
+    if (v === undefined || v === null) continue;
+    if (spec.type === "enum_array") {
+      if (Array.isArray(v)) {
+        const ok = [...new Set(v.filter((x): x is string => typeof x === "string" && (spec.values ?? []).includes(x)))];
+        if (ok.length > 0) out[name] = ok;
+      }
+    } else if (spec.type === "boolean") {
+      if (typeof v === "boolean") out[name] = v;
+    } else if (spec.type === "enum") {
+      if (typeof v === "string" && (spec.values ?? []).includes(v)) out[name] = v;
+    } else if (spec.type === "date") {
+      if (typeof v === "string" && isIsoDate(v)) out[name] = v;
+    }
+  }
+  return out;
+}
