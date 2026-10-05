@@ -26,6 +26,12 @@ describe("citations", () => {
     expect(kinds("Article 3(1) defines an AI system.")).toEqual(["reference_ok"]);
     expect(kinds("Article 5(1), first subparagraph, point (ba) is new.")).toEqual(["reference_ok"]);
   });
+  it("reads Article 113(3)(c) as the third paragraph, point (c), in EN and DE", () => {
+    expect(run("See Article 113(3)(c).").findings[0]).toMatchObject({ kind: "reference_ok", node: "art_113.sub_3.c", ref: "Article 113, third paragraph, point (c)" });
+    expect(run("Siehe Artikel 113 Absatz 3 Buchstabe c.", NOW, "de").findings[0]).toMatchObject({ kind: "reference_ok", node: "art_113.sub_3.c" });
+    expect(kinds("See Article 113(3)(c)(i).")).toEqual(["reference_ok"]);
+    expect(kinds("See Article 113(9).")).toEqual(["unknown_provision"]);
+  });
   it("flags a removed provision and suggests where it moved (EN, DE)", () => {
     const f = find(run("Article 10(5) allows special categories."), "removed_provision");
     expect(f).toMatchObject({ severity: "error", node: "art_10.par_5", ref: "Article 10(5)" });

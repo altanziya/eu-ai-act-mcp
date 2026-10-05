@@ -130,19 +130,23 @@ function movesFrom(older: CorpusIndex, newer: CorpusIndex): DiffMove[] {
   return hit;
 }
 
-/** `art_3.par_1` and `art_3.pt_1` are interchangeable readings; a subparagraph level absent from the tree is skipped. */
+/**
+ * Other readings of an id, exact first: `art_3.par_1` and `art_3.pt_1` are interchangeable, an article without numbered
+ * paragraphs has `sub_n` where a citation says `(n)` (`Article 113(3)(c)` is `art_113.sub_3.c`), and a subparagraph
+ * level that is not in the tree is skipped.
+ */
 function candidates(id: string): string[] {
   const segs = id.split(".");
-  const swappable = segs.map((s, i) => (/^(?:par|pt)_/.test(s) ? i : -1)).filter((i) => i >= 0);
-  const out: string[][] = [];
-  for (let mask = 0; mask < 1 << swappable.length; mask++) {
-    const alt = [...segs];
-    swappable.forEach((at, k) => {
-      if (mask & (1 << k)) alt[at] = (alt[at] as string).startsWith("par_") ? `pt_${(alt[at] as string).slice(4)}` : `par_${(alt[at] as string).slice(3)}`;
-    });
-    out.push(alt);
-  }
-  const all = out.flatMap((a) => [a, a.filter((s) => !s.startsWith("sub_"))]);
+  let combos: Array<{ segs: string[]; introduced: boolean }> = [{ segs: [], introduced: false }];
+  segs.forEach((seg, i) => {
+    const options: Array<{ seg: string; introduced: boolean }> = [{ seg, introduced: false }];
+    const m = /^(par|pt)_(.+)$/.exec(seg);
+    if (m) options.push({ seg: `${m[1] === "par" ? "pt" : "par"}_${m[2] as string}`, introduced: false });
+    if (i === 1 && m?.[1] === "par" && /^\d+$/.test(m[2] as string)) options.push({ seg: `sub_${m[2] as string}`, introduced: true });
+    combos = combos.flatMap((c) => options.map((o) => ({ segs: [...c.segs, o.seg], introduced: c.introduced || o.introduced })));
+  });
+  // skipping a subparagraph level is only for levels the citation wrote, not for the `sub_n` read from `(n)`
+  const all = combos.flatMap((c) => (c.introduced ? [c.segs] : [c.segs, c.segs.filter((x) => !x.startsWith("sub_"))]));
   return [...new Set(all.map((a) => a.join(".")))];
 }
 function resolveIn(idx: CorpusIndex, id: string): string | null {
