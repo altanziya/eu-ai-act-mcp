@@ -221,7 +221,7 @@ Limits:
 runs by itself; a paid run needs an explicit call.
 
     npm run eval -- --cases <yaml> --models <id,...> --arms plain,web,tools --reps N --max-usd X --out <dir> \
-                    --primary-model <id> [--dry-run] [--resume] [--reasoning-effort low|medium|high|none]
+                    --primary-model <id> [--dry-run] [--resume] [--reasoning-effort low|medium|high|none] [--max-claude-calls N]
 
 - `--cases`: YAML list of cases (`src/eval/cases.ts`, validated; errors name the case id and the field). Fields: `id`
   (unique), `kind` (`generation|evaluation`), `subset` (`version_deadline|evaluation`), `question`, `as_of` (YYYY-MM-DD),
@@ -229,11 +229,14 @@ runs by itself; a paid run needs an explicit call.
   (`date?`, `version?`, `articles?`, `verdict?`, `claim?`), `ground_truth` (`celex`, `pinpoint`, `quote`), `legal_review`
   (`none|llm_second_rater|lawyer`), `notes?`. `generation` needs at least one of `expected.date|articles|claim`;
   `evaluation` needs `expected.verdict` (`correct|incorrect`). Smoke fixture: `tests/fixtures/eval-smoke.yaml`.
-- `--models`: OpenRouter model ids. `--arms`: `plain`; `web` (OpenRouter plugin `web`); `tools` (the three MCP tools run
+- `--models`: OpenRouter model ids; ids with the prefix `claude-code/` (e.g. `claude-code/claude-opus-5-5`) run through the
+  Claude Code backend (below). One run may mix both. `--arms`: `plain`; `web` (OpenRouter plugin `web`); `tools` (the three MCP tools run
   locally, at most 6 rounds, at most 4 tool calls executed per round (further calls of the round get the error result
   "tool call limit per round"), each tool result cut at 6 000 characters; a test checks that `TOOL_DEFS` equals the MCP
   server's descriptions and parameters). `--reps`: repetitions per case (default 1).
-- Requests: `max_tokens` 3000; `temperature` 0 where the model lists the parameter; `reasoning: {effort}` (default `low`) where the
+- Prompt `eval-prompt-v2`: as v1, plus the sentence "You may search the web." in arm `web` (all backends; Claude Code decides
+  itself whether to search, for OpenRouter the plugin is on anyway).
+- Requests (OpenRouter): `max_tokens` 3000; `temperature` 0 where the model lists the parameter; `reasoning: {effort}` (default `low`) where the
   model lists `reasoning` (`--reasoning-effort none` omits it); `usage: {include: true}`. Cost is only the sum of `usage.cost`.
   The model list (`GET /models`, free) is fetched once per run for these capabilities. The prompt is `src/eval/prompts.ts`
   (`PROMPT_VERSION`), with the case's `as_of` as today's date; the model must reply with one JSON object with the keys
@@ -251,9 +254,27 @@ runs by itself; a paid run needs an explicit call.
   `--models`; required for real runs, optional with `--dry-run`.
 - `--dry-run`: mock model, no network, no key, no cost (`--max-usd 0` is fine). It answers from `expected` and is wrong on
   every third case; the report says so.
+- `--max-claude-calls N` (default 400): cap on `claude` calls per invocation (a `--resume` counts from zero); before the call that
+  would exceed it the run stops with `budget_stop`.
 - `--resume`: aborts if a stored run has another (or no) `prompt_version` than the current one; otherwise skips runs already in
   `runs.jsonl` (not those with an API error or `incomplete`), counts their cost against the cap, and re-scores the stored
   answers with the current scorer (`rescored_runs`, cumulative). Without `--resume` an existing `runs.jsonl` is an error.
+
+**Backend `claude-code`** (`src/eval/claudeCode.ts`): one `claude -p` call per case x arm x repetition, sequentially, `spawn` without
+shell, stdin closed, in a fresh empty temporary working directory (deleted afterwards), binary from `CLAUDE_BIN` or `claude`,
+timeout 300 s. Arguments: `-p <question> --model <id without prefix> --setting-sources "" --strict-mcp-config --system-prompt
+<buildSystemPrompt(as_of, arm)> --output-format stream-json --verbose --max-turns 8 --effort low`, plus per arm: `plain`
+`--tools ""`; `web` `--tools WebSearch,WebFetch --allowedTools WebSearch,WebFetch`; `tools` `--mcp-config <temp json: server aiact =
+node_modules/.bin/tsx src/mcp/server.ts, absolute paths> --tools "" --allowedTools mcp__aiact__aiact_get_provision,
+mcp__aiact__aiact_diff,mcp__aiact__aiact_verify_citation`. The child environment lacks `ANTHROPIC_API_KEY`,
+`ANTHROPIC_AUTH_TOKEN`, `CLAUDE_CODE_USE_BEDROCK` and `CLAUDE_CODE_USE_VERTEX`, so nothing is billed to an API account; no
+OpenRouter key is read for a run with only `claude-code/` models. Stream evaluation: answer = `result` of the final `result` event
+(then `parseAnswer`); `tool_calls` = every `tool_use` block (name as the CLI reports it, e.g. `mcp__aiact__aiact_diff`, or
+`WebSearch`; input cut to 300 characters); `total_cost_usd` -> `cost_equiv_usd`; `model_reported` = keys of `modelUsage`.
+`is_error` or exit code != 0 (also timeout, spawn failure, no result event) gives an error run (`error` <= 300 characters); an
+error text containing "limit" or "usage" is a used-up quota: the run is stored with `incomplete: true`, the harness stops cleanly
+with status `quota_stop`, and `--resume` continues. Subscription runs have `cost: 0`; `cost_equiv_usd` (API-equivalent, not billed)
+is not counted against `--max-usd` and is summed separately. `--dry-run` mocks `claude-code/` ids like all others (no `claude` call).
 
 Scoring (`src/eval/answer.ts`, `src/eval/score.ts`; deterministic, no model involved): `parseAnswer` takes the first JSON object
 in the text (also in a fence); none or broken JSON gives `null` (empty answers included), which is not scored and reported as
@@ -277,15 +298,19 @@ and a sensitivity row "unparseable counted as wrong" (errors, n, Clopper-Pearson
 Output in `--out`:
 
 - `runs.jsonl`: one run per line: `case_id, subset, knowable_before_omnibus, kind, model, arm, rep` (0-based), `raw`, `parsed`,
-  `prompt_version`, `score {correct, checks}`, `prompt_tokens, completion_tokens, cost`, `cost_estimated?`,
+  `prompt_version`, `backend` (`openrouter|claude-code`), `score {correct, checks}`, `prompt_tokens, completion_tokens, cost`,
+  `cost_equiv_usd?` and `model_reported?` (claude-code), `cost_estimated?`,
   `tool_calls [{name, arguments, rejected?}]`, `requests, finish_reason, status, latency_ms`, `error?`, `incomplete?`, `mock?`.
-- `results.json`: `status` (`complete|budget_stop`), `dry_run` (true only if all runs are mock), `prompt_version`, `scorer_version`, `rescored_runs`, `primary_model`, `e1`
-  (`{model, arm: "web", subset: "version_deadline", errors, n, lower, upper, decision}` or null), `reps`, `max_usd`, `total_cost_usd`, `runs`
-  (distinct runs), `planned_runs`, `models`, `arms`, `cases`, `max_tokens`, `request_params`, `estimates`, `cells` (the summary per model x arm, including `excluded_cases`, `sensitivity`, `version_named`, `tools_usage`).
+- `results.json`: `status` (`complete|budget_stop|quota_stop`), `dry_run` (true only if all runs are mock), `prompt_version`, `scorer_version`, `rescored_runs`, `primary_model`, `e1`
+  (`{model, arm: "web", subset: "version_deadline", errors, n, lower, upper, decision}` or null), `reps`, `max_usd`, `max_claude_calls`, `claude_calls`, `total_cost_usd`, `total_cost_equiv_usd`, `backends` (model -> backend), `runs`
+  (distinct runs), `planned_runs`, `models`, `arms`, `cases`, `max_tokens`, `request_params`, `estimates`, `cells` (the summary per model x arm, including `backend`, `cost_equiv_usd`, `excluded_cases`, `sensitivity`, `version_named`, `tools_usage`).
 - `report.md` (English): per model x arm the number of cases, errors by majority (a case is wrong if more than half of its scored
   runs are wrong: 1 run: that run, 3 runs: at least 2 of 3), the Clopper-Pearson 95 % interval over cases (`src/eval/stats.ts`),
   cases with at least one wrong run, excluded cases, unparseable runs, API error runs, tool-call rate (tools arm), the version-named
-  shares, cost, and a sensitivity row per cell. The pre-registered E1 rule (`decideE1`) appears in exactly one line starting with
+  shares, cost, cost equivalent (subscription) and backend, and a sensitivity row per cell. If a `claude-code` model is
+  present, a methodology paragraph states: call through the Claude Code CLI with a subscription, own system prompt, still visible
+  are an identity sentence of the Agent SDK, the account e-mail and an environment block with the execution date; web search
+  is Anthropic's own. The pre-registered E1 rule (`decideE1`) appears in exactly one line starting with
   `E1 decision` (primary model, arm `web`, subset `version_deadline`); no other row carries a decision. A section per model x arm
   `tools` gives the error rate of runs with at least one tool call versus runs without. Tables for all cases, per `subset` and per
   `knowable_before_omnibus`. Provenance (`prompt_version`, `scorer_version`, re-scored runs, dry run) is in the header.
