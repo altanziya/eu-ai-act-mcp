@@ -94,10 +94,18 @@ amending act `32026R1744`). Where an `id` is expected, a human citation is accep
 Input `{ id, as_of?, version?, lang?, include_children? }`: `as_of` (ISO date) default today; without `version` the version in
 force on `as_of` is returned (before 2026-07-27 the Official Journal version `32024R1689`, after it the consolidated version
 `02024R1689-20260727`); an explicit `version` wins. `lang` default `en`, `include_children` default `true`.
-Output `{ found, version, lang, as_of, applicability?, node?, children?, text_full?, reason?, fallback?, notice }`.
+Output `{ found, version, lang, as_of, applicability?, node?, structure?, children?, text_full?, reason?, fallback?, notice }`.
 `applicability` is the deadline-table result for the node in the returned version on `as_of`, in the form of `validity` of
 verify (`state`, `until?`, `rule_id`, `source_nodes`, `conditional_dates?`); it is computed for `as_of` (or today) also with an
 explicit `version`. `as_of` is the date used (input or today). The eval harness passes the case date as default `as_of`.
+`structure` is `{ parent: {id, citation} | null, siblings: [{id, citation, new_in_version?: true}], children: [{id, citation}] }`:
+`parent` and `siblings` are the neighbourhood in the returned version (siblings exclude the node itself). For a paragraph, point or section the
+siblings are the other children of the parent in document order; for an article, annex or recital they are the one before and the one after
+and every item of the same number (Article 60: 59, 60a, 61), so provisions inserted with a letter suffix (Article 60a, Article 99(6a)) are
+visible. `new_in_version: true` marks a sibling that does not exist in the Official Journal version (only set in the consolidated version;
+in the Official Journal version a node missing from the consolidated one was removed, not new). At most 30 siblings (the nearest in
+document order); `children` are the direct children (the top-level `children` below are all descendants). The tool description says so
+too (also in `TOOL_DEFS`), because in the evaluation (cases A40, A42) models read Article 99(6) and missed the inserted 6a.
 `children` are all descendants in document order; `text_full` is heading and text of the node and (with children) all
 descendants in `order`, joined by "\n". If the id is not in the requested version but in the other one: `found: false`,
 `reason` `not_in_consolidated_version` (requested 2026) or `not_in_version` (requested 2024), and `fallback: { version, node }`.

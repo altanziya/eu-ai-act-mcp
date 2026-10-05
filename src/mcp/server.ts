@@ -60,7 +60,8 @@ export function createServer(options: ServerOptions = {}): McpServer {
         `Returns one provision of Regulation (EU) 2024/1689 by id or citation (e.g. "art_50.par_1" or "Article 50(1)"), with all descendants. ` +
         `as_of: reference date; without version the text in force on that date is returned (before 2026-07-27 the Official Journal version ${V2024}, after it the consolidated version ${V2026}); default today. ` +
         `version: ${V2024} (Official Journal) or ${V2026} (consolidated after the Omnibus); an explicit version wins over as_of. Recitals exist only in ${V2024}; asking for one in ${V2026} returns found=false with a fallback. ` +
-        `The result carries applicability: whether the provision applies on as_of (from the deadline table).`,
+        `The result carries applicability: whether the provision applies on as_of (from the deadline table). ` +
+        `The response lists neighbouring provisions (including ones inserted by the 2026 amendment, such as paragraph 6a); check them before concluding that the Act says nothing more.`,
       inputSchema: {
         id: z.string().min(1).describe("Node id (art_50.par_1.a, anx_3.pt_1, rec_12, cpt_3.sct_2) or citation (Article 50(1)(a), Anhang III Nummer 1)"),
         as_of: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().describe("Reference date YYYY-MM-DD; default today. Selects the version (before 2026-07-27 the Official Journal version, after it the consolidated version) unless version is given."),
