@@ -20,9 +20,11 @@ async function serverTools(): Promise<Array<{ name: string; description?: string
 }
 
 describe("the eval's tools arm offers the real product", () => {
-  it("offers exactly the tools of the MCP server, with identical descriptions", async () => {
+  it("offers the three tools of evaluation run A, all of them in the MCP server, with identical descriptions", async () => {
     const tools = await serverTools();
-    expect(TOOL_DEFS.map((d) => d.function.name).sort()).toEqual(tools.map((t) => t.name).sort());
+    // aiact_search and aiact_audit_text (day 5a) are product tools that the frozen evaluation design does not offer
+    expect(TOOL_DEFS.map((d) => d.function.name).sort()).toEqual(["aiact_diff", "aiact_get_provision", "aiact_verify_citation"]);
+    expect(tools.map((t) => t.name)).toEqual(expect.arrayContaining(TOOL_DEFS.map((d) => d.function.name)));
     for (const d of TOOL_DEFS) {
       const t = tools.find((x) => x.name === d.function.name);
       expect(d.function.description, d.function.name).toBe(t?.description);
