@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Budget, Estimator } from "../../src/eval/budget.js";
 import { converse } from "../../src/eval/openrouter.js";
-import { buildSystemPrompt } from "../../src/eval/prompts.js";
+import { PROMPT_VERSION, buildSystemPrompt } from "../../src/eval/prompts.js";
 import { latestRuns, renderReport, summarize } from "../../src/eval/report.js";
 import type { RunRecord } from "../../src/eval/report.js";
 import { main, mockAnswer, parseArgs } from "../../src/eval/run.js";
@@ -90,6 +90,13 @@ describe("arguments, prompt and mock", () => {
     expect(buildSystemPrompt("2026-10-05", "plain")).toContain("Today's date is 2026-10-05");
     expect(buildSystemPrompt("2026-10-05", "plain")).not.toMatch(/tools/);
     expect(buildSystemPrompt("2026-10-05", "tools")).toMatch(/tools/);
+  });
+  it("prompt v2: only the web arm may search the web", () => {
+    expect(PROMPT_VERSION).toBe("eval-prompt-v2");
+    expect(buildSystemPrompt("2026-10-05", "web")).toMatch(/ You may search the web\.$/);
+    expect(buildSystemPrompt("2026-10-05", "plain")).not.toMatch(/search the web/);
+    expect(buildSystemPrompt("2026-10-05", "tools")).not.toMatch(/search the web/);
+    expect(buildSystemPrompt("2026-10-05", "web").replace(" You may search the web.", "")).toBe(buildSystemPrompt("2026-10-05", "plain"));
   });
   it("mock is wrong exactly on every third case", async () => {
     const { loadCases } = await import("../../src/eval/cases.js");
