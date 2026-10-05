@@ -230,6 +230,21 @@ describe("timing", () => {
     const same = data([entry("e", { applies_if: { all: [] }, timing: { basis: "hr_route", literal_rule: "art6-par2-annex3" } })]);
     expect(one(same, { area: "1" })).not.toHaveProperty("applies_from_literal");
   });
+  it("hr_route: no applies_from_literal when the literal rule is the simplified Chapter III rule ch3s1-3", () => {
+    const table: DeadlineTable = { versions: { ...TABLE.versions, [V2026]: { ...BLOCK, rules: [...BLOCK.rules, { id: "ch3s1-3", applies_from: "2027-12-02", scope: ["cpt_1"], source_nodes: [] }] } } };
+    const d = data([entry("e", { applies_if: { all: [] }, timing: { basis: "hr_route", literal_rule: "ch3s1-3" } })]);
+    const go = (p: Record<string, unknown>) => aiactObligationsWith({ profile: { role: ["provider"], ...p }, as_of: AS_OF }, mini, table, d).obligations[0];
+    expect(go({ section: "A", other_flag: true })).toMatchObject({ applies_from: "2028-08-02" });
+    expect(go({ section: "A", other_flag: true })).not.toHaveProperty("applies_from_literal");
+    expect(go({ area: "1" })).not.toHaveProperty("applies_from_literal");
+  });
+  it("hr_route: no conditional_dates (the route decides); deadline_table keeps them", () => {
+    const table: DeadlineTable = { versions: { ...TABLE.versions, [V2026]: { ...BLOCK, rules: [...BLOCK.rules, { id: "later", applies_from: "2026-12-02", scope: ["art_2"], source_nodes: [], later_dates: [{ applies_from: "2028-08-02", condition: "Annex I systems", source_node: "x" }] }] } } };
+    const base = { applies_if: { all: [] }, anchor_node: "art_2.par_1", quote: "Beta deployers shall do the beta thing." };
+    const go = (t: Timing) => aiactObligationsWith({ profile: { role: ["provider"], area: "1" }, as_of: AS_OF }, mini, table, data([entry("e", { ...base, timing: t })])).obligations[0];
+    expect(go({ basis: "hr_route", literal_rule: "later" })).not.toHaveProperty("conditional_dates");
+    expect(go({ basis: "deadline_table", literal_rule: "later" })).toHaveProperty("conditional_dates");
+  });
   it("hr_route: the Annex III exception removes the route", () => {
     const d = data([entry("e", { applies_if: { all: [] }, timing: { basis: "hr_route", literal_rule: "early" } })]);
     expect(one(d, { area: "1", flag: true })?.applies_from).toBe("2025-02-02");
@@ -377,6 +392,14 @@ describe("real data", () => {
       const ev = new Evaluator(data0, values, () => false);
       for (const e of data0.obligations) expect(() => ev.test(e.applies_if), e.id).not.toThrow();
     }
+  });
+  it("an Annex I Section A profile shows no literal date for risk management and no conditional dates", () => {
+    const r = aiactObligations({ profile: { role: ["provider"], uses_or_provides_ai_system: true, annex_i_section: "A", annex_i_third_party_conformity_assessment: true }, as_of: AS_OF });
+    const o = r.obligations.find((x) => x.id === "risk-management-system");
+    expect(o).toMatchObject({ applies_from: "2028-08-02" });
+    expect(o).not.toHaveProperty("applies_from_literal");
+    expect(o).not.toHaveProperty("conditional_dates");
+    expect(r.obligations.find((x) => x.id === "ce-marking")).toMatchObject({ applies_from: "2028-08-02", applies_from_literal: "2026-08-02" });
   });
   it("an Annex I Section A and Annex III provider gets both route dates and the earlier one as applies_from", () => {
     const r = aiactObligations({ profile: { role: ["provider"], uses_or_provides_ai_system: true, annex_iii_area: "4", annex_i_section: "A", annex_i_third_party_conformity_assessment: true }, as_of: AS_OF });

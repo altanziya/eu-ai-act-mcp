@@ -112,6 +112,8 @@ export const BEFORE_CONSOLIDATED_MESSAGE = `obligations map covers the consolida
 /** Rule ids of data/deadlines.json that carry the Chapter III application date of the two classification routes (Article 6(2) / Article 6(1)). */
 export const ROUTE_RULE_ANNEX_III = "art6-par2-annex3";
 export const ROUTE_RULE_ANNEX_I = "art6-par1-annex1";
+/** Table rule for Chapter III Sections 1-3: a simplification of Art. 113(3)(c), which names the route dates itself; not a divergent literal reading. */
+const SIMPLIFIED_ROUTE_RULE = "ch3s1-3";
 const DEFAULT_RULE = "default";
 const COMPUTED_PLACED_BEFORE = "placed_before_chapter_iii_date";
 /** Fields the `computed` rule placed_before_chapter_iii_date reads (besides the profile): used to find which answers matter. */
@@ -335,7 +337,7 @@ function entryDate(e: ObligationEntry, ev: Evaluator, block: DeadlineBlock, idx:
     const from = routes[0] as string;
     return {
       applies_from: from,
-      ...(literal !== from ? { applies_from_literal: literal } : {}),
+      ...(literal !== from && t.literal_rule !== SIMPLIFIED_ROUTE_RULE ? { applies_from_literal: literal } : {}),
       ...(routes.length > 1 ? { route_dates: routes } : {}),
       ...caveat,
     };
@@ -417,7 +419,8 @@ export function aiactObligationsWith(input: ObligationsInput, load: CorpusLoader
     const from = d.applies_from;
     const status: Status = from === null ? "depends" : from <= asOf ? "applicable" : "upcoming";
     const node = idx.byId.get(e.anchor_node);
-    const conditional = node ? resolveDeadline(version, node, idx.byId, asOf, deadlines).conditional_dates : undefined;
+    // hr_route: the route decides the date (route_dates covers mixed cases), later dates of the anchor's rule would only repeat it
+    const conditional = node && e.timing.basis !== "hr_route" ? resolveDeadline(version, node, idx.byId, asOf, deadlines).conditional_dates : undefined;
 
     let changed = e.omnibus_note !== undefined || e.new_in_2026 === true;
     if (!changed && from !== null && e.timing.basis !== "transition" && block2024) {

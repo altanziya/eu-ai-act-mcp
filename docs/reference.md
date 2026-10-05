@@ -170,7 +170,7 @@ quotation, application date on `as_of` and the places where a legal assessment i
   (`null`: `applies_from: null`, `status: "depends"`, `days_until: null`). If the literal rule of Article 113 gives another date than the
   effective one, the entry carries `applies_from_literal` and the data's `deadline_caveat` (Article 113 names Chapter III Sections 1 to 3 only, so for example conformity
   assessment, registration and post-market monitoring are literally under the residual rule of 2026-08-02; the map reports both dates and does not decide).
-  `conditional_dates` are later dates of the anchor's rule (`later_dates` in the table).
+  For `hr_route` entries whose `literal_rule` is `ch3s1-3` no `applies_from_literal` is given (Article 113(3)(c) names the route dates itself; the table rule is a simplification). `conditional_dates` are later dates of the anchor's rule (`later_dates` in the table); `hr_route` entries have none (the route decides the date).
 - **Entry**: `{ id, kind (obligation|permission|relief|transition|scope), title, summary, roles, provisions: [{id, citation}], anchor_node, quote,
   quote_verified (re-checked against the corpus at run time, whitespace-normalised, including descendants of the anchor), applies_from,
   applies_from_literal?, route_dates?, deadline_caveat?, status (applicable|upcoming|depends), days_until, conditional_dates?,
