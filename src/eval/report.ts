@@ -29,6 +29,12 @@ export interface RunRecord {
   status: number;
   latency_ms: number;
   error?: string;
+  /** Backend of the model id (`claude-code/` prefix: claude-code, else openrouter); set on every run written since day 4c. */
+  backend?: string;
+  /** claude-code only: API-equivalent cost (`total_cost_usd`) of a run on the subscription. Not part of `cost` and not counted against --max-usd. */
+  cost_equiv_usd?: number;
+  /** claude-code only: model(s) named in `modelUsage` of the stream. */
+  model_reported?: string;
   /** PROMPT_VERSION the run was made with. */
   prompt_version?: string;
   /** Cost of at least one request is the estimate (usage.cost missing, or the request failed after it was sent). */
@@ -195,6 +201,9 @@ export interface ReportMeta {
   reps: number;
   max_usd: number;
   total_cost_usd: number;
+  /** Sum of cost_equiv_usd (claude-code runs on the subscription); not part of total_cost_usd. */
+  total_cost_equiv_usd?: number;
+  backends?: Record<string, string>;
   primary_model?: string | null;
   e1?: E1Result | null;
   note?: string;
