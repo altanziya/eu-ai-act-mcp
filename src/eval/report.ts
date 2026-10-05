@@ -3,6 +3,7 @@ import type { ModelAnswer } from "./answer.js";
 import type { EvalCase } from "./cases.js";
 import type { Score } from "./score.js";
 import type { E1Decision } from "./stats.js";
+import { versionNamed } from "./score.js";
 import { clopperPearson, decideE1 } from "./stats.js";
 import type { ToolCallRecord } from "./openrouter.js";
 
@@ -66,6 +67,7 @@ export interface CellSummary {
   /** Share of runs with at least one tool call (tools arm only). */
   tool_call_rate: number | null;
   /** Tools arm only: wrong scored runs, split by whether the model called at least one tool. A descriptive split, not a causal one. */
+  version_named: VersionNamedCounts;
   tools_usage: { with_tool: RunGroupRate; no_tool: RunGroupRate } | null;
   cost_usd: number;
   /** Runs that booked an estimate instead of usage.cost. */
@@ -80,12 +82,33 @@ export interface RunGroupRate {
   rate: number | null;
 }
 
+/** Counts of the version a model names (`versionNamed`) over its parsed runs; descriptive, not part of `correct`. */
+export interface VersionNamedCounts {
+  /** Parsed runs. */
+  n: number;
+  "32024R1689": number;
+  "02024R1689-20260727": number;
+  both: number;
+  none: number;
+}
+
 export type Filter = (r: RunRecord) => boolean;
 
 function rate(rs: RunRecord[]): RunGroupRate {
   const scored = rs.filter((r) => r.score.correct !== null);
   const wrong = scored.filter((r) => r.score.correct === false).length;
   return { runs: rs.length, scored: scored.length, wrong, rate: scored.length > 0 ? wrong / scored.length : null };
+}
+
+function versionCounts(rs: RunRecord[]): VersionNamedCounts {
+  const out: VersionNamedCounts = { n: 0, "32024R1689": 0, "02024R1689-20260727": 0, both: 0, none: 0 };
+  for (const r of rs) {
+    if (r.parsed === null) continue;
+    out.n++;
+    const v = typeof r.parsed.version === "string" ? versionNamed(r.parsed.version) : null;
+    out[v ?? "none"]++;
+  }
+  return out;
 }
 
 /** One summary per model x arm (in order of first appearance). `lines` may contain superseded lines; cost counts all of them. */
@@ -125,6 +148,7 @@ export function summarize(lines: RunRecord[], filter: Filter = () => true): Cell
       unparseable_runs: runs.filter((r) => r.parsed === null && !r.error).length,
       api_error_runs: runs.filter((r) => r.error !== undefined).length,
       tool_call_rate: arm === "tools" && runs.length > 0 ? runs.filter((r) => r.tool_calls.length > 0).length / runs.length : null,
+      version_named: versionCounts(runs),
       tools_usage: arm === "tools" ? { with_tool: rate(runs.filter((r) => r.tool_calls.length > 0)), no_tool: rate(runs.filter((r) => r.tool_calls.length === 0)) } : null,
       cost_usd: all.reduce((s, r) => s + r.cost, 0),
       cost_estimated_runs: all.filter((r) => r.cost_estimated === true).length,
@@ -179,21 +203,24 @@ export interface ReportMeta {
 const f4 = (x: number): string => x.toFixed(4);
 const pct = (x: number | null): string => (x === null ? "-" : `${(x * 100).toFixed(0)} %`);
 
+const versionCell = (v: VersionNamedCounts): string =>
+  v.n === 0 ? "-" : [v["32024R1689"], v["02024R1689-20260727"], v.both, v.none].map((x) => pct(x / v.n)).join(" / ");
+
 function table(cells: CellSummary[]): string[] {
   const L = [
-    "| Model | Arm | Cases | Excluded cases | Errors (majority) | Clopper-Pearson 95 % | Errors (>= 1 wrong run) | Unparseable runs | API error runs | Tool-call rate | Cost USD |",
-    "|---|---|---|---|---|---|---|---|---|---|---|",
+    "| Model | Arm | Cases | Excluded cases | Errors (majority) | Clopper-Pearson 95 % | Errors (>= 1 wrong run) | Unparseable runs | API error runs | Tool-call rate | Version named: 2024 / 2026 / both / none | Cost USD |",
+    "|---|---|---|---|---|---|---|---|---|---|---|---|",
   ];
   for (const c of cells) {
     L.push(
-      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${f4(c.cost_usd)}${c.cost_estimated_runs > 0 ? ` (${c.cost_estimated_runs} runs estimated)` : ""} |`,
+      `| ${c.model} | ${c.arm} | ${c.cases} | ${c.excluded_cases} | ${c.errors_majority} | ${c.ci ? `[${f4(c.ci.lower)}, ${f4(c.ci.upper)}]` : "-"} | ${c.errors_any} | ${c.unparseable_runs}/${c.runs} | ${c.api_error_runs}/${c.runs} | ${pct(c.tool_call_rate)} | ${versionCell(c.version_named)} | ${f4(c.cost_usd)}${c.cost_estimated_runs > 0 ? ` (${c.cost_estimated_runs} runs estimated)` : ""} |`,
     );
     if (c.sensitivity) {
       const s = c.sensitivity;
-      L.push(`| ${c.model} | ${c.arm}: unparseable counted as wrong | ${s.n} | - | ${s.errors} | [${f4(s.lower)}, ${f4(s.upper)}] | - | - | - | - | - |`);
+      L.push(`| ${c.model} | ${c.arm}: unparseable counted as wrong | ${s.n} | - | ${s.errors} | [${f4(s.lower)}, ${f4(s.upper)}] | - | - | - | - | - | - |`);
     }
   }
-  if (cells.length === 0) L.push("| (no runs) | | | | | | | | | | |");
+  if (cells.length === 0) L.push("| (no runs) | | | | | | | | | | | |");
   return L;
 }
 
@@ -224,7 +251,7 @@ export function renderReport(meta: ReportMeta, lines: RunRecord[]): string {
     "Method: a case counts as an error if more than half of its runs are wrong (one repetition: that run; three: at least 2 of 3). " +
       "Clopper-Pearson intervals (exact, 95 %) are computed over cases, not runs. Unparseable answers (no JSON object, including empty answers) are not scored and do not count as wrong; " +
       "with R runs per case a case is an error if more than R/2 of its runs are wrong, and it is excluded only if no run of it could be scored. " +
-      "The second row of each cell (sensitivity) repeats the computation with every unparseable run and API error run counted as wrong (all cases, none excluded). API error runs are listed separately. The tool-call rate is the share of runs with at least one tool call. " +
+      "The second row of each cell (sensitivity) repeats the computation with every unparseable run and API error run counted as wrong (all cases, none excluded). API error runs are listed separately. The tool-call rate is the share of runs with at least one tool call. \"Version named\" is the share of parsed runs whose `version` text names the Official Journal version (32024R1689), the consolidated version (02024R1689-20260727), both, or neither by an explicit identifier (versionNamed); it is descriptive and not part of correctness. " +
       "The pre-registered E1 rule (go if the lower bound >= 0.05; else undecided if cases < 45 and errors >= 1; else not supported) is applied once, to the primary model in arm web on subset version_deadline (the E1 line below); no other row carries a decision.",
     "",
     e1Line(meta),
