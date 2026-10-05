@@ -28,11 +28,15 @@ function roman(s: string): number | null {
   return Number.isNaN(n) ? null : n;
 }
 
+const ORDINAL: Record<string, number> = { first: 1, second: 2, third: 3, fourth: 4, fifth: 5, sixth: 6, seventh: 7, eighth: 8, ninth: 9, tenth: 10 };
+
 const KW = {
+  /** "third paragraph" / "second subparagraph" (the n-th unnumbered paragraph, as `Article 113, third paragraph`): `sub_n`. */
+  ordinal: /^(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+(?:sub)?paragraph(?![a-z0-9])/i,
   par: /^(?:paragraphs?|para\.?|absatz|abs\.?)\s*\(?(\d+[a-z]?)\)?(?![a-z0-9])/i,
   sub: /^(?:subparagraph|subpara\.?|unterabsatz|unterabs\.?)\s*\(?(\d+)\)?(?![a-z0-9])/i,
   ptNum: /^(?:points?|items?|nummer|nr\.?|no\.?)\s*\(?(\d+(?:\.\d+)*[a-z]?)\)?(?![a-z0-9])/i,
-  ptLetter: /^(?:points?|buchstabe|buchst\.?|lit\.?|letter)\s*\(?([a-z]{1,3})\)?(?![a-z0-9])/i,
+  ptLetter: /^(?:points?|buchstabe|buchst\.?|lit\.?|letter|ziffer)\s*\(?([a-z]{1,3})\)?(?![a-z0-9])/i,
   section: /^(?:section|abschnitt)\s+([a-z]|\d+)(?![a-z0-9])/i,
   paren: /^\(\s*([0-9a-z]+)\s*\)/i,
   skip: /^(?:[\s,;:.]+|(?:of|the|in|im|der|des|von)\b)/i,
@@ -49,7 +53,9 @@ function tail(kind: Kind, input: string, segs: string[]): string[] | null {
       continue;
     }
     let m: RegExpExecArray | null;
-    if ((m = KW.par.exec(rest))) {
+    if ((m = KW.ordinal.exec(rest))) {
+      segs.push(`sub_${ORDINAL[(m[1] as string).toLowerCase()] as number}`);
+    } else if ((m = KW.par.exec(rest))) {
       segs.push(`par_${(m[1] as string).toLowerCase()}`);
     } else if ((m = KW.sub.exec(rest))) {
       segs.push(`sub_${m[1] as string}`);
