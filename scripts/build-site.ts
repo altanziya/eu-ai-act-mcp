@@ -3,9 +3,10 @@
  * site/release/ and make sure site/keys/index.json exists. Outputs are git-ignored except site/verify/index.html and site/keys/.
  */
 import { build } from "esbuild";
-import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { REPO_ROOT } from "../src/config.js";
+import { writeFileAtomic } from "../src/util/write.js";
 
 const site = join(REPO_ROOT, "site");
 mkdirSync(join(site, "verify"), { recursive: true });
@@ -29,7 +30,7 @@ if (existsSync(releaseRoot)) {
 }
 mkdirSync(join(site, "keys"), { recursive: true });
 const keysIndex = join(site, "keys/index.json");
-if (!existsSync(keysIndex)) writeFileSync(keysIndex, `${JSON.stringify({ keys: [] }, null, 2)}\n`, "utf8");
+if (!existsSync(keysIndex)) writeFileAtomic(keysIndex, `${JSON.stringify({ keys: [] }, null, 2)}\n`);
 
 const releases = existsSync(join(site, "release")) ? readdirSync(join(site, "release")).filter((d) => existsSync(join(site, "release", d, "manifest.json"))) : [];
 console.log(`site: bundle ${statSync(outfile).size} bytes, releases: ${releases.join(", ") || "none"}`);

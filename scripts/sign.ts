@@ -5,14 +5,14 @@
  * never written anywhere. With --publish-key the public key is added to site/keys/<key_id>.pub and site/keys/index.json.
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { REPO_ROOT } from "../src/config.js";
 import { manifestBytes } from "../src/release/manifest.js";
 import type { Manifest } from "../src/release/manifest.js";
 import { keyIdFromPublicKey, publicKeyPemFromPrivate, signManifest, verifyManifestSignature } from "../src/release/sign.js";
-import { toJson } from "../src/util/write.js";
+import { toJson, writeFileAtomic } from "../src/util/write.js";
 
 const { values } = parseArgs({
   options: { release: { type: "string" }, "key-file": { type: "string" }, keychain: { type: "string" }, "publish-key": { type: "boolean" } },
@@ -45,16 +45,16 @@ if (!verifyManifestSignature(stored, sig, publicPem) || keyIdFromPublicKey(publi
   console.error("self-check of the new signature failed");
   process.exit(1);
 }
-writeFileSync(join(dir, "manifest.sig.json"), toJson(sig), "utf8");
+writeFileAtomic(join(dir, "manifest.sig.json"), toJson(sig));
 console.log(`signed ${values.release} with key ${sig.key_id}`);
 
 if (values["publish-key"]) {
   const keysDir = join(REPO_ROOT, "site/keys");
   mkdirSync(keysDir, { recursive: true });
-  writeFileSync(join(keysDir, `${sig.key_id}.pub`), publicPem, "utf8");
+  writeFileAtomic(join(keysDir, `${sig.key_id}.pub`), publicPem);
   const indexPath = join(keysDir, "index.json");
   const index = existsSync(indexPath) ? (JSON.parse(readFileSync(indexPath, "utf8")) as { keys: Array<{ key_id: string; public_key_pem: string; status: string }> }) : { keys: [] };
   if (!index.keys.some((k) => k.key_id === sig.key_id)) index.keys.push({ key_id: sig.key_id, public_key_pem: publicPem, status: "active" });
-  writeFileSync(indexPath, toJson(index), "utf8");
+  writeFileAtomic(indexPath, toJson(index));
   console.log(`public key published in site/keys (${sig.key_id})`);
 }
