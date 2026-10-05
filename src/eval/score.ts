@@ -76,6 +76,22 @@ export function citedId(s: string): string | null {
   return head ? parseRef(head[0]) : null;
 }
 
+/** First word of `s` (letters only, case-insensitive), with ja/nein read as yes/no; null if there is none. */
+function leadingWord(s: string): string | null {
+  const m = /^[^\p{L}]*(\p{L}+)/u.exec(s);
+  const w = m?.[1]?.toLowerCase() ?? null;
+  return w === "ja" ? "yes" : w === "nein" ? "no" : w;
+}
+
+/** yes/no claims (ja/nein too) are compared with the first word of the answer; any other claim must be contained in the answer (case-insensitive). */
+export function claimHolds(claim: string, answer: string | null | undefined): boolean {
+  if (typeof answer !== "string") return false;
+  const expected = leadingWord(claim);
+  const bare = /^[^\p{L}]*\p{L}+[^\p{L}]*$/u.test(claim); // a single word, so "No later than 2027" is a substring claim
+  if (bare && (expected === "yes" || expected === "no")) return leadingWord(answer) === expected;
+  return answer.toLowerCase().includes(claim.trim().toLowerCase());
+}
+
 export interface Score {
   correct: boolean | null;
   checks: Record<string, boolean>;
@@ -104,5 +120,6 @@ export function scoreCase(c: EvalCase, a: ModelAnswer | null): Score {
       });
     }
   }
+  if (c.expected.claim !== undefined) checks["claim"] = claimHolds(c.expected.claim, a.answer);
   return { correct: Object.values(checks).every(Boolean), checks };
 }

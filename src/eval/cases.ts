@@ -16,7 +16,7 @@ export interface EvalCase {
   knowable_before_omnibus: boolean;
   origin: (typeof ORIGINS)[number];
   origin_ref?: string;
-  expected: { date?: string; version?: string; articles?: string[]; verdict?: string };
+  expected: { date?: string; version?: string; articles?: string[]; verdict?: string; claim?: string };
   ground_truth: { celex: string; pinpoint: string; quote: string };
   legal_review: (typeof LEGAL_REVIEWS)[number];
   notes?: string;
@@ -64,11 +64,15 @@ function validate(raw: unknown, index: number): EvalCase {
     if (!Array.isArray(ex["articles"]) || ex["articles"].length === 0 || !ex["articles"].every(isStr)) fail(id, "expected.articles", "must be a non-empty list of strings");
     expected.articles = ex["articles"] as string[];
   }
+  if (ex["claim"] !== undefined) {
+    if (!isStr(ex["claim"])) fail(id, "expected.claim", "must be a non-empty string");
+    expected.claim = ex["claim"];
+  }
   if (ex["verdict"] !== undefined) {
     if (typeof ex["verdict"] !== "string" || !["correct", "incorrect"].includes(ex["verdict"].toLowerCase())) fail(id, "expected.verdict", "must be correct or incorrect");
     expected.verdict = ex["verdict"].toLowerCase();
   }
-  if (kind === "generation" && expected.date === undefined && expected.version === undefined && expected.articles === undefined) fail(id, "expected", "needs date, version or articles for kind generation");
+  if (kind === "generation" && expected.date === undefined && expected.articles === undefined && expected.claim === undefined) fail(id, "expected", "needs date, articles or claim for kind generation");
   if (kind === "evaluation" && expected.verdict === undefined) fail(id, "expected.verdict", "required for kind evaluation");
 
   const gt = raw["ground_truth"];
