@@ -246,6 +246,10 @@ the quotation check. *Quotations*: text in `" "`, `“ ”`, `„ “` or `« »
 sentence (a citation inside the quotation does not count), is passed to `verifyCitation` with that citation as `claimed_ref` (at
 most 200 per text, identical ones once). Sentences are split at `. ! ?` (not after abbreviations such as Art., Abs., Nr.; not in
 "2. August"), at blank lines, and never inside a checked quotation.
+Speed: `verifyCitation` finds the nodes that can match a quote through an inverted token index per corpus (a node needs at least half
+of the quote's tokens, so only nodes holding one of the rarest quote tokens are tested), and searches the four corpora of the precedence
+order only until one decides. Results are the same as testing every node (`tests/unit/verify.test.ts`); 150 different quotations in
+a 5000-word text take about 0.2 s on a developer machine (the audit tests keep their limit of 2 s).
 Known gaps: no recitals, no relative dates ("two years after entry into force"), no check of
 which provision applies to a system; a date without trigger word is not reported when it matches nothing.
 

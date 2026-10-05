@@ -161,19 +161,74 @@ interface Hit {
   mm: SegmentMatch;
 }
 
-const overlaps = (pq: PreparedQuote, set: Set<string>): boolean => {
+export const overlaps = (pq: PreparedQuote, set: Set<string>): boolean => {
   let hit = 0;
   for (const s of pq.segments) for (const t of s.tokens) if (set.has(t.norm)) hit++;
   return hit * 2 >= pq.total;
 };
+
+/**
+ * Inverted index over token sets (token -> positions of the sets that contain it), used to find the few sets that can pass
+ * `overlaps` without testing every set. A set passes only if it holds at least ceil(total / 2) of the quote's tokens
+ * (counted with repetition); so it must hold at least one token of any group of quote tokens whose weight exceeds
+ * total - ceil(total / 2). Taking the rarest tokens first keeps the candidate list short. Result: the same sets, in
+ * the same order, as testing all of them.
+ */
+export class Postings {
+  private readonly byToken = new Map<string, number[]>();
+  constructor(sets: ReadonlyArray<Set<string>>) {
+    sets.forEach((set, i) => {
+      for (const t of set) {
+        const list = this.byToken.get(t);
+        if (list) list.push(i);
+        else this.byToken.set(t, [i]);
+      }
+    });
+  }
+  /** Positions (ascending) of the sets that can overlap the quote enough; a superset of those passing `overlaps`. */
+  candidates(pq: PreparedQuote): number[] {
+    const weight = new Map<string, number>();
+    for (const s of pq.segments) for (const t of s.tokens) weight.set(t.norm, (weight.get(t.norm) ?? 0) + 1);
+    const need = pq.total - Math.ceil(pq.total / 2) + 1;
+    const rare = [...weight.entries()].map(([tok, w]) => ({ list: this.byToken.get(tok), w })).sort((a, b) => (a.list?.length ?? 0) - (b.list?.length ?? 0));
+    const seen = new Set<number>();
+    let covered = 0;
+    for (const { list, w } of rare) {
+      if (covered >= need) break;
+      covered += w;
+      for (const i of list ?? []) seen.add(i);
+    }
+    return [...seen].sort((a, b) => a - b);
+  }
+}
+const nodePostings = new WeakMap<CorpusIndex, { nodes: ProvisionNode[]; postings: Postings }>();
+function nodesWithText(idx: CorpusIndex): { nodes: ProvisionNode[]; postings: Postings } {
+  let hit = nodePostings.get(idx);
+  if (!hit) {
+    const nodes = idx.nodes.filter((n) => n.text !== "");
+    hit = { nodes, postings: new Postings(nodes.map((n) => tokensOf(n).set)) };
+    nodePostings.set(idx, hit);
+  }
+  return hit;
+}
+const groupPostings = new WeakMap<CorpusIndex, Postings>();
+function postingsOfGroups(idx: CorpusIndex): Postings {
+  let hit = groupPostings.get(idx);
+  if (!hit) {
+    hit = new Postings(groupsOf(idx).map((g) => g.set));
+    groupPostings.set(idx, hit);
+  }
+  return hit;
+}
 
 const sliceText = (text: string, toks: readonly Tok[], start: number, end: number): string =>
   text.slice((toks[start] as Tok).start, (toks[end - 1] as Tok).end).replace(/\s+/g, " ");
 
 function searchNodes(idx: CorpusIndex, pq: PreparedQuote): Hit[] {
   const hits: Hit[] = [];
-  for (const node of idx.nodes) {
-    if (node.text === "") continue;
+  const { nodes, postings } = nodesWithText(idx);
+  for (const at of postings.candidates(pq)) {
+    const node = nodes[at] as ProvisionNode;
     const nt = tokensOf(node);
     if (!overlaps(pq, nt.set)) continue;
     const mm = matchSegments(pq.segments, nt.toks, pq.total);
@@ -205,7 +260,9 @@ interface StreamHit {
 
 function searchStreams(idx: CorpusIndex, pq: PreparedQuote): StreamHit[] {
   const out: StreamHit[] = [];
-  for (const g of groupsOf(idx)) {
+  const groups = groupsOf(idx);
+  for (const at of postingsOfGroups(idx).candidates(pq)) {
+    const g = groups[at] as Group;
     if (!overlaps(pq, g.set)) continue;
     const mm = matchSegments(pq.segments, g.toks, pq.total);
     if (!mm) continue;
@@ -346,7 +403,11 @@ function verifyCore(input: VerifyInput, asOf: string, load: CorpusLoader, deadli
     { idx: load(vc, ol), kind: "lang" },
     { idx: load(ov, ol), kind: "both" },
   ];
-  const results = corpora.map((c) => ({ ...c, hits: searchNodes(c.idx, pq) }));
+  // searched in precedence order, each corpus only when the earlier ones did not decide (same results as searching all four)
+  const results = corpora.map((c) => {
+    let cached: Hit[] | undefined;
+    return { ...c, get hits(): Hit[] { return (cached ??= searchNodes(c.idx, pq)); } };
+  });
 
   const matchOf = (h: Hit): MatchInfo => ({ provision_id: h.node.id, version_id: h.corpus.version, lang: h.corpus.lang, similarity: h.similarity, matched_text: h.matched_text });
   const candidateOf = (h: Hit): Candidate => ({ ...matchOf(h) });
@@ -411,7 +472,10 @@ function verifyCore(input: VerifyInput, asOf: string, load: CorpusLoader, deadli
   }
 
   // 3. quote across several nodes of one article: clean (multi_node) first, then with hard-token differences
-  const streamResults = corpora.map((r) => ({ r, streams: searchStreams(r.idx, pq) }));
+  const streamResults = corpora.map((r) => {
+    let cached: StreamHit[] | undefined;
+    return { r, get streams(): StreamHit[] { return (cached ??= searchStreams(r.idx, pq)); } };
+  });
   for (const wantHard of [false, true]) {
     for (const { r, streams: all } of streamResults) {
       const streams = all.filter((h) => (h.hard > 0) === wantHard);
