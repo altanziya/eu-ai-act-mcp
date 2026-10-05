@@ -1,0 +1,16 @@
+eu-ai-act-mcp
+Copyright 2026 Altan Koemek
+
+Licensing (kept separate on purpose):
+
+1. Code: Apache License 2.0 (see LICENSE).
+
+2. Legal texts (data/raw/, and the text fields in data/corpus/):
+   (c) European Union, eur-lex.europa.eu
+   Source: EUR-Lex / CELLAR, reused under Commission Decision 2011/833/EU.
+   Only the Official Journal is authentic. The consolidated version
+   (02024R1689-20260727) is not legally authentic.
+
+3. Own data (node IDs, hashes, diffs, H3 measurements): CC BY 4.0
+   (https://creativecommons.org/licenses/by/4.0/). This does not apply to the
+   EUR-Lex texts under point 2.

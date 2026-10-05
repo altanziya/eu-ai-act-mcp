@@ -1,0 +1,27 @@
+{
+  "name": "eu-ai-act-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic provision tree, diff and measurements for the EU AI Act (Regulation (EU) 2024/1689)",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "fetch": "tsx scripts/fetch-raw.ts",
+    "parse": "tsx scripts/parse.ts",
+    "h3": "tsx scripts/h3.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  },
+  "dependencies": {
+    "htmlparser2": "^12.0.0"
+  }
+}
