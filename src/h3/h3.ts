@@ -69,3 +69,30 @@ export function enDeStats(en: ProvisionNode[], de: ProvisionNode[]): EnDeStats {
   const matched = en.length - missing.length;
   return { en_nodes: en.length, with_de_counterpart: matched, ratio: ratio(matched, en.length), missing_in_de: missing };
 }
+
+/** Full content of data/h3.json (key order is the file's key order). Pure function of the corpora and diffs. */
+export function buildH3Report(input: {
+  en2024: ProvisionNode[];
+  de2024: ProvisionNode[];
+  en2026: ProvisionNode[];
+  de2026: ProvisionNode[];
+  diffEn: DiffResult;
+  diffDe: DiffResult;
+}): { report: Record<string, unknown>; stats: { en: MappedStats; de: MappedStats } } {
+  const stats = { en: mappedStats(input.en2024, input.diffEn), de: mappedStats(input.de2024, input.diffDe) };
+  const enDe2024 = enDeStats(input.en2024, input.de2024);
+  const enDe2026 = enDeStats(input.en2026, input.de2026);
+  const report = {
+    mapped_2024_to_2026: { en: stats.en.ratio, de: stats.de.ratio },
+    en_de_2024: enDe2024.ratio,
+    en_de_2026: enDe2026.ratio,
+    details: {
+      note: "mapped_2024_to_2026 is measured over operative nodes (all types except recital): the consolidated version contains no recitals. See mapped_2024_to_2026_all_nodes for the ratio including them.",
+      mapped_2024_to_2026_all_nodes: { en: stats.en.all_nodes, de: stats.de.all_nodes },
+      mapped_2024_to_2026_operative: { en: stats.en, de: stats.de },
+      en_de_2024: enDe2024,
+      en_de_2026: enDe2026,
+    },
+  };
+  return { report, stats };
+}
