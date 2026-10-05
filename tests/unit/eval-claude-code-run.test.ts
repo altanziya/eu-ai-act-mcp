@@ -59,6 +59,9 @@ describe("claude-code backend in the harness", () => {
     const res = readResults(out);
     expect(res).toMatchObject({ status: "complete", runs: 6, total_cost_usd: 0, backends: { [CC]: "claude-code" } });
     expect(res["total_cost_equiv_usd"]).toBeCloseTo(0.0738);
+    expect(res.cells.map((c) => c["backend"])).toEqual(["claude-code", "claude-code", "claude-code"]);
+    expect(res.cells.every((c) => Math.abs((c["cost_equiv_usd"] as number) - 0.0246) < 1e-9 && c["cost_usd"] === 0)).toBe(true);
+    expect(readFileSync(join(out, "report.md"), "utf8")).toMatch(/Backend claude-code/);
   });
 
   it("the prompt of each arm reaches the binary with the case date", async () => {
@@ -139,6 +142,7 @@ describe("claude-code backend in the harness", () => {
     expect(res["total_cost_usd"]).toBeCloseTo(0.1); // only OpenRouter money
     expect(res["total_cost_equiv_usd"]).toBeCloseTo(0.0246);
     expect(res["request_params"]).toEqual({ "x/y": { temperature: true, reasoning_effort: null } });
+    expect(res.cells.map((c) => [c["model"], c["backend"]])).toEqual([["x/y", "openrouter"], [CC, "claude-code"]]);
   });
 
   it("subscription runs are not stopped by --max-usd 0 (their equivalent cost is outside the money cap)", async () => {
