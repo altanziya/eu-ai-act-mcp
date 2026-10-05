@@ -108,11 +108,20 @@ const ABBREVIATIONS = new Set(
 );
 export const MONTH_START = new RegExp(`^(?:${MONTH_RE})(?![${L}])`, "iu");
 
+/** A list marker (`-`, `*`, `•`, `1.`, `1)`, `a)`) or a table row (`|`) at `pos`; "2. August" at the start of a line is a date, not a list item. */
+export function startsListItem(text: string, pos: number): boolean {
+  const rest = text.slice(pos, pos + 40);
+  if (/^(?:[-*•]\s|\|)/u.test(rest)) return true;
+  if (/^[a-z]\)\s/u.test(rest)) return true;
+  const num = /^\d{1,3}([.)])\s+(.*)$/su.exec(rest);
+  return num !== null && !(num[1] === "." && MONTH_START.test(num[2] as string));
+}
+
 /** Sentence spans (trimmed). A break needs `. ! ?` plus whitespace, a following upper-case letter, digit or quote, and no abbreviation or "2. August" before; `skip` ranges (quotations) are never split. */
 export function splitSentences(text: string, skip: readonly Span[] = []): Span[] {
   const cuts: number[] = [];
   const inSkip = (i: number): boolean => skip.some((s) => i > s.start && i < s.end - 1);
-  const re = /[.!?…]+["'”’»“)\]]*(?=\s|$)|\n[ \t]*\n+/gu;
+  const re = /[.!?…]+["'”’»“)\]]*(?=\s|$)|\n[ \t\r]*\n(?:[ \t\r]*\n)*/gu;
   for (const m of text.matchAll(re)) {
     const end = m.index + m[0].length;
     if (inSkip(end - 1)) continue;
@@ -130,6 +139,13 @@ export function splitSentences(text: string, skip: readonly Span[] = []): Span[]
     if (m[0] === "." && !/[\p{Lu}\p{N}"„“«'(\[]/u.test(next)) continue;
     cuts.push(end);
   }
+  // every list item and table row is a sentence of its own (a bullet without a full stop does not run into the next one)
+  for (const m of text.matchAll(/\n[ \t]*(?=\S)/gu)) {
+    const at = m.index + m[0].length;
+    if (!startsListItem(text, at) || inSkip(m.index)) continue;
+    cuts.push(m.index);
+  }
+  cuts.sort((a, b) => a - b);
   const out: Span[] = [];
   let from = 0;
   const push = (to: number): void => {
@@ -140,6 +156,7 @@ export function splitSentences(text: string, skip: readonly Span[] = []): Span[]
     if (e > s) out.push({ start: s, end: e });
   };
   for (const c of cuts) {
+    if (c <= from) continue;
     push(c);
     from = c;
   }
