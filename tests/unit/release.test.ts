@@ -54,10 +54,39 @@ describe("release and manifest", () => {
       cpSync("data/corpus", join(data, "corpus"), { recursive: true });
       cpSync("data/diff", join(data, "diff"), { recursive: true });
       writeFileSync(join(data, "deadlines.json"), `${readFileSync("data/deadlines.json", "utf8")} `);
-      expect(() => buildRelease({ releaseId: "unit-release", outRoot: rel.outRoot, dataDir: data })).toThrow(/immutable/);
+      expect(() => buildRelease({ releaseId: "unit-release", outRoot: rel.outRoot, dataDir: data })).toThrow(/release exists and differs: .*deadlines\.json/);
       expect(sha256Hex(new Uint8Array(readFileSync(join(rel.dir, "deadlines.json"))))).toBe(rel.manifest.files.find((f) => f.path === "deadlines.json")?.sha256);
     } finally {
       rmSync(data, { recursive: true, force: true });
+    }
+  });
+  it("an existing release folder with a changed or extra file is refused even if manifest.json is untouched", () => {
+    const outRoot = mkdtempSync(join(tmpdir(), "aiact-unit-exists-"));
+    try {
+      const built = buildRelease({ releaseId: "exists", outRoot });
+      const corpus = join(built.dir, "corpus", "32024R1689.en.json");
+      const original = readFileSync(corpus);
+      writeFileSync(corpus, original.toString("utf8").replace("shall", "SHALL"));
+      expect(() => buildRelease({ releaseId: "exists", outRoot })).toThrow(`release exists and differs: ${corpus}`);
+      writeFileSync(corpus, original);
+      expect(buildRelease({ releaseId: "exists", outRoot }).dir).toBe(built.dir);
+      writeFileSync(join(built.dir, "diff", "extra.json"), "{}");
+      expect(() => buildRelease({ releaseId: "exists", outRoot })).toThrow(/release exists and differs: .*extra\.json/);
+      rmSync(join(built.dir, "diff", "extra.json"));
+      rmSync(join(built.dir, "deadlines.json"));
+      expect(() => buildRelease({ releaseId: "exists", outRoot })).toThrow(/release exists and differs: .*deadlines\.json/);
+    } finally {
+      rmSync(outRoot, { recursive: true, force: true });
+    }
+  });
+  it("a signature file next to the manifest does not make a rebuild fail", () => {
+    const outRoot = mkdtempSync(join(tmpdir(), "aiact-unit-sigok-"));
+    try {
+      const built = buildRelease({ releaseId: "signed", outRoot });
+      writeFileSync(join(built.dir, "manifest.sig.json"), "{}\n");
+      expect(buildRelease({ releaseId: "signed", outRoot }).dir).toBe(built.dir);
+    } finally {
+      rmSync(outRoot, { recursive: true, force: true });
     }
   });
   it("rejects release ids that are not plain folder names and leaves no temporary folder behind", () => {
