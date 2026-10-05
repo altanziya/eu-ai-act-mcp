@@ -277,7 +277,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   const asOf = input.as_of;
   if (typeof text !== "string") throw new Error("text must be a string");
   if (typeof asOf !== "string" || !isIsoDate(asOf)) throw new Error(`as_of is required and must be an ISO date (YYYY-MM-DD), got ${JSON.stringify(asOf)}`);
-  // `lang` (default en) selects the corpus and the quotation check; without it only the messages follow the language of the text
+  // `lang` (default en) selects the corpus and the quotation check; without it the corpus is en, each quotation is checked in its own language and the messages follow the language of the text
   const corpusLang = input.lang ?? "en";
   if (!isLang(corpusLang)) throw new Error(`unknown lang ${String(corpusLang)}`);
   const lang = input.lang ?? detectLang(text);
@@ -410,12 +410,14 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
   for (const { quote, claimed } of quoteJobs) {
     const claimedId = claimed.curId ?? claimed.mention.id;
     let v: VerifyResult;
+    // an explicit `lang` decides; without it the quotation is checked in its own language (the corpus for deadlines and citations stays `corpusLang`)
+    const quoteLang: Lang = input.lang ?? detectLang(quote.inner);
     const key = `${claimedId}\u0000${quote.inner}`;
     const cached = verified.get(key);
     if (cached) v = cached;
     else {
       try {
-        v = verifyCitationWith({ quote: quote.inner, claimed_ref: claimedId, as_of: asOf, lang: corpusLang }, load, deadlines);
+        v = verifyCitationWith({ quote: quote.inner, claimed_ref: claimedId, as_of: asOf, lang: quoteLang }, load, deadlines);
       } catch {
         continue;
       }
@@ -467,7 +469,7 @@ export function auditTextWith(input: AuditInput, load: CorpusLoader, deadlines: 
         break;
       }
       case "found_other_language":
-        add({ ...base, ...found, kind: "quote_deviates", severity: "warning", sources, message: tr(`The quotation is in another language than ${corpusLang}.`, `Das Zitat steht in einer anderen Sprache als ${corpusLang}.`) });
+        add({ ...base, ...found, kind: "quote_deviates", severity: "warning", sources, message: tr(`The quotation is in another language than ${quoteLang}.`, `Das Zitat steht in einer anderen Sprache als ${quoteLang}.`) });
         break;
       case "not_found":
         add({ ...base, kind: "quote_not_found", severity: "error", message: tr("The quotation was not found in the AI Act.", "Das Zitat wurde in der KI-Verordnung nicht gefunden.") });
