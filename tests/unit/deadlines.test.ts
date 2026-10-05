@@ -91,6 +91,10 @@ describe("data/deadlines.json against the corpus", () => {
     for (const id of ["art_5.par_1.ba", "art_5.par_1.bb", "art_5.par_1a", "art_5.par_1a.a.i", "art_5.par_1b"]) {
       expect(res(V2026, id, "2026-09-01"), id).toMatchObject({ state: "not_yet_applicable_until", until: "2026-12-02" });
     }
+    expect(res(V2026, "art_6.par_1", "2028-01-01")).toMatchObject({ state: "not_yet_applicable_until", until: "2028-08-02", rule_id: "art6-par1-annex1" });
+    expect(res(V2026, "art_6.par_1.a", "2028-08-02").state).toBe("in_force_at_as_of");
+    expect(res(V2026, "art_6.par_2", "2027-06-01")).toMatchObject({ state: "not_yet_applicable_until", until: "2027-12-02", rule_id: "art6-par2-annex3" });
+    expect(res(V2026, "art_6.par_3", "2027-06-01").rule_id).toBe("ch3s1-3");
     expect(res(V2026, "art_9.par_1", "2027-06-01")).toMatchObject({ until: "2027-12-02" });
     expect(res(V2026, "art_9.par_1", "2028-01-01").state).toBe("unknown");
     expect(res(V2026, "art_9.par_1", "2028-08-02").state).toBe("in_force_at_as_of");
