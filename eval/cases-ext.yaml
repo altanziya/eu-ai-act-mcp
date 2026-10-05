@@ -1,0 +1,315 @@
+# Eval A extension cases A31-A45 (frozen 2026-10-05, subset version_deadline). Ground truth from the Official Journal (32024R1689, 32026R1744, consolidated 02024R1689-20260727).
+# Same format as eval/cases.yaml. Version is descriptive only.
+- id: A31
+  kind: generation
+  subset: version_deadline
+  question: As of 10 January 2026, by what date must the European Commission provide guidelines, including a comprehensive list of practical
+    examples of high-risk and not high-risk use cases, specifying the practical implementation of Article 6 of the EU AI Act?
+  as_of: 2026-01-10
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2026-02-02
+    articles:
+      - art_6
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 6(5)
+    quote: no later than 2 February 2026, provide guidelines specifying the practical implementation of this Article in line with Article 96
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 32024R1689. Art. 6(5) is unchanged in 32026R1744 (the Omnibus only excepts Art. 6(5)
+    from the new application dates in Art. 113(3)(c)); the statutory date stays 2 February 2026. A model that conflates the guideline
+    deadline with the delayed high-risk application dates (2027/2028) may err."
+- id: A32
+  kind: generation
+  subset: version_deadline
+  question: By what date were the codes of practice for general-purpose AI models to be ready at the latest under Article 56(9) of the EU AI Act?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2025-05-02
+    articles:
+      - art_56
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 56(9)
+    quote: Codes of practice shall be ready at the latest by 2 May 2025.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 56(9) is unchanged (Art. 1(21) of 32026R1744 replaces only
+    Art. 56(6)). Not to be confused with the 2 August 2025 fallback date for implementing acts in the second sentence."
+- id: A33
+  kind: generation
+  subset: version_deadline
+  question: As of 15 March 2026, by what date must the European Commission submit the first report on the evaluation and review of the EU AI
+    Act as a whole (including the assessment of the enforcement structure and the possible need for a Union agency) to the European
+    Parliament and the Council?
+  as_of: 2026-03-15
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2029-08-02
+    articles:
+      - art_112
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 112(3)
+    quote: By 2 August 2029 and every four years thereafter, the Commission shall submit a report on the evaluation and review of this Regulation
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 32024R1689. Art. 112(3) unchanged by the Omnibus. Distinct from Art. 112(2) (2 August
+    2028, Annex III headings and Art. 50 list) and Art. 112(13) (2 August 2031)."
+- id: A34
+  kind: generation
+  subset: version_deadline
+  question: By what date must the European Commission carry out an assessment of the enforcement of the EU AI Act and report on it to the
+    European Parliament, the Council and the European Economic and Social Committee?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: constructed
+  expected:
+    date: 2031-08-02
+    articles:
+      - art_112
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 112(13)
+    quote: By 2 August 2031, the Commission shall carry out an assessment of the enforcement of this Regulation and shall report on it to the
+      European Parliament, the Council and the European Economic and Social Committee
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 112(13) unchanged by the Omnibus. A model that confuses it
+    with the 2028/2029 reviews in Art. 112(2) and (3) would err."
+- id: A35
+  kind: generation
+  subset: version_deadline
+  question: From what date does Article 101 of the EU AI Act (fines for providers of general-purpose AI models) apply?
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: constructed
+  origin_ref: "https://news.ycombinator.com/item?id=49505351 (Thema: erste Kommissions-Auskunftsersuchen an Modellanbieter, Bericht 06,
+    Abschnitt Marktüberwachung; Frage selbst abgeleitet)"
+  expected:
+    date: 2026-08-02
+    articles:
+      - art_101
+      - art_113
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 113, second paragraph and third paragraph, point (b)
+    quote: "It shall apply from 2 August 2026. However: (a) Chapters I and II shall apply from 2 February 2025; (b) Chapter III Section 4,
+      Chapter V, Chapter VII and Chapter XII and Article 78 shall apply from 2 August 2025, with the exception of Article 101"
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 101 is in Chapter XII but is expressly excepted from the 2
+    August 2025 date in Art. 113(3)(b), so the general date 2 August 2026 applies; point (b) is unchanged by the Omnibus. A model that
+    applies the GPAI date 2 August 2025 to all of Chapter XII would err. Topical origin only: the HN thread is about the first Commission
+    information requests to model providers, not this exact question. Reworded before freezing: the draft asked about a model placed on the market in 2025, which the blind
+    second rater flagged as ambiguous because of the Art. 111(3) transition."
+- id: A36
+  kind: generation
+  subset: version_deadline
+  question: A company takes a general-purpose AI system that is already on the EU market and changes its intended purpose so that the system
+    becomes a high-risk AI system under Article 6 of the EU AI Act. Is that company considered a provider of the high-risk AI system under
+    Article 25(1)? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: true
+  origin: constructed
+  origin_ref: https://www.youtube.com/watch?v=b4ZfSiVx3JU (IfR Talk 04, 2024-07-16; Bericht 07, Entwicklerfragen Nr. 9; Frage abgeleitet)
+  expected:
+    articles:
+      - art_25
+    claim: yes
+  ground_truth:
+    celex: 32024R1689
+    pinpoint: Art. 25(1)(c)
+    quote: they modify the intended purpose of an AI system, including a general-purpose AI system, which has not been classified as high-risk
+      and has already been placed on the market or put into service in such a way that the AI system concerned becomes a high-risk AI system
+      in accordance with Article 6
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 25(1) is not amended by the Omnibus (only paragraphs 2 and
+    4). Class restricted to a third party that is not the initial provider and modifies the intended purpose of an AI system not classified
+    as high-risk. Origin is a thematic match (IfR Talk 04 states that a party who changes the purpose becomes manufacturer/provider), not a
+    verbatim user question."
+- id: A37
+  kind: generation
+  subset: version_deadline
+  question: By what date must notified bodies that have been notified under Union harmonisation legislation listed in Section A of Annex I
+    apply for designation under Chapter III, Section 4 of the EU AI Act (Article 43(3))?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2028-01-28
+    articles:
+      - art_43
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(19) (new Art. 43(3))
+    quote: shall apply for designation in accordance with Section 4 of this Chapter by 28 January 2028
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Provision and date are new; Art. 43(3) in 32024R1689 contained no
+    such deadline, so a model with the 2024 text cannot know it."
+- id: A38
+  kind: generation
+  subset: version_deadline
+  question: By what date must the European Commission publish guidelines on the practical implementation of Article 8(2), Article 9(10) and
+    Article 17(3) of the EU AI Act, aimed at avoiding duplication with Union harmonisation legislation listed in Section A of Annex I?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2027-08-01
+    articles:
+      - art_96
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(36)(b) (new Art. 96(1), first subparagraph, point (g))
+    quote: such guidelines shall be published by 1 August 2027
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Point (g) of Art. 96(1) is new; no such guideline mandate existed
+    in 2024."
+- id: A39
+  kind: generation
+  subset: version_deadline
+  question: From what date is the power to adopt delegated acts referred to in Article 30(2) of the EU AI Act conferred on the Commission, for
+    a period of five years, under Article 97(2)?
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    date: 2026-07-27
+    articles:
+      - art_97
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(37)(a) (new Art. 97(2))
+    quote: The power to adopt delegated acts referred to in Article 2(13) and Article 30(2) shall be conferred on the Commission for a period of
+      five years from 27 July 2026.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. The delegation for Art. 30(2) (amendment of Annex XIV) is new; the
+    older delegations run from 1 August 2024, which a model with the 2024 text would give."
+- id: A40
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, is each administrative fine for a small mid-cap enterprise (SMC) under Article 99(4) and (5) of the EU AI
+    Act capped at the lower of the percentage and the fixed amount, rather than the higher? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_99
+    claim: yes
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(38)(c) (new Art. 99(6a))
+    quote: In the case of SMCs, each fine referred to in paragraphs 4 and 5 shall be up to the percentages or amount referred therein, whichever
+      is lower.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. In 2024 the lower-of rule (Art. 99(6)) covered only SMEs including
+    start-ups; SMCs are new."
+- id: A41
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, may providers of high-risk AI systems covered by Union harmonisation legislation listed in Section A of
+    Annex I conduct testing in real world conditions outside AI regulatory sandboxes under Article 60 of the EU AI Act? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_60
+    claim: yes
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(24)(a) (amended Art. 60(1))
+    quote: may be conducted by providers or prospective providers of high-risk AI systems listed in Annex III or covered by Union harmonisation
+      legislation listed in Section A of Annex I
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. 32024R1689 Art. 60(1) covered only Annex III systems and left
+    Annex I products to Union or national law. Class restricted to Section A of Annex I."
+- id: A42
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, which article of the EU AI Act allows Member States to permit testing of high-risk AI systems in real world
+    conditions outside AI regulatory sandboxes for AI-enabled products covered by Union harmonisation legislation listed in Section B of
+    Annex I? Give the article number.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_60a
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(25) (new Art. 60a(1))
+    quote: Member States may allow, in accordance with this Article, the testing of high-risk AI systems in real world conditions outside AI
+      regulatory sandboxes by providers or prospective providers of AI enabled products covered by the Union harmonisation legislation
+      listed in Section B of Annex I
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Article 60a is new. Answer: Article 60a (not Article 60)."
+- id: A43
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, may a small enterprise (not a microenterprise) that has no partner enterprises or linked enterprises comply
+    with certain elements of the quality management system required by Article 17 of the EU AI Act in a simplified manner under Article
+    63(1)? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_63
+    claim: yes
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(26) (amended Art. 63(1))
+    quote: SMEs, including start-ups, may comply with certain elements of the quality management system required by Article 17 in a simplified
+      manner, provided that they do not have partner enterprises or linked enterprises
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. 32024R1689 Art. 63(1) covered only microenterprises. A small
+    enterprise is an SME. Answer: yes."
+- id: A44
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, are high-risk AI systems that fall within the scope of the Cyber Resilience Act (Regulation (EU) 2024/2847)
+    and fulfil the conditions of Article 12(1) of that Regulation deemed to comply with the cybersecurity requirements of Article 15 of the
+    EU AI Act? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  origin_ref: https://www.youtube.com/watch?v=JFmkK3S3gDM (CoreLogic Defense, 2026-09-29, 'which framework actually takes priority?'; Bericht
+    07, Entwicklerfragen Nr. 8; Frage abgeleitet)
+  expected:
+    articles:
+      - art_42
+    claim: yes
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(18) (new Art. 42(3))
+    quote: Where high-risk AI systems fall within the scope of Regulation (EU) 2024/2847 and the conditions laid down in Article 12(1) of that
+      Regulation are fulfilled, such systems shall be deemed to comply with the cybersecurity requirements set out in Article 15 of this
+      Regulation.
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 42(3) is new; 32024R1689 Art. 42(2) knew only the presumption
+    via a cybersecurity scheme under Regulation (EU) 2019/881. Topical origin only: the video asks which framework takes priority (CRA, AI
+    Act, NIS 2, DORA), not this exact question."
+- id: A45
+  kind: generation
+  subset: version_deadline
+  question: As of 5 October 2026, must notifying authorities ensure that a conformity assessment body can submit a single application and
+    undergo a unified assessment procedure for designation under both the EU AI Act and Union harmonisation legislation listed in Section A
+    of Annex I, where that legislation provides for such a procedure? Answer yes or no.
+  as_of: 2026-10-05
+  knowable_before_omnibus: false
+  origin: constructed
+  expected:
+    articles:
+      - art_28
+    claim: yes
+  ground_truth:
+    celex: 32026R1744
+    pinpoint: Art. 1(14) (new Art. 28(8))
+    quote: shall ensure that the conformity assessment body that applies for designation both pursuant to this Regulation and the Union
+      harmonisation legislation listed in Section A of Annex I is provided with the possibility to submit a single application and undergoes
+      a unified assessment procedure
+  legal_review: llm_second_rater
+  notes: "Version relied on (descriptive, not scored): 02024R1689-20260727. Art. 28(8) is new; Art. 28 of 32024R1689 had only paragraphs 1 to 7."
