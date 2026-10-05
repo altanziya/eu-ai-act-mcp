@@ -73,7 +73,7 @@ export function normalizeDate(s: string): string | null {
  * enough when the accepted id is the article. A deeper accepted id is then not matched (conservative).
  */
 export function citedId(s: string): string | null {
-  const full = parseRef(s);
+  const full = parseRef(s, { extended: false }); // ordinal wording and "Ziffer" stay unread here: the scoring of run A is pre-registered
   if (full !== null) return full;
   const head = /^\s*(?:art(?:icle|ikel)?\.?|annex|anhang)\s+([0-9]+[a-z]?|[ivxlc]+)(?![a-z0-9])/i.exec(s);
   return head ? parseRef(head[0]) : null;

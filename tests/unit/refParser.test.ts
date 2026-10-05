@@ -35,3 +35,13 @@ describe("parseRef", () => {
     expect(parseRef(ref)).toBeNull();
   });
 });
+
+describe("parseRef extended reading", () => {
+  it("ordinal paragraphs and Ziffer are read by default and not with extended: false", () => {
+    expect(parseRef("Article 113, third paragraph, point (c)(i)")).toBe("art_113.sub_3.c.i");
+    expect(parseRef("Article 113, third paragraph, point (c)(i)", { extended: false })).toBeNull();
+    expect(parseRef("Artikel 9 Absatz 1 Buchstabe c Ziffer i")).toBe("art_9.par_1.c.i");
+    expect(parseRef("Artikel 9 Absatz 1 Buchstabe c Ziffer i", { extended: false })).toBeNull();
+    expect(parseRef("Article 9(1)(c)(i)", { extended: false })).toBe("art_9.par_1.c.i");
+  });
+});
