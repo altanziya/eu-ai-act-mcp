@@ -9,9 +9,10 @@
  *
  * Source: EUR-Lex / CELLAR, (c) European Union, eur-lex.europa.eu.
  */
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { CELEX_IDS, LANGS, rawPath, REPO_ROOT } from "../src/config.js";
+import { writeFileAtomic } from "../src/util/write.js";
 
 const force = process.argv.includes("--force");
 
@@ -44,7 +45,7 @@ async function main(): Promise<void> {
         continue;
       }
       const body = await fetchOne(celex, lang);
-      writeFileSync(path, body, "utf8");
+      writeFileAtomic(path, body);
       console.log(`fetched ${path} (${body.length} chars)`);
     }
   }
