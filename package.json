@@ -13,7 +13,7 @@
     "parse": "tsx scripts/parse.ts",
     "h3": "tsx scripts/h3.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p tests/tsconfig.golden.json",
+    "typecheck": "tsc --noEmit",
     "mcp": "tsx src/mcp/server.ts"
   },
   "devDependencies": {

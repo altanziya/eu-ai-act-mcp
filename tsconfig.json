@@ -10,16 +10,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "noEmit": true,
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
-  "include": [
-    "src",
-    "scripts",
-    "tests"
-  ],
-  "exclude": [
-    "tests/golden"
-  ]
+  "include": ["src", "scripts", "tests"]
 }

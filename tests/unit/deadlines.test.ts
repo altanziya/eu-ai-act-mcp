@@ -69,7 +69,7 @@ describe("data/deadlines.json against the corpus", () => {
     return resolveDeadline(version, idx.byId.get(id) as ProvisionNode, idx.byId, asOf, real);
   };
   it("every scope and except entry exists in the corpus of its version", () => {
-    for (const v of [V2024, V2026] as const) {
+    for (const v of [V2024, V2026]) {
       const idx = loadCorpus(v, "en");
       for (const r of real.versions[v]?.rules ?? []) {
         for (const id of [...(r.scope ?? []), ...(r.except ?? []), ...r.source_nodes]) expect(idx.byId.has(id), `${v} ${r.id} ${id}`).toBe(true);
