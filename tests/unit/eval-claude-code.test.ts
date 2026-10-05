@@ -96,6 +96,16 @@ describe("child process", () => {
     expect(env?.["HOME"]).toBe(process.env["HOME"] ?? null); // the rest of the environment (login) is kept
     expect(childEnv({ ANTHROPIC_API_KEY: "k", PATH: "p" })).toEqual({ PATH: "p" });
   });
+  it("also lacks every CLAUDE* variable of a parent session and ANTHROPIC_BASE_URL, but keeps CLAUDE_CONFIG_DIR", async () => {
+    const inherited = ["CLAUDECODE", "CLAUDE_EFFORT", "CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION", "CLAUDE_CODE_SESSION_ID", "CLAUDE_CODE_MESSAGING_X", "CLAUDE_CODE_CHILD_SESSION", "CLAUDE_CODE_USE_FOUNDRY", "ANTHROPIC_BASE_URL"];
+    for (const k of inherited) vi.stubEnv(k, "1");
+    vi.stubEnv("CLAUDE_CONFIG_DIR", "/some/config");
+    await go("plain");
+    const env = readLog(log)[0]?.env ?? {};
+    for (const k of inherited) expect(env[k], k).toBeNull();
+    expect(env["CLAUDE_CONFIG_DIR"]).toBe("/some/config");
+    expect(childEnv({ CLAUDECODE: "1", CLAUDE_CONFIG_DIR: "/c", CLAUDE_FUTURE_THING: "x", CLAUDEX: "y", PATH: "p", HOME: "/h" })).toEqual({ CLAUDE_CONFIG_DIR: "/c", PATH: "p", HOME: "/h" });
+  });
   it("runs in a fresh empty directory that is deleted afterwards", async () => {
     await go("tools");
     const c = readLog(log)[0];

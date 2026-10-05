@@ -47,10 +47,18 @@ export function mcpConfigJson(root = REPO_ROOT): string {
   return `${JSON.stringify({ mcpServers: { [MCP_SERVER_NAME]: { command: join(root, "node_modules/.bin/tsx"), args: [join(root, "src/mcp/server.ts")] } } }, null, 2)}\n`;
 }
 
-/** Child environment: the parent's without the API credential variables. */
+/** Kept although it starts with CLAUDE: it only says where the login of the subscription lives. */
+const KEPT_CLAUDE_ENV = ["CLAUDE_CONFIG_DIR"];
+
+/**
+ * Child environment: the parent's without the API credential variables, without `ANTHROPIC_BASE_URL` and without every variable
+ * whose name starts with CLAUDE (session, effort, search limits, nesting markers such as CLAUDECODE inherited from a parent Claude
+ * Code session), except CLAUDE_CONFIG_DIR. The run must depend on the subscription login only, not on the caller's session.
+ */
 export function childEnv(parent: NodeJS.ProcessEnv = process.env): NodeJS.ProcessEnv {
   const env = { ...parent };
-  for (const k of STRIPPED_ENV) delete env[k];
+  for (const k of [...STRIPPED_ENV, "ANTHROPIC_BASE_URL"]) delete env[k];
+  for (const k of Object.keys(env)) if (k.startsWith("CLAUDE") && !KEPT_CLAUDE_ENV.includes(k)) delete env[k];
   return env;
 }
 
@@ -60,6 +68,8 @@ export interface StreamResult {
   /** A result event was seen. */
   hasResult: boolean;
   isError: boolean;
+  /** Text of all assistant text blocks (for a quota message that arrives outside the result event). */
+  assistantText: string;
   subtype: string | null;
   tool_calls: ToolCallRecord[];
   cost_equiv_usd: number;
@@ -71,7 +81,7 @@ export interface StreamResult {
 
 /** Evaluates the stream-json output (one JSON object per line; lines that are not JSON are ignored). */
 export function parseStream(stdout: string): StreamResult {
-  const r: StreamResult = { text: "", hasResult: false, isError: false, subtype: null, tool_calls: [], cost_equiv_usd: 0, model_reported: null, prompt_tokens: 0, completion_tokens: 0, num_turns: 0 };
+  const r: StreamResult = { text: "", hasResult: false, isError: false, assistantText: "", subtype: null, tool_calls: [], cost_equiv_usd: 0, model_reported: null, prompt_tokens: 0, completion_tokens: 0, num_turns: 0 };
   for (const line of stdout.split("\n")) {
     const t = line.trim();
     if (!t.startsWith("{")) continue;
@@ -85,6 +95,7 @@ export function parseStream(stdout: string): StreamResult {
       const content = (ev["message"] as { content?: unknown } | undefined)?.content;
       if (!Array.isArray(content)) continue;
       for (const b of content as Array<Record<string, unknown>>) {
+        if (b["type"] === "text" && typeof b["text"] === "string") r.assistantText += `${b["text"]}\n`;
         if (b["type"] !== "tool_use") continue;
         const input = JSON.stringify(b["input"] ?? {});
         r.tool_calls.push({ name: String(b["name"] ?? "unknown"), arguments: input.slice(0, TOOL_INPUT_CHARS) });
