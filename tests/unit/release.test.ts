@@ -2,6 +2,7 @@ import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync }
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterAll, describe, expect, it } from "vitest";
+import { loadRelease } from "../../src/release/context.js";
 import { buildManifest, manifestBytes, sha256Hex } from "../../src/release/manifest.js";
 import { buildRelease } from "../../src/release/release.js";
 import { makeRelease } from "./helpers/release.js";
@@ -63,5 +64,59 @@ describe("release and manifest", () => {
     expect(() => buildRelease({ releaseId: "../evil", outRoot: rel.outRoot })).toThrow(/invalid release id/);
     expect(() => buildRelease({ releaseId: "", outRoot: rel.outRoot })).toThrow(/invalid release id/);
     expect(readdirSync(rel.outRoot)).toEqual(["unit-release"]);
+  });
+});
+
+describe("loadRelease verifies the release folder against its manifest", () => {
+  const copy = (id: string) => {
+    const root = mkdtempSync(join(tmpdir(), "aiact-unit-tamper-"));
+    cpSync(rel.dir, join(root, id), { recursive: true });
+    return { dir: join(root, id), cleanup: () => rmSync(root, { recursive: true, force: true }) };
+  };
+  it("loads an untouched release", () => {
+    expect(loadRelease(rel.dir).releaseId).toBe("unit-release");
+  });
+  it("throws with the file name for a changed corpus file (same size)", () => {
+    const c = copy("tampered");
+    try {
+      const f = join(c.dir, "corpus", "32024R1689.en.json");
+      const text = readFileSync(f, "utf8");
+      writeFileSync(f, text.replace("shall", "SHALL"));
+      expect(() => loadRelease(c.dir)).toThrow(/corpus\/32024R1689\.en\.json/);
+    } finally {
+      c.cleanup();
+    }
+  });
+  it("throws for a changed file that is not needed for verification (diff), a truncated file and a missing file", () => {
+    for (const [file, edit, pattern] of [
+      ["diff/en.json", (t: string) => `${t} `, /diff\/en\.json/],
+      ["deadlines.json", (t: string) => t.slice(0, 50), /deadlines\.json/],
+    ] as const) {
+      const c = copy("tampered");
+      try {
+        writeFileSync(join(c.dir, file), edit(readFileSync(join(c.dir, file), "utf8")));
+        expect(() => loadRelease(c.dir)).toThrow(pattern);
+      } finally {
+        c.cleanup();
+      }
+    }
+    const c = copy("tampered");
+    try {
+      rmSync(join(c.dir, "diff", "de.json"));
+      expect(() => loadRelease(c.dir)).toThrow(/diff\/de\.json/);
+    } finally {
+      c.cleanup();
+    }
+  });
+  it("throws for a manifest that lists a path outside the release folder", () => {
+    const c = copy("tampered");
+    try {
+      const m = JSON.parse(readFileSync(join(c.dir, "manifest.json"), "utf8")) as { files: Array<{ path: string }> };
+      m.files.push({ path: "../outside.json" });
+      writeFileSync(join(c.dir, "manifest.json"), JSON.stringify(m));
+      expect(() => loadRelease(c.dir)).toThrow(/invalid path/);
+    } finally {
+      c.cleanup();
+    }
   });
 });
