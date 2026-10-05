@@ -102,6 +102,18 @@ A verification gives three separate answers, never one combined "verified":
 | Tests | 465, including golden tests written and frozen before implementation |
 | Verify page | 52 KB, no framework, no external requests |
 
+## Does it matter? A pre-registered evaluation
+
+30 questions on versions and deadlines of the AI Act after the 2026 amendment, asked to three frontier models with and without this project's tools. Errors per question:
+
+| Model | No tools | With these MCP tools |
+|---|---|---|
+| Claude Opus 5.5 | 16/30 | 3/30 |
+| GPT-6 Astra | 17/30 | 2/30 |
+| Gemini 3.1 Pro | 16/29 | 5/27 |
+
+Without tools the models were right on everything the amendment left unchanged and wrong on almost everything it changed. Opus with web search: 4/30. The pre-registered decision rule is still **undecided** for the web-search arm, and the evaluation also found a weakness in the tools (questions dated before the amendment). Cases, pre-registration, raw answers and limitations: [`eval/results/2026-10-05/`](eval/results/2026-10-05/).
+
 ## Quick start
 
 Requires Node 20+.
@@ -152,7 +164,8 @@ Details in the [technical reference](docs/reference.md#known-limitations).
 - [x] Parser, diff and provision IDs for both versions, EN + DE
 - [x] MCP tools with three-level verification
 - [x] Signed releases, evidence records, browser verify page
-- [ ] **Evaluation:** how often frontier models cite the wrong version or date, with and without these tools (pre-registered, in preparation)
+- [x] **Evaluation:** pre-registered run with three frontier models, with and without these tools ([results](eval/results/2026-10-05/))
+- [ ] Evaluation extension to 45 cases (pre-registered rule) and the date-aware default version for the tools
 - [ ] Hosted MCP endpoint
 - [ ] Further acts: GDPR, Data Act, Cyber Resilience Act
 

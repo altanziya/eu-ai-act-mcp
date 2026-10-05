@@ -1,0 +1,175 @@
+{
+  "cases_file": "eval/cases.yaml",
+  "prompt_version": "eval-prompt-v2",
+  "scorer_version": "eval-scorer-v2",
+  "rescored_runs": 0,
+  "status": "complete",
+  "dry_run": false,
+  "reps": 3,
+  "max_usd": 0,
+  "max_claude_calls": 400,
+  "claude_calls": 1,
+  "total_cost_usd": 0,
+  "total_cost_equiv_usd": 12.506546000000004,
+  "backends": {
+    "claude-code/claude-opus-5-5": "claude-code"
+  },
+  "primary_model": "claude-code/claude-opus-5-5",
+  "e1": {
+    "model": "claude-code/claude-opus-5-5",
+    "arm": "web",
+    "subset": "version_deadline",
+    "errors": 4,
+    "n": 30,
+    "lower": 0.03755349633836383,
+    "upper": 0.30721835027612676,
+    "decision": "undecided"
+  },
+  "runs": 360,
+  "planned_runs": 360,
+  "models": [
+    "claude-code/claude-opus-5-5"
+  ],
+  "arms": [
+    "plain",
+    "web",
+    "tools"
+  ],
+  "cases": 40,
+  "max_tokens": 3000,
+  "request_params": {},
+  "estimates": {
+    "claude-code/claude-opus-5-5 | plain": {
+      "run_usd": 0,
+      "requests": 1,
+      "source": "subscription"
+    },
+    "claude-code/claude-opus-5-5 | web": {
+      "run_usd": 0,
+      "requests": 1,
+      "source": "subscription"
+    },
+    "claude-code/claude-opus-5-5 | tools": {
+      "run_usd": 0,
+      "requests": 1,
+      "source": "subscription"
+    }
+  },
+  "cells": [
+    {
+      "model": "claude-code/claude-opus-5-5",
+      "backend": "claude-code",
+      "arm": "plain",
+      "cases": 40,
+      "excluded_cases": 0,
+      "errors_majority": 22,
+      "errors_any": 23,
+      "ci": {
+        "lower": 0.3849067945340172,
+        "upper": 0.7074116499601202
+      },
+      "sensitivity": {
+        "errors": 22,
+        "n": 40,
+        "lower": 0.3849067945340172,
+        "upper": 0.7074116499601202
+      },
+      "runs": 120,
+      "unparseable_runs": 0,
+      "api_error_runs": 0,
+      "tool_call_rate": null,
+      "version_named": {
+        "n": 120,
+        "32024R1689": 117,
+        "02024R1689-20260727": 0,
+        "both": 3,
+        "none": 0
+      },
+      "tools_usage": null,
+      "cost_usd": 0,
+      "cost_equiv_usd": 2.173069599999999,
+      "cost_estimated_runs": 0
+    },
+    {
+      "model": "claude-code/claude-opus-5-5",
+      "backend": "claude-code",
+      "arm": "web",
+      "cases": 40,
+      "excluded_cases": 0,
+      "errors_majority": 4,
+      "errors_any": 7,
+      "ci": {
+        "lower": 0.027925415294218117,
+        "upper": 0.23663739987609972
+      },
+      "sensitivity": {
+        "errors": 4,
+        "n": 40,
+        "lower": 0.027925415294218117,
+        "upper": 0.23663739987609972
+      },
+      "runs": 120,
+      "unparseable_runs": 0,
+      "api_error_runs": 0,
+      "tool_call_rate": null,
+      "version_named": {
+        "n": 120,
+        "32024R1689": 47,
+        "02024R1689-20260727": 70,
+        "both": 3,
+        "none": 0
+      },
+      "tools_usage": null,
+      "cost_usd": 0,
+      "cost_equiv_usd": 5.973768,
+      "cost_estimated_runs": 0
+    },
+    {
+      "model": "claude-code/claude-opus-5-5",
+      "backend": "claude-code",
+      "arm": "tools",
+      "cases": 40,
+      "excluded_cases": 0,
+      "errors_majority": 3,
+      "errors_any": 4,
+      "ci": {
+        "lower": 0.01574217985104097,
+        "upper": 0.20386474873289884
+      },
+      "sensitivity": {
+        "errors": 3,
+        "n": 40,
+        "lower": 0.01574217985104097,
+        "upper": 0.20386474873289884
+      },
+      "runs": 120,
+      "unparseable_runs": 0,
+      "api_error_runs": 0,
+      "tool_call_rate": 0.95,
+      "version_named": {
+        "n": 120,
+        "32024R1689": 5,
+        "02024R1689-20260727": 108,
+        "both": 7,
+        "none": 0
+      },
+      "tools_usage": {
+        "with_tool": {
+          "runs": 114,
+          "scored": 114,
+          "wrong": 7,
+          "rate": 0.06140350877192982
+        },
+        "no_tool": {
+          "runs": 6,
+          "scored": 6,
+          "wrong": 3,
+          "rate": 0.5
+        }
+      },
+      "cost_usd": 0,
+      "cost_equiv_usd": 4.359708399999998,
+      "cost_estimated_runs": 0
+    }
+  ]
+}
