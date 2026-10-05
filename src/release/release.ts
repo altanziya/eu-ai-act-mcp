@@ -3,7 +3,7 @@
  * release/<release_id>/ and described by manifest.json. Deterministic; no timestamps. An existing release with
  * different content is never overwritten.
  */
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { REPO_ROOT } from "../config.js";
 import { LANGS } from "../constants.js";
@@ -47,6 +47,7 @@ export function buildRelease(opts: BuildReleaseOptions): { dir: string; manifest
       }
       return { dir, manifest };
     }
+    chmodSync(tmp, 0o755); // mkdtemp creates 0700
     renameSync(tmp, dir);
     return { dir, manifest };
   } finally {
