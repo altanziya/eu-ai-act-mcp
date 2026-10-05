@@ -159,7 +159,7 @@ async function chat(key: string, body: Record<string, unknown>, estimate: number
     headers: {
       Authorization: `Bearer ${key}`,
       "Content-Type": "application/json",
-      "HTTP-Referer": "https://github.com/akoemek-dev/eu-ai-act-mcp",
+      "HTTP-Referer": "https://github.com/altanziya/eu-ai-act-mcp",
       "X-Title": "eu-ai-act-mcp cost probe",
     },
     body: JSON.stringify({ ...body, usage: { include: true }, max_tokens: 800, temperature: 0 }),
@@ -290,7 +290,7 @@ function report(candidates: Candidate[], flagship: Candidate[], cheaper: Candida
 
 async function main(): Promise<void> {
   const key = apiKey();
-  const res = await fetch(`${API}/models`, { headers: { Authorization: `Bearer ${key}`, "HTTP-Referer": "https://github.com/akoemek-dev/eu-ai-act-mcp", "X-Title": "eu-ai-act-mcp cost probe" } });
+  const res = await fetch(`${API}/models`, { headers: { Authorization: `Bearer ${key}`, "HTTP-Referer": "https://github.com/altanziya/eu-ai-act-mcp", "X-Title": "eu-ai-act-mcp cost probe" } });
   if (!res.ok) throw new Error(`models: HTTP ${res.status}`);
   const candidates = toCandidates(((await res.json()) as { data: RawModel[] }).data);
   const sel = selectModels(candidates);

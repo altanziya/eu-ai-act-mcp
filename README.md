@@ -2,14 +2,14 @@
 
 **Check any quote from the EU AI Act against the right version of the law, on the right date, and share a proof that anyone can recompute in their browser.**
 
-[![Tests](https://github.com/akoemek-dev/eu-ai-act-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/akoemek-dev/eu-ai-act-mcp/actions/workflows/test.yml)
-[![Live demo](https://img.shields.io/badge/live-demo-2ea44f)](https://akoemek-dev.github.io/eu-ai-act-mcp/)
+[![Tests](https://github.com/altanziya/eu-ai-act-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/altanziya/eu-ai-act-mcp/actions/workflows/test.yml)
+[![Live demo](https://img.shields.io/badge/live-demo-2ea44f)](https://altanziya.github.io/eu-ai-act-mcp/)
 ![MCP](https://img.shields.io/badge/MCP-3%20tools-blue)
 ![License](https://img.shields.io/badge/code-Apache--2.0-lightgrey)
 
-→ **[Open the example evidence record](https://akoemek-dev.github.io/eu-ai-act-mcp/example/)**: a quote from Article 9(2), checked as of 1 September 2026. Result: the wording is exact, but the provision does not apply yet. It applies from 2 December 2027, or 2 August 2028 for Annex I systems.
+→ **[Open the example evidence record](https://altanziya.github.io/eu-ai-act-mcp/example/)**: a quote from Article 9(2), checked as of 1 September 2026. Result: the wording is exact, but the provision does not apply yet. It applies from 2 December 2027, or 2 August 2028 for Annex I systems.
 
-<a href="https://akoemek-dev.github.io/eu-ai-act-mcp/example/"><img src="docs/assets/verify-page.png" alt="Verify page: all checks passed, signature valid" width="640"></a>
+<a href="https://altanziya.github.io/eu-ai-act-mcp/example/"><img src="docs/assets/verify-page.png" alt="Verify page: all checks passed, signature valid" width="640"></a>
 
 ---
 
@@ -34,7 +34,7 @@ So a sentence like *"high-risk obligations under Annex III apply from 2 August 2
 | **Diff** | What changed between 2024 and 2026, per provision, down to the word. |
 | **MCP server** | Three read-only tools that an AI assistant (Claude, Cursor, any MCP client) can call. |
 | **Signed releases** | Each corpus snapshot gets a manifest of SHA-256 hashes, signed with Ed25519. |
-| **Evidence records** | One check, packed into a link. The [verify page](https://akoemek-dev.github.io/eu-ai-act-mcp/verify/) recomputes it in the browser against the signed release. No server, no account, no trust in the author required. |
+| **Evidence records** | One check, packed into a link. The [verify page](https://altanziya.github.io/eu-ai-act-mcp/verify/) recomputes it in the browser against the signed release. No server, no account, no trust in the author required. |
 
 ## Example
 
@@ -107,7 +107,7 @@ A verification gives three separate answers, never one combined "verified":
 Requires Node 20+.
 
 ```bash
-git clone https://github.com/akoemek-dev/eu-ai-act-mcp.git
+git clone https://github.com/altanziya/eu-ai-act-mcp.git
 cd eu-ai-act-mcp
 npm ci
 npm test
@@ -134,7 +134,7 @@ npm run record -- --quote "..." --ref "Article 9(2)" --as-of 2026-09-01 --lang e
 
 A record with a valid signature shows that the quoted passages read as stated in the signed corpus release, and that the check was recomputed on the page. It does not show who created the record, whether a legal claim is right, or that any system is compliant.
 
-- Signing key `71fa6df7215bb8b9`, published at [`keys/index.json`](https://akoemek-dev.github.io/eu-ai-act-mcp/keys/index.json). The private key never touches the repository or CI.
+- Signing key `71fa6df7215bb8b9`, published at [`keys/index.json`](https://altanziya.github.io/eu-ai-act-mcp/keys/index.json). The private key never touches the repository or CI.
 - The record hash is plain SHA-256 over canonical JSON and can be recomputed in three lines of Python ([reference](docs/reference.md#evidence-record)).
 - The consolidated text from EUR-Lex is not legally authentic. Only the Official Journal is binding. **Not legal advice.**
 
@@ -186,4 +186,4 @@ See [`NOTICE`](NOTICE).
 
 ---
 
-Built by [Altan Kömek](https://github.com/akoemek-dev).
+Built by [Altan Kömek](https://github.com/altanziya).
