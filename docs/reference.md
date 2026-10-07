@@ -157,7 +157,7 @@ Input `{ profile, as_of?, lang?, detail? }`. Output `{ as_of, version, profile_e
 Orientation from the consolidated text: for a company profile, the applicable and upcoming obligations with citation, verbatim
 quotation, application date on `as_of` and the places where a legal assessment is needed. No language model; deterministic.
 
-- **Data** `data/obligations.json` (schema `obligations-v1`, reviewed draft from `work/obligations/`): `profile_fields`, `derived`
+- **Data** `data/obligations.json` (schema `obligations-v1`): `profile_fields`, `derived`
   (rules over profile fields and other derived fields), `obligations` (about 95 entries, each with `roles`, `applies_if`, `provisions`,
   `anchor_node`, a verbatim `quote`, `timing`), `classification` (the rules behind the derived fields, with the open legal question).
   The file contains no application dates except the fixed dates of Article 111 (`timing.date`) and `not_before`; all other
@@ -202,8 +202,7 @@ quotation, application date on `as_of` and the places where a legal assessment i
   detected). `id` is the field, the text is `Not set: <field> – <field description without its type prefix>` (the classification rules are not consulted: one that only mentions the field in passing would give it a foreign text).
   `kind: "legal_assessment"`: the `legal_assessment_needed` of each listed entry (`id` = obligation id), after the classification questions.
 - **Limits**: the map does not decide classification, significance of design changes, "substantial modification", public-service status or open-source
-  status; those are flagged. Not covered: duties of Member States, the Commission, notified bodies and authorities; penalty amounts (see `work/obligations/notes.md`,
-  "Nicht abgedeckt"). The core takes the corpus loader, the deadline table and the data as parameters and has no `node:` import
+  status; those are flagged. Not covered: duties of Member States, the Commission, notified bodies and authorities; penalty amounts. The core takes the corpus loader, the deadline table and the data as parameters and has no `node:` import
   (`tests/unit/obligations.test.ts` bundles it for the browser).
 
 ### Citation format (`formatRef`)
@@ -495,11 +494,28 @@ Output in `--out`:
 
 ## Run the MCP server
 
-    npm ci
+Requires Node 20 or later. The server speaks MCP over stdio and makes no network calls.
+
+**Without a clone**, straight from GitHub (the first start installs the package and builds `dist/server.js`, about a minute):
+
+    claude mcp add eu-ai-act -- npx -y github:altanziya/eu-ai-act-mcp
+
+Other clients: command `npx`, args `["-y", "github:altanziya/eu-ai-act-mcp"]`.
+
+**From a clone:** `npm ci` installs the dependencies and builds the bundle `dist/server.js` (the `prepare` script runs `npm run build`,
+which bundles `src/mcp/server.ts` with esbuild; dependencies stay external, the data files are read from the package root). Then
+
+    claude mcp add eu-ai-act -- node "$(pwd)/dist/server.js"
+
+`node dist/server.js --version` prints the version and exits with 0; `--help` prints a short usage text (purpose, the six tools, stdio,
+no network access) and exits with 0. Other arguments, such as the former `--extended`, are ignored. While the server runs, stdout carries the
+protocol only. The package ships `dist/` and exactly the data files the tools read (`npm pack` lists them); `data/raw/` and `data/h3.json` are not part of it.
+
+**Development** (from the sources, no build):
+
     npm run mcp          # = tsx src/mcp/server.ts, stdio
 
-Claude Code: `claude mcp add eu-ai-act -- npx tsx /path/to/eu-ai-act-mcp/src/mcp/server.ts`. Other clients: command `npx`,
-args `["tsx", "src/mcp/server.ts"]`, working directory the repository root. Tools: `aiact_get_provision`, `aiact_diff`,
+Tools: `aiact_get_provision`, `aiact_diff`,
 `aiact_verify_citation`, `aiact_search`, `aiact_audit_text` and `aiact_obligations`; the server always lists exactly these six. The evaluation's tools arm
 (`TOOL_DEFS`) offers the first three. All tools with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
 reads only `data/corpus`, `data/diff`, `data/deadlines.json` and `data/obligations.json`; it makes no network calls.
