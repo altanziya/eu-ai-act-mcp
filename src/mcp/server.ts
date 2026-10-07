@@ -16,6 +16,7 @@ import { aiactSearch } from "../tools/search.js";
 import { isIsoDate } from "../tools/corpus.js";
 import { todayIso } from "../tools/today.js";
 import { verifyCitation } from "../tools/verifyCitation.js";
+import { packageVersion } from "../version.js";
 
 const version = z.enum([V2024, V2026]);
 const lang = z.enum(["en", "de"]);
@@ -47,7 +48,7 @@ const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; te
 });
 
 export function createServer(): McpServer {
-  const server = new McpServer({ name: "eu-ai-act-mcp", version: "0.1.0" });
+  const server = new McpServer({ name: "eu-ai-act-mcp", version: packageVersion() });
 
   server.registerTool(
     "aiact_get_provision",
