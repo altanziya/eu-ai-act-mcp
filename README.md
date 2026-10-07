@@ -9,6 +9,8 @@
 
 Every result cites the provision, quotes it word for word from the text in force on your date, and says when it applies. Where the law requires a judgement, the tools say so instead of making it. Deterministic, no language model at runtime, runs in your browser or inside your AI assistant.
 
+**Status:** v0.1.0 (October 2026), stable; see the [changelog](CHANGELOG.md).
+
 ---
 
 ## The problem
@@ -103,7 +105,7 @@ A verification gives three separate answers, never one combined "verified":
 | EN/DE structural parity | 100 % |
 | Application-date rules (2026 version) | 7, each linked to its source sentence in Art. 113 |
 | Obligations map | 95 entries, 106 verbatim quotations, all checked against the corpus |
-| Tests | 977, including golden tests written and frozen before implementation |
+| Tests | 981, including golden tests written before the implementation |
 | Verify page | 52 KB, no framework, no external requests |
 
 ## Does it matter? A pre-registered evaluation
@@ -122,22 +124,31 @@ Without tools the models were right on what the amendment left unchanged and wro
 
 Requires Node 20+.
 
+**Option A, no clone:**
+
+```bash
+claude mcp add eu-ai-act -- npx -y github:altanziya/eu-ai-act-mcp
+```
+
+For other MCP clients, use command `npx` with arguments `-y github:altanziya/eu-ai-act-mcp`. The first start builds the package (about a minute); after that the server runs locally over stdio and makes no network calls.
+
+**Option B, from a clone:**
+
 ```bash
 git clone https://github.com/altanziya/eu-ai-act-mcp.git
 cd eu-ai-act-mcp
-npm ci
-npm test
+npm ci    # also builds dist/server.js
+claude mcp add eu-ai-act -- node "$(pwd)/dist/server.js"
 ```
 
-**Use it from Claude Code** (run inside the repository):
+**Development:**
 
 ```bash
-claude mcp add eu-ai-act -- "$(pwd)/node_modules/.bin/tsx" "$(pwd)/src/mcp/server.ts"
+npm test
+npm run mcp    # the server from the sources, via tsx
 ```
 
 Then ask, for example: *"We sell an AI tool that ranks job applicants. Which AI Act obligations apply to us and when? Use the eu-ai-act tools."* or *"Check this vendor answer against the current AI Act: …"*
-
-**Other MCP clients:** command `<repo>/node_modules/.bin/tsx`, arguments `<repo>/src/mcp/server.ts`. The server runs locally over stdio and makes no network calls.
 
 **Create your own evidence record:**
 
@@ -162,6 +173,10 @@ A record with a valid signature shows that the quoted passages read as stated in
 - The obligations map covers duties of operators, not of authorities, the Commission or notified bodies, and covers sector-specific reliefs only for financial institutions.
 - The document checker reads citations, dates and quotations; it does not judge legal arguments. Relative deadlines ("two years after entry into force") are not resolved.
 - No lawyer has reviewed the deadline table or the obligations map yet. Two independent model reviews found and fixed errors; every entry cites its source so it can be checked.
+- Exactly two versions of the Act are built in: the Official Journal text and the consolidated text after the Digital Omnibus. A further amendment needs code changes, not only new data.
+- English and German only.
+- Releases are signed with a single key; there is no key rotation or revocation yet.
+- In German mode the obligations navigator quotes the English text.
 
 Details in the [technical reference](docs/reference.md#known-limitations).
 
@@ -179,11 +194,11 @@ Details in the [technical reference](docs/reference.md#known-limitations).
 
 ## How this was built
 
-I designed the specification, the data model, the verification levels and the trust model, and wrote the acceptance tests. Implementation was done by AI coding agents working under that control:
+This project was built with AI coding agents under my direction. I set the goal and the scope, decided at each gate what to build, what counts as done and what to publish, reviewed the results and am responsible for the errors. The agents wrote the research drafts, the specification, the tests and the code:
 
-- **Each build step** had a written contract and a gate script. Golden tests were written and frozen before implementation; the agents could not change them.
-- **Every merge** passed the gate and two independent reviews in a fresh context. The reviews found real defects, such as a silently redefined metric and an incomplete verdict on the verify page, which were fixed before merge.
-- **The process is documented** in [`process/`](process/) (German): architecture decisions as ADRs, research reports with sources, verified facts, session logs and the build contracts.
+- **Each build step** had a written contract and an acceptance script. The expected results (golden tests) were fixed by the orchestrating agent before the implementing agent started, and the implementing agent could not change them.
+- **Every merge** passed the acceptance script and two independent reviews in a fresh context. The reviews found real defects, such as a silently redefined metric and an incomplete verdict on the verify page, which were fixed before merge.
+- **The legal content** (deadline table, obligations map) was checked by two independent model reviews, not yet by a lawyer; every entry cites its source so it can be checked.
 
 ## Repository layout
 
@@ -195,8 +210,6 @@ I designed the specification, the data model, the verification levels and the tr
 | `site/` | Landing page, obligations navigator, document checker, verify page (GitHub Pages) |
 | `tests/` | Unit and golden tests |
 | `docs/reference.md` | Full technical reference |
-| `process/` | Working notes in German: decisions (ADRs), research, facts, specification, session logs |
-| `plan/` | Build contracts and gate scripts per step |
 
 ## License
 
