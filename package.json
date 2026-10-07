@@ -1,14 +1,43 @@
 {
   "name": "eu-ai-act-mcp",
   "version": "0.1.0",
-  "private": true,
   "description": "Deterministic provision tree, diff and measurements for the EU AI Act (Regulation (EU) 2024/1689)",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/altanziya/eu-ai-act-mcp.git"
+  },
+  "homepage": "https://altanziya.github.io/eu-ai-act-mcp/",
+  "keywords": [
+    "eu-ai-act",
+    "mcp",
+    "model-context-protocol",
+    "legal-tech",
+    "citation-verification"
+  ],
   "type": "module",
+  "bin": {
+    "eu-ai-act-mcp": "dist/server.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "NOTICE",
+    "data/corpus",
+    "data/diff/de.json",
+    "data/diff/en.json",
+    "data/deadlines.json",
+    "data/obligations.json"
+  ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
+    "build": "tsx scripts/build-server.ts",
+    "prepare": "npm run build",
+    "start": "node dist/server.js",
     "fetch": "tsx scripts/fetch-raw.ts",
     "parse": "tsx scripts/parse.ts",
     "h3": "tsx scripts/h3.ts",

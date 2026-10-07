@@ -1,10 +1,12 @@
 /**
  * MCP server (stdio) for the EU AI Act provision tree: aiact_get_provision, aiact_diff, aiact_verify_citation,
- * aiact_search, aiact_audit_text and aiact_obligations. All tools are read-only. Results are JSON text in content[0]. Start: `npm run mcp`.
- * stdout carries the protocol only; nothing else may be written to it.
+ * aiact_search, aiact_audit_text and aiact_obligations. All tools are read-only. Results are JSON text in content[0]. Start: `npm run mcp`
+ * (sources) or `eu-ai-act-mcp` / `node dist/server.js` (bundle). `--version` and `--help` print and exit; other arguments are ignored.
+ * While the server runs, stdout carries the protocol only; nothing else may be written to it.
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { z } from "zod";
 import { V2024, V2026 } from "../config.js";
@@ -197,13 +199,51 @@ export function createServer(): McpServer {
   return server;
 }
 
-async function main(): Promise<void> {
+const HELP = `eu-ai-act-mcp ${packageVersion()}
+
+MCP server (stdio) for Regulation (EU) 2024/1689, the EU AI Act: a deterministic provision tree, diff and measurements.
+Runs locally and makes no network requests.
+
+Tools (all read-only):
+  aiact_get_provision     one provision by id or citation, in the version in force on a date
+  aiact_diff              what changed between the Official Journal text and the consolidated text
+  aiact_verify_citation   checks that a quotation exists in the Act, and whether it applies on a date
+  aiact_search            full-text search over the Act
+  aiact_audit_text        checks a text for outdated dates, wrong citations and altered quotations
+  aiact_obligations       obligations and application dates for a company profile
+
+Usage:
+  eu-ai-act-mcp             start the server on stdin/stdout
+  eu-ai-act-mcp --version   print the version
+  eu-ai-act-mcp --help      print this text
+`;
+
+async function main(argv: string[]): Promise<void> {
+  if (argv.includes("--version")) {
+    process.stdout.write(`${packageVersion()}\n`);
+    return;
+  }
+  if (argv.includes("--help") || argv.includes("-h")) {
+    process.stdout.write(HELP);
+    return;
+  }
   await createServer().connect(new StdioServerTransport());
 }
 
-// Only when started as a program (npm run mcp); importing createServer (tests, the eval harness check) must not open stdio.
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((e: unknown) => {
+/** True when this module is the program entry point; follows symlinks (the npm bin is a symlink to dist/server.js). */
+function isEntryPoint(): boolean {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  try {
+    return import.meta.url === pathToFileURL(realpathSync(entry)).href;
+  } catch {
+    return false;
+  }
+}
+
+// Only when started as a program; importing createServer (tests, the eval harness check) must not open stdio.
+if (isEntryPoint()) {
+  main(process.argv.slice(2)).catch((e: unknown) => {
     console.error(e);
     process.exit(1);
   });
