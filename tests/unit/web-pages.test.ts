@@ -41,9 +41,9 @@ describe("static tool pages", () => {
 describe("landing page", () => {
   const html = read("site/index.html");
   const text = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "").replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
-  const copy = read("plan/day-5c-copy.md");
+  const copy = read("tests/fixtures/site-copy.md");
   const values = (prefixes: RegExp): string[] => copy.split("\n").filter((l) => prefixes.test(l)).map((l) => l.slice(l.indexOf(":") + 1).trim().replace(/ \(link to [^)]*\)/, ""));
-  it("contains the texts of plan/day-5c-copy.md word for word (EN and DE)", () => {
+  it("contains the texts of the page copy fixture word for word (EN and DE)", () => {
     const lines = values(/^(Title|Lead|Card \d, (title|text|button)|Text|Snippet|Privacy note|Footer|Karte \d, (Titel|Text|Knopf)|Fußzeile|Datenschutzhinweis|Abschnitt|Section):/);
     expect(lines.length).toBeGreaterThan(30);
     for (const line of lines) {
