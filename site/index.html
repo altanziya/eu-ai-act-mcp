@@ -70,10 +70,10 @@
 
   <section class="block" aria-labelledby="mcp-title">
     <h2 id="mcp-title"><span lang="en">Use it from your AI assistant</span><span lang="de">Im KI-Assistenten nutzen</span></h2>
-    <p lang="en">The same checks run as an MCP server, locally over stdio, with no network calls. In Claude Code, inside the repository:</p>
-    <p lang="de">Dieselben Prüfungen laufen als MCP-Server, lokal über stdio, ohne Netzwerkzugriffe. In Claude Code, im Repository:</p>
+    <p lang="en">The same checks run as an MCP server, locally over stdio, with no network calls. In Claude Code (needs Node 20+):</p>
+    <p lang="de">Dieselben Prüfungen laufen als MCP-Server, lokal über stdio, ohne Netzwerkzugriffe. In Claude Code (benötigt Node 20+):</p>
     <div class="snippet-row">
-      <pre class="snippet" id="snippet">claude mcp add eu-ai-act -- "$(pwd)/node_modules/.bin/tsx" "$(pwd)/src/mcp/server.ts" --extended</pre>
+      <pre class="snippet" id="snippet">claude mcp add eu-ai-act -- npx -y github:altanziya/eu-ai-act-mcp</pre>
       <button type="button" class="btn secondary small" id="copy-snippet"><span lang="en">Copy</span><span lang="de">Kopieren</span></button>
     </div>
   </section>

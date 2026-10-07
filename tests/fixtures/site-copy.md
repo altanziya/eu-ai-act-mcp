@@ -19,8 +19,8 @@ Card 3, text: Open a hash-sealed evidence record and recompute it in your browse
 Card 3, button: Verify a record
 
 Section: Use it from your AI assistant
-Text: The same checks run as an MCP server, locally over stdio, with no network calls. In Claude Code, inside the repository:
-Snippet: claude mcp add eu-ai-act -- "$(pwd)/node_modules/.bin/tsx" "$(pwd)/src/mcp/server.ts" --extended
+Text: The same checks run as an MCP server, locally over stdio, with no network calls. In Claude Code (needs Node 20+):
+Snippet: claude mcp add eu-ai-act -- npx -y github:altanziya/eu-ai-act-mcp
 
 Section: Why this exists
 Text: In a pre-registered evaluation, three frontier models answered questions on rules the 2026 amendment changed. Without tools they gave the old answer in most cases; with this project's tools the error rate fell to a few cases. Results and data: Evaluation (link to https://github.com/altanziya/eu-ai-act-mcp/tree/main/eval/results).
@@ -48,7 +48,7 @@ Karte 3, Text: Öffnen Sie einen versiegelten Nachweis und berechnen Sie ihn im 
 Karte 3, Knopf: Nachweis prüfen
 
 Abschnitt: Im KI-Assistenten nutzen
-Text: Dieselben Prüfungen laufen als MCP-Server, lokal über stdio, ohne Netzwerkzugriffe. In Claude Code, im Repository:
+Text: Dieselben Prüfungen laufen als MCP-Server, lokal über stdio, ohne Netzwerkzugriffe. In Claude Code (benötigt Node 20+):
 
 Abschnitt: Warum es das gibt
 Text: In einer vorregistrierten Evaluation beantworteten drei führende Sprachmodelle Fragen zu Regeln, die die Änderung von 2026 verschoben hat. Ohne Werkzeuge nannten sie meist die alte Antwort; mit den Werkzeugen dieses Projekts sank die Fehlerquote auf wenige Fälle. Ergebnisse und Daten: Evaluation.
