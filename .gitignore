@@ -6,8 +6,7 @@ dist/
 .DS_Store
 *.log
 .gstack/
-!plan/*.log
-plan/.gate-failures-*
+.claude/
 __pycache__/
 *.pem
 *.key
@@ -15,8 +14,6 @@ site/release/
 site/verify/verify.js
 release/.tmp-*
 *.p12
-plan/handoff-latest.md
-plan/handoff-latest.md.tmp
 
 # local working drafts (eval cases, smoke runs)
 work/
