@@ -175,7 +175,7 @@ A record with a valid signature shows that the quoted passages read as stated in
 - No lawyer has reviewed the deadline table or the obligations map yet. Two independent model reviews found and fixed errors; every entry cites its source so it can be checked.
 - Exactly two versions of the Act are built in: the Official Journal text and the consolidated text after the Digital Omnibus. A further amendment needs code changes, not only new data.
 - English and German only.
-- Releases are signed with a single key; there is no key rotation or revocation yet.
+- Releases are signed with a single key. A key can be revoked through the key list; there is no key rotation yet.
 - In German mode the obligations navigator quotes the English text.
 
 Details in the [technical reference](docs/reference.md#known-limitations).
