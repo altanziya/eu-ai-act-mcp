@@ -1,7 +1,7 @@
 /**
  * Matching engine of aiact_verify_citation (V0): quote preparation, tokens, hard tokens, window search.
  *
- * Rules (fixed here, documented in README "Verification levels V0-V2"):
+ * Rules (fixed here, documented in docs/reference.md "Verification levels V0-V2"):
  *  - Quote preparation: `normalizeText` (NFC, soft hyphens, typographic quotes, whitespace), line breaks to spaces,
  *    a list label at the start removed ("(a)", "a)", "(1)", "1.", dash/bullet), split into segments at ellipses
  *    ("[...]", "[…]", "(...)", "…", "...").

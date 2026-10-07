@@ -1,5 +1,5 @@
 /**
- * Human citation (EN/DE) -> logical node id (ID scheme v1, README "ID scheme").
+ * Human citation (EN/DE) -> logical node id (ID scheme v1, docs/reference.md "ID scheme").
  *
  *   Article 50(1)(a)                      art_50.par_1.a
  *   Art. 50 Abs. 1 Buchst. a              art_50.par_1.a

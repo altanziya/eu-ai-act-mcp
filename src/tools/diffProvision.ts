@@ -169,7 +169,7 @@ export function diffProvision(input: { id: string; lang?: Lang }): DiffProvision
   const d = idx.descendants.get(id);
   if (d) out.descendants = d;
   if (hit.status === "removed" && id.startsWith("rec_")) {
-    out.note = "Recitals are not part of the consolidated version (F66); they remain citable through the Official Journal version.";
+    out.note = "Recitals are not part of the consolidated version; they remain citable through the Official Journal version.";
   }
   return out;
 }

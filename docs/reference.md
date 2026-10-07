@@ -109,7 +109,7 @@ too (also in `TOOL_DEFS`), because in the evaluation (cases A40, A42) models rea
 `children` are all descendants in document order; `text_full` is heading and text of the node and (with children) all
 descendants in `order`, joined by "\n". If the id is not in the requested version but in the other one: `found: false`,
 `reason` `not_in_consolidated_version` (requested 2026) or `not_in_version` (requested 2024), and `fallback: { version, node }`.
-Recitals exist only in the Official Journal version (F66). Unknown everywhere: `reason: "unknown_id"`.
+Recitals exist only in the Official Journal version. Unknown everywhere: `reason: "unknown_id"`.
 
 ### `aiact_diff` (`diffProvision`)
 
@@ -311,7 +311,7 @@ V0, V1 and V2 are separate fields; there is no combined "verified".
    beats it. Quotes across several nodes of one article -> `multi_node` (`candidates` = one part per node).
 5. Else `not_found`. Fewer than 6 tokens -> `too_short`.
 
-**Recitals (F66).** The consolidated version has no recitals; they are not superseded, they are absent. If `claimed_ref` is a
+**Recitals.** The consolidated version has no recitals; they are not superseded, they are absent. If `claimed_ref` is a
 recital (`rec_N`) or the best hit is one, the quote is checked against `32024R1689` (`version_checked` and `match.version_id` are
 then `32024R1689`), the normal V0 status is returned, `warnings` contains `recital_not_in_consolidated_version` and
 `validity` is `{ state: "unknown", note: "recital: no application date; the preamble is not part of the consolidated text" }`.

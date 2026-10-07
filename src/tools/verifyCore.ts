@@ -4,7 +4,7 @@
  *
  * aiact_verify_citation: V0 (does the quoted wording exist, and where), V1 (does it apply on `as_of`, from the
  * deadline table) and V2 (language check) as separate fields. Deterministic, no LLM, no network.
- * Specification: README "Verification levels V0-V2".
+ * Specification: docs/reference.md "Verification levels V0-V2".
  *
  * Search order (precedence): (version_checked, lang) -> (other version, lang) -> (version_checked, other lang) ->
  * (other version, other lang). Within the first corpus that has an exact/fuzzy hit: a hit at the claimed pinpoint

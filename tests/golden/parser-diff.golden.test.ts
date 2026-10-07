@@ -148,7 +148,7 @@ describe("parser and diff golden: 2024 EN (32024R1689)", () => {
 describe("parser and diff golden: 2026 EN (02024R1689-20260727)", () => {
   const file = corpusRel(V2026, "en");
 
-  it("contains art_4a and art_75a (F38)", () => {
+  it("contains art_4a and art_75a", () => {
     const nodes = load(V2026, "en");
     for (const id of ["art_4a", "art_75a"]) {
       expect(nodes.some((n) => n.type === "article" && n.id === id), `${id} missing in ${file}`).toBe(true);

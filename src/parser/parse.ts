@@ -6,7 +6,7 @@
  *    paragraphs are <div id="NNN.NNN"> whose first <p> starts with "1.   ".
  *  - Consolidated rendition (class "norm"): list items are div.grid-container, paragraphs are
  *    div.norm with a span.no-parag label.
- * Node structure follows ID scheme v1 (README "ID scheme"): subparagraphs, annex sections,
+ * Node structure follows ID scheme v1 (docs/reference.md "ID scheme"): subparagraphs, annex sections,
  * nested points, no "~N" suffixes.
  * No LLM, no network, no clock: the same input always yields the same nodes.
  */
@@ -276,7 +276,7 @@ function flattenBlocks(blocks: Block[]): string[] {
 }
 
 // ---------------------------------------------------------------------------------------------
-// Node builder (ID scheme v1, see README "ID scheme")
+// Node builder (ID scheme v1, see docs/reference.md "ID scheme")
 // ---------------------------------------------------------------------------------------------
 
 interface Draft {

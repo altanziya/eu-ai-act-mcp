@@ -51,7 +51,7 @@ export interface GetProvisionResult {
   /** Heading and text of the node and, with include_children, all descendants, in `order`, joined by "\n". */
   text_full?: string;
   reason?: "unknown_id" | "not_in_consolidated_version" | "not_in_version";
-  /** The same id in the other version, when the requested version does not contain it (F66: recitals). */
+  /** The same id in the other version, when the requested version does not contain it (recitals). */
   fallback?: { version: Version; node: ProvisionNode };
   notice: Notice;
 }

@@ -1,5 +1,5 @@
 /**
- * V1 deadline resolution from the deadline table data/deadlines.json (isomorphic; the file loader is deadlines-fs.ts; hand-transcribed from Article 113, see README "Deadline table").
+ * V1 deadline resolution from the deadline table data/deadlines.json (isomorphic; the file loader is deadlines-fs.ts; hand-transcribed from Article 113, see docs/reference.md "Deadline table").
  *
  * A node is matched against the rules through its chain (node, parent, grandparent, ...). A rule matches if one of its
  * `scope` entries is in the chain and no `except` entry is in the chain. The rule whose matching scope entry is nearest

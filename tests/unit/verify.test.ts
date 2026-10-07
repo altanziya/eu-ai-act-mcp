@@ -193,7 +193,7 @@ describe("verifyCitation: determinism and output", () => {
   });
 });
 
-describe("verifyCitation: recitals (F66)", () => {
+describe("verifyCitation: recitals", () => {
   const rec = (loadCorpus(V2024, "en").byId.get("rec_12") as ProvisionNode).text;
   const NOTE = "recital: no application date; the preamble is not part of the consolidated text";
   for (const asOf of ["2026-09-01", "2025-01-01"]) {

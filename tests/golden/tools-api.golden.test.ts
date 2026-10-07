@@ -99,7 +99,7 @@ describe("tools api golden: aiact_get_provision", () => {
       expect(r.text_full ?? "").toContain(d);
     }
   });
-  it("recital in the consolidated version falls back to the Official Journal version (F66)", () => {
+  it("recital in the consolidated version falls back to the Official Journal version", () => {
     const r = getProvision({ id: "rec_12", version: V2026, lang: "en" });
     expect(r.found).toBe(false);
     expect(r.reason).toBe("not_in_consolidated_version");
