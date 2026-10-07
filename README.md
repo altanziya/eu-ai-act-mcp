@@ -1,27 +1,60 @@
-# EU AI Act workbench
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/hero-dark.svg">
+  <img src="docs/assets/hero-light.svg" width="100%" alt="EU AI Act workbench. Answers about the EU AI Act that you can check. Example: the 2024 application date 2 August 2026 is struck through and replaced by 2 December 2027, changed by Regulation (EU) 2026/1744.">
+</picture>
 
-**Answers about the EU AI Act that you can check: which obligations apply to you and when, whether a document still states the law correctly, and a proof anyone can recompute.**
+<p align="center">
+  <a href="https://github.com/altanziya/eu-ai-act-mcp/actions/workflows/test.yml"><img src="https://github.com/altanziya/eu-ai-act-mcp/actions/workflows/test.yml/badge.svg" alt="Tests"></a>
+  <a href="https://altanziya.github.io/eu-ai-act-mcp/"><img src="https://img.shields.io/badge/live-demo-2ea44f" alt="Live demo"></a>
+  <a href="https://github.com/altanziya/eu-ai-act-mcp/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/release-v0.1.0-blue" alt="Release v0.1.0"></a>
+  <img src="https://img.shields.io/badge/MCP-6%20tools-blue" alt="MCP: 6 tools">
+  <img src="https://img.shields.io/badge/runtime-no%20LLM-555" alt="No LLM at runtime">
+  <img src="https://img.shields.io/badge/code-Apache--2.0-lightgrey" alt="License: Apache-2.0">
+</p>
 
-[![Tests](https://github.com/altanziya/eu-ai-act-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/altanziya/eu-ai-act-mcp/actions/workflows/test.yml)
-[![Live demo](https://img.shields.io/badge/live-demo-2ea44f)](https://altanziya.github.io/eu-ai-act-mcp/)
-![MCP](https://img.shields.io/badge/MCP-6%20tools-blue)
-![License](https://img.shields.io/badge/code-Apache--2.0-lightgrey)
+<p align="center"><b>Which obligations apply to you and when. Whether a document still states the law correctly. A proof anyone can recompute.</b></p>
 
-Every result cites the provision, quotes it word for word from the text in force on your date, and says when it applies. Where the law requires a judgement, the tools say so instead of making it. Deterministic, no language model at runtime, runs in your browser or inside your AI assistant.
+Every answer cites the provision, quotes it word for word from the text in force on your date, and says when it applies. Where the law requires a judgement, the tools say so instead of making it. Deterministic, no language model at runtime, runs in your browser or inside your AI assistant.
 
-**Status:** v0.1.0 (October 2026), stable; see the [changelog](CHANGELOG.md).
+**Status:** v0.1.0 (October 2026), stable. [Changelog](CHANGELOG.md) · [Technical reference](docs/reference.md)
 
----
+## Try it now
 
-## The problem
+| In the browser | From your AI assistant |
+|---|---|
+| [Obligations navigator](https://altanziya.github.io/eu-ai-act-mcp/obligations/) · [Document checker](https://altanziya.github.io/eu-ai-act-mcp/audit/) · [Verify a record](https://altanziya.github.io/eu-ai-act-mcp/verify/)<br>Your text stays in your browser; the pages check the signature of the corpus release before using it. | `claude mcp add eu-ai-act -- npx -y github:altanziya/eu-ai-act-mcp`<br>Six read-only tools, local over stdio, no network calls. Node 20+. [Details](#install) |
+
+Then ask, for example: *"We sell an AI tool that ranks job applicants. Which AI Act obligations apply to us and when? Use the eu-ai-act tools."*
+
+## Why this exists
 
 The AI Act (Regulation (EU) 2024/1689) was amended in July 2026 by the Digital Omnibus on AI (Regulation (EU) 2026/1744). Application dates moved, provisions were inserted, moved and removed. Policies, vendor answers, slide decks and language models still describe the 2024 version.
 
-So *"high-risk obligations under Annex III apply from 2 August 2026"* is right for the 2024 text and wrong today: the date is 2 December 2027. In a [pre-registered evaluation](#does-it-matter-a-pre-registered-evaluation), three frontier models without tools gave the old answer on almost every question the amendment changed.
+So *"high-risk obligations under Annex III apply from 2 August 2026"* is right for the 2024 text and wrong today: the date is 2 December 2027. We asked three frontier models 45 pre-registered questions on deadlines and versions of the AI Act after the 2026 amendment, without tools and in two runs with this project's tools:
 
-## Three workflows
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/eval-dark.svg">
+  <img src="docs/assets/eval-light.svg" width="100%" alt="Bar chart of errors per question on deadlines and versions after the 2026 amendment. Without tools: Claude Opus 5.5 24 of 45, GPT-6 Astra 26 of 45, Gemini 3.1 Pro 25 of 42. With these MCP tools, run v1: 3 of 30, 2 of 30, 5 of 27. Run v2: 2 of 15, 1 of 15, 2 of 12.">
+</picture>
 
-### 1. Which obligations apply to us, and when? (Obligations navigator)
+Without tools the models were right on what the amendment left unchanged and wrong on almost everything it changed.
+
+<details>
+<summary><b>Numbers, caveats and where the raw data lives</b></summary>
+
+| Model | No tools | With these MCP tools |
+|---|---|---|
+| Claude Opus 5.5 | 24/45 | 3/30 (v1) · 2/15 (v2) |
+| GPT-6 Astra | 26/45 | 2/30 (v1) · 1/15 (v2) |
+| Gemini 3.1 Pro | 25/42 | 5/27 (v1) · 2/12 (v2) |
+
+Opus with web search: 6/45. The pre-registered rule for that arm (at least 5 % errors, lower 95 % bound) is formally met, but not robustly: it depends on one case with a known answer-key erratum, which we report up front. Each run also exposed tool weaknesses that were then fixed (date-aware version selection; showing inserted provisions such as Article 99(6a) next to the one asked for); the fixes after v2 are not yet measured. Cases, pre-registrations, raw answers and limitations: [`eval/results/`](eval/results/).
+
+</details>
+
+## Three things it does
+
+### 1. Which obligations apply to us, and when?
 
 Describe your organisation and AI system in a few fields: role (provider, deployer, importer, …), Annex III area or Annex I product, general-purpose model, transparency cases, company size. You get the obligations that apply now and the ones coming, each with provision, verbatim quote, date and days left, plus open questions where the answer depends on facts or a legal judgement.
 
@@ -38,43 +71,44 @@ Describe your organisation and AI system in a few fields: role (provider, deploy
 
 The map behind it covers 95 obligations, reliefs and transitional rules for providers, deployers, importers, distributors and authorised representatives. All 106 quotations are checked against the corpus on every build. The classification (Article 6(1) and 6(2), the Article 6(3) exception and its profiling override, Annex I Section A vs. B, systemic-risk GPAI, open-source exemptions) is explicit, versioned data, not code.
 
-### 2. Is this document still right? (Document checker)
+### 2. Is this document still right?
 
 Paste a policy, a vendor's answer, a slide or a chatbot answer. The checker finds references, dates and quotations and compares them with the text in force on your date.
 
-```text
-Our hiring assistant is high-risk under Annex III; the obligations apply from 2 August 2026.
-Under Article 10(5) we may process special categories of personal data to detect bias.
-
-  error  outdated deadline   "2 August 2026"  -> 2 December 2027 (changed by Regulation (EU) 2026/1744)
-  error  removed provision   "Article 10(5)"  -> the text moved to Article 4a(1)
-```
+<img src="docs/assets/demo-checker.svg" width="100%" alt="Terminal demo of aiact_audit_text. Input: Our hiring assistant is high-risk under Annex III; the obligations apply from 2 August 2026. Under Article 10(5) we may process special categories of personal data to detect bias. Findings: error, outdated deadline, 2 August 2026 becomes 2 December 2027, changed by Regulation (EU) 2026/1744. Error, removed provision, Article 10(5): the text moved to Article 4a(1).">
 
 It knows deadlines written into provisions (Article 57(1): sandboxes "operational by 2 August 2027") as well as application dates from Article 113, recognises EN and DE citation styles, skips other acts (GDPR, Data Act, …), and checks quotations word for word. 5,000 words take well under a second.
 
-### 3. Can I prove what the text said? (Evidence records)
+### 3. Can I prove what the text said?
 
 One check, packed into a link: the quotation, the version, the date and the result, hash-sealed and tied to a signed corpus release. The [verify page](https://altanziya.github.io/eu-ai-act-mcp/verify/) recomputes it in the browser. No server, no account, no trust in the author required.
 
 → **[Open the example evidence record](https://altanziya.github.io/eu-ai-act-mcp/example/)**: a quote from Article 9(2), checked as of 1 September 2026. The wording is exact, but the provision does not apply yet.
 
-<a href="https://altanziya.github.io/eu-ai-act-mcp/example/"><img src="docs/assets/verify-page.png" alt="Verify page: all checks passed, signature valid" width="640"></a>
+<p align="center"><a href="https://altanziya.github.io/eu-ai-act-mcp/example/"><img src="docs/assets/verify-page.png" alt="Verify page: all checks passed, signature valid" width="640"></a></p>
 
-## Use it
+## The six MCP tools
 
-- **In the browser:** [Obligations navigator](https://altanziya.github.io/eu-ai-act-mcp/obligations/) · [Document checker](https://altanziya.github.io/eu-ai-act-mcp/audit/) · [Verify a record](https://altanziya.github.io/eu-ai-act-mcp/verify/). Your text stays in your browser; the pages check the signature of the corpus release before using it.
-- **From your AI assistant (MCP):** six read-only tools, local over stdio, no network calls.
+| Tool | Answers | Ask your assistant |
+|---|---|---|
+| `aiact_obligations` | Obligations for a profile on a date, with quotes, dates, caveats and open questions | *"We deploy a CV-screening tool bought from a vendor. What applies to us, and from when?"* |
+| `aiact_audit_text` | Outdated deadlines, moved or unknown provisions, wrong quotations in a text | *"Check this vendor answer against the current AI Act: …"* |
+| `aiact_search` | Provisions by keyword in the version in force on a date (EN/DE) | *"Where does the Act talk about biometric categorisation?"* |
+| `aiact_get_provision` | A provision in the version in force on a date, with applicability and neighbouring provisions | *"Show me Article 50(2) as it applies on 1 March 2027."* |
+| `aiact_verify_citation` | Does a quotation exist, where, in which version, and does it apply on that date | *"Is this quote really in Article 9(2), and is it in force?"* |
+| `aiact_diff` | What the 2026 amendment changed in a provision | *"What did the Digital Omnibus change in Article 6?"* |
 
-| Tool | Answers |
-|---|---|
-| `aiact_obligations` | Obligations for a profile on a date, with quotes, dates, caveats and open questions |
-| `aiact_audit_text` | Outdated deadlines, moved or unknown provisions, wrong quotations in a text |
-| `aiact_search` | Provisions by keyword in the version in force on a date (EN/DE) |
-| `aiact_get_provision` | A provision in the version in force on a date, with applicability and neighbouring provisions |
-| `aiact_verify_citation` | Does a quotation exist, where, in which version, and does it apply on that date |
-| `aiact_diff` | What the 2026 amendment changed in a provision |
+All six are read-only. The server makes no network calls; the corpus ships with the package.
 
 ## How it works
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/pipeline-dark.svg">
+  <img src="docs/assets/pipeline-light.svg" width="100%" alt="Pipeline: EUR-Lex XHTML in English and German is parsed into a provision tree with stable IDs; the corpus holds the 2024 and 2026 versions with a diff and a deadline table from Article 113; an obligations map with 95 entries feeds the six MCP tools; signed releases with an Ed25519 signature and SHA-256 evidence records are recomputed by the verify page in the browser.">
+</picture>
+
+<details>
+<summary>Text version of the diagram</summary>
 
 ```mermaid
 flowchart LR
@@ -90,7 +124,14 @@ flowchart LR
     G --> H
 ```
 
+</details>
+
 A verification gives three separate answers, never one combined "verified":
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/levels-dark.svg">
+  <img src="docs/assets/levels-light.svg" width="100%" alt="Three verification levels applied to a quote from Article 9(2) as of 1 September 2026. V0 wording: exact match. V1 applicability: not yet, applies from 2 December 2027. V2 language: English, as requested.">
+</picture>
 
 - **V0, wording:** exact, fuzzy, found at another provision, found only in the other version or language, or not found. Numbers, dates and negations must match exactly.
 - **V1, applicability:** applicable on the given date, not yet applicable until a date, superseded or inserted by the 2026 amendment. Based on a deadline table written from Article 113 of each version.
@@ -105,22 +146,10 @@ A verification gives three separate answers, never one combined "verified":
 | EN/DE structural parity | 100 % |
 | Application-date rules (2026 version) | 7, each linked to its source sentence in Art. 113 |
 | Obligations map | 95 entries, 106 verbatim quotations, all checked against the corpus |
-| Tests | 981, including golden tests written before the implementation |
+| Tests | 983, including golden tests written before the implementation |
 | Verify page | 52 KB, no framework, no external requests |
 
-## Does it matter? A pre-registered evaluation
-
-45 questions on deadlines and versions of the AI Act after the 2026 amendment, asked to three frontier models with and without this project's tools. Errors per question:
-
-| Model | No tools | With these MCP tools |
-|---|---|---|
-| Claude Opus 5.5 | 24/45 | 3/30 (v1) · 2/15 (v2) |
-| GPT-6 Astra | 26/45 | 2/30 (v1) · 1/15 (v2) |
-| Gemini 3.1 Pro | 25/42 | 5/27 (v1) · 2/12 (v2) |
-
-Without tools the models were right on what the amendment left unchanged and wrong on almost everything it changed. Opus with web search: 6/45. The pre-registered rule for that arm (at least 5 % errors, lower 95 % bound) is formally met, but not robustly: it depends on one case with a known answer-key erratum, which we report up front. Each run also exposed tool weaknesses that were then fixed (date-aware version selection; showing inserted provisions such as Article 99(6a) next to the one asked for); the fixes after v2 are not yet measured. Cases, pre-registrations, raw answers and limitations: [`eval/results/`](eval/results/).
-
-## Quick start
+## Install
 
 Requires Node 20+.
 
@@ -147,8 +176,6 @@ claude mcp add eu-ai-act -- node "$(pwd)/dist/server.js"
 npm test
 npm run mcp    # the server from the sources, via tsx
 ```
-
-Then ask, for example: *"We sell an AI tool that ranks job applicants. Which AI Act obligations apply to us and when? Use the eu-ai-act tools."* or *"Check this vendor answer against the current AI Act: …"*
 
 **Create your own evidence record:**
 

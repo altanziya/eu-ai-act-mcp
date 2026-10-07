@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-labelledby="t d">
+<title id="t">EU AI Act workbench</title>
+<desc id="d">Answers about the EU AI Act that you can check. A provision card for Article 113 shows the Annex III high-risk date 2 August 2026 struck through and replaced by 2 December 2027, changed by Regulation (EU) 2026/1744, checked against the text in force.</desc>
+<style>.sans{font-family:-apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif}.mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}.fx{transform-box:fill-box;transform-origin:center}.dash{stroke-dasharray:100 100;stroke-dashoffset:0}@keyframes oeyebrow{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}#eyebrow{animation:oeyebrow 0.8s cubic-bezier(.4,0,.2,1) 0.1s 1 both}@keyframes otitle{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}#title{animation:otitle 0.8s cubic-bezier(.4,0,.2,1) 0.3s 1 both}@keyframes otag{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}#tag{animation:otag 0.8s cubic-bezier(.4,0,.2,1) 0.6s 1 both}@keyframes ochip1{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}#chip1{animation:ochip1 0.8s cubic-bezier(.4,0,.2,1) 0.9s 1 both}@keyframes ochip2{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}#chip2{animation:ochip2 0.8s cubic-bezier(.4,0,.2,1) 1.05s 1 both}@keyframes ochip3{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}#chip3{animation:ochip3 0.8s cubic-bezier(.4,0,.2,1) 1.2s 1 both}@keyframes ocard{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}#card{animation:ocard 0.9s cubic-bezier(.4,0,.2,1) 0.6s 1 both}@keyframes kold{0%,27.50%{fill:#17212b}31.67%,96.67%{fill:#96171c}100%{fill:#17212b}}#olddate{animation:kold 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kstrike{0%,25.00%{stroke-dashoffset:100}30.83%,100%{stroke-dashoffset:0}}#strike{animation:kstrike 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes knewdate{0%,36.67%{opacity:0;transform:translateY(6px)}41.67%,100%{opacity:1;transform:translateY(0)}}#newdate{animation:knewdate 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kchg{0%,43.33%{opacity:0;transform:translateY(6px)}47.50%,100%{opacity:1;transform:translateY(0)}}#chg{animation:kchg 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kbadge{0%,63.33%{opacity:0;transform:scale(.9)}66.67%,100%{opacity:1;transform:scale(1)}}#badge{animation:kbadge 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kcheck{0%,65.83%{stroke-dashoffset:100}70.83%,100%{stroke-dashoffset:0}}#check{animation:kcheck 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kstory{0%,96.67%{opacity:1}100%{opacity:0}}#story{animation:kstory 12s cubic-bezier(.4,0,.2,1) infinite both}@media (prefers-reduced-motion: reduce){*{animation:none !important}}</style>
+
+<defs>
+<clipPath id="clip"><rect x="0.75" y="0.75" width="1198.5" height="418.5" rx="14"/></clipPath>
+<pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#17212b" stroke-width="1" opacity="0.045"/></pattern>
+<linearGradient id="band" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1c4f8c"/><stop offset="1" stop-color="#2d6cc0"/></linearGradient>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="50"/></filter>
+<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#17212b" flood-opacity="0.1"/></filter>
+</defs>
+<rect x="0.75" y="0.75" width="1198.5" height="418.5" rx="14" fill="#ffffff"/>
+<g clip-path="url(#clip)">
+<rect width="1200" height="420" fill="url(#grid)"/>
+<circle cx="930" cy="210" r="250" fill="#2d6cc0" opacity=".10" filter="url(#soft)"/>
+<circle cx="80" cy="30" r="150" fill="#2d6cc0" opacity=".06" filter="url(#soft)"/>
+<rect width="1200" height="5" fill="url(#band)"/>
+<text id="eyebrow" class="mono fx" x="56" y="122" font-size="13" letter-spacing="1.4" fill="#1c4f8c">REGULATION (EU) 2024/1689 · AS AMENDED BY 2026/1744</text>
+<text id="title" class="sans fx" x="54" y="190" font-size="54" font-weight="700" letter-spacing="-1" fill="#17212b">EU AI Act <tspan fill="#1c4f8c">workbench</tspan></text>
+<text id="tag" class="sans fx" x="56" y="236" font-size="23" fill="#50606f">Answers about the EU AI Act that you can check.</text>
+<g id="chip1" class="fx"><rect x="56" y="270" width="132" height="34" rx="17" fill="#eef1f4" stroke="#d3dae1" stroke-width="1.5"/><circle cx="74" cy="287" r="3.5" fill="#1c4f8c"/><text class="sans" x="87" y="292" font-size="15" fill="#17212b">6 MCP tools</text></g>
+<g id="chip2" class="fx"><rect x="200" y="270" width="216" height="34" rx="17" fill="#eef1f4" stroke="#d3dae1" stroke-width="1.5"/><circle cx="218" cy="287" r="3.5" fill="#1c4f8c"/><text class="sans" x="231" y="292" font-size="15" fill="#17212b">signed corpus releases</text></g>
+<g id="chip3" class="fx"><rect x="428" y="270" width="180" height="34" rx="17" fill="#eef1f4" stroke="#d3dae1" stroke-width="1.5"/><circle cx="446" cy="287" r="3.5" fill="#1c4f8c"/><text class="sans" x="459" y="292" font-size="15" fill="#17212b">no LLM at runtime</text></g>
+<g id="card" class="fx">
+<rect x="690" y="48" width="466" height="324" rx="14" fill="#ffffff" stroke="#aeb9c4" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="690" y="70" width="3" height="40" rx="1.5" fill="#1c4f8c"/>
+<text class="mono" x="718" y="96" font-size="14" fill="#50606f">Article 113 · as of October 2026</text>
+<line x1="718" y1="114" x2="1128" y2="114" stroke="#d3dae1" stroke-width="1.5"/>
+<text class="sans" x="718" y="150" font-size="20" fill="#17212b">Annex III high-risk obligations</text>
+<text class="sans" x="718" y="178" font-size="20" fill="#17212b">apply from</text>
+<text id="olddate" class="mono" x="718" y="226" font-size="26" font-weight="600" fill="#96171c">2 August 2026</text>
+<g id="story">
+<path id="strike" class="dash" pathLength="100" d="M714 217H932" stroke="#96171c" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+<g id="newdate" class="fx"><text class="mono" x="718" y="270" font-size="26" font-weight="600" fill="#14562a">2 December 2027</text></g>
+<g id="chg" class="fx"><rect x="718" y="286" width="292" height="26" rx="13" fill="#e5eefa" stroke="#9fbde3" stroke-width="1.5"/><text class="sans" x="864" y="303.5" font-size="13" text-anchor="middle" fill="#164a80">changed by Regulation (EU) 2026/1744</text></g>
+<g id="badge" class="fx"><rect x="832" y="322" width="296" height="30" rx="15" fill="#e4f3e8" stroke="#9ccaa9" stroke-width="1.5"/><path id="check" class="dash" pathLength="100" d="M847 337.5l4.5 4.5l9 -10" fill="none" stroke="#14562a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><text class="sans" x="870" y="341.8" font-size="13.5" font-weight="600" fill="#14562a">checked against the text in force</text></g>
+</g></g>
+</g>
+<rect x="0.75" y="0.75" width="1198.5" height="418.5" rx="14" fill="none" stroke="#d3dae1" stroke-width="1.5"/>
+</svg>

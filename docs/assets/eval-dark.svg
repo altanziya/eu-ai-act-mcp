@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" width="1000" height="440" role="img" aria-labelledby="t d">
+<title id="t">Errors per question: deadlines and versions after the 2026 amendment</title>
+<desc id="d">Grouped horizontal bar chart. 45 pre-registered questions, three frontier models, without tools vs. with these MCP tools. Error share per arm: Claude Opus 5.5: no tools 24/45 (53 %), with tools v1 3/30 (10 %), with tools v2 2/15 (13 %). GPT-6 Astra: no tools 26/45 (58 %), v1 2/30 (7 %), v2 1/15 (7 %). Gemini 3.1 Pro: no tools 25/42 (60 %), v1 5/27 (19 %), v2 2/12 (17 %). Arms have different n; tool fixes after run v2 are not yet measured. Opus with web search alone: 6/45.</desc>
+<style>
+text{font-family:-apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif}
+.h{font-size:20px;font-weight:700;fill:#e7ecf1}
+.sub{font-size:14px;fill:#a5b2bf}
+.leg{font-size:13px;fill:#e7ecf1}
+.grp{font-size:14px;font-weight:600;fill:#e7ecf1}
+.lbl{font-size:13px;fill:#e7ecf1;font-variant-numeric:tabular-nums;stroke:#171f28;stroke-width:4px;stroke-linejoin:round;paint-order:stroke}
+.tick{font-size:12px;fill:#a5b2bf}
+.fn{font-size:12px;fill:#a5b2bf}
+.bar{transform-box:fill-box;transform-origin:left center;animation:grow .9s cubic-bezier(.4,0,.2,1) both}
+.lbl{animation:fade .4s cubic-bezier(.4,0,.2,1) both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<rect x="0.75" y="0.75" width="998.5" height="438.5" rx="14" fill="#171f28" stroke="#2d3945" stroke-width="1.5"/>
+<text x="32" y="50" class="h">Errors per question: deadlines and versions after the 2026 amendment</text>
+<text x="32" y="75" class="sub">45 pre-registered questions · three frontier models · without tools vs. with these MCP tools</text>
+<rect x="856" y="93" width="12" height="12" rx="3" fill="#3366b4"/><text x="874" y="103.5" class="leg">with tools v2</text><rect x="722" y="93" width="12" height="12" rx="3" fill="#6197dc"/><text x="740" y="103.5" class="leg">with tools v1</text><rect x="622" y="93" width="12" height="12" rx="3" fill="#c9676b"/><text x="640" y="103.5" class="leg">no tools</text>
+<path d="M200.0 118V348" stroke="#46566a" stroke-width="1"/>
+<text x="200.0" y="366" text-anchor="middle" class="tick">0 %</text>
+<path d="M292.3 118V348" stroke="#26313c" stroke-width="1"/>
+<text x="292.3" y="366" text-anchor="middle" class="tick">10 %</text>
+<path d="M384.6 118V348" stroke="#26313c" stroke-width="1"/>
+<text x="384.6" y="366" text-anchor="middle" class="tick">20 %</text>
+<path d="M476.9 118V348" stroke="#26313c" stroke-width="1"/>
+<text x="476.9" y="366" text-anchor="middle" class="tick">30 %</text>
+<path d="M569.1 118V348" stroke="#26313c" stroke-width="1"/>
+<text x="569.1" y="366" text-anchor="middle" class="tick">40 %</text>
+<path d="M661.4 118V348" stroke="#26313c" stroke-width="1"/>
+<text x="661.4" y="366" text-anchor="middle" class="tick">50 %</text>
+<path d="M753.7 118V348" stroke="#26313c" stroke-width="1"/>
+<text x="753.7" y="366" text-anchor="middle" class="tick">60 %</text>
+<path d="M846.0 118V348" stroke="#26313c" stroke-width="1"/>
+<text x="846.0" y="366" text-anchor="middle" class="tick">70 %</text>
+<text x="184" y="160.5" text-anchor="end" class="grp">Claude Opus 5.5</text>
+<path class="bar" style="animation-delay:0.15s" d="M200 128h485.1a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-485.1z" fill="#c9676b"><title>Claude Opus 5.5, no tools: 24/45 errors (53 %)</title></path>
+<text class="lbl" style="animation-delay:0.95s" x="697.1" y="140.5">24/45 · 53 %</text>
+<path class="bar" style="animation-delay:0.27s" d="M200 148h88.3a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-88.3z" fill="#6197dc"><title>Claude Opus 5.5, with tools v1: 3/30 errors (10 %)</title></path>
+<text class="lbl" style="animation-delay:1.07s" x="300.3" y="160.5">3/30 · 10 %</text>
+<path class="bar" style="animation-delay:0.39s" d="M200 168h116.0a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-116.0z" fill="#3366b4"><title>Claude Opus 5.5, with tools v2: 2/15 errors (13 %)</title></path>
+<text class="lbl" style="animation-delay:1.19s" x="328.0" y="180.5">2/15 · 13 %</text>
+<text x="184" y="238.5" text-anchor="end" class="grp">GPT-6 Astra</text>
+<path class="bar" style="animation-delay:0.51s" d="M200 206h531.3a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-531.3z" fill="#c9676b"><title>GPT-6 Astra, no tools: 26/45 errors (58 %)</title></path>
+<text class="lbl" style="animation-delay:1.31s" x="743.3" y="218.5">26/45 · 58 %</text>
+<path class="bar" style="animation-delay:0.63s" d="M200 226h60.6a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-60.6z" fill="#6197dc"><title>GPT-6 Astra, with tools v1: 2/30 errors (7 %)</title></path>
+<text class="lbl" style="animation-delay:1.43s" x="272.6" y="238.5">2/30 · 7 %</text>
+<path class="bar" style="animation-delay:0.75s" d="M200 246h60.6a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-60.6z" fill="#3366b4"><title>GPT-6 Astra, with tools v2: 1/15 errors (7 %)</title></path>
+<text class="lbl" style="animation-delay:1.55s" x="272.6" y="258.5">1/15 · 7 %</text>
+<text x="184" y="316.5" text-anchor="end" class="grp">Gemini 3.1 Pro</text>
+<path class="bar" style="animation-delay:0.87s" d="M200 284h549.7a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-549.7z" fill="#c9676b"><title>Gemini 3.1 Pro, no tools: 25/42 errors (60 %)</title></path>
+<text class="lbl" style="animation-delay:1.67s" x="761.7" y="296.5">25/42 · 60 %</text>
+<path class="bar" style="animation-delay:0.99s" d="M200 304h171.3a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-171.3z" fill="#6197dc"><title>Gemini 3.1 Pro, with tools v1: 5/27 errors (19 %)</title></path>
+<text class="lbl" style="animation-delay:1.79s" x="383.3" y="316.5">5/27 · 19 %</text>
+<path class="bar" style="animation-delay:1.11s" d="M200 324h152.9a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-152.9z" fill="#3366b4"><title>Gemini 3.1 Pro, with tools v2: 2/12 errors (17 %)</title></path>
+<text class="lbl" style="animation-delay:1.91s" x="364.9" y="336.5">2/12 · 17 %</text>
+<text x="32" y="404" class="fn">Arms have different n; tool fixes after run v2 are not yet measured. Opus with web search alone: 6/45. Details in eval/results/.</text>
+</svg>

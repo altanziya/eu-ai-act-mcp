@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" width="1200" height="440" role="img" aria-labelledby="t d">
+<title id="t">How the EU AI Act workbench works</title>
+<desc id="d">Flow from EUR-Lex / CELLAR through the parser to the 2024 and 2026 corpus; the corpus and the obligations map feed the six MCP tools; signed releases and hash-sealed evidence records are recomputed by the verify page in the browser.</desc>
+<style>.sans{font-family:-apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif}.mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace}.fx{transform-box:fill-box;transform-origin:center}.dash{stroke-dasharray:100 100;stroke-dashoffset:0}.pulse{opacity:0}@keyframes kn_eur{0%,1.67%{opacity:0;transform:translateY(10px)}5.83%,100%{opacity:1;transform:translateY(0)}}#n_eur{animation:kn_eur 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kn_par{0%,8.33%{opacity:0;transform:translateY(10px)}12.50%,100%{opacity:1;transform:translateY(0)}}#n_par{animation:kn_par 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kn_obl{0%,11.67%{opacity:0;transform:translateY(10px)}15.83%,100%{opacity:1;transform:translateY(0)}}#n_obl{animation:kn_obl 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kn_cor{0%,15.83%{opacity:0;transform:translateY(10px)}20.00%,100%{opacity:1;transform:translateY(0)}}#n_cor{animation:kn_cor 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kn_tool{0%,23.33%{opacity:0;transform:translateY(10px)}27.50%,100%{opacity:1;transform:translateY(0)}}#n_tool{animation:kn_tool 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kn_sig{0%,24.17%{opacity:0;transform:translateY(10px)}28.33%,100%{opacity:1;transform:translateY(0)}}#n_sig{animation:kn_sig 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kn_evi{0%,30.83%{opacity:0;transform:translateY(10px)}35.00%,100%{opacity:1;transform:translateY(0)}}#n_evi{animation:kn_evi 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kn_ver{0%,38.33%{opacity:0;transform:translateY(10px)}42.50%,100%{opacity:1;transform:translateY(0)}}#n_ver{animation:kn_ver 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke1{0%,5.83%{stroke-dashoffset:100}9.17%,100%{stroke-dashoffset:0}}#e1{animation:ke1 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke1a{0%,8.75%{opacity:0}10.42%,100%{opacity:1}}#e1a{animation:ke1a 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kpe1{0%,45.00%{opacity:0}46.00%,50.25%{opacity:1}51.25%,100%{opacity:0}}#e1p{animation:kpe1 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke2{0%,12.50%{stroke-dashoffset:100}15.83%,100%{stroke-dashoffset:0}}#e2{animation:ke2 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke2a{0%,15.42%{opacity:0}17.08%,100%{opacity:1}}#e2a{animation:ke2a 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kpe2{0%,48.33%{opacity:0}49.33%,53.58%{opacity:1}54.58%,100%{opacity:0}}#e2p{animation:kpe2 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke4{0%,15.83%{stroke-dashoffset:100}22.50%,100%{stroke-dashoffset:0}}#e4{animation:ke4 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke4h{0%,15.83%{stroke-dashoffset:100}22.50%,100%{stroke-dashoffset:0}}#e4h{animation:ke4h 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke4a{0%,22.08%{opacity:0}23.75%,100%{opacity:1}}#e4a{animation:ke4a 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kpe4{0%,50.00%{opacity:0}51.00%,55.25%{opacity:1}56.25%,100%{opacity:0}}#e4p{animation:kpe4 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke3{0%,20.00%{stroke-dashoffset:100}23.33%,100%{stroke-dashoffset:0}}#e3{animation:ke3 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke3a{0%,22.92%{opacity:0}24.58%,100%{opacity:1}}#e3a{animation:ke3a 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kpe3{0%,52.50%{opacity:0}53.50%,57.75%{opacity:1}58.75%,100%{opacity:0}}#e3p{animation:kpe3 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke5{0%,20.00%{stroke-dashoffset:100}24.17%,100%{stroke-dashoffset:0}}#e5{animation:ke5 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke5a{0%,23.75%{opacity:0}25.42%,100%{opacity:1}}#e5a{animation:ke5a 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kpe5{0%,54.17%{opacity:0}55.17%,59.42%{opacity:1}60.42%,100%{opacity:0}}#e5p{animation:kpe5 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke6{0%,27.50%{stroke-dashoffset:100}30.83%,100%{stroke-dashoffset:0}}#e6{animation:ke6 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke6a{0%,30.42%{opacity:0}32.08%,100%{opacity:1}}#e6a{animation:ke6a 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kpe6{0%,57.50%{opacity:0}58.50%,62.75%{opacity:1}63.75%,100%{opacity:0}}#e6p{animation:kpe6 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke7{0%,28.33%{stroke-dashoffset:100}31.67%,100%{stroke-dashoffset:0}}#e7{animation:ke7 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke7a{0%,31.25%{opacity:0}32.92%,100%{opacity:1}}#e7a{animation:ke7a 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kpe7{0%,59.17%{opacity:0}60.17%,64.42%{opacity:1}65.42%,100%{opacity:0}}#e7p{animation:kpe7 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke8{0%,35.00%{stroke-dashoffset:100}38.33%,100%{stroke-dashoffset:0}}#e8{animation:ke8 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes ke8a{0%,37.92%{opacity:0}39.58%,100%{opacity:1}}#e8a{animation:ke8a 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kpe8{0%,62.50%{opacity:0}63.50%,67.75%{opacity:1}68.75%,100%{opacity:0}}#e8p{animation:kpe8 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kcap{0%,41.67%{opacity:0;transform:translateY(6px)}46.67%,100%{opacity:1;transform:translateY(0)}}#cap{animation:kcap 12s cubic-bezier(.4,0,.2,1) infinite both}@keyframes kscene{0%,96.67%{opacity:1}100%{opacity:0}}#scene{animation:kscene 12s cubic-bezier(.4,0,.2,1) infinite both}@media (prefers-reduced-motion: reduce){*{animation:none !important}}</style>
+
+<defs>
+<clipPath id="clip"><rect x="0.75" y="0.75" width="1198.5" height="438.5" rx="14"/></clipPath>
+<pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#17212b" stroke-width="1" opacity="0.045"/></pattern>
+<linearGradient id="band" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1c4f8c"/><stop offset="1" stop-color="#2d6cc0"/></linearGradient>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="40"/></filter>
+<filter id="glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="3"/></filter>
+</defs>
+<rect x="0.75" y="0.75" width="1198.5" height="438.5" rx="14" fill="#ffffff"/>
+<g clip-path="url(#clip)">
+<rect width="1200" height="440" fill="url(#grid)"/>
+<rect width="1200" height="4" fill="url(#band)"/>
+<circle cx="1050" cy="380" r="160" fill="#2d6cc0" opacity=".06" filter="url(#soft)"/>
+<g id="scene">
+<path id="e1" class="dash" pathLength="100" d="M246 84H284" fill="none" stroke="#aeb9c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon id="e1a" points="282,78.5 291,84 282,89.5" fill="#aeb9c4"/>
+<path id="e2" class="dash" pathLength="100" d="M542 84H586" fill="none" stroke="#aeb9c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon id="e2a" points="584,78.5 593,84 584,89.5" fill="#aeb9c4"/>
+<path id="e3" class="dash" pathLength="100" d="M856 84H900" fill="none" stroke="#aeb9c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon id="e3a" points="898,78.5 907,84 898,89.5" fill="#aeb9c4"/>
+<path id="e5" class="dash" pathLength="100" d="M725 120V322" fill="none" stroke="#aeb9c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="e4h" class="dash" pathLength="100" d="M542 230H874Q882 230 882 222V134Q882 126 890 126H900" fill="none" stroke="#ffffff" stroke-width="9"/>
+<path id="e4" class="dash" pathLength="100" d="M542 230H874Q882 230 882 222V134Q882 126 890 126H900" fill="none" stroke="#aeb9c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon id="e4a" points="898,120.5 907,126 898,131.5" fill="#aeb9c4"/>
+<polygon id="e5a" points="719.5,320 725,329 730.5,320" fill="#aeb9c4"/>
+<path id="e6" class="dash" pathLength="100" d="M1034 148V186" fill="none" stroke="#aeb9c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon id="e6a" points="1028.5,184 1034,193 1039.5,184" fill="#aeb9c4"/>
+<path id="e7" class="dash" pathLength="100" d="M856 366H900" fill="none" stroke="#aeb9c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon id="e7a" points="898,360.5 907,366 898,371.5" fill="#aeb9c4"/>
+<path id="e8" class="dash" pathLength="100" d="M1034 266V322" fill="none" stroke="#aeb9c4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon id="e8a" points="1028.5,320 1034,329 1039.5,320" fill="#aeb9c4"/>
+<g id="n_eur" class="fx"><rect x="40" y="48" width="206" height="72" rx="12" fill="#ffffff" stroke="#d3dae1" stroke-width="1.5"/>
+<text class="sans" x="58" y="78" font-size="17" font-weight="700" fill="#17212b">EUR-Lex / CELLAR</text>
+<text class="sans" x="58" y="101" font-size="13" fill="#50606f">XHTML · EN + DE</text>
+</g>
+<g id="n_par" class="fx"><rect x="292" y="48" width="250" height="72" rx="12" fill="#ffffff" stroke="#d3dae1" stroke-width="1.5"/>
+<text class="sans" x="310" y="78" font-size="17" font-weight="700" fill="#17212b">Parser</text>
+<text class="sans" x="310" y="101" font-size="13" fill="#50606f">provision tree, stable IDs</text>
+</g>
+<g id="n_obl" class="fx"><rect x="292" y="194" width="250" height="72" rx="12" fill="#ffffff" stroke="#d3dae1" stroke-width="1.5"/>
+<text class="sans" x="310" y="224" font-size="17" font-weight="700" fill="#17212b">Obligations map</text>
+<text class="sans" x="310" y="247" font-size="13" fill="#50606f">95 entries · 106 quotes checked</text>
+</g>
+<g id="n_cor" class="fx"><rect x="594" y="48" width="262" height="72" rx="12" fill="#ffffff" stroke="#d3dae1" stroke-width="1.5"/>
+<text class="sans" x="612" y="78" font-size="17" font-weight="700" fill="#17212b">Corpus 2024 + 2026</text>
+<text class="sans" x="612" y="101" font-size="13" fill="#50606f">diff + deadline table (Art. 113)</text>
+</g>
+<g id="n_tool" class="fx"><rect x="908" y="48" width="252" height="100" rx="12" fill="#ffffff" stroke="#d3dae1" stroke-width="1.5"/>
+<text class="sans" x="926" y="78" font-size="17" font-weight="700" fill="#17212b">6 MCP tools</text>
+<text class="sans" x="926" y="101" font-size="13" fill="#50606f">navigator · checker · search</text>
+<text class="sans" x="926" y="121" font-size="13" fill="#50606f">get · diff · verify</text>
+</g>
+<g id="n_sig" class="fx"><rect x="594" y="330" width="262" height="72" rx="12" fill="#ffffff" stroke="#d3dae1" stroke-width="1.5"/>
+<text class="sans" x="612" y="360" font-size="17" font-weight="700" fill="#17212b">Signed release</text>
+<text class="sans" x="612" y="383" font-size="13" fill="#50606f">manifest · Ed25519</text>
+</g>
+<g id="n_evi" class="fx"><rect x="908" y="194" width="252" height="72" rx="12" fill="#ffffff" stroke="#d3dae1" stroke-width="1.5"/>
+<text class="sans" x="926" y="224" font-size="17" font-weight="700" fill="#17212b">Evidence record</text>
+<text class="sans" x="926" y="247" font-size="13" fill="#50606f">SHA-256 over canonical JSON</text>
+</g>
+<g id="n_ver" class="fx"><rect x="908" y="330" width="252" height="72" rx="12" fill="#e5eefa" stroke="#1c4f8c" stroke-width="2"/>
+<text class="sans" x="926" y="360" font-size="17" font-weight="700" fill="#1c4f8c">Verify page</text>
+<text class="sans" x="926" y="383" font-size="13" fill="#50606f">recomputes in the browser</text>
+</g>
+<g id="cap" class="fx"><text class="mono" x="40" y="342" font-size="12" letter-spacing="1.4" fill="#1c4f8c">HOW IT WORKS</text><text class="sans" x="40" y="370" font-size="15" font-weight="600" fill="#17212b">Built from the EUR-Lex text, then served read-only.</text><text class="sans" x="40" y="392" font-size="13" fill="#50606f">Deterministic: no LLM at runtime, signed and hash-checked.</text></g>
+<g id="e1p" class="pulse"><circle r="7" fill="#1c4f8c" opacity=".35" filter="url(#glow)"/><circle r="3.5" fill="#1c4f8c"/><animateMotion dur="12s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.4500;0.5125;1" path="M246 84H284"/></g>
+<g id="e2p" class="pulse"><circle r="7" fill="#1c4f8c" opacity=".35" filter="url(#glow)"/><circle r="3.5" fill="#1c4f8c"/><animateMotion dur="12s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.4833;0.5458;1" path="M542 84H586"/></g>
+<g id="e4p" class="pulse"><circle r="7" fill="#1c4f8c" opacity=".35" filter="url(#glow)"/><circle r="3.5" fill="#1c4f8c"/><animateMotion dur="12s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.5000;0.5625;1" path="M542 230H874Q882 230 882 222V134Q882 126 890 126H900"/></g>
+<g id="e3p" class="pulse"><circle r="7" fill="#1c4f8c" opacity=".35" filter="url(#glow)"/><circle r="3.5" fill="#1c4f8c"/><animateMotion dur="12s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.5250;0.5875;1" path="M856 84H900"/></g>
+<g id="e5p" class="pulse"><circle r="7" fill="#1c4f8c" opacity=".35" filter="url(#glow)"/><circle r="3.5" fill="#1c4f8c"/><animateMotion dur="12s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.5417;0.6042;1" path="M725 120V322"/></g>
+<g id="e6p" class="pulse"><circle r="7" fill="#1c4f8c" opacity=".35" filter="url(#glow)"/><circle r="3.5" fill="#1c4f8c"/><animateMotion dur="12s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.5750;0.6375;1" path="M1034 148V186"/></g>
+<g id="e7p" class="pulse"><circle r="7" fill="#1c4f8c" opacity=".35" filter="url(#glow)"/><circle r="3.5" fill="#1c4f8c"/><animateMotion dur="12s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.5917;0.6542;1" path="M856 366H900"/></g>
+<g id="e8p" class="pulse"><circle r="7" fill="#1c4f8c" opacity=".35" filter="url(#glow)"/><circle r="3.5" fill="#1c4f8c"/><animateMotion dur="12s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.6250;0.6875;1" path="M1034 266V322"/></g>
+</g>
+</g>
+<rect x="0.75" y="0.75" width="1198.5" height="438.5" rx="14" fill="none" stroke="#d3dae1" stroke-width="1.5"/>
+</svg>

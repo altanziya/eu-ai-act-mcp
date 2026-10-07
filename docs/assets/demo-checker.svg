@@ -1,0 +1,402 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" width="1000" height="470" role="img" aria-labelledby="t d">
+<title id="t">aiact_audit_text: checking a text against the AI Act in force today</title>
+<desc id="d">A terminal types a two-sentence text: "Our hiring assistant is high-risk under Annex III; the obligations apply from 2 August 2026. Under Article 10(5) we may process special categories of personal data to detect bias." The tool returns two errors. First, outdated deadline: "2 August 2026" is now 2 December 2027, changed by Regulation (EU) 2026/1744. Second, removed provision: "Article 10(5)"; the text moved to Article 4a(1). Footer: 2 findings, checked against the text in force on the given date, no LLM involved.</desc>
+<style>
+.mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;font-size:15px}
+.in{fill:#e7ecf1}
+.mut{fill:#a5b2bf}
+.txt{fill:#e7ecf1}
+.b{font-weight:700}
+.pill{font-size:13px;fill:#ffb8ba;font-weight:600}
+.ttl{font-size:13px;fill:#a5b2bf}
+.blink{animation:blink 1s steps(1,end) infinite}
+@keyframes blink{0%{opacity:1}50%{opacity:0}}
+.ra,.rb,.ft{transform-box:fill-box;transform-origin:center}
+.ra,.rb,.ft{animation-timing-function:cubic-bezier(.4,0,.2,1)!important}
+@keyframes a0{0%,6.607%{opacity:0}6.614%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a1{0%,6.786%{opacity:0}6.793%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a2{0%,6.964%{opacity:0}6.971%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a3{0%,7.143%{opacity:0}7.150%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a4{0%,7.321%{opacity:0}7.329%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a5{0%,7.500%{opacity:0}7.507%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a6{0%,7.679%{opacity:0}7.686%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a7{0%,7.857%{opacity:0}7.864%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a8{0%,8.036%{opacity:0}8.043%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a9{0%,8.214%{opacity:0}8.221%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a10{0%,8.393%{opacity:0}8.400%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a11{0%,8.571%{opacity:0}8.579%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a12{0%,8.750%{opacity:0}8.757%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a13{0%,8.929%{opacity:0}8.936%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a14{0%,9.107%{opacity:0}9.114%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a15{0%,9.286%{opacity:0}9.293%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a16{0%,9.464%{opacity:0}9.471%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a17{0%,9.643%{opacity:0}9.650%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a18{0%,9.821%{opacity:0}9.829%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a19{0%,10.000%{opacity:0}10.007%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a20{0%,10.179%{opacity:0}10.186%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a21{0%,10.357%{opacity:0}10.364%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a22{0%,10.536%{opacity:0}10.543%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a23{0%,10.714%{opacity:0}10.721%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a24{0%,10.893%{opacity:0}10.900%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a25{0%,11.071%{opacity:0}11.079%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a26{0%,11.250%{opacity:0}11.257%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a27{0%,11.429%{opacity:0}11.436%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a28{0%,11.607%{opacity:0}11.614%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a29{0%,11.786%{opacity:0}11.793%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a30{0%,11.964%{opacity:0}11.971%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a31{0%,12.143%{opacity:0}12.150%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a32{0%,12.321%{opacity:0}12.329%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a33{0%,12.500%{opacity:0}12.507%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a34{0%,12.679%{opacity:0}12.686%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a35{0%,12.857%{opacity:0}12.864%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a36{0%,13.036%{opacity:0}13.043%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a37{0%,13.214%{opacity:0}13.221%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a38{0%,13.393%{opacity:0}13.400%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a39{0%,13.571%{opacity:0}13.579%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a40{0%,13.750%{opacity:0}13.757%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a41{0%,13.929%{opacity:0}13.936%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a42{0%,14.107%{opacity:0}14.114%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a43{0%,14.286%{opacity:0}14.293%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a44{0%,14.464%{opacity:0}14.471%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a45{0%,14.643%{opacity:0}14.650%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a46{0%,14.821%{opacity:0}14.829%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a47{0%,15.000%{opacity:0}15.007%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a48{0%,15.179%{opacity:0}15.186%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a49{0%,15.357%{opacity:0}15.364%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a50{0%,15.536%{opacity:0}15.543%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a51{0%,15.714%{opacity:0}15.721%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a52{0%,15.893%{opacity:0}15.900%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a53{0%,16.071%{opacity:0}16.079%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a54{0%,16.250%{opacity:0}16.257%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a55{0%,16.429%{opacity:0}16.436%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a56{0%,16.607%{opacity:0}16.614%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a57{0%,16.786%{opacity:0}16.793%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a58{0%,16.964%{opacity:0}16.971%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a59{0%,17.143%{opacity:0}17.150%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a60{0%,17.321%{opacity:0}17.329%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a61{0%,17.500%{opacity:0}17.507%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a62{0%,17.679%{opacity:0}17.686%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a63{0%,17.857%{opacity:0}17.864%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a64{0%,18.036%{opacity:0}18.043%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a65{0%,18.214%{opacity:0}18.221%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a66{0%,18.393%{opacity:0}18.400%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a67{0%,18.571%{opacity:0}18.579%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a68{0%,18.750%{opacity:0}18.757%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a69{0%,18.929%{opacity:0}18.936%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a70{0%,19.107%{opacity:0}19.114%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a71{0%,19.286%{opacity:0}19.293%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a72{0%,19.464%{opacity:0}19.471%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a73{0%,19.643%{opacity:0}19.650%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a74{0%,19.821%{opacity:0}19.829%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a75{0%,20.000%{opacity:0}20.007%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a76{0%,20.179%{opacity:0}20.186%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a77{0%,20.357%{opacity:0}20.364%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a78{0%,20.536%{opacity:0}20.543%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a79{0%,20.714%{opacity:0}20.721%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a80{0%,20.893%{opacity:0}20.900%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a81{0%,21.071%{opacity:0}21.079%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a82{0%,21.250%{opacity:0}21.257%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a83{0%,21.429%{opacity:0}21.436%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a84{0%,21.607%{opacity:0}21.614%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a85{0%,21.786%{opacity:0}21.793%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a86{0%,21.964%{opacity:0}21.971%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a87{0%,22.143%{opacity:0}22.150%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a88{0%,22.321%{opacity:0}22.329%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a89{0%,22.500%{opacity:0}22.507%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a90{0%,22.679%{opacity:0}22.686%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes a91{0%,22.857%{opacity:0}22.864%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b0{0%,24.107%{opacity:0}24.114%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b1{0%,24.286%{opacity:0}24.293%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b2{0%,24.464%{opacity:0}24.471%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b3{0%,24.643%{opacity:0}24.650%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b4{0%,24.821%{opacity:0}24.829%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b5{0%,25.000%{opacity:0}25.007%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b6{0%,25.179%{opacity:0}25.186%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b7{0%,25.357%{opacity:0}25.364%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b8{0%,25.536%{opacity:0}25.543%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b9{0%,25.714%{opacity:0}25.721%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b10{0%,25.893%{opacity:0}25.900%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b11{0%,26.071%{opacity:0}26.079%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b12{0%,26.250%{opacity:0}26.257%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b13{0%,26.429%{opacity:0}26.436%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b14{0%,26.607%{opacity:0}26.614%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b15{0%,26.786%{opacity:0}26.793%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b16{0%,26.964%{opacity:0}26.971%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b17{0%,27.143%{opacity:0}27.150%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b18{0%,27.321%{opacity:0}27.329%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b19{0%,27.500%{opacity:0}27.507%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b20{0%,27.679%{opacity:0}27.686%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b21{0%,27.857%{opacity:0}27.864%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b22{0%,28.036%{opacity:0}28.043%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b23{0%,28.214%{opacity:0}28.221%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b24{0%,28.393%{opacity:0}28.400%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b25{0%,28.571%{opacity:0}28.579%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b26{0%,28.750%{opacity:0}28.757%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b27{0%,28.929%{opacity:0}28.936%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b28{0%,29.107%{opacity:0}29.114%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b29{0%,29.286%{opacity:0}29.293%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b30{0%,29.464%{opacity:0}29.471%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b31{0%,29.643%{opacity:0}29.650%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b32{0%,29.821%{opacity:0}29.829%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b33{0%,30.000%{opacity:0}30.007%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b34{0%,30.179%{opacity:0}30.186%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b35{0%,30.357%{opacity:0}30.364%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b36{0%,30.536%{opacity:0}30.543%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b37{0%,30.714%{opacity:0}30.721%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b38{0%,30.893%{opacity:0}30.900%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b39{0%,31.071%{opacity:0}31.079%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b40{0%,31.250%{opacity:0}31.257%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b41{0%,31.429%{opacity:0}31.436%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b42{0%,31.607%{opacity:0}31.614%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b43{0%,31.786%{opacity:0}31.793%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b44{0%,31.964%{opacity:0}31.971%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b45{0%,32.143%{opacity:0}32.150%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b46{0%,32.321%{opacity:0}32.329%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b47{0%,32.500%{opacity:0}32.507%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b48{0%,32.679%{opacity:0}32.686%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b49{0%,32.857%{opacity:0}32.864%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b50{0%,33.036%{opacity:0}33.043%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b51{0%,33.214%{opacity:0}33.221%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b52{0%,33.393%{opacity:0}33.400%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b53{0%,33.571%{opacity:0}33.579%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b54{0%,33.750%{opacity:0}33.757%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b55{0%,33.929%{opacity:0}33.936%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b56{0%,34.107%{opacity:0}34.114%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b57{0%,34.286%{opacity:0}34.293%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b58{0%,34.464%{opacity:0}34.471%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b59{0%,34.643%{opacity:0}34.650%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b60{0%,34.821%{opacity:0}34.829%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b61{0%,35.000%{opacity:0}35.007%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b62{0%,35.179%{opacity:0}35.186%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b63{0%,35.357%{opacity:0}35.364%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b64{0%,35.536%{opacity:0}35.543%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b65{0%,35.714%{opacity:0}35.721%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b66{0%,35.893%{opacity:0}35.900%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b67{0%,36.071%{opacity:0}36.079%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b68{0%,36.250%{opacity:0}36.257%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b69{0%,36.429%{opacity:0}36.436%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b70{0%,36.607%{opacity:0}36.614%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b71{0%,36.786%{opacity:0}36.793%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b72{0%,36.964%{opacity:0}36.971%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b73{0%,37.143%{opacity:0}37.150%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b74{0%,37.321%{opacity:0}37.329%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b75{0%,37.500%{opacity:0}37.507%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b76{0%,37.679%{opacity:0}37.686%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b77{0%,37.857%{opacity:0}37.864%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b78{0%,38.036%{opacity:0}38.043%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b79{0%,38.214%{opacity:0}38.221%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b80{0%,38.393%{opacity:0}38.400%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b81{0%,38.571%{opacity:0}38.579%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b82{0%,38.750%{opacity:0}38.757%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b83{0%,38.929%{opacity:0}38.936%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b84{0%,39.107%{opacity:0}39.114%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes b85{0%,39.286%{opacity:0}39.293%,95.714%{opacity:1}98.571%,100%{opacity:0}}
+@keyframes cam{0%,6.429%{transform:translateX(0);animation-timing-function:steps(92,end)}22.857%,100%{transform:translateX(846.4px)}}
+@keyframes cav{0%,2.143%{opacity:0}2.150%,22.864%{opacity:1}22.871%,100%{opacity:0}}
+@keyframes cbm{0%,23.929%{transform:translateX(0);animation-timing-function:steps(86,end)}39.286%,100%{transform:translateX(791.2px)}}
+@keyframes cbv{0%,22.864%{opacity:0}22.871%,45.357%{opacity:1}45.364%,100%{opacity:0}}
+@keyframes ra{0%,45.714%{opacity:0;transform:translateY(6px)}48.929%,95.714%{opacity:1;transform:none}98.571%,100%{opacity:0;transform:none}}
+@keyframes rb{0%,51.429%{opacity:0;transform:translateY(6px)}54.643%,95.714%{opacity:1;transform:none}98.571%,100%{opacity:0;transform:none}}
+@keyframes ft{0%,57.857%{opacity:0;transform:translateY(6px)}61.071%,95.714%{opacity:1;transform:none}98.571%,100%{opacity:0;transform:none}}
+.a0{animation:a0 14.0s linear infinite}
+.a1{animation:a1 14.0s linear infinite}
+.a2{animation:a2 14.0s linear infinite}
+.a3{animation:a3 14.0s linear infinite}
+.a4{animation:a4 14.0s linear infinite}
+.a5{animation:a5 14.0s linear infinite}
+.a6{animation:a6 14.0s linear infinite}
+.a7{animation:a7 14.0s linear infinite}
+.a8{animation:a8 14.0s linear infinite}
+.a9{animation:a9 14.0s linear infinite}
+.a10{animation:a10 14.0s linear infinite}
+.a11{animation:a11 14.0s linear infinite}
+.a12{animation:a12 14.0s linear infinite}
+.a13{animation:a13 14.0s linear infinite}
+.a14{animation:a14 14.0s linear infinite}
+.a15{animation:a15 14.0s linear infinite}
+.a16{animation:a16 14.0s linear infinite}
+.a17{animation:a17 14.0s linear infinite}
+.a18{animation:a18 14.0s linear infinite}
+.a19{animation:a19 14.0s linear infinite}
+.a20{animation:a20 14.0s linear infinite}
+.a21{animation:a21 14.0s linear infinite}
+.a22{animation:a22 14.0s linear infinite}
+.a23{animation:a23 14.0s linear infinite}
+.a24{animation:a24 14.0s linear infinite}
+.a25{animation:a25 14.0s linear infinite}
+.a26{animation:a26 14.0s linear infinite}
+.a27{animation:a27 14.0s linear infinite}
+.a28{animation:a28 14.0s linear infinite}
+.a29{animation:a29 14.0s linear infinite}
+.a30{animation:a30 14.0s linear infinite}
+.a31{animation:a31 14.0s linear infinite}
+.a32{animation:a32 14.0s linear infinite}
+.a33{animation:a33 14.0s linear infinite}
+.a34{animation:a34 14.0s linear infinite}
+.a35{animation:a35 14.0s linear infinite}
+.a36{animation:a36 14.0s linear infinite}
+.a37{animation:a37 14.0s linear infinite}
+.a38{animation:a38 14.0s linear infinite}
+.a39{animation:a39 14.0s linear infinite}
+.a40{animation:a40 14.0s linear infinite}
+.a41{animation:a41 14.0s linear infinite}
+.a42{animation:a42 14.0s linear infinite}
+.a43{animation:a43 14.0s linear infinite}
+.a44{animation:a44 14.0s linear infinite}
+.a45{animation:a45 14.0s linear infinite}
+.a46{animation:a46 14.0s linear infinite}
+.a47{animation:a47 14.0s linear infinite}
+.a48{animation:a48 14.0s linear infinite}
+.a49{animation:a49 14.0s linear infinite}
+.a50{animation:a50 14.0s linear infinite}
+.a51{animation:a51 14.0s linear infinite}
+.a52{animation:a52 14.0s linear infinite}
+.a53{animation:a53 14.0s linear infinite}
+.a54{animation:a54 14.0s linear infinite}
+.a55{animation:a55 14.0s linear infinite}
+.a56{animation:a56 14.0s linear infinite}
+.a57{animation:a57 14.0s linear infinite}
+.a58{animation:a58 14.0s linear infinite}
+.a59{animation:a59 14.0s linear infinite}
+.a60{animation:a60 14.0s linear infinite}
+.a61{animation:a61 14.0s linear infinite}
+.a62{animation:a62 14.0s linear infinite}
+.a63{animation:a63 14.0s linear infinite}
+.a64{animation:a64 14.0s linear infinite}
+.a65{animation:a65 14.0s linear infinite}
+.a66{animation:a66 14.0s linear infinite}
+.a67{animation:a67 14.0s linear infinite}
+.a68{animation:a68 14.0s linear infinite}
+.a69{animation:a69 14.0s linear infinite}
+.a70{animation:a70 14.0s linear infinite}
+.a71{animation:a71 14.0s linear infinite}
+.a72{animation:a72 14.0s linear infinite}
+.a73{animation:a73 14.0s linear infinite}
+.a74{animation:a74 14.0s linear infinite}
+.a75{animation:a75 14.0s linear infinite}
+.a76{animation:a76 14.0s linear infinite}
+.a77{animation:a77 14.0s linear infinite}
+.a78{animation:a78 14.0s linear infinite}
+.a79{animation:a79 14.0s linear infinite}
+.a80{animation:a80 14.0s linear infinite}
+.a81{animation:a81 14.0s linear infinite}
+.a82{animation:a82 14.0s linear infinite}
+.a83{animation:a83 14.0s linear infinite}
+.a84{animation:a84 14.0s linear infinite}
+.a85{animation:a85 14.0s linear infinite}
+.a86{animation:a86 14.0s linear infinite}
+.a87{animation:a87 14.0s linear infinite}
+.a88{animation:a88 14.0s linear infinite}
+.a89{animation:a89 14.0s linear infinite}
+.a90{animation:a90 14.0s linear infinite}
+.a91{animation:a91 14.0s linear infinite}
+.b0{animation:b0 14.0s linear infinite}
+.b1{animation:b1 14.0s linear infinite}
+.b2{animation:b2 14.0s linear infinite}
+.b3{animation:b3 14.0s linear infinite}
+.b4{animation:b4 14.0s linear infinite}
+.b5{animation:b5 14.0s linear infinite}
+.b6{animation:b6 14.0s linear infinite}
+.b7{animation:b7 14.0s linear infinite}
+.b8{animation:b8 14.0s linear infinite}
+.b9{animation:b9 14.0s linear infinite}
+.b10{animation:b10 14.0s linear infinite}
+.b11{animation:b11 14.0s linear infinite}
+.b12{animation:b12 14.0s linear infinite}
+.b13{animation:b13 14.0s linear infinite}
+.b14{animation:b14 14.0s linear infinite}
+.b15{animation:b15 14.0s linear infinite}
+.b16{animation:b16 14.0s linear infinite}
+.b17{animation:b17 14.0s linear infinite}
+.b18{animation:b18 14.0s linear infinite}
+.b19{animation:b19 14.0s linear infinite}
+.b20{animation:b20 14.0s linear infinite}
+.b21{animation:b21 14.0s linear infinite}
+.b22{animation:b22 14.0s linear infinite}
+.b23{animation:b23 14.0s linear infinite}
+.b24{animation:b24 14.0s linear infinite}
+.b25{animation:b25 14.0s linear infinite}
+.b26{animation:b26 14.0s linear infinite}
+.b27{animation:b27 14.0s linear infinite}
+.b28{animation:b28 14.0s linear infinite}
+.b29{animation:b29 14.0s linear infinite}
+.b30{animation:b30 14.0s linear infinite}
+.b31{animation:b31 14.0s linear infinite}
+.b32{animation:b32 14.0s linear infinite}
+.b33{animation:b33 14.0s linear infinite}
+.b34{animation:b34 14.0s linear infinite}
+.b35{animation:b35 14.0s linear infinite}
+.b36{animation:b36 14.0s linear infinite}
+.b37{animation:b37 14.0s linear infinite}
+.b38{animation:b38 14.0s linear infinite}
+.b39{animation:b39 14.0s linear infinite}
+.b40{animation:b40 14.0s linear infinite}
+.b41{animation:b41 14.0s linear infinite}
+.b42{animation:b42 14.0s linear infinite}
+.b43{animation:b43 14.0s linear infinite}
+.b44{animation:b44 14.0s linear infinite}
+.b45{animation:b45 14.0s linear infinite}
+.b46{animation:b46 14.0s linear infinite}
+.b47{animation:b47 14.0s linear infinite}
+.b48{animation:b48 14.0s linear infinite}
+.b49{animation:b49 14.0s linear infinite}
+.b50{animation:b50 14.0s linear infinite}
+.b51{animation:b51 14.0s linear infinite}
+.b52{animation:b52 14.0s linear infinite}
+.b53{animation:b53 14.0s linear infinite}
+.b54{animation:b54 14.0s linear infinite}
+.b55{animation:b55 14.0s linear infinite}
+.b56{animation:b56 14.0s linear infinite}
+.b57{animation:b57 14.0s linear infinite}
+.b58{animation:b58 14.0s linear infinite}
+.b59{animation:b59 14.0s linear infinite}
+.b60{animation:b60 14.0s linear infinite}
+.b61{animation:b61 14.0s linear infinite}
+.b62{animation:b62 14.0s linear infinite}
+.b63{animation:b63 14.0s linear infinite}
+.b64{animation:b64 14.0s linear infinite}
+.b65{animation:b65 14.0s linear infinite}
+.b66{animation:b66 14.0s linear infinite}
+.b67{animation:b67 14.0s linear infinite}
+.b68{animation:b68 14.0s linear infinite}
+.b69{animation:b69 14.0s linear infinite}
+.b70{animation:b70 14.0s linear infinite}
+.b71{animation:b71 14.0s linear infinite}
+.b72{animation:b72 14.0s linear infinite}
+.b73{animation:b73 14.0s linear infinite}
+.b74{animation:b74 14.0s linear infinite}
+.b75{animation:b75 14.0s linear infinite}
+.b76{animation:b76 14.0s linear infinite}
+.b77{animation:b77 14.0s linear infinite}
+.b78{animation:b78 14.0s linear infinite}
+.b79{animation:b79 14.0s linear infinite}
+.b80{animation:b80 14.0s linear infinite}
+.b81{animation:b81 14.0s linear infinite}
+.b82{animation:b82 14.0s linear infinite}
+.b83{animation:b83 14.0s linear infinite}
+.b84{animation:b84 14.0s linear infinite}
+.b85{animation:b85 14.0s linear infinite}
+.cam{animation:cam 14.0s linear infinite}.cav{opacity:0;animation:cav 14.0s linear infinite}
+.cbm{animation:cbm 14.0s linear infinite}.cbv{opacity:0;animation:cbv 14.0s linear infinite}
+.ra{animation:ra 14.0s linear infinite}
+.rb{animation:rb 14.0s linear infinite}
+.ft{animation:ft 14.0s linear infinite}
+
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<rect x="0.75" y="0.75" width="998.5" height="468.5" rx="14" fill="#0f141a" stroke="#2d3945" stroke-width="1.5"/>
+<rect x="16" y="16" width="968" height="438" rx="12" fill="#171f28" stroke="#46566a" stroke-width="1.5"/>
+<path d="M17 52.5h966" stroke="#2d3945" stroke-width="1.5"/>
+<circle cx="40" cy="34" r="5.5" fill="#46566a"/><circle cx="60" cy="34" r="5.5" fill="#46566a"/><circle cx="80" cy="34" r="5.5" fill="#46566a"/>
+<text x="500" y="38.5" text-anchor="middle" class="mono ttl">aiact_audit_text</text>
+<text x="48" y="102" class="mono mut">› Check this text against the AI Act in force today:</text>
+<path d="M34 128v52" stroke="#2d3945" stroke-width="2"/>
+<text x="48" y="146" class="mono in" textLength="846.4" lengthAdjust="spacing" xml:space="preserve"><tspan class="a0">O</tspan><tspan class="a1">u</tspan><tspan class="a2">r</tspan><tspan class="a3"> </tspan><tspan class="a4">h</tspan><tspan class="a5">i</tspan><tspan class="a6">r</tspan><tspan class="a7">i</tspan><tspan class="a8">n</tspan><tspan class="a9">g</tspan><tspan class="a10"> </tspan><tspan class="a11">a</tspan><tspan class="a12">s</tspan><tspan class="a13">s</tspan><tspan class="a14">i</tspan><tspan class="a15">s</tspan><tspan class="a16">t</tspan><tspan class="a17">a</tspan><tspan class="a18">n</tspan><tspan class="a19">t</tspan><tspan class="a20"> </tspan><tspan class="a21">i</tspan><tspan class="a22">s</tspan><tspan class="a23"> </tspan><tspan class="a24">h</tspan><tspan class="a25">i</tspan><tspan class="a26">g</tspan><tspan class="a27">h</tspan><tspan class="a28">-</tspan><tspan class="a29">r</tspan><tspan class="a30">i</tspan><tspan class="a31">s</tspan><tspan class="a32">k</tspan><tspan class="a33"> </tspan><tspan class="a34">u</tspan><tspan class="a35">n</tspan><tspan class="a36">d</tspan><tspan class="a37">e</tspan><tspan class="a38">r</tspan><tspan class="a39"> </tspan><tspan class="a40">A</tspan><tspan class="a41">n</tspan><tspan class="a42">n</tspan><tspan class="a43">e</tspan><tspan class="a44">x</tspan><tspan class="a45"> </tspan><tspan class="a46">I</tspan><tspan class="a47">I</tspan><tspan class="a48">I</tspan><tspan class="a49">;</tspan><tspan class="a50"> </tspan><tspan class="a51">t</tspan><tspan class="a52">h</tspan><tspan class="a53">e</tspan><tspan class="a54"> </tspan><tspan class="a55">o</tspan><tspan class="a56">b</tspan><tspan class="a57">l</tspan><tspan class="a58">i</tspan><tspan class="a59">g</tspan><tspan class="a60">a</tspan><tspan class="a61">t</tspan><tspan class="a62">i</tspan><tspan class="a63">o</tspan><tspan class="a64">n</tspan><tspan class="a65">s</tspan><tspan class="a66"> </tspan><tspan class="a67">a</tspan><tspan class="a68">p</tspan><tspan class="a69">p</tspan><tspan class="a70">l</tspan><tspan class="a71">y</tspan><tspan class="a72"> </tspan><tspan class="a73">f</tspan><tspan class="a74">r</tspan><tspan class="a75">o</tspan><tspan class="a76">m</tspan><tspan class="a77"> </tspan><tspan class="a78">2</tspan><tspan class="a79"> </tspan><tspan class="a80">A</tspan><tspan class="a81">u</tspan><tspan class="a82">g</tspan><tspan class="a83">u</tspan><tspan class="a84">s</tspan><tspan class="a85">t</tspan><tspan class="a86"> </tspan><tspan class="a87">2</tspan><tspan class="a88">0</tspan><tspan class="a89">2</tspan><tspan class="a90">6</tspan><tspan class="a91">.</tspan></text>
+<text x="48" y="172" class="mono in" textLength="791.2" lengthAdjust="spacing" xml:space="preserve"><tspan class="b0">U</tspan><tspan class="b1">n</tspan><tspan class="b2">d</tspan><tspan class="b3">e</tspan><tspan class="b4">r</tspan><tspan class="b5"> </tspan><tspan class="b6">A</tspan><tspan class="b7">r</tspan><tspan class="b8">t</tspan><tspan class="b9">i</tspan><tspan class="b10">c</tspan><tspan class="b11">l</tspan><tspan class="b12">e</tspan><tspan class="b13"> </tspan><tspan class="b14">1</tspan><tspan class="b15">0</tspan><tspan class="b16">(</tspan><tspan class="b17">5</tspan><tspan class="b18">)</tspan><tspan class="b19"> </tspan><tspan class="b20">w</tspan><tspan class="b21">e</tspan><tspan class="b22"> </tspan><tspan class="b23">m</tspan><tspan class="b24">a</tspan><tspan class="b25">y</tspan><tspan class="b26"> </tspan><tspan class="b27">p</tspan><tspan class="b28">r</tspan><tspan class="b29">o</tspan><tspan class="b30">c</tspan><tspan class="b31">e</tspan><tspan class="b32">s</tspan><tspan class="b33">s</tspan><tspan class="b34"> </tspan><tspan class="b35">s</tspan><tspan class="b36">p</tspan><tspan class="b37">e</tspan><tspan class="b38">c</tspan><tspan class="b39">i</tspan><tspan class="b40">a</tspan><tspan class="b41">l</tspan><tspan class="b42"> </tspan><tspan class="b43">c</tspan><tspan class="b44">a</tspan><tspan class="b45">t</tspan><tspan class="b46">e</tspan><tspan class="b47">g</tspan><tspan class="b48">o</tspan><tspan class="b49">r</tspan><tspan class="b50">i</tspan><tspan class="b51">e</tspan><tspan class="b52">s</tspan><tspan class="b53"> </tspan><tspan class="b54">o</tspan><tspan class="b55">f</tspan><tspan class="b56"> </tspan><tspan class="b57">p</tspan><tspan class="b58">e</tspan><tspan class="b59">r</tspan><tspan class="b60">s</tspan><tspan class="b61">o</tspan><tspan class="b62">n</tspan><tspan class="b63">a</tspan><tspan class="b64">l</tspan><tspan class="b65"> </tspan><tspan class="b66">d</tspan><tspan class="b67">a</tspan><tspan class="b68">t</tspan><tspan class="b69">a</tspan><tspan class="b70"> </tspan><tspan class="b71">t</tspan><tspan class="b72">o</tspan><tspan class="b73"> </tspan><tspan class="b74">d</tspan><tspan class="b75">e</tspan><tspan class="b76">t</tspan><tspan class="b77">e</tspan><tspan class="b78">c</tspan><tspan class="b79">t</tspan><tspan class="b80"> </tspan><tspan class="b81">b</tspan><tspan class="b82">i</tspan><tspan class="b83">a</tspan><tspan class="b84">s</tspan><tspan class="b85">.</tspan></text>
+<g class="cav"><g class="cam"><rect class="blink" x="48" y="133" width="9.2" height="17" rx="1.5" fill="#8cbcf2"/></g></g>
+<g class="cbv"><g class="cbm"><rect class="blink" x="48" y="159" width="9.2" height="17" rx="1.5" fill="#8cbcf2"/></g></g>
+<g class="ra"><rect x="48" y="226" width="58" height="22" rx="11" fill="#3b1d20" stroke="#7c3a3e" stroke-width="1.5"/><text x="77" y="241" text-anchor="middle" class="mono pill">error</text><text x="124" y="241" class="mono txt" xml:space="preserve">outdated deadline   <tspan class="b">"2 August 2026"</tspan>  <tspan class="mut">→</tspan>  <tspan class="b">2 December 2027</tspan></text>
+<text x="124" y="267" class="mono mut" xml:space="preserve">(changed by Regulation (EU) 2026/1744)</text></g>
+<g class="rb"><rect x="48" y="298" width="58" height="22" rx="11" fill="#3b1d20" stroke="#7c3a3e" stroke-width="1.5"/><text x="77" y="313" text-anchor="middle" class="mono pill">error</text><text x="124" y="313" class="mono txt" xml:space="preserve">removed provision   <tspan class="b">"Article 10(5)"</tspan>  <tspan class="mut">→</tspan>  the text moved to <tspan class="b">Article 4a(1)</tspan></text></g>
+<g class="ft"><path d="M48 372.5h904" stroke="#2d3945" stroke-width="1.5"/><text x="48" y="408" class="mono mut" style="font-size:14px">2 findings · checked against the text in force on the given date · no LLM involved</text></g>
+</svg>
