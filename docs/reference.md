@@ -83,7 +83,7 @@ Rules:
 
 ## Tools
 
-Six read-only tools (pure functions in `src/tools/`, exposed by `src/mcp/server.ts`; `aiact_search`, `aiact_audit_text` and `aiact_obligations` only in extended mode, see "Run the MCP server"). Every result carries `notice`
+Six read-only tools (pure functions in `src/tools/`, exposed by `src/mcp/server.ts`, see "Run the MCP server"). Every result carries `notice`
 (`{de, en}`, the mandatory texts with the version actually checked). No result contains a timestamp; `as_of` is only
 echoed. Versions: `32024R1689` (Official Journal) and `02024R1689-20260727` (consolidated after the Omnibus,
 amending act `32026R1744`). Where an `id` is expected, a human citation is accepted too (`Article 50(1)(a)`,
@@ -500,9 +500,8 @@ Output in `--out`:
 
 Claude Code: `claude mcp add eu-ai-act -- npx tsx /path/to/eu-ai-act-mcp/src/mcp/server.ts`. Other clients: command `npx`,
 args `["tsx", "src/mcp/server.ts"]`, working directory the repository root. Tools: `aiact_get_provision`, `aiact_diff`,
-`aiact_verify_citation`; in extended mode (`npm run mcp:extended`, argument `--extended` or `AIACT_MCP_EXTENDED=1`, in code
-`createServer({ extended: true })`) also `aiact_search`, `aiact_audit_text` and `aiact_obligations`. The default lists exactly the three tools because the
-MCP tools test checks that; the evaluation's tools arm (`TOOL_DEFS`) offers the three. All tools with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
+`aiact_verify_citation`, `aiact_search`, `aiact_audit_text` and `aiact_obligations`; the server always lists exactly these six. The evaluation's tools arm
+(`TOOL_DEFS`) offers the first three. All tools with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
 reads only `data/corpus`, `data/diff`, `data/deadlines.json` and `data/obligations.json`; it makes no network calls.
 
 ## Releases and manifest

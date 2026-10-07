@@ -299,14 +299,16 @@ describe("tools api golden: determinism", () => {
 
 describe("tools api golden: MCP stdio server", () => {
   it(
-    "lists exactly the three read-only tools and answers a call",
+    "lists exactly the six read-only tools and answers a call",
     async () => {
       const transport = new StdioClientTransport({ command: "npx", args: ["tsx", "src/mcp/server.ts"], cwd: ROOT });
       const client = new Client({ name: "golden-tools-api", version: "0.0.0" });
       try {
         await client.connect(transport);
         const { tools } = await client.listTools();
-        expect(tools.map((t) => t.name).sort()).toEqual(["aiact_diff", "aiact_get_provision", "aiact_verify_citation"]);
+        expect(tools.map((t) => t.name).sort()).toEqual(
+          ["aiact_get_provision", "aiact_diff", "aiact_verify_citation", "aiact_search", "aiact_audit_text", "aiact_obligations"].sort(),
+        );
         for (const t of tools) expect(t.annotations?.readOnlyHint).toBe(true);
         const res = await client.callTool({ name: "aiact_get_provision", arguments: { id: "art_50", version: V2024, lang: "en" } });
         const content = (res as { content: Array<{ type: string; text?: string }> }).content;

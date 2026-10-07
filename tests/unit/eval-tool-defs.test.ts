@@ -20,9 +20,10 @@ async function serverTools(): Promise<Array<{ name: string; description?: string
 }
 
 describe("the eval's tools arm offers the real product", () => {
-  it("offers exactly the tools of the MCP server, with identical descriptions", async () => {
+  it("offers the three pre-registered tools of the MCP server, with identical descriptions", async () => {
     const tools = await serverTools();
-    expect(TOOL_DEFS.map((d) => d.function.name).sort()).toEqual(tools.map((t) => t.name).sort());
+    expect(TOOL_DEFS.map((d) => d.function.name).sort()).toEqual(["aiact_diff", "aiact_get_provision", "aiact_verify_citation"]);
+    for (const d of TOOL_DEFS) expect(tools.map((t) => t.name), d.function.name).toContain(d.function.name);
     for (const d of TOOL_DEFS) {
       const t = tools.find((x) => x.name === d.function.name);
       expect(d.function.description, d.function.name).toBe(t?.description);

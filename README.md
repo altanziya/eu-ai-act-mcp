@@ -132,14 +132,12 @@ npm test
 **Use it from Claude Code** (run inside the repository):
 
 ```bash
-claude mcp add eu-ai-act -- "$(pwd)/node_modules/.bin/tsx" "$(pwd)/src/mcp/server.ts" --extended
+claude mcp add eu-ai-act -- "$(pwd)/node_modules/.bin/tsx" "$(pwd)/src/mcp/server.ts"
 ```
-
-`--extended` enables all six tools; without it the server offers the three original ones (get, diff, verify).
 
 Then ask, for example: *"We sell an AI tool that ranks job applicants. Which AI Act obligations apply to us and when? Use the eu-ai-act tools."* or *"Check this vendor answer against the current AI Act: …"*
 
-**Other MCP clients:** command `<repo>/node_modules/.bin/tsx`, arguments `<repo>/src/mcp/server.ts --extended`. The server runs locally over stdio and makes no network calls.
+**Other MCP clients:** command `<repo>/node_modules/.bin/tsx`, arguments `<repo>/src/mcp/server.ts`. The server runs locally over stdio and makes no network calls.
 
 **Create your own evidence record:**
 

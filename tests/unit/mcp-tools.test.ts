@@ -3,8 +3,8 @@ import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import { describe, expect, it } from "vitest";
 import { createServer } from "../../src/mcp/server.js";
 
-async function connect(extended = true): Promise<Client> {
-  const server = createServer({ extended });
+async function connect(): Promise<Client> {
+  const server = createServer();
   const client = new Client({ name: "test", version: "0" });
   const [a, b] = InMemoryTransport.createLinkedPair();
   await Promise.all([server.connect(a), client.connect(b)]);
@@ -23,12 +23,7 @@ const call = async (client: Client, name: string, args: Record<string, unknown>)
 };
 
 describe("MCP server tools", () => {
-  it("the default server lists exactly the three tools of the day-2 golden test", async () => {
-    const client = await connect(false);
-    expect((await client.listTools()).tools.map((t) => t.name).sort()).toEqual(["aiact_diff", "aiact_get_provision", "aiact_verify_citation"]);
-    await client.close();
-  });
-  it("lists six read-only tools in extended mode, with as_of documented where the version depends on it", async () => {
+  it("lists the six read-only tools, with as_of documented where the version depends on it", async () => {
     const client = await connect();
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual(["aiact_audit_text", "aiact_diff", "aiact_get_provision", "aiact_obligations", "aiact_search", "aiact_verify_citation"]);
@@ -61,10 +56,7 @@ describe("MCP server tools", () => {
 });
 
 describe("MCP aiact_obligations", () => {
-  it("is registered only in extended mode, with a profile schema generated from the profile fields", async () => {
-    const plain = await connect(false);
-    expect((await plain.listTools()).tools.map((t) => t.name)).not.toContain("aiact_obligations");
-    await plain.close();
+  it("is registered with a profile schema generated from the profile fields", async () => {
     const client = await connect();
     const tool = (await client.listTools()).tools.find((t) => t.name === "aiact_obligations");
     expect(tool?.annotations?.readOnlyHint).toBe(true);
