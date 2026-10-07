@@ -1,5 +1,5 @@
 /**
- * Coverage and order (plan/day-1b.md "Neue Tests" 2): for every article, annex and recital of all four
+ * Coverage and order: for every article, annex and recital of all four
  * raw files, the word sequence of the raw source text equals the word sequence of heading + text of all
  * nodes of that provision, in `order`.
  *

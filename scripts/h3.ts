@@ -1,4 +1,4 @@
-/** npm run h3: data/corpus + data/diff -> data/h3.json (deterministic; thresholds are checked by plan/gate-day-1.sh). */
+/** npm run h3: data/corpus + data/diff -> data/h3.json (deterministic). */
 import { readFileSync } from "node:fs";
 import { corpusPath, diffPath, h3Path, V2024, V2026 } from "../src/config.js";
 import type { DiffResult } from "../src/diff/diff.js";

@@ -1,11 +1,11 @@
 /**
- * Golden tests day 1 (ADR-011, plan/day-1.md, gate points 2-5). Written by the orchestrator;
- * read-only for workers (write-guard hook, frozen hash).
+ * Golden tests for the parser, the diff and the H3 measurements. The expected values were written before the
+ * implementation and do not follow it.
  *
- * Expected npm scripts in package.json (created by the builder):
+ * Expected npm scripts in package.json:
  *   test   vitest run                      (picks up tests/golden and tests/unit)
  *   parse  deterministic parser: data/raw/<celex>.<lang>.xhtml -> data/corpus/<celex>.<lang>.json (+ data/diff/<lang>.json)
- *   h3     scripts/h3.ts -> data/h3.json   (thresholds are checked by plan/gate-day-1.sh)
+ *   h3     scripts/h3.ts -> data/h3.json
  * Dev dependencies needed to compile this file under `tsc --noEmit`: vitest, @types/node.
  *
  * Expected corpus file: JSON array of nodes, or an object with a `nodes` array/map. Node fields:
@@ -13,7 +13,7 @@
  * IDs are logical paths: art_3, art_50.par_1, art_4a, rec_12. `parent` is the parent node id.
  *
  * Missing files or a missing `parse` script never crash the run: each test fails (or the
- * determinism test is skipped) with an explicit message. The gate rejects skipped tests.
+ * determinism test is skipped) with an explicit message.
  * Set GOLDEN_ROOT to point the tests at another repo root (default: process.cwd()).
  */
 import { spawnSync } from "node:child_process";
@@ -60,7 +60,7 @@ function load(version: string, lang: Lang): Prov[] {
   if (hit) return hit;
   const abs = join(ROOT, rel);
   if (!existsSync(abs)) {
-    throw new Error(`Missing corpus file ${rel}. It must be produced by \`npm run parse\` (the builder has not delivered it yet).`);
+    throw new Error(`Missing corpus file ${rel}. It must be produced by \`npm run parse\`.`);
   }
   let parsed: unknown;
   try {
@@ -105,7 +105,7 @@ function expectedArticleIds(count: number): string[] {
   return Array.from({ length: count }, (_, i) => `art_${i + 1}`);
 }
 
-describe("day 1 golden: 2024 EN (32024R1689)", () => {
+describe("parser and diff golden: 2024 EN (32024R1689)", () => {
   const file = corpusRel(V2024, "en");
 
   it("has exactly 113 articles art_1..art_113", () => {
@@ -145,7 +145,7 @@ describe("day 1 golden: 2024 EN (32024R1689)", () => {
   });
 });
 
-describe("day 1 golden: 2026 EN (02024R1689-20260727)", () => {
+describe("parser and diff golden: 2026 EN (02024R1689-20260727)", () => {
   const file = corpusRel(V2026, "en");
 
   it("contains art_4a and art_75a (F38)", () => {
@@ -160,7 +160,7 @@ describe("day 1 golden: 2026 EN (02024R1689-20260727)", () => {
   });
 });
 
-describe("day 1 golden: DE mirror", () => {
+describe("parser and diff golden: DE mirror", () => {
   for (const [label, version] of [["2024", V2024], ["2026", V2026]] as const) {
     it(`${label}: DE has the same article and recital counts as EN`, () => {
       const en = load(version, "en");
@@ -175,12 +175,12 @@ describe("day 1 golden: DE mirror", () => {
   }
 });
 
-describe("day 1 golden: diff output (smoke)", () => {
+describe("parser and diff golden: diff output (smoke)", () => {
   for (const lang of LANGS) {
     it(`data/diff/${lang}.json exists and names the five diff classes`, () => {
       const rel = `data/diff/${lang}.json`;
       const abs = join(ROOT, rel);
-      if (!existsSync(abs)) throw new Error(`Missing ${rel} (diff 2024->2026 per language, plan/day-1.md "In Scope").`);
+      if (!existsSync(abs)) throw new Error(`Missing ${rel} (diff 2024->2026 per language).`);
       const parsed: unknown = JSON.parse(readFileSync(abs, "utf8"));
       expect(parsed !== null && typeof parsed === "object", `${rel} must be a JSON object or array`).toBe(true);
       const flat = JSON.stringify(parsed);
@@ -202,7 +202,7 @@ function npmScripts(): Record<string, unknown> {
 
 const hasParseScript = typeof npmScripts().parse === "string";
 
-describe("day 1 golden: determinism", () => {
+describe("parser and diff golden: determinism", () => {
   it.skipIf(!hasParseScript)(
     hasParseScript
       ? "a second `npm run parse` yields byte-identical corpus files"

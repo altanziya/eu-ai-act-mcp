@@ -30,7 +30,7 @@ Corpus files `data/corpus/<celex>.<lang>.json` hold `{celex, lang, nodes}`; each
 
 ## ID scheme
 
-ID scheme v1 (ADR-012). IDs are logical paths that follow the legal way of citing; they are the same in EN and DE
+ID scheme v1. IDs are logical paths that follow the legal way of citing; they are the same in EN and DE
 and carry no `~N` suffix. Every ID is unique per file, every `parent` exists.
 
 | ID | Meaning |
@@ -78,8 +78,8 @@ Rules:
   and changed provision is not recognised. Open.
 - Some `changed` nodes differ only in presentation (markup or spacing of the source), not in wording. Open; their
   word diff then has only `equal` operations.
-- The consolidated version contains no recitals (F66). `mapped_2024_to_2026` is measured over operative nodes
-  (all types except `recital`, ADR-012); the all-node ratio is in `data/h3.json` under `details`.
+- The consolidated version contains no recitals. `mapped_2024_to_2026` is measured over operative nodes
+  (all types except `recital`); the all-node ratio is in `data/h3.json` under `details`.
 
 ## Tools
 
@@ -224,7 +224,7 @@ A finding is `{ kind, severity, span: { start, end }, excerpt, message, ref?, no
 offsets are UTF-16 positions in the input text, findings are ordered by `span.start`, `sources` are `<version>:<node id>`.
 No findings at all gives a single `info` finding `no_references` ("no references found"). Deterministic, no model, no network;
 orientation only, not legal advice, and no certification of compliance (`notice` as in verify, naming both versions when the
-other one was used). 5 000 words take about 50 ms (the gate allows 2 s); each checked quotation costs one `verifyCitation`
+other one was used). 5 000 words take about 50 ms (a test requires under 2 s); each checked quotation costs one `verifyCitation`
 call (about 30 ms).
 
 | kind | severity | meaning |
@@ -502,7 +502,7 @@ Claude Code: `claude mcp add eu-ai-act -- npx tsx /path/to/eu-ai-act-mcp/src/mcp
 args `["tsx", "src/mcp/server.ts"]`, working directory the repository root. Tools: `aiact_get_provision`, `aiact_diff`,
 `aiact_verify_citation`; in extended mode (`npm run mcp:extended`, argument `--extended` or `AIACT_MCP_EXTENDED=1`, in code
 `createServer({ extended: true })`) also `aiact_search`, `aiact_audit_text` and `aiact_obligations`. The default lists exactly the three tools because the
-frozen day-2 golden test checks that; the evaluation's tools arm (`TOOL_DEFS`) offers the three. All tools with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
+MCP tools test checks that; the evaluation's tools arm (`TOOL_DEFS`) offers the three. All tools with `annotations.readOnlyHint: true`; each result is JSON text in `content[0]`. The server
 reads only `data/corpus`, `data/diff`, `data/deadlines.json` and `data/obligations.json`; it makes no network calls.
 
 ## Releases and manifest

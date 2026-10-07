@@ -22,7 +22,7 @@ const call = async (client: Client, name: string, args: Record<string, unknown>)
   return { ...(r.isError ? { isError: true } : {}), body };
 };
 
-describe("MCP server tools (day 5a)", () => {
+describe("MCP server tools", () => {
   it("the default server lists exactly the three tools of the day-2 golden test", async () => {
     const client = await connect(false);
     expect((await client.listTools()).tools.map((t) => t.name).sort()).toEqual(["aiact_diff", "aiact_get_provision", "aiact_verify_citation"]);
@@ -60,7 +60,7 @@ describe("MCP server tools (day 5a)", () => {
   });
 });
 
-describe("MCP aiact_obligations (day 5b)", () => {
+describe("MCP aiact_obligations", () => {
   it("is registered only in extended mode, with a profile schema generated from the profile fields", async () => {
     const plain = await connect(false);
     expect((await plain.listTools()).tools.map((t) => t.name)).not.toContain("aiact_obligations");

@@ -1,4 +1,4 @@
-/** ID scheme v1 against the real data (plan/day-1b.md "Neue Tests" 1 and 4). Parses data/raw, no network. */
+/** ID scheme v1 against the real data. Parses data/raw, no network. */
 import { describe, expect, it } from "vitest";
 import { ALL_CASES, mustGet, nodeMap, parsed, V2024, V2026 } from "./helpers/corpora.js";
 

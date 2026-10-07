@@ -1,5 +1,6 @@
 /**
- * Golden tests day 5b (written and frozen before implementation, plan/day-5b.md).
+ * Golden tests for the obligations navigator. The expected values were written before the implementation and do
+ * not follow it.
  * Fixed API:
  *   src/tools/obligations.ts  aiactObligations({ profile, as_of?, lang? }), describeProfile()
  */
@@ -24,7 +25,7 @@ const get = (r: Res, id: string) => {
 
 const ANNEX_III_PROVIDER = { role: ["provider"], uses_or_provides_ai_system: true, annex_iii_area: "4", annex_iii_art6_3_exception_concluded: false };
 
-describe("day5b golden: Annex III provider (employment)", () => {
+describe("obligations golden: Annex III provider (employment)", () => {
   const r = run(ANNEX_III_PROVIDER);
   it("uses the consolidated text and classifies as high-risk via Annex III", () => {
     expect(r.version).toBe("02024R1689-20260727");
@@ -69,7 +70,7 @@ describe("day5b golden: Annex III provider (employment)", () => {
   });
 });
 
-describe("day5b golden: Article 6(3)", () => {
+describe("obligations golden: Article 6(3)", () => {
   it("exception without profiling: documentation duty, no high-risk package", () => {
     const r = run({ ...ANNEX_III_PROVIDER, annex_iii_art6_3_exception_concluded: true, annex_iii_performs_profiling: false });
     expect(ids(r)).toContain("annex-iii-non-high-risk-documentation");
@@ -87,7 +88,7 @@ describe("day5b golden: Article 6(3)", () => {
   });
 });
 
-describe("day5b golden: Annex I", () => {
+describe("obligations golden: Annex I", () => {
   it("Section A product: high-risk from the Annex I route date", () => {
     const r = run({ role: ["provider"], uses_or_provides_ai_system: true, annex_i_section: "A", annex_i_third_party_conformity_assessment: true });
     const o = get(r, "risk-management-system");
@@ -101,7 +102,7 @@ describe("day5b golden: Annex I", () => {
   });
 });
 
-describe("day5b golden: deployer and GPAI", () => {
+describe("obligations golden: deployer and GPAI", () => {
   it("public body using a creditworthiness system must do a FRIA", () => {
     const r = run({ role: ["deployer"], uses_or_provides_ai_system: true, annex_iii_area: "5", annex_iii_point5_bc: true, annex_iii_art6_3_exception_concluded: false, deployer_public_body_or_public_service: true });
     expect(ids(r)).toContain("fundamental-rights-impact-assessment");
@@ -122,7 +123,7 @@ describe("day5b golden: deployer and GPAI", () => {
   });
 });
 
-describe("day5b golden: legacy systems and input checks", () => {
+describe("obligations golden: legacy systems and input checks", () => {
   it("an Annex III system placed on the market before the route date without significant changes is out of Chapter III", () => {
     const r = run({ ...ANNEX_III_PROVIDER, placed_on_market_before: "2026-01-01", significant_design_change_since_application: false });
     expect(ids(r)).not.toContain("risk-management-system");

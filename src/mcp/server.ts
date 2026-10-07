@@ -1,7 +1,7 @@
 /**
  * MCP server (stdio) for the EU AI Act provision tree: aiact_get_provision, aiact_diff, aiact_verify_citation and, in
  * extended mode (`npm run mcp:extended`, `--extended`, `AIACT_MCP_EXTENDED=1`), aiact_search, aiact_audit_text and aiact_obligations.
- * The default stays the three tools of the frozen day-2 golden test (exactly three tools listed). All tools are read-only. Results are JSON text in content[0]. Start: `npm run mcp`.
+ * All tools are read-only. Results are JSON text in content[0]. Start: `npm run mcp`.
  * stdout carries the protocol only; nothing else may be written to it.
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -48,7 +48,7 @@ const failure = (e: unknown): { isError: true; content: Array<{ type: "text"; te
 });
 
 export interface ServerOptions {
-  /** Also register aiact_search, aiact_audit_text (day 5a) and aiact_obligations (day 5b). Default false: tests/golden/day2 expects exactly three tools. */
+  /** Also register aiact_search, aiact_audit_text and aiact_obligations. Default false: exactly three tools are listed. */
   extended?: boolean;
 }
 

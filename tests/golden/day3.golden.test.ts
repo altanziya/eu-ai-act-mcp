@@ -1,8 +1,8 @@
 /**
- * Golden tests day 3a (ADR-011, plan/day-3.md "Gate" and "API"). Written by the orchestrator;
- * read-only for workers (write-guard hook, frozen hash in plan/frozen.sha256).
+ * Golden tests for signed releases, evidence records and their recomputation. The expected values were written
+ * before the implementation and do not follow it.
  *
- * Fixed API under test (plan/day-3.md §API):
+ * Fixed API under test:
  *   src/release/release.ts   buildRelease({ releaseId, outRoot? }) -> { dir, manifest }
  *   src/release/manifest.ts  buildManifest(releaseDir, releaseId), manifestBytes(manifest), sha256Hex(bytes)
  *   src/release/sign.ts      generateKeyPair(), keyIdFromPublicKey(pem), signManifest(bytes, pem), verifyManifestSignature(bytes, sig, pem)
@@ -27,7 +27,7 @@ import { recomputeRecord } from "../../src/verify-core/recompute.js";
 const ROOT = process.env.GOLDEN_ROOT ?? process.cwd();
 const V2024 = "32024R1689";
 const V2026 = "02024R1689-20260727";
-const RELEASE_ID = "golden-day3";
+const RELEASE_ID = "golden-release";
 
 interface Node {
   id: string;
@@ -40,7 +40,7 @@ interface Node {
 const sha256File = (p: string): string => createHash("sha256").update(readFileSync(p)).digest("hex");
 const tokens = (s: string): string[] => s.trim().split(/\s+/).filter(Boolean);
 
-const outRoot = mkdtempSync(join(tmpdir(), "aiact-golden-day3-"));
+const outRoot = mkdtempSync(join(tmpdir(), "aiact-golden-release-"));
 afterAll(() => rmSync(outRoot, { recursive: true, force: true }));
 
 const built = buildRelease({ releaseId: RELEASE_ID, outRoot });
@@ -52,7 +52,7 @@ function releaseCorpus(version: string, lang: string): Map<string, Node> {
   const raw = JSON.parse(readFileSync(p, "utf8")) as { nodes: Node[] };
   return new Map(raw.nodes.map((n) => [n.id, n]));
 }
-/** First Article 5 point identical in both versions (same choice as day 2). */
+/** First Article 5 point identical in both versions. */
 function unchangedArt5(): Node {
   const a24 = releaseCorpus(V2024, "en");
   const a26 = releaseCorpus(V2026, "en");
@@ -75,7 +75,7 @@ const baseInput = () => ({
   release_id: RELEASE_ID,
 });
 
-describe("golden day 3a: release and manifest", () => {
+describe("release and record golden: release and manifest", () => {
   it("copies corpus, deadlines and diff files and writes a manifest whose hashes match the files", () => {
     for (const rel of [
       `corpus/${V2024}.en.json`,
@@ -127,7 +127,7 @@ describe("golden day 3a: release and manifest", () => {
   });
 });
 
-describe("golden day 3a: evidence record", () => {
+describe("release and record golden: evidence record", () => {
   it("creates a record with exact result, cited node hashes from the release and a stable record_hash", () => {
     const n = unchangedArt5();
     const r = createRecord(baseInput(), ctx);
@@ -164,7 +164,7 @@ describe("golden day 3a: evidence record", () => {
   });
 });
 
-describe("golden day 3a: recompute", () => {
+describe("release and record golden: recompute", () => {
   it("an untouched record verifies in full (signature missing)", () => {
     const r = createRecord(baseInput(), ctx);
     const rep = recomputeRecord(r, ctx);
@@ -199,7 +199,7 @@ describe("golden day 3a: recompute", () => {
   });
 });
 
-describe("golden day 3a: signature", () => {
+describe("release and record golden: signature", () => {
   it("signs and verifies a manifest with a throwaway key pair; tampering and wrong keys fail", () => {
     const bytes = manifestBytes(ctx.manifest);
     const kp = generateKeyPair();
@@ -231,7 +231,7 @@ describe("golden day 3a: signature", () => {
   });
 });
 
-describe("golden day 3a: verify page build", () => {
+describe("release and record golden: verify page build", () => {
   it(
     "npm run build:site produces a self-contained page and bundle",
     () => {

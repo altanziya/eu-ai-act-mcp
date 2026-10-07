@@ -1,4 +1,4 @@
-/** Day 5d addendum 3 (plan/day-5d-addendum-3.md): without `lang`, each quotation is checked in its own language; with `lang`, that language decides. */
+/** Document checker: without `lang`, each quotation is checked in its own language; with `lang`, that language decides. */
 import { describe, expect, it } from "vitest";
 import { auditText } from "../../src/tools/audit.js";
 import type { Finding } from "../../src/tools/audit.js";
@@ -17,7 +17,7 @@ describe("quotation checked in its own language without lang", () => {
     expect(kinds(`Article 4 says, in the German version: ${DE_QUOTE}.`)).toContain("quote_ok");
     expect(kinds(`Nach Artikel 4 gilt: ${DE_QUOTE}.`)).not.toContain("quote_deviates");
   });
-  it("English quotation: ok in an English and in a German text (no regression of addendum 2 B)", () => {
+  it("English quotation: ok in an English and in a German text (no regression of the quote check keeping its language)", () => {
     expect(kinds(`Article 4 says: ${EN_QUOTE}.`)).toContain("quote_ok");
     expect(kinds(`Die Pflicht ergibt sich aus Artikel 4: ${EN_QUOTE}. Das gilt für unsere gesamte Belegschaft.`)).toContain("quote_ok");
   });

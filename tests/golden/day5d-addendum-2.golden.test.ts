@@ -1,5 +1,6 @@
 /**
- * Golden tests day 5d addendum 2 (written and frozen before implementation, plan/day-5d-addendum-2.md).
+ * Golden tests for dates at the start of a sentence. The expected values were written before the implementation
+ * and do not follow it.
  * Event dates at the start of a sentence must stay silent; the quote check keeps its language.
  */
 import { describe, expect, it } from "vitest";
@@ -10,7 +11,7 @@ const run = (text: string, as_of = "2026-10-05") => (auditText({ text, as_of }) 
 const errors = (text: string) => run(text).filter((f) => f.severity === "error");
 const outdated = (text: string) => run(text).filter((f) => f.kind === "outdated_deadline");
 
-describe("day5d addendum 2 golden: event dates at the start stay silent", () => {
+describe("audit statement dates golden: event dates at the start stay silent", () => {
   it.each([
     "From 2 August 2026 to 5 August 2026 we held a workshop on high-risk systems.",
     "As of 2 August 2026 our inventory listed three high-risk systems.",
@@ -25,7 +26,7 @@ describe("day5d addendum 2 golden: event dates at the start stay silent", () => 
   });
 });
 
-describe("day5d addendum 2 golden: statements of application are still caught", () => {
+describe("audit statement dates golden: statements of application are still caught", () => {
   it.each([
     "Ab dem 2. August 2026 gelten die Pflichten für Hochrisiko-KI-Systeme.",
     "From 2 August 2026 high-risk AI systems must comply.",
@@ -39,7 +40,7 @@ describe("day5d addendum 2 golden: statements of application are still caught", 
   });
 });
 
-describe("day5d addendum 2 golden: quote check keeps its language", () => {
+describe("audit statement dates golden: quote check keeps its language", () => {
   it("an English quotation of Article 4 in a German text is ok", () => {
     const text = "Die Pflicht zur KI-Kompetenz für Betreiber und Anbieter ergibt sich aus Artikel 4: \"Providers and deployers of AI systems shall take measures to ensure, to their best extent, a sufficient level of AI literacy of their staff\". Das gilt für unsere gesamte Belegschaft.";
     const f = run(text, "2026-05-01");

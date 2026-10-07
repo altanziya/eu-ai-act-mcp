@@ -1,5 +1,5 @@
 /**
- * Determinism of the whole pipeline in memory (plan/day-1b.md "Neue Tests" 3): raw XHTML -> corpus, diff, report and
+ * Determinism of the whole pipeline in memory: raw XHTML -> corpus, diff, report and
  * h3 are built twice and must be byte-identical, and they must equal the committed files in data/corpus, data/diff
  * and data/h3.json (so the committed data is never stale). In memory on purpose: the golden test already runs
  * `npm run parse`; a second writer in parallel would race on the same files.

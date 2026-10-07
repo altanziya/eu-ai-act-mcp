@@ -1,4 +1,4 @@
-/** Day 5d addendum 2 (plan/day-5d-addendum-2.md): a date at the start of a sentence counts only for a statement of application; the quote check keeps its language. EN and DE, each rule with a counter-probe. */
+/** Document checker: a date at the start of a sentence counts only for a statement of application; the quote check keeps its language. EN and DE, each rule with a counter-probe. */
 import { describe, expect, it } from "vitest";
 import { auditText } from "../../src/tools/audit.js";
 import type { Finding } from "../../src/tools/audit.js";

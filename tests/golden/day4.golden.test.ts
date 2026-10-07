@@ -1,6 +1,8 @@
 /**
- * Golden tests day 4a (plan/day-4.md "Feste API"). Written by the orchestrator;
- * read-only for workers (write-guard hook, frozen hash in plan/frozen.sha256).
+ * Golden tests for the evaluation harness (statistics, answer parsing, scoring, case loading). The expected values
+ * were written before the implementation and do not follow it.
+ *
+ * Fixed API under test:
  *
  *   src/eval/stats.ts   clopperPearson(k, n, alpha?), decideE1({ errors, n })
  *   src/eval/answer.ts  parseAnswer(text)
@@ -19,10 +21,10 @@ import { parseAnswer } from "../../src/eval/answer.js";
 import { normalizeVersion, scoreCase } from "../../src/eval/score.js";
 import { loadCases } from "../../src/eval/cases.js";
 
-const tmp = mkdtempSync(join(tmpdir(), "golden-day4-"));
+const tmp = mkdtempSync(join(tmpdir(), "golden-eval-"));
 afterAll(() => rmSync(tmp, { recursive: true, force: true }));
 
-describe("day4 golden: Clopper-Pearson and E1 decision", () => {
+describe("eval harness golden: Clopper-Pearson and E1 decision", () => {
   const ref: Array<[number, number, number, number]> = [
     [0, 30, 0.0, 0.1157],
     [1, 30, 0.0008, 0.1722],
@@ -50,7 +52,7 @@ describe("day4 golden: Clopper-Pearson and E1 decision", () => {
   });
 });
 
-describe("day4 golden: parseAnswer", () => {
+describe("eval harness golden: parseAnswer", () => {
   it("reads plain and fenced JSON", () => {
     expect(parseAnswer('{"date":"2027-12-02","version":"consolidated"}')?.date).toBe("2027-12-02");
     const fenced = 'Here you go:\n```json\n{"article":"Article 113","verdict":"incorrect"}\n```\nThanks';
@@ -65,7 +67,7 @@ describe("day4 golden: parseAnswer", () => {
   });
 });
 
-describe("day4 golden: scoring", () => {
+describe("eval harness golden: scoring", () => {
   it("normalizes version strings", () => {
     expect(normalizeVersion("Regulation (EU) 2024/1689 as amended by Regulation (EU) 2026/1744")).toBe("02024R1689-20260727");
     expect(normalizeVersion("consolidated version 02024R1689-20260727")).toBe("02024R1689-20260727");
@@ -147,7 +149,7 @@ const fixture = `- id: G01
   legal_review: none
 `;
 
-describe("day4 golden: case file and dry run", () => {
+describe("eval harness golden: case file and dry run", () => {
   it("loads a valid case file", () => {
     const p = join(tmp, "cases.yaml");
     writeFileSync(p, fixture);

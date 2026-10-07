@@ -17,9 +17,9 @@ export interface ProvisionNode {
   parent: string | null;
   heading: string;
   text: string;
-  /** SHA-256 over the normalized `text` (plan/day-1.md). */
+  /** SHA-256 over the normalized `text`. */
   hash: string;
-  /** SHA-256 over normalized `heading + "\n" + text`; used by the diff (ADR-012). */
+  /** SHA-256 over normalized `heading + "\n" + text`; used by the diff. */
   node_hash: string;
   order: number;
   /** Id attribute of the nearest enclosing source element in the CELLAR XHTML (own id if it has one). */

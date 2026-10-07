@@ -1,5 +1,6 @@
 /**
- * Golden tests day 5a (written and frozen before implementation, plan/day-5.md).
+ * Golden tests for search, the document checker, reference formatting and as_of-aware provisions. The expected
+ * values were written before the implementation and do not follow it.
  * Fixed API:
  *   src/tools/getProvision.ts  getProvision({ id, as_of?, version?, lang? }) -> version follows as_of; applicability
  *   src/tools/search.ts        aiactSearch({ query, as_of?, lang?, limit? })
@@ -16,7 +17,7 @@ import { auditText } from "../../src/tools/audit.js";
 const V24 = "32024R1689";
 const V26 = "02024R1689-20260727";
 
-describe("day5 golden: version follows the reference date", () => {
+describe("search and audit golden: version follows the reference date", () => {
   it("before 27 July 2026 the Official Journal text, after it the consolidated text", () => {
     expect(getProvision({ id: "art_6.par_2", as_of: "2026-03-15" }).version).toBe(V24);
     expect(getProvision({ id: "art_6.par_2", as_of: "2026-10-05" }).version).toBe(V26);
@@ -31,7 +32,7 @@ describe("day5 golden: version follows the reference date", () => {
   });
 });
 
-describe("day5 golden: citations", () => {
+describe("search and audit golden: citations", () => {
   it("formats ids as citations and round-trips through parseRef", () => {
     expect(formatRef("art_9.par_2", "en")).toBe("Article 9(2)");
     for (const id of ["art_9.par_2", "art_5.par_1.a", "art_113.sub_3.c.i", "anx_3.pt_4", "art_4a.par_1"]) {
@@ -40,7 +41,7 @@ describe("day5 golden: citations", () => {
   });
 });
 
-describe("day5 golden: search by reference date", () => {
+describe("search and audit golden: search by reference date", () => {
   const q = "bias detection and correction special categories of personal data";
   it("finds the new Article 4a after the amendment", () => {
     const r = aiactSearch({ query: q, as_of: "2026-10-05" });
@@ -62,7 +63,7 @@ describe("day5 golden: search by reference date", () => {
   });
 });
 
-describe("day5 golden: document audit", () => {
+describe("search and audit golden: document audit", () => {
   const kinds = (r: ReturnType<typeof auditText>) => r.findings.map((f) => f.kind);
   it("flags the pre-amendment Annex III date", () => {
     const r = auditText({ text: "Under Article 6(2) and Annex III, the obligations for high-risk AI systems apply from 2 August 2026.", as_of: "2026-10-05" });

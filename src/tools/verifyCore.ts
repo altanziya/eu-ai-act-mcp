@@ -4,7 +4,7 @@
  *
  * aiact_verify_citation: V0 (does the quoted wording exist, and where), V1 (does it apply on `as_of`, from the
  * deadline table) and V2 (language check) as separate fields. Deterministic, no LLM, no network.
- * Specification: process/designs/ai-act-verifier-benchmark.md "aiact_verify_citation"; README "Verification levels V0-V2".
+ * Specification: README "Verification levels V0-V2".
  *
  * Search order (precedence): (version_checked, lang) -> (other version, lang) -> (version_checked, other lang) ->
  * (other version, other lang). Within the first corpus that has an exact/fuzzy hit: a hit at the claimed pinpoint
@@ -333,7 +333,7 @@ function validityOf(found: { corpus: CorpusIndex; node: ProvisionNode } | null, 
 const RECITAL_NOTE = "recital: no application date; the preamble is not part of the consolidated text";
 
 /**
- * Recitals are not superseded, they are absent from the consolidated version (F66, ADR-012): a citation of a recital
+ * Recitals are not superseded, they are absent from the consolidated version: a citation of a recital
  * (claimed ref `rec_*`, or the best hit is a recital) is checked against the Official Journal version, the normal V0
  * status is returned, and V1 is `unknown` (a recital has no application date).
  */

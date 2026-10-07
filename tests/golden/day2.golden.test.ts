@@ -1,8 +1,8 @@
 /**
- * Golden tests day 2 (ADR-011, plan/day-2.md "Gate" and "API"). Written by the orchestrator;
- * read-only for workers (write-guard hook, frozen hash in plan/frozen.sha256).
+ * Golden tests for get_provision, diff, verify_citation, the reference parser and the MCP server. The expected values
+ * were written before the implementation and do not follow it.
  *
- * Fixed API under test (plan/day-2.md §API):
+ * Fixed API under test:
  *   src/tools/getProvision.ts   getProvision({ id, version?, lang?, include_children? })
  *   src/tools/diffProvision.ts  diffProvision({ id, lang? })
  *   src/tools/verifyCitation.ts verifyCitation({ quote, claimed_ref?, as_of?, lang? })
@@ -84,7 +84,7 @@ function only2026(): Node {
   throw new Error("precondition: no art_75a node with >= 12 tokens absent from 2024");
 }
 
-describe("golden day 2: aiact_get_provision", () => {
+describe("tools api golden: aiact_get_provision", () => {
   it("returns art_50 (2024, EN) with heading Transparency and >= 4 paragraphs", () => {
     const r = getProvision({ id: "art_50", version: V2024, lang: "en" });
     expect(r.found).toBe(true);
@@ -123,7 +123,7 @@ describe("golden day 2: aiact_get_provision", () => {
   });
 });
 
-describe("golden day 2: aiact_diff", () => {
+describe("tools api golden: aiact_diff", () => {
   it("art_4a is added, art_10.par_5.a moved to art_4a.par_1.a", () => {
     expect(diffProvision({ id: "art_4a", lang: "en" }).status).toBe("added");
     const m = diffProvision({ id: "art_10.par_5.a", lang: "en" });
@@ -158,7 +158,7 @@ describe("golden day 2: aiact_diff", () => {
   });
 });
 
-describe("golden day 2: aiact_verify_citation V0", () => {
+describe("tools api golden: aiact_verify_citation V0", () => {
   it("exact match at the claimed ref, in force after 2 February 2025", () => {
     const n = unchangedArt5();
     const r = verifyCitation({ quote: n.text, claimed_ref: n.id, as_of: "2026-09-01", lang: "en" });
@@ -206,7 +206,7 @@ describe("golden day 2: aiact_verify_citation V0", () => {
     expect(r.validity.act).toBe(OMNIBUS);
   });
   it("a changed year is a hard-token mismatch", () => {
-    // ID scheme v1 (ADR-012): "It shall apply from 2 August 2026." is the second subparagraph of Article 113.
+    // ID scheme v1: "It shall apply from 2 August 2026." is the second subparagraph of Article 113.
     const n = ["art_113.sub_2", "art_113"].map((id) => EN24.get(id)).find((x) => x && x.text.includes("2026"));
     if (!n) throw new Error("precondition: neither art_113.sub_2 nor art_113 (2024) contains the token 2026");
     const quote = n.text.replace("2026", "2027");
@@ -244,7 +244,7 @@ describe("golden day 2: aiact_verify_citation V0", () => {
   });
 });
 
-describe("golden day 2: V1 deadlines", () => {
+describe("tools api golden: V1 deadlines", () => {
   it("Article 5 before and after 2 February 2025", () => {
     const n = unchangedArt5();
     const before = verifyCitation({ quote: n.text, claimed_ref: n.id, as_of: "2024-12-01", lang: "en" });
@@ -268,7 +268,7 @@ describe("golden day 2: V1 deadlines", () => {
   });
 });
 
-describe("golden day 2: ref parser", () => {
+describe("tools api golden: ref parser", () => {
   it.each([
     ["Article 50(1)", "art_50.par_1"],
     ["Article 50(1)(a)", "art_50.par_1.a"],
@@ -287,7 +287,7 @@ describe("golden day 2: ref parser", () => {
   });
 });
 
-describe("golden day 2: determinism", () => {
+describe("tools api golden: determinism", () => {
   it("same input, identical output, no timestamps", () => {
     const n = unchangedArt5();
     const a = verifyCitation({ quote: n.text, claimed_ref: n.id, as_of: "2026-09-01", lang: "en" });
@@ -297,12 +297,12 @@ describe("golden day 2: determinism", () => {
   });
 });
 
-describe("golden day 2: MCP stdio server", () => {
+describe("tools api golden: MCP stdio server", () => {
   it(
     "lists exactly the three read-only tools and answers a call",
     async () => {
       const transport = new StdioClientTransport({ command: "npx", args: ["tsx", "src/mcp/server.ts"], cwd: ROOT });
-      const client = new Client({ name: "golden-day2", version: "0.0.0" });
+      const client = new Client({ name: "golden-tools-api", version: "0.0.0" });
       try {
         await client.connect(transport);
         const { tools } = await client.listTools();

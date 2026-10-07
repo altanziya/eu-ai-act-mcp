@@ -30,7 +30,7 @@ export interface RunRecord {
   status: number;
   latency_ms: number;
   error?: string;
-  /** Backend of the model id (`claude-code/` prefix: claude-code, else openrouter); set on every run written since day 4c. */
+  /** Backend of the model id (`claude-code/` prefix: claude-code, else openrouter); set on every run. */
   backend?: string;
   /** claude-code only: API-equivalent cost (`total_cost_usd`) of a run on the subscription. Not part of `cost` and not counted against --max-usd. */
   cost_equiv_usd?: number;

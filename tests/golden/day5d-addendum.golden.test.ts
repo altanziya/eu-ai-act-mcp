@@ -1,6 +1,6 @@
 /**
- * Golden tests day 5d addendum (written and frozen before implementation, plan/day-5d-addendum.md).
- * Counter-examples from the review: correct sentences must stay silent, common German word orders must be caught.
+ * Golden tests for the document checker's false alarms. The expected values were written before the implementation
+ * and do not follow it. Counter-examples: correct sentences must stay silent, common German word orders must be caught.
  */
 import { describe, expect, it } from "vitest";
 import { auditText } from "../../src/tools/audit.js";
@@ -11,7 +11,7 @@ const run = (text: string, lang?: "en" | "de") => (auditText({ text, as_of: AS_O
 const errors = (text: string) => run(text).filter((f) => f.severity === "error");
 const outdated = (text: string) => run(text).filter((f) => f.kind === "outdated_deadline");
 
-describe("day5d addendum golden: no false alarms", () => {
+describe("audit false alarms golden: no false alarms", () => {
   it.each([
     "This guide covers high-risk AI systems. The AI Act applies from 2 August 2026.",
     "Der Leitfaden behandelt Hochrisiko-KI-Systeme. Die Verordnung gilt ab dem 2. August 2026.",
@@ -28,7 +28,7 @@ describe("day5d addendum golden: no false alarms", () => {
   });
 });
 
-describe("day5d addendum golden: word orders that must be caught", () => {
+describe("audit false alarms golden: word orders that must be caught", () => {
   it.each([
     "Ab dem 2. August 2026 gelten die Pflichten für Hochrisiko-KI-Systeme.",
     "Ab 2. August 2026 müssen Hochrisiko-KI-Systeme die Anforderungen erfüllen.",
@@ -49,7 +49,7 @@ describe("day5d addendum golden: word orders that must be caught", () => {
   });
 });
 
-describe("day5d addendum golden: message language follows the text", () => {
+describe("audit false alarms golden: message language follows the text", () => {
   it("German text without lang gets a German message", () => {
     const f = outdated("Die Pflichten für Hochrisiko-KI-Systeme gelten ab dem 2. August 2026.");
     expect(f[0]!.message).toMatch(/Dezember 2027/);

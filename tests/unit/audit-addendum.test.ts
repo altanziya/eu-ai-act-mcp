@@ -1,4 +1,4 @@
-/** Day 5d addendum (plan/day-5d-addendum.md), points A1-C10: no false alarms on correct sentences, more German/English word orders, small fixes. EN and DE, each with a counter-probe. */
+/** Document checker: no false alarms on correct sentences, more German/English word orders, small fixes. EN and DE, each with a counter-probe. */
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { auditText } from "../../src/tools/audit.js";

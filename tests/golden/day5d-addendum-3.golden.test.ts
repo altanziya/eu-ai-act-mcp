@@ -1,5 +1,6 @@
 /**
- * Golden tests day 5d addendum 3 (written and frozen before implementation, plan/day-5d-addendum-3.md).
+ * Golden tests for the language of quotations in the document checker. The expected values were written before the
+ * implementation and do not follow it.
  * Without `lang`, each quotation is checked in its own language.
  */
 import { describe, expect, it } from "vitest";
@@ -10,7 +11,7 @@ const DE_QUOTE = "\"Die Anbieter und Betreiber von KI-Systemen ergreifen Maßnah
 const kinds = (text: string, lang?: "en" | "de") =>
   (auditText({ text, as_of: "2026-05-01", ...(lang ? { lang } : {}) } as Parameters<typeof auditText>[0]) as unknown as { findings: F[] }).findings.map((f) => f.kind);
 
-describe("day5d addendum 3 golden: quotation language", () => {
+describe("audit quotation language golden: quotation language", () => {
   it("a German quotation in a German text without lang is ok", () => {
     const k = kinds(`Nach Artikel 4 gilt: ${DE_QUOTE}.`);
     expect(k).toContain("quote_ok");

@@ -1,6 +1,6 @@
 /**
  * Diff between two parsed corpora (2024 Official Journal -> 2026 consolidated), by logical ID and `node_hash`
- * (SHA-256 over heading + text, ADR-012; so a heading change counts as `changed`).
+ * (SHA-256 over heading + text; so a heading change counts as `changed`).
  *
  *  unchanged  same id, same hash
  *  changed    same id, different hash
